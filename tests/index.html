@@ -1,0 +1,169 @@
+
+<html>
+    <head>
+        <title>Pivot Demo</title>
+        <link rel="stylesheet" type="text/css" href="pivot.css">
+        <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
+        <script type="text/javascript" src="pivot.js"></script>
+		<script type="text/javascript" src="countriesAgg.js"></script>
+		<script type="text/javascript" src="itemHSAgg.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="gchart_renderers.js"></script>
+		<script type="text/javascript" src="configuration.js"></script>
+			
+    </head>
+    <style>
+        * {font-family: Verdana;}
+    </style>
+    <body>
+	<script type="text/javascript">
+	
+	function montrercacher(b)
+	{
+	if(b){
+	//	$("#mesVals").show();
+	$("#vals").hide();
+                     $("#cols").hide();
+                      // $("#rows").hide();
+ //$("#unused").hide();	
+ $("#renderer").hide();	 
+					  
+                     //  $(".pvtTotalLabel").hide();
+                        //$(".pvtTotal").hide();
+                        
+                      // $(".pvtGrandTotal").hide();
+	}
+	else
+	{
+	
+		$("#mesVals").show();
+	$("#vals").show();
+                     $("#cols").show();
+                       $("#rows").show();
+ //$("#unused").show();	
+ $("#renderer").show();	 
+					  
+                     //  $(".pvtTotalLabel").hide();
+                        //$(".pvtTotal").hide();
+                       
+                       $(".pvtGrandTotal").show();
+	}
+	}
+	
+	
+	function countryrefresh()
+	{FAOSTATOLAP2.optionsCountry.hiddenAttributes=["Annee"];
+	$("#newOlap").pivotUI(test, FAOSTATOLAP2.optionsCountry,true);
+}
+	
+	var test;
+	
+	$(function(){
+	var derivers = $.pivotUtilities.derivers;
+var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.gchart_renderers);
+	$.post( "datacountry.json", {}).done(function( data ) 
+	{
+	
+	test=data.slice(0,1000);
+	//test=data;
+	
+	//data=FAOSTATOLAP2.attrTM.concat(data);
+$("#newOlap").pivotUI(test, FAOSTATOLAP2.optionsCountry);
+montrercacher(0);
+	});
+});
+	
+	
+	//myNewOlap();
+	/*
+	//TM
+	$(function(){
+	var derivers = $.pivotUtilities.derivers;
+var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.gchart_renderers);
+	$.post( "/wds/rest/table/json", FAOSTATOLAP2.queryParamsTM).done(function( data ) 
+	{
+	data=FAOSTATOLAP2.attrTM.concat(data);
+$("#newOlap").pivotUI(data, FAOSTATOLAP2.optionsTM);
+montrercacher(0);
+	});
+});
+*/
+
+/*
+
+//Item study
+$(function(){
+	var derivers = $.pivotUtilities.derivers;
+var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.gchart_renderers);
+console.log(FAOSTATOLAP2.queryParams);
+	$.post( "/wds/rest/table/json", FAOSTATOLAP2.queryParams).done(function( data ) 
+	{
+	data=FAOSTATOLAP2.attrM.concat(data);
+$("#newOlap").pivotUI(data, FAOSTATOLAP2.optionsM);
+	
+montrercacher(0);
+	
+	});
+
+});
+	*/
+	function newData()
+	{
+		$(function(){
+	var derivers = $.pivotUtilities.derivers;
+var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.gchart_renderers);
+
+/*JSON.stringify({"selects":[{"aggregation":"NONE","column":"DOM.DomainNameE","alias":"Domain"},{"aggregation":"NONE","column":"A.AreaCode","alias":"AreaCode"},{"aggregation":"NONE","column":"A.AreaNameE","alias":"Area"},{"aggregation":"NONE","column":"I.ItemCode","alias":"ItemCode"},{"aggregation":"NONE","column":"I.ItemNameE","alias":"Item"},{"aggregation":"NONE","column":"E.ElementCode","alias":"ElementCode"},{"aggregation":"NONE","column":"E.ElementNameE","alias":"Element"},{"aggregation":"NONE","column":"D.Year","alias":"Year"},{"aggregation":"NONE","column":"D.Value","alias":"Value"},{"aggregation":"NONE","column":"E.UnitNameE","alias":"Unit"},{"aggregation":"NONE","column":"Flag","alias":"Flag"}],
+"froms":[{"column":"Data","alias":"D"},{"column":"Item","alias":"I"},
+{"column":"Element","alias":"E"},
+{"column":"Area","alias":"A"},
+{"column":"Domain","alias":"DOM"}],"wheres":[{"datatype":"TEXT","column":"D.DomainCode","operator":"=","value":"QC","ins":[]},{"datatype":"TEXT","column":"DOM.DomainCode","operator":"=","value":"QC","ins":[]},{"datatype":"DATE","column":"D.AreaCode","operator":"=","value":"A.AreaCode","ins":[]},{"datatype":"DATE","column":"D.DomainCode","operator":"=","value":"DOM.DomainCode","ins":[]},{"datatype":"DATE","column":"D.ItemCode","operator":"=","value":"I.ItemCode","ins":[]},{"datatype":"DATE","column":"D.ElementCode","operator":"=","value":"E.ElementCode","ins":[]},{"datatype":"TEXT","column":"D.ElementCode","operator":"IN","value":"E.ElementCode","ins":[5312,5423,5419,5510,5525]},{"datatype":"TEXT","column":"D.AreaCode","operator":"IN","value":"A.AreaCode","ins":[3,4,5,6,7,258,8,9,1,22,10,11]},{"datatype":"TEXT","column":"D.ItemCode","operator":"IN","value":"I.ItemCode","ins":[221,711,515,526,527,226,366,367,572]},{"datatype":"TEXT","column":"D.Year","operator":"IN","value":"D.Year","ins":[2012,2011,2010,2009,2008,2007,2006,2005,2004,2003,2002]}],"orderBys":[{"column":"D.Year","direction":"DESC"},{"column":"A.AreaNameE","direction":"ASC"},{"column":"I.ItemNameE","direction":"ASC"},{"column":"E.ElementNameE","direction":"ASC"}],"limit":null,"query":null,"frequency":"NONE"});
+
+
+
+JSON.stringify({
+	"selects":null,
+	"froms":null,
+	"wheres":null,
+	"orderBys":null,
+	"limit":null,
+	"query":"select DomainCode as Dom,AreaCode,AreaCode as Area,ItemCode,ItemCode as Item,ElementCode,ElementCode as Element,Year,Value, ElementCode as Unit,Flag from Data where AreaCode<5000 and ElementCode=5312 and Year>2000 and ItemCode=221",
+	"frequency":"NONE"});
+
+
+*/
+
+
+
+
+
+
+FAOSTATOLAP2.queryParams.json=JSON.stringify({
+	"selects":null,
+	"froms":null,
+	"wheres":null,
+	"orderBys":null,
+	"limit":null,
+	"query":"select D.DomainCode as Dom,D.AreaCode,AreaNameE as Area,D.ItemCode,ItemNameE as Item,D.ElementCode,ElementNameE as Element,Year,Value, E.UnitNameE as Unit,Flag from Data D inner join Item I on D.ItemCode=I.ItemCode 	inner join Element E on D.ElementCode=E.ElementCode 	inner join Area A on D.AreaCode=A.AreaCode 	where D.AreaCode<5000 and D.Year>2000 and D.ItemCode=221",
+	"frequency":"NONE"})
+	$.post( "/wds/rest/table/json", FAOSTATOLAP2.queryParams).done(function( data ) 
+	{
+	data=FAOSTATOLAP2.attr.concat(data);
+$("#newData").pivotUI(data, FAOSTATOLAP2.options);
+	$("#newOlap").empty();
+montrercacher(0);
+	
+	});
+	});
+	}
+	
+        </script>
+        <div id="newOlap" style="margin: 10px;"></div>
+		 <div id="newData" style="margin: 10px;"></div>
+		 <form id="formExcel" action="/faostat.olap.ws/rest/ExcelCreator" method="post" >
+        <input type="hidden" id="excelData" name="data" value="">
+        <input type="hidden" name="type" value="xls">
+    </form>
+    </body>
+</html>

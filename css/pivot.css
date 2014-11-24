@@ -1,0 +1,115 @@
+*{
+font-family: 'Roboto', sans-serif !important;
+/*font-family: 'Roboto Condensed', sans-serif !important;*/
+}
+
+#testinline{
+    /*
+    overflow: scroll !important;
+    position:absolute;
+    */
+height: 500px;
+width:750px;
+
+left:250px
+}
+
+#pivot_table tbody{
+    
+    overflow: scroll !important;
+    /*position:absolute;*/
+   
+
+width:750px;
+
+left:250px
+}
+
+
+#finaltable{overflow: scroll;
+height: 300px;
+/* position: absolute; */
+width: 750px;}
+#pivot_table {
+    font-family:arial;
+    font-size: 8pt;
+    text-align: left;
+    border-collapse: collapse;
+}
+#pivot_table tr th, #pivot_table tr th {
+    background-color: #e6EEEE;
+    border: 1px solid #CDCDCD;
+    font-size: 8pt;
+    padding: 3px;
+}
+#pivot_table .pvtColLabel {text-align: center;}
+#pivot_table .pvtTotalLabel {text-align: right;}
+.tableVCell tr td {border: 0px solid #CDCDCD !important;}
+#pivot_table tr td {
+    color: #3D3D3D;
+    padding: 3px;
+    background-color: #FFF;
+    border: 1px solid #CDCDCD;
+    vertical-align: top;
+    text-align: right;
+}
+
+.pvtTotal, .pvtGrandTotal { font-weight: bold;}
+
+
+.pvtAxisContainer {
+/*    border: 1px solid gray;
+    background: #90AEC3;*/
+    padding: 3px;
+    min-width: 20px;
+    min-height: 20px;
+}
+.pvtAxisContainer li {
+    margin: 3px;
+    padding: 3px;
+    list-style-type: none;
+    cursor:move;
+}
+
+.pvtHorizList li { display: inline; }
+.innerCol{width:100%}
+.innerCol tr th
+{border: 0px solid #CDCDCD !important;}
+
+
+.nestedby {background-color:white;color:black !important;}
+.nestedby .innerCol th{background-color:white;color:black !important;}
+
+ #rows li{text-transform: uppercase;
+background-color:#399BCC;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+color: white;
+}
+  #cols li{text-transform: uppercase;
+background-color:#399BCC;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+color: white;}
+
+
+#cols span{color:#666666; font-weight: 700;
+
+}
+#rows span{color:#666666; font-weight: 700;}
+
+
+#unused li{
+	text-transform: uppercase;
+	color: white;
+	}
+	
+#mesVals{display:none}
+
+#unused {display:none}
+#renderer{display:none}
+#aggregator{display:none}
+.ordre{display:none}
+.pvtTotal,.pvtTotalLabel,.pvtGrandTotal{display:none}

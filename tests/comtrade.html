@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>Pivot Demo</title>
+        <link rel="stylesheet" type="text/css" href="pivot.css">
+        <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
+        <script type="text/javascript" src="pivot.js"></script>
+		<script type="text/javascript" src="countriesAgg.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="gchart_renderers.js"></script>
+		<script type="text/javascript" src="configuration.js"></script>
+    </head>
+    <style>
+        * {font-family: Verdana;}
+    </style>
+    <body>
+	<script type="text/javascript">
+	var comUrl="http://comtrade.un.org/ws/get.aspx?px=H3&y=2011&r=68&p=4,8,12,24,32,51,36,40,31,44,48,50,52,112,84,204,64,68,70,72,76,96,100,854,108,116,120,124,132,140,148,152,156,344,446,170,174,178,188,384,191,192,196,203,408,180,208,212,214,218,818,222,226,232,233,231,234,242,246,251,254,258,266,270,268,276,288,300,304,312,320,324,328,332,340,348,352,699,360,364,368,372,376,381,388,392,400,398,404,296,414,417,418,428,422,434,440,442,450,454,458,462,466,470,584,474,478,480,484,496,499,500,504,508,104,516,524,528,540,554,558,562,566,579,512,586,585,591,598,600,604,608,616,620,634,410,498,638,642,643,646,659,662,670,882,682,686,688,891,690,694,702,703,705,706,710,724,144,736,740,748,752,757,760,762,807,764,768,780,788,792,795,800,804,784,826,834,858,842,860,862,704,887,894,716&cc=-1,2510,3101,-1,3102,310210,310221,310229,310230,310240, 310250,310260, 310270,310280,310290,3102-310250,3103,-1,3104,310410,310420,310430,310490,3104-310410,3105&Rg=1,2&comp=false";
+
+
+	
+	function montrercacher(b)
+	{
+	if(b){
+	//	$("#mesVals").show();
+	$("#vals").hide();
+                     $("#cols").hide();
+                      // $("#rows").hide();
+ //$("#unused").hide();	
+ $("#renderer").hide();	 
+					  
+                     //  $(".pvtTotalLabel").hide();
+                        //$(".pvtTotal").hide();
+                        
+                      // $(".pvtGrandTotal").hide();
+	}
+	else
+	{
+	
+		$("#mesVals").show();
+	$("#vals").show();
+                     $("#cols").show();
+                       $("#rows").show();
+ //$("#unused").show();	
+ $("#renderer").show();	 
+					  
+                     //  $(".pvtTotalLabel").hide();
+                        //$(".pvtTotal").hide();
+                       
+                       $(".pvtGrandTotal").show();
+	}
+	}
+	
+	//myNewOlap();
+	
+	$(function(){$.get( comUrl).done(function( data ) 
+	{
+	/*data=FAOSTATOLAP2.attr.concat(data);
+$("#newData").pivotUI(data, FAOSTATOLAP2.options);
+	$("#newOlap").empty();
+montrercacher(0);
+	*/
+	alert(data);
+	});
+	});
+	
+	
+	
+	
+        </script>
+        <div id="newOlap" style="margin: 10px;"></div>
+		 <div id="newData" style="margin: 10px;"></div>
+		 <form id="formExcel" action="/faostat.olap.ws/rest/ExcelCreator" method="post" >
+        <input type="hidden" id="excelData" name="data" value="">
+        <input type="hidden" name="type" value="xls">
+    </form>
+    </body>
+</html>

@@ -1,0 +1,175 @@
+<html>
+    <head>
+        <title>Pivot Demo</title>
+        <link rel="stylesheet" type="text/css" href="pivot.css">
+        <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
+        <script type="text/javascript" src="pivot.js"></script>
+		<script type="text/javascript" src="countriesAgg.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="gchart_renderers.js"></script>
+		<script type="text/javascript" src="configuration.js"></script>
+			<script type="text/javascript" src="jsontotable.js"></script>
+			<script type="text/javascript" src="StandardUnit.js"></script>
+			<script type="text/javascript" src="LocalUnit.js"></script>
+			
+			<!--
+			
+			  //Example data, Object 
+    var objectArray = [{
+        "Total": "34",
+        "Version": "1.0.4",
+        "Office": "New York"
+    }, {
+        "Total": "67",
+        "Version": "1.1.0",
+        "Office": "Paris"
+    }];
+
+    //Example data, Array
+    var stringArray = ["New York", "Berlin", "Paris", "Marrakech", "Moscow"];
+
+    //Example data, nested Object. This data will create nested table also.
+    var nestedTable = [{
+        key1: "val1",
+        key2: "val2",
+        key3: {
+            tableId: "tblIdNested1",
+            tableClassName: "clsNested",
+            linkText: "Download",
+            data: [{
+                subkey1: "subval1",
+                subkey2: "subval2",
+                subkey3: "subval3"
+            }]
+        }
+    }];
+			
+			
+			-->
+    </head>
+    <style>
+        * {font-family: Verdana;}
+		.invi{display:none}
+		.visi{display:block}
+    </style>
+	
+	<script>
+	var globalData=[];
+	var header=[];
+	var UnitIndex=-1;
+	var Units={};
+	var UnitsUnknow={};
+	/*TEST*/
+	 var objectArray = [{"Total": "34","Version": "1.0.4","Office": "New York"}, {"Total": "67","Version": "1.1.0","Office": "Paris"}];
+
+    //Example data, Array
+    var stringArray = ["New York", "Berlin", "Paris", "Marrakech", "Moscow"];
+	 var stringArrayK = [{"un" :"New York"}, {"deux":" Berlin"},{ "trois":"Paris"},{"quatre": "Marrakech"},{"cinq":"Moscow"}];
+
+    //Example data, nested Object. This data will create nested table also.
+    var nestedTable = [{
+        key1: "val1",
+        key2: "val2",
+        key3: {
+            tableId: "tblIdNested1",
+            tableClassName: "clsNested",
+            linkText: "Download",
+            data: [{subkey1: "subval1",subkey2: "subval2",subkey3: "subval3"}]
+        }
+    }];
+	
+/*	FINTEST*/
+	
+	function getRemoteData()
+	{$("#SelUnitCol").empty();
+var	test=JSON.parse(document.getElementById("postParam").value);
+	test.json=JSON.stringify(test.json);
+	 $.ajax({
+                    type : 'POST',
+                    url:document.getElementById("url").value,
+                    data:test,
+                    success:function(response){
+					globalData=response;
+					dimLen=response[0].length;
+					header=[];
+					for(i=0;i<dimLen;i++)
+					{
+					header.push("dim_"+i);
+					}
+					//data.push(header);
+					data=[];
+					for(i=0;i<response.length && i<15;i++ ){data.push(response[i])}
+					
+                      //$("#outputTable").pivotUI(data, {},true);
+					    var jsonHtmlTable = ConvertJsonToTable(data, 'outputTable2', null, 'Download');
+						$("#outputTable").html(jsonHtmlTable);
+						step2();
+                    }
+                });
+
+	}
+	function step2()
+	{
+	document.getElementById("step2").className="visi";
+	
+	$("#SelUnitCol").append("<option value=\"-1\">&nbsp;</option>")
+	for(i in header){$("#SelUnitCol").append("<option value=\""+i+"\">"+header[i]+"</option>")}
+	}
+		function step3()
+	{
+	document.getElementById("step2").className="invi";	
+	document.getElementById("step3").className="visi";
+	UnitIndex=document.getElementById("SelUnitCol").value;
+	Units=[];
+	
+	for(i in globalData)
+	{
+	if(FAOSTATUnit.Local[globalData[i][UnitIndex]]){
+	Units[globalData[i][UnitIndex]]=FAOSTATUnit.Local[globalData[i][UnitIndex]];}
+	else{UnitsUnknow[globalData[i][UnitIndex]]=1;}
+	}
+	console.log("---------------fin" );
+	for(i in Units){
+		console.log(i+" :::: "+JSON.stringify(Units[i]));
+		}
+		console.log("---------------FIN2" );
+		$("#step3").empty();
+	for(i in UnitsUnknow){
+		$("#step3").append("<p>"+i+":<input type=text value=\"\" name=\"unknownU[\""+i.trim()+"\"]\"/></p>");
+		
+		}
+	}
+	
+	
+	</script>
+    <body>
+	<form>
+	dataset url: <br>
+	<input type="text" name="url" id="url" value="http://fenixapps.fao.org/wds/rest/table/json">
+	</br>
+	Post Parameters : <br>
+	<textarea name="postParam" id="postParam">
+{"datasource":"faostat2",
+"thousandSeparator":",",
+"decimalSeparator":".",
+"decimalNumbers":"2",
+"json":{"selects":[{"aggregation":"NONE","column":"DOM.DomainNameE","alias":"Domain"},{"aggregation":"NONE","column":"D.AreaCode","alias":"AreaCode"},{"aggregation":"NONE","column":"A.AreaNameE","alias":"AreaName"},{"aggregation":"NONE","column":"I.ItemCode","alias":"ItemCode"},{"aggregation":"NONE","column":"I.ItemNameE","alias":"ItemName"},{"aggregation":"NONE","column":"E.ElementListCode","alias":"ElementCode"},{"aggregation":"NONE","column":"E.ElementUnitNameE","alias":"ElementName"},{"aggregation":"NONE","column":"D.Year","alias":"Year"},{"aggregation":"NONE","column":"E.UnitNameE","alias":"Unit"},{"aggregation":"NONE","column":"D.Flag","alias":"Flag"},{"aggregation":"NONE","column":"D.Value","alias":"Value"}],"froms":[{"column":"Data","alias":"D"},{"column":"Item","alias":"I"},{"column":"Element","alias":"E"},{"column":"Area","alias":"A"},{"column":"Domain","alias":"DOM"}],
+"wheres":[
+{"datatype":"DATE","column":"D.AreaCode","operator":"=","value":"A.AreaCode","ins":[]},{"datatype":"DATE","column":"D.DomainCode","operator":"=","value":"DOM.DomainCode","ins":[]},{"datatype":"DATE","column":"D.ItemCode","operator":"=","value":"I.ItemCode","ins":[]},{"datatype":"DATE","column":"D.ElementCode","operator":"=","value":"E.ElementCode","ins":[]},
+{"datatype":"TEXT","column":"D.AreaCode","operator":"IN","value":"A.AreaCode","ins":[68]},
+{"datatype":"TEXT","column":"D.Year","operator":"IN","value":"D.Year","ins":[2011]}],
+"orderBys":[{"column":"D.Year","direction":"DESC"},{"column":"A.AreaNameE","direction":"ASC"},{"column":"I.ItemNameE","direction":"ASC"},{"column":"E.ElementUnitNameE","direction":"ASC"}],"limit":null,"query":null,"frequency":"NONE"},
+"cssFilename":"",
+"valueIndex":5}
+	</textarea>
+	<input type="button" value="getData" onclick="getRemoteData()">
+	</form>
+	<div id="step2" class="invi" >
+	Unit Code:<select id="SelUnitCol" onchange="step3()">
+	</select>
+	</div>
+		<div id="step3" class="invi"></div>
+	<div id="outputTable"></div>
+	</body>
+	</html>
