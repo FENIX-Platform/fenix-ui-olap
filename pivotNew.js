@@ -695,12 +695,11 @@ function my_exportNew() {
   var mycols=[];
   
       for(var c=0;c<FAOSTATNEWOLAP.internalData.rowAttrs.length;c++){
-           if(F3DWLD.CONFIG.wdsPayload.showCodes){ mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Code");
-        }
           mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Name");
-         
+          if(F3DWLD.CONFIG.wdsPayload.showCodes){ mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Code");
+        }
   }
-//console.log(FAOSTATNEWOLAP.internalData.tree);
+console.log(FAOSTATNEWOLAP.internalData.tree);
  document.getElementById("myJson").value=stringify( {data:FAOSTATNEWOLAP.internalData.tree,
      header:FAOSTATNEWOLAP.internalData.flatColKeys,cols:mycols,swUnit:FAOSTATNEWOLAP.showUnits,swFlag:FAOSTATNEWOLAP.showFlags
  
@@ -715,14 +714,13 @@ function decolrowspanNEW(){
     var today = new Date();
     var reg = new RegExp("<span class=\"ordre\">[0-9]+</span>", "g");
     var reg3 = new RegExp("<span class=\"ordre\"></span>", "g");
-    var reg2 = new RegExp("<table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g"); 
+    var reg2 = new RegExp("<table class=\"innerCol\"><th>([^>]*)</th><th>([0-9]+)</th></table>", "g");
     var row = FAOSTATNEWOLAP.internalData.tree;
     var col = FAOSTATNEWOLAP.internalData.flatColKeys.sort();
     var ret = "";
     for (var j = 0; j < FAOSTATNEWOLAP.internalData.rowKeys[0].length; j++) {
-        
-        if (F3DWLD.CONFIG.wdsPayload.showCodes) { ret += "Code,";  }
         ret += '"'+FAOSTATNEWOLAP.internalData.rowAttrs[j].replace("_", "") + "\",";
+        if (F3DWLD.CONFIG.wdsPayload.showCodes) { ret += "Code,";  }
     }
    
     for (j in col){
@@ -1913,7 +1911,7 @@ var internalTest;
       rows: [],
       vals: [],
       exclusions: {},
-      unusedAttrsVertical:false,// "auto",
+      unusedAttrsVertical: "auto",
       autoSortUnusedAttrs: false,
       rendererOptions: {
         localeStrings: locales[locale].localeStrings
@@ -1976,7 +1974,7 @@ var internalTest;
         return _results;
       });
       uiTable = $("<table cellpadding='5'>");
-      rendererControl = $("<td id='vals'>");
+      rendererControl = $("<td>");
       renderer = $("<select class='pvtRenderer'>").appendTo(rendererControl).bind("change", function() {
         return refresh();
       });
@@ -1985,8 +1983,7 @@ var internalTest;
         if (!__hasProp.call(_ref1, x)) continue;
         $("<option>").val(x).html(x).appendTo(renderer);
       }
-  
-      colList = $("<td id='unused' class='pvtAxisContainer pvtUnused'>");
+      colList = $("<td class='pvtAxisContainer pvtUnused'>");
       shownAttributes = (function() {
         var _j, _len1, _results;
         _results = [];
@@ -2107,24 +2104,14 @@ var internalTest;
       }
       $("<td class='pvtVals'>").appendTo(tr1).append(aggregator).append($("<br>"));
       $("<td class='pvtAxisContainer pvtHorizList pvtCols'>").appendTo(tr1);
-     tr2 = $("<tr>").appendTo(uiTable);
-      
-     // tr2.append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>"));
-     
- //tr2.append($("<td>"));
-      
-      
-      
-     pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
+      tr2 = $("<tr>").appendTo(uiTable);
+      tr2.append($("<td valign='top' class='pvtAxisContainer pvtRows'>"));
+      pivotTable = $("<td valign='top' class='pvtRendererArea'>").appendTo(tr2);
       if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
         uiTable.find('tr:nth-child(1)').prepend(rendererControl);
         uiTable.find('tr:nth-child(2)').prepend(colList);
-        
       } else {
-            uiTable.prepend($("<tr>").append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>")).prepend($("<td>&nbsp;</td>")));
         uiTable.prepend($("<tr>").append(rendererControl).append(colList));
-      
-      
       }
       this.html(uiTable);
       _ref3 = opts.cols;
