@@ -1,169 +1,184 @@
 
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Pivot Demo</title>
-        <link rel="stylesheet" type="text/css" href="pivot.css">
-        <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
-        <script type="text/javascript" src="pivot.js"></script>
-		<script type="text/javascript" src="countriesAgg.js"></script>
-		<script type="text/javascript" src="itemHSAgg.js"></script>
-		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript" src="gchart_renderers.js"></script>
-		<script type="text/javascript" src="configuration.js"></script>
-			
-    </head>
-    <style>
-        * {font-family: Verdana;}
-    </style>
-    <body>
-	<script type="text/javascript">
-	
-	function montrercacher(b)
-	{
-	if(b){
-	//	$("#mesVals").show();
-	$("#vals").hide();
-                     $("#cols").hide();
-                      // $("#rows").hide();
- //$("#unused").hide();	
- $("#renderer").hide();	 
-					  
-                     //  $(".pvtTotalLabel").hide();
-                        //$(".pvtTotal").hide();
-                        
-                      // $(".pvtGrandTotal").hide();
-	}
-	else
-	{
-	
-		$("#mesVals").show();
-	$("#vals").show();
-                     $("#cols").show();
-                       $("#rows").show();
- //$("#unused").show();	
- $("#renderer").show();	 
-					  
-                     //  $(".pvtTotalLabel").hide();
-                        //$(".pvtTotal").hide();
-                       
-                       $(".pvtGrandTotal").show();
-	}
-	}
-	
-	
-	function countryrefresh()
-	{FAOSTATOLAP2.optionsCountry.hiddenAttributes=["Annee"];
-	$("#newOlap").pivotUI(test, FAOSTATOLAP2.optionsCountry,true);
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" href="../pivotNew.css">
+<link rel="stylesheet" type="text/css" href="../grid/gt_grid_height.css" />
+
+<script type="text/javascript" src="../jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="../pivotNew.js"></script>
+<script type='text/javascript' src='../jquery.i18n.properties-min.js'></script>
+<!-- NEW -->
+
+<!-- un script src="highlight/jssc3.js" type="text/javascript"></script>
+<link href="highlight/style.css" rel="stylesheet" type="text/css" /-->
+
+<!--style type="text/css" media="all">@import "./css/doc_no_left.css";</style>
+<script src="../../../js/menu.js" type="text/javascript"></script-->
+
+<!-- deux link rel="stylesheet" type="text/css" media="all" href="grid/calendar/calendar-blue.css"  />
+<script type="text/javascript" src="grid/calendar/calendar.js"></script>
+<script type="text/javascript" src="grid/calendar/calendar-cn-utf8.js"></script-->
+<!--script type="text/javascript" src="../grid/calendar/calendar-setup.js"></script-->
+
+<script type="text/javascript" src="../grid/gt_msg_en.js"></script>
+<!--script type="text/javascript" src="../grid/gt_const.js"></script-->
+<script type="text/javascript" src="../grid/gt_grid_all.js"></script>
+<script type="text/javascript" src="../grid/flashchart/fusioncharts/FusionCharts.js"></script>
+ 
+<style>
+.mybutton-cls { 
+        background : url(../images/mybutton.png) no-repeat center center; 
 }
-	
-	var test;
-	
-	$(function(){
-	var derivers = $.pivotUtilities.derivers;
-var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.gchart_renderers);
-	$.post( "datacountry.json", {}).done(function( data ) 
+</style>
+
+<script src="dataTest.js"></script>
+<script>
+
+
+	FAOSTATOLAPV3={};
+	FAOSTATOLAPV3.grouped=true;
+
+	function changechkTreeview()
 	{
-	
-	test=data.slice(0,1000);
-	//test=data;
-	
-	//data=FAOSTATOLAP2.attrTM.concat(data);
-$("#newOlap").pivotUI(test, FAOSTATOLAP2.optionsCountry);
-montrercacher(0);
-	});
-});
-	
-	
-	//myNewOlap();
-	/*
-	//TM
-	$(function(){
-	var derivers = $.pivotUtilities.derivers;
-var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.gchart_renderers);
-	$.post( "/wds/rest/table/json", FAOSTATOLAP2.queryParamsTM).done(function( data ) 
-	{
-	data=FAOSTATOLAP2.attrTM.concat(data);
-$("#newOlap").pivotUI(data, FAOSTATOLAP2.optionsTM);
-montrercacher(0);
-	});
-});
-*/
-
-/*
-
-//Item study
-$(function(){
-	var derivers = $.pivotUtilities.derivers;
-var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.gchart_renderers);
-console.log(FAOSTATOLAP2.queryParams);
-	$.post( "/wds/rest/table/json", FAOSTATOLAP2.queryParams).done(function( data ) 
-	{
-	data=FAOSTATOLAP2.attrM.concat(data);
-$("#newOlap").pivotUI(data, FAOSTATOLAP2.optionsM);
-	
-montrercacher(0);
-	
-	});
-
-});
-	*/
-	function newData()
-	{
-		$(function(){
-	var derivers = $.pivotUtilities.derivers;
-var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.gchart_renderers);
-
-/*JSON.stringify({"selects":[{"aggregation":"NONE","column":"DOM.DomainNameE","alias":"Domain"},{"aggregation":"NONE","column":"A.AreaCode","alias":"AreaCode"},{"aggregation":"NONE","column":"A.AreaNameE","alias":"Area"},{"aggregation":"NONE","column":"I.ItemCode","alias":"ItemCode"},{"aggregation":"NONE","column":"I.ItemNameE","alias":"Item"},{"aggregation":"NONE","column":"E.ElementCode","alias":"ElementCode"},{"aggregation":"NONE","column":"E.ElementNameE","alias":"Element"},{"aggregation":"NONE","column":"D.Year","alias":"Year"},{"aggregation":"NONE","column":"D.Value","alias":"Value"},{"aggregation":"NONE","column":"E.UnitNameE","alias":"Unit"},{"aggregation":"NONE","column":"Flag","alias":"Flag"}],
-"froms":[{"column":"Data","alias":"D"},{"column":"Item","alias":"I"},
-{"column":"Element","alias":"E"},
-{"column":"Area","alias":"A"},
-{"column":"Domain","alias":"DOM"}],"wheres":[{"datatype":"TEXT","column":"D.DomainCode","operator":"=","value":"QC","ins":[]},{"datatype":"TEXT","column":"DOM.DomainCode","operator":"=","value":"QC","ins":[]},{"datatype":"DATE","column":"D.AreaCode","operator":"=","value":"A.AreaCode","ins":[]},{"datatype":"DATE","column":"D.DomainCode","operator":"=","value":"DOM.DomainCode","ins":[]},{"datatype":"DATE","column":"D.ItemCode","operator":"=","value":"I.ItemCode","ins":[]},{"datatype":"DATE","column":"D.ElementCode","operator":"=","value":"E.ElementCode","ins":[]},{"datatype":"TEXT","column":"D.ElementCode","operator":"IN","value":"E.ElementCode","ins":[5312,5423,5419,5510,5525]},{"datatype":"TEXT","column":"D.AreaCode","operator":"IN","value":"A.AreaCode","ins":[3,4,5,6,7,258,8,9,1,22,10,11]},{"datatype":"TEXT","column":"D.ItemCode","operator":"IN","value":"I.ItemCode","ins":[221,711,515,526,527,226,366,367,572]},{"datatype":"TEXT","column":"D.Year","operator":"IN","value":"D.Year","ins":[2012,2011,2010,2009,2008,2007,2006,2005,2004,2003,2002]}],"orderBys":[{"column":"D.Year","direction":"DESC"},{"column":"A.AreaNameE","direction":"ASC"},{"column":"I.ItemNameE","direction":"ASC"},{"column":"E.ElementNameE","direction":"ASC"}],"limit":null,"query":null,"frequency":"NONE"});
-
-
-
-JSON.stringify({
-	"selects":null,
-	"froms":null,
-	"wheres":null,
-	"orderBys":null,
-	"limit":null,
-	"query":"select DomainCode as Dom,AreaCode,AreaCode as Area,ItemCode,ItemCode as Item,ElementCode,ElementCode as Element,Year,Value, ElementCode as Unit,Flag from Data where AreaCode<5000 and ElementCode=5312 and Year>2000 and ItemCode=221",
-	"frequency":"NONE"});
-
-
-*/
-
-
-
-
-
-
-FAOSTATOLAP2.queryParams.json=JSON.stringify({
-	"selects":null,
-	"froms":null,
-	"wheres":null,
-	"orderBys":null,
-	"limit":null,
-	"query":"select D.DomainCode as Dom,D.AreaCode,AreaNameE as Area,D.ItemCode,ItemNameE as Item,D.ElementCode,ElementNameE as Element,Year,Value, E.UnitNameE as Unit,Flag from Data D inner join Item I on D.ItemCode=I.ItemCode 	inner join Element E on D.ElementCode=E.ElementCode 	inner join Area A on D.AreaCode=A.AreaCode 	where D.AreaCode<5000 and D.Year>2000 and D.ItemCode=221",
-	"frequency":"NONE"})
-	$.post( "/wds/rest/table/json", FAOSTATOLAP2.queryParams).done(function( data ) 
-	{
-	data=FAOSTATOLAP2.attr.concat(data);
-$("#newData").pivotUI(data, FAOSTATOLAP2.options);
-	$("#newOlap").empty();
-montrercacher(0);
-	
-	});
-	});
+	   FAOSTATOLAPV3.grouped=document.getElementById('chkTreeview').checked;
+	   FAOSTATOLAPV3.mygrid="";
+	$("#testinline").pivotUI(finalData,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);
 	}
-	
-        </script>
-        <div id="newOlap" style="margin: 10px;"></div>
-		 <div id="newData" style="margin: 10px;"></div>
-		 <form id="formExcel" action="/faostat.olap.ws/rest/ExcelCreator" method="post" >
-        <input type="hidden" id="excelData" name="data" value="">
-        <input type="hidden" name="type" value="xls">
-    </form>
-    </body>
+
+	function newGrid(r){
+	   var r2d2=[];
+	    console.log(r);
+	  $("#myGrid1_div").remove();
+	for(ligne in r.tree)
+	    {
+	        //console.log(ligne);
+	   var temp=ligne.split('||');
+	    for(col in r.colKeys)
+	    { 
+	        var coldInd=r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9]/g,"_")
+	      // console.log(coldInd);
+	        // for(col in r.tree[ligne])
+	  /*      console.log("ligne"+ligne+" "+r.tree[ligne]);
+	        console.log(col+":"+r.tree[ligne][col].value());*/
+	if( r.tree[ligne][coldInd]!=null){temp.push(r.tree[ligne][coldInd].value());
+	}
+	else{
+		temp.push( "");
+}
+	                // r2d2.push([ligne,col,+r.tree[ligne][col].value()]);
+	      }
+	    //  console.log(temp);
+	      r2d2.push(temp);
+	     }
+	       // console.log(r2d2);
+	var grid_demo_id = "myGrid1" ;
+
+
+	var dsOption= {
+
+		fields :[],
+
+		recordType : 'array',
+		data : r2d2
+	};
+
+	/*
+			{name : 'Area'  },
+			{name : 'Item'  },
+			{name : 'Element'  },
+	                {name : '2007'  },
+			{name : '2008'  },
+			{name : '2009'  },
+	                {name : '2010'  }*/
+
+
+	var colsOption = [];
+	 /*
+	     {id: 'Area' , header: "Area" , width :60,frozen : true  },
+	     
+		   {id: 'Item' , header: "Item" , width :70,frozen : true  },
+		   {id: 'Element' , header: "Element" , width :80 ,frozen : true },
+	           {id: '2007' , header: "2007" , width :60  },
+		   {id: '2008' , header: "2008" , width :70  },
+		   {id: '2009' , header: "2009" , width :80  },
+	            {id: '2010' , header: "2010" , width :70  }*/
+
+
+	for(var i in r.rowAttrs){
+	   r.rowAttrs[i];
+	   dsOption.fields.push({name : r.rowAttrs[i]  });
+	   colsOption.push({id:  r.rowAttrs[i] , header:  r.rowAttrs[i] , width :150,frozen : true ,grouped : FAOSTATOLAPV3.grouped  });
+	   
+	}
+
+	for(var i in r.colKeys){
+	 // console.log(r.colKeys[i].toString());
+	   dsOption.fields.push({name : r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_")  });
+	   colsOption.push({id:  r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_") ,
+	       width :150,header:  r.colKeys[i].toString()  });
+	   
+	}
+
+
+	Sigma.ToolFactroy.register(
+		'mybutton',  
+		{
+			cls : 'mybutton-cls',  
+			toolTip : 'I am a new button',
+			action : function(event,grid) {  alert( 'The id of this grid is  '+grid.id)  }
+		}
+	);
+
+
+
+	var gridOption={
+		id : grid_demo_id,
+		width: "800",  //"100%", // 700,
+		height: "330",  //"100%", // 330,
+		container :  $(".pvtRendererArea")[0],//'gridbox',
+		replaceContainer : true, 
+		dataset : dsOption ,
+		columns : colsOption,
+		pageSize : 15 ,
+	        pageSizeList : [15,25,50,150],
+	        SigmaGridPath : 'grid/',
+		toolbarContent : 'nav | goto | mybutton | pagesize '
+	};
+
+
+	console.log(r2d2);
+	console.log(colsOption );
+	console.log(dsOption.fields);
+	//Sigma.Msg.Grid.en.PAGE_AFTER='okokk'+gridOption.pageSize;
+	  FAOSTATOLAPV3.mygrid=new Sigma.Grid( gridOption );
+	  
+	console.log( FAOSTATOLAPV3.mygrid);
+	 Sigma.Grid.render( FAOSTATOLAPV3.mygrid)() ;
+	 document.getElementById('page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
+	  FAOSTATOLAPV3.mygrid.pageSizeSelect.onchange=function()
+	  {document.getElementById('page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;};
+	 
+	 if(FAOSTATOLAPV3.grouped)
+	 	$("#myGrid1_div").append($("<label for=\"chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));
+	else
+		$("#myGrid1_div").append($("<label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));
+
+	}
+
+</script>
+</head>
+<body>
+	<div id="testinline"></div>
+	<script>
+	/*FAOSTATOLAP3={cols:[],rows:[],vals:[]};
+	for(var i=0;i<finalData.lenth;i++)
+	{}*/
+	$("#testinline").pivotUI(finalData,{"rows":["Area","Item"],"cols":["Element","Year"],"vals":["Value"]});
+	</script>
+</body>
 </html>

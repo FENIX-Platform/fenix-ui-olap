@@ -3,46 +3,50 @@
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-              <link rel="stylesheet" type="text/css" href="pivotNew.css">
-        <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
-        <script type="text/javascript" src="pivotNew.js"></script>
-           <script type="text/javascript" src="dataTest.js"></script>
-            <script type='text/javascript' src='http://fenixapps.fao.org/repository/js/jquery/1.0.9/jquery.i18n.properties-min.js'></script>
-            <!-- NEW -->
 
-<script src="highlight/jssc3.js" type="text/javascript"></script>
-<link href="highlight/style.css" rel="stylesheet" type="text/css" />
-
-<!--style type="text/css" media="all">@import "./css/doc_no_left.css";</style>
-<script src="../../../js/menu.js" type="text/javascript"></script-->
-
-
-<link rel="stylesheet" type="text/css" media="all" href="grid/calendar/calendar-blue.css"  />
-<script type="text/javascript" src="grid/calendar/calendar.js"></script>
-<script type="text/javascript" src="grid/calendar/calendar-cn-utf8.js"></script>
-<!--script type="text/javascript" src="../grid/calendar/calendar-setup.js"></script-->
-
+<link rel="stylesheet" type="text/css" href="pivotNew.css">
+<link rel="stylesheet" type="text/css" href="highlight/style.css" />
+<link rel="stylesheet" type="text/css" href="grid/calendar/calendar-blue.css" />
 <link rel="stylesheet" type="text/css" href="grid/gt_grid_height.css" />
 
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
+<script type='text/javascript' src='http://fenixapps.fao.org/repository/js/jquery/1.0.9/jquery.i18n.properties-min.js'></script>
+<script type="text/javascript" src="pivotNew.js"></script>
+<script type="text/javascript" src="dataTest.json"></script>
+<script type="text/javascript" src="highlight/jssc3.js"></script>
+<script type="text/javascript" src="grid/calendar/calendar.js"></script>
+<script type="text/javascript" src="grid/calendar/calendar-cn-utf8.js"></script>
 <script type="text/javascript" src="grid/gt_msg_en.js"></script>
-<!--script type="text/javascript" src="grid/gt_const.js"></script-->
 <script type="text/javascript" src="grid/gt_grid_all.js"></script>
 <script type="text/javascript" src="grid/flashchart/fusioncharts/FusionCharts.js"></script>
  
  
-<style>.mybutton-cls { 
+<style>
+.mybutton-cls { 
         background : url(./images/mybutton.png) no-repeat center center; 
 }
 </style>
 <script>
-    FAOSTATOLAPV3={};
+
+var dataTest;
+
+$.ajax({
+	async: false,	
+	url: 'dataTest.json',
+	dataType: 'json',
+	success: function(json) {
+		dataTest = json;
+	}
+});
+
+FAOSTATOLAPV3={};
 FAOSTATOLAPV3.grouped=true;
 function changechkTreeview()
 {
    FAOSTATOLAPV3.grouped=document.getElementById('chkTreeview').checked;
    FAOSTATOLAPV3.mygrid="";
-$("#testinline").pivotUI(finalData,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
+$("#testinline").pivotUI(dataTest,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
 
 function newGrid(r){
    var r2d2=[];
@@ -77,44 +81,20 @@ var dsOption= {
 	recordType : 'array',
 	data : r2d2
 };
-
-/*
-		{name : 'Area'  },
-		{name : 'Item'  },
-		{name : 'Element'  },
-                {name : '2007'  },
-		{name : '2008'  },
-		{name : '2009'  },
-                {name : '2010'  }*/
-
-
 var colsOption = [];
- /*
-     {id: 'Area' , header: "Area" , width :60,frozen : true  },
-     
-	   {id: 'Item' , header: "Item" , width :70,frozen : true  },
-	   {id: 'Element' , header: "Element" , width :80 ,frozen : true },
-           {id: '2007' , header: "2007" , width :60  },
-	   {id: '2008' , header: "2008" , width :70  },
-	   {id: '2009' , header: "2009" , width :80  },
-            {id: '2010' , header: "2010" , width :70  }*/
 
-
-for(var i in r.rowAttrs){
+for(var i in r.rowAttrs) {
    r.rowAttrs[i];
    dsOption.fields.push({name : r.rowAttrs[i]  });
    colsOption.push({id:  r.rowAttrs[i] , header:  r.rowAttrs[i] , width :150,frozen : true ,grouped : FAOSTATOLAPV3.grouped  });
-   
 }
 
-for(var i in r.colKeys){
- // console.log(r.colKeys[i].toString());
+for(var i in r.colKeys) {
    dsOption.fields.push({name : r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_")  });
    colsOption.push({id:  r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_") ,
        width :150,header:  r.colKeys[i].toString()  });
    
 }
-
 
 Sigma.ToolFactroy.register(
 	'mybutton',  
@@ -167,9 +147,9 @@ else{$("#myGrid1_div").append($("<label for=\"chkTreeview\">Treeview/Sorting col
         <div id="testinline"></div>
           <script>
               /*FAOSTATOLAP3={cols:[],rows:[],vals:[]};
-              for(var i=0;i<finalData.lenth;i++)
+              for(var i=0;i<dataTest.lenth;i++)
                   {}*/
-                $("#testinline").pivotUI(finalData,{"rows":["Area","Item"],"cols":["Element","Year"],"vals":["Value"]});
+                $("#testinline").pivotUI(dataTest,{"rows":["Area","Item"],"cols":["Element","Year"],"vals":["Value"]});
                </script>
     </body>
 </html>
