@@ -4,152 +4,23 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 
-<link rel="stylesheet" type="text/css" href="pivotNew.css">
-<link rel="stylesheet" type="text/css" href="highlight/style.css" />
-<link rel="stylesheet" type="text/css" href="grid/calendar/calendar-blue.css" />
-<link rel="stylesheet" type="text/css" href="grid/gt_grid_height.css" />
+<link rel="stylesheet" type="text/css" href="css/pivot.css">
+<link rel="stylesheet" type="text/css" href="lib/highlight/style.css" />
+<link rel="stylesheet" type="text/css" href="lib/grid/calendar/calendar-blue.css" />
+<link rel="stylesheet" type="text/css" href="lib/grid/gt_grid_height.css" />
 
-<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
-<script type='text/javascript' src='http://fenixapps.fao.org/repository/js/jquery/1.0.9/jquery.i18n.properties-min.js'></script>
-<script type="text/javascript" src="pivotNew.js"></script>
-<script type="text/javascript" src="dataTest.json"></script>
-<script type="text/javascript" src="highlight/jssc3.js"></script>
-<script type="text/javascript" src="grid/calendar/calendar.js"></script>
-<script type="text/javascript" src="grid/calendar/calendar-cn-utf8.js"></script>
-<script type="text/javascript" src="grid/gt_msg_en.js"></script>
-<script type="text/javascript" src="grid/gt_grid_all.js"></script>
-<script type="text/javascript" src="grid/flashchart/fusioncharts/FusionCharts.js"></script>
- 
  
 <style>
 .mybutton-cls { 
         background : url(./images/mybutton.png) no-repeat center center; 
 }
 </style>
-<script>
-
-var dataTest;
-
-$.ajax({
-	async: false,	
-	url: 'dataTest.json',
-	dataType: 'json',
-	success: function(json) {
-		dataTest = json;
-	}
-});
-
-FAOSTATOLAPV3={};
-FAOSTATOLAPV3.grouped=true;
-function changechkTreeview()
-{
-   FAOSTATOLAPV3.grouped=document.getElementById('chkTreeview').checked;
-   FAOSTATOLAPV3.mygrid="";
-$("#testinline").pivotUI(dataTest,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
-
-function newGrid(r){
-   var r2d2=[];
-    console.log(r);
-  $("#myGrid1_div").remove();
-for(ligne in r.tree)
-    {
-        //console.log(ligne);
-   var temp=ligne.split('||');
-    for(col in r.colKeys)
-    { 
-        var coldInd=r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9]/g,"_")
-      // console.log(coldInd);
-        // for(col in r.tree[ligne])
-  /*      console.log("ligne"+ligne+" "+r.tree[ligne]);
-        console.log(col+":"+r.tree[ligne][col].value());*/
-if( r.tree[ligne][coldInd]!=null){temp.push(r.tree[ligne][coldInd].value());}
-else{temp.push( "");}
-                // r2d2.push([ligne,col,+r.tree[ligne][col].value()]);
-      }
-    //  console.log(temp);
-      r2d2.push(temp);
-     }
-       // console.log(r2d2);
-var grid_demo_id = "myGrid1" ;
-
-
-var dsOption= {
-
-	fields :[],
-
-	recordType : 'array',
-	data : r2d2
-};
-var colsOption = [];
-
-for(var i in r.rowAttrs) {
-   r.rowAttrs[i];
-   dsOption.fields.push({name : r.rowAttrs[i]  });
-   colsOption.push({id:  r.rowAttrs[i] , header:  r.rowAttrs[i] , width :150,frozen : true ,grouped : FAOSTATOLAPV3.grouped  });
-}
-
-for(var i in r.colKeys) {
-   dsOption.fields.push({name : r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_")  });
-   colsOption.push({id:  r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_") ,
-       width :150,header:  r.colKeys[i].toString()  });
-   
-}
-
-Sigma.ToolFactroy.register(
-	'mybutton',  
-	{
-		cls : 'mybutton-cls',  
-		toolTip : 'I am a new button',
-		action : function(event,grid) {  alert( 'The id of this grid is  '+grid.id)  }
-	}
-);
-
-
-
-var gridOption={
-	id : grid_demo_id,
-	width: "800",  //"100%", // 700,
-	height: "330",  //"100%", // 330,
-	container :  $(".pvtRendererArea")[0],//'gridbox',
-	replaceContainer : true, 
-	dataset : dsOption ,
-	columns : colsOption,
-	pageSize : 15 ,
-        pageSizeList : [15,25,50,150],
-        SigmaGridPath : 'grid/',
-	toolbarContent : 'nav | goto | mybutton | pagesize '
-};
-
-
-console.log(r2d2);
-console.log(colsOption );
-console.log(dsOption.fields);
-//Sigma.Msg.Grid.en.PAGE_AFTER='okokk'+gridOption.pageSize;
-  FAOSTATOLAPV3.mygrid=new Sigma.Grid( gridOption );
-  
-console.log( FAOSTATOLAPV3.mygrid);
- Sigma.Grid.render( FAOSTATOLAPV3.mygrid)() ;
- document.getElementById('page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
-  FAOSTATOLAPV3.mygrid.pageSizeSelect.onchange=function()
-  {document.getElementById('page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;};
- 
- if(FAOSTATOLAPV3.grouped){$("#myGrid1_div").append($("<label for=\"chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));}
-else{$("#myGrid1_div").append($("<label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));}
-}
-
-</script>
-
 
 
     </head>
     <body>test final
         <div id="testinline"></div>
-          <script>
-              /*FAOSTATOLAP3={cols:[],rows:[],vals:[]};
-              for(var i=0;i<dataTest.lenth;i++)
-                  {}*/
-                $("#testinline").pivotUI(dataTest,{"rows":["Area","Item"],"cols":["Element","Year"],"vals":["Value"]});
-               </script>
+        <script type="text/javascript" data-main="js/main" src="lib/require.js"></script>
+
     </body>
 </html>
