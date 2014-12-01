@@ -4,7 +4,7 @@ function changechkTreeview()
 {
    FAOSTATOLAPV3.grouped=document.getElementById('chkTreeview').checked;
    FAOSTATOLAPV3.mygrid="";
-$("#testinline").pivotUI(FAOSTATNEWOLAP.originalData,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
+$("#testinline").pivotUI(dataTest,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
 
 function newGrid(r){
    var r2d2=[];
@@ -83,11 +83,11 @@ for(var i in r.colKeys){
                montitle="";
                for(var ii=0;ii<r.colKeys[i].length;ii++)
                {
-                   console.log(r.colKeys[i][ii]);
+                   //console.log(r.colKeys[i][ii]);
                    if(true || F3DWLD.CONFIG.wdsPayload.showCodes){montitle+=" "+r.colKeys[i][ii].replace(reg2, "$2 ($1)")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
                    else{montitle+=" "+r.colKeys[i][ii].replace(reg, "$1")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
                    }
-               console.log(montitle);
+              // console.log(montitle);
    colsOption.push({id:  r.colKeys[i].join("_").replace(/[^a-zA-Z0-9]/g,"_") ,
        header: montitle, toolTip : true ,toolTipWidth : 150,editor:{
         type:"textarea",width:"300px",height:"200px"
@@ -144,7 +144,7 @@ onMouseOver : function(value,  record,  cell,  row,  colNo, rowNo,  columnObj,  
 //Sigma.Msg.Grid.en.PAGE_AFTER='okokk'+gridOption.pageSize;
   FAOSTATOLAPV3.mygrid=new Sigma.Grid( gridOption );
   
-console.log( FAOSTATOLAPV3.mygrid);
+//console.log( FAOSTATOLAPV3.mygrid);
  Sigma.Grid.render( FAOSTATOLAPV3.mygrid)() ;
  document.getElementById('page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
   FAOSTATOLAPV3.mygrid.pageSizeSelect.onchange=function()
