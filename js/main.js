@@ -1,8 +1,10 @@
 requirejs.config({
 
-    baseUrl: '../',
+    baseUrl: './',
 
     paths : {
+        text: 'lib/text',
+        domReady: 'lib/domReady',
         jquery: "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
         jqueryui: "lib/jquery-ui-1.9.2.custom.min",
         i18n: 'lib/jquery.i18n.properties-min',
@@ -35,8 +37,8 @@ requirejs.config({
     }
 });
 
-require(['host','text!dataTest.json','text!dataConfig.json','pivot', 'domReady!'],
-    function( Host, dataTest, dataConfig, pivot ) {
+require(['text!config/dataTest.json','text!config/dataConfig.json','pivot', 'domReady!'],
+    function(dataTest, dataConfig, pivot ) {
         
     dataTest = JSON.parse(dataTest);
     dataConfig = JSON.parse(dataConfig);
