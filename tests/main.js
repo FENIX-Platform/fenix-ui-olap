@@ -1,6 +1,6 @@
 requirejs.config({
 
-    baseUrl: './',
+    baseUrl: '../',
 
     paths : {
         text: 'lib/text',
@@ -14,12 +14,18 @@ requirejs.config({
         gt_msg: "lib/grid/gt_msg_en",
         gt_msg_grid: "lib/grid/gt_grid_all",
         //fusioncharts: "grid/flashchart/fusioncharts/FusionCharts",        
-        configuration: "js/configuration",
+        configuration: "tests/configuration",
         pivot: "js/pivot"
     },
     shim: {
         i18n : {
             deps: ['jquery']
+        },
+        calendar: {
+            exports: 'Calendar'
+        },
+        calendar_utf8: {
+            exports: 'Calendar'
         },
         gt_msg: {
             deps: ['jquery']  
@@ -42,7 +48,7 @@ require(['text!config/dataTest.json','text!config/dataConfig.json','pivot', 'dom
         
     dataTest = JSON.parse(dataTest);
     dataConfig = JSON.parse(dataConfig);
-    
+
     $("#testinline").pivotUI(dataTest, dataConfig);
 
 });
