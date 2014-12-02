@@ -47,9 +47,9 @@ requirejs.config({
 require(['text!config/dataTest.json','text!config/dataConfig.json','pivot', 'domReady!'],
     function(dataTest, dataConfig, pivot ) {
         
-    dataTest = JSON.parse(dataTest);
+    dataTest2 = JSON.parse(dataTest);
     dataConfig = JSON.parse(dataConfig);
 
-    $("#testinline").pivotUI(dataTest, dataConfig);
+    $("#testinline").pivotUI(dataTest2, dataConfig);
 
 });

@@ -1,10 +1,11 @@
  FAOSTATOLAPV3={};
 FAOSTATOLAPV3.grouped=true;
+var dataTest2=[];
 function changechkTreeview()
 {
    FAOSTATOLAPV3.grouped=document.getElementById('chkTreeview').checked;
    FAOSTATOLAPV3.mygrid="";
-$("#testinline").pivotUI(dataTest,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
+$("#testinline").pivotUI(dataTest2,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
 
 function newGrid(r){
    var r2d2=[];
