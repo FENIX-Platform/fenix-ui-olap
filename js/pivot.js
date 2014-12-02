@@ -973,6 +973,45 @@ var internalTest;
     return x1 + x2;
   };
 
+
+arrayFormat = function(opts) {
+    
+        { sigfig = 3;  }
+         { scaler = 1;  }
+    
+       return function(x) {
+      var result;
+      if (isNaN(x) || !isFinite(x)) {
+        return "";
+      }
+      if (x === 0 && !opts.showZero) {
+        return "";
+      }
+      result = addSeparators((opts.scaler * x).toFixed(opts.digitsAfterDecimal), opts.thousandsSep, opts.decimalSep);
+      return "" + opts.prefix + result + opts.suffix;
+    };
+     /*
+     **
+        return function(x1) {
+          var ret = "<table class=\"tableVCell\" style=\"width:100%\"><tr>";
+        //     var ret = "<table><tr>";
+            for (k in x1) {
+                var x = x1[k];
+                if (x != "_") {
+                    if (!isNaN(k)) {
+                        if(k==0 && isNaN(x)   ){ret += "<td></td>";}
+                        else if (k > 0 || x === 0 ||isNaN(x)|| !isFinite(x)) {ret += "<td>" + x + "</td>";}
+                        else { ret += "<td>" + addCommas((scaler * x).toFixed(FAOSTATNEWOLAP.decimal)) + "</td>"; }
+                        // else {ret+= "<td>"+ x.toFixed(FAOSTATNEWOLAP.decimal).toLocaleString()+"</td>"; }
+                    }
+                }
+            }
+            ret += "</tr></table>";
+            return ret;
+        };*/
+    };
+
+
   numberFormat = function(opts) {
     var defaults;
     defaults = {
@@ -999,6 +1038,7 @@ var internalTest;
   };
 
   usFmt = numberFormat();
+    arrFmt = arrayFormat();
 
   usFmtInt = numberFormat({
     digitsAfterDecimal: 0
@@ -1080,10 +1120,12 @@ var internalTest;
       };
     },
     sum: function(formatter) {
+   
       if (formatter == null) {
         formatter = usFmt;
       }
       return function(_arg) {
+          alert("ss")
         var attr;
         attr = _arg[0];
         return function(data, rowKey, colKey) {
@@ -1103,6 +1145,56 @@ var internalTest;
         };
       };
     },
+     sum2: function(formatter) {
+          { sigfig = 3;}
+           { scaler = 1; }
+         
+            return function(_arg) {
+                var attr;//function(){var ret=[];for(var i=0;i<_arg;i++){ret.push(0);};return ret}
+                attr = _arg[0];
+                var emptyInitTab = [0, "", ""];
+                //for(var i in _arg){emptyInitTab.push(0);}
+                /*function(){t=[0];
+                 if(FAOSTATOLAP2.displayOption.showFlag==1){t.push("");}
+                 if(FAOSTATOLAP2.displayOption.showUnit==1){t.push("");}
+                 return t;
+                 }*/
+                return function() {
+                    return {
+                        sum: [0, "_", "_"],
+                        push: function(record) {
+                            //if (!isNaN(parseFloat(record[_arg[j]]))) {
+                            for (var j = 0; j < _arg.length; j++)  {
+                               // _arg[j] = _arg[j];
+                                if (_arg[j] == "Flag" ) {
+                                    if (this.sum[j] == "_") {//|| this.sum[j]==record[_arg[j]]){
+                                        if (record[_arg[j]] != "") { this.sum[j] =  record[_arg[j]]; }
+                                        else {this.sum[j] = "&nbsp;";}
+                                        FAOSTATNEWOLAP.flags[record[_arg[j]]] = 1;
+                                    }
+                                    else {this.sum[j] = "Agg";}
+                                }
+                                else if (_arg[j] == "Value" ) { this.sum[j] =parseFloat(record[_arg[j]]);   }
+                                else if (_arg[j] == "Unit" ) {
+                                    if (this.sum[j] == "_" || this.sum[j] == record[_arg[j]] ) {
+                                        // this.sum[j]="("+record[_arg[j]]+")";
+                                        if (record[_arg[j]] != "") {  this.sum[j] =  record[_arg[j]] ;}
+                                        else {this.sum[j] = "&nbsp;";}
+                                    }
+                                    else { this.sum[0] = NaN;this.sum[j] = "nan"; }
+                                }
+                            }
+                            
+                            return this.sum;
+                        },
+                        value: function() {   return this.sum;  },
+                        format: arrFmt,
+                        label: "Sum of " + attr
+                    };
+                };
+            };
+        },
+    
     average: function(formatter) {
       if (formatter == null) {
         formatter = usFmt;
@@ -1223,7 +1315,8 @@ var internalTest;
   };
 
   aggregators = (function(tpl) {
-    return {    "Sum": tpl.sum(usFmt),
+    return {    "Sum": tpl.sum2(arrayFormat),
+         "Sum1": tpl.sum(arrayFormat),
       "Count": tpl.count(usFmtInt),
       "Count Unique Values": tpl.countUnique(usFmtInt),
       "List Unique Values": tpl.listUnique(", "),
@@ -1870,7 +1963,7 @@ var internalTest;
       aggregators: locales[locale].aggregators,
       renderers: locales[locale].renderers,
       hiddenAttributes: [],
-      menuLimit: 200,
+      menuLimit: 500,
       cols: [],
       rows: [],
       vals: [],

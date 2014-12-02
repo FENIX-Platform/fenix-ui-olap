@@ -22,11 +22,12 @@ for(ligne in r.tree)
         // for(col in r.tree[ligne])
   /*      console.log("ligne"+ligne+" "+r.tree[ligne]);
         console.log(col+":"+r.tree[ligne][col].value());*/
-if( r.tree[ligne][coldInd]!=null){temp.push(r.tree[ligne][coldInd].value());}
+             
+if( r.tree[ligne][coldInd]!=null){temp.push("<table width=\"100%\" ><tr><td width=\"50%\">"+r.tree[ligne][coldInd].value()[0]+"</td><td>"+r.tree[ligne][coldInd].value()[1]+"</td></tr></table>");}
 else{temp.push( "");}
                 // r2d2.push([ligne,col,+r.tree[ligne][col].value()]);
       }
-    //  console.log(temp);
+      //console.log(temp);
       r2d2.push(temp);
      }
        // console.log(r2d2);
@@ -78,7 +79,7 @@ for(var i in r.rowAttrs){
 for(var i in r.colKeys){
  // console.log(r.colKeys[i].toString());
    dsOption.fields.push(
-           {name : r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_"),type:'float'  }
+           {name : r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_")  }
            );
                
                montitle="";
@@ -90,9 +91,7 @@ for(var i in r.colKeys){
                    }
               // console.log(montitle);
    colsOption.push({id:  r.colKeys[i].join("_").replace(/[^a-zA-Z0-9]/g,"_") ,
-       header: montitle, toolTip : true ,toolTipWidth : 150,editor:{
-        type:"textarea",width:"300px",height:"200px"
-    }  });
+       header: montitle, toolTip : true ,toolTipWidth : 150});
 
    
 }
@@ -109,6 +108,12 @@ Sigma.ToolFactroy.register(
 );
 
 
+function my_renderer(value ,record,columnObj,grid,colNo,rowNo){
+
+		var no= record[columnObj.fieldIndex] + 0;
+		var color = no<50?"red":(no>70?"green":"blue");
+		return "<span style=\"color:" + color +";\"><strong>" + no + "</strong></span>";
+}
 
 var gridOption={
 	id : grid_demo_id,

@@ -6,7 +6,9 @@ requirejs.config({
     paths : {
         text: 'lib/text',
         domReady: 'lib/domReady',
-        jquery: "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
+        //jquery: "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
+        jquery: "lib/jquery-2.1.1.min",
+        
         jqueryui: "lib/jquery-ui-1.9.2.custom.min",
         i18n: 'lib/jquery.i18n.properties-min',
         jssc3: "lib/highlight/jssc3",
@@ -18,7 +20,7 @@ requirejs.config({
         configuration: "tests/configuration",
         pivot: "js/pivot"
     },
-    shim: {
+    shim: {jqueryui:{deps: ['jquery']},
         i18n : {
             deps: ['jquery']
         },
@@ -50,6 +52,10 @@ require(['text!config/dataTest.json','text!config/dataConfig.json','pivot', 'dom
     dataTest2 = JSON.parse(dataTest);
     dataConfig = JSON.parse(dataConfig);
 
+dataConfig.derivedAttributes= {
+    "Value2":function(mp){return mp["Value"]}
+                    //"Value2": function(mp) {  return "<table><tr><td>"+mp["Value"]+"</td><td>"+mp["Flag"]+"</td></tr></table>" ; }
+                    }
     $("#testinline").pivotUI(dataTest2, dataConfig);
 
 });
