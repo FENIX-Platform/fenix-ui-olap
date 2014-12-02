@@ -1315,8 +1315,8 @@ arrayFormat = function(opts) {
   };
 
   aggregators = (function(tpl) {
-    return {    "Sum": tpl.sum2(arrayFormat),
-         "Sum1": tpl.sum(arrayFormat),
+    return {    //"Sum": tpl.sum2(arrayFormat),
+         "Sum1": tpl.sum(),
       "Count": tpl.count(usFmtInt),
       "Count Unique Values": tpl.countUnique(usFmtInt),
       "List Unique Values": tpl.listUnique(", "),

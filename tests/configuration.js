@@ -23,7 +23,11 @@ for(ligne in r.tree)
   /*      console.log("ligne"+ligne+" "+r.tree[ligne]);
         console.log(col+":"+r.tree[ligne][col].value());*/
              
-if( r.tree[ligne][coldInd]!=null){temp.push("<table width=\"100%\" ><tr><td width=\"50%\">"+r.tree[ligne][coldInd].value()[0]+"</td><td>"+r.tree[ligne][coldInd].value()[1]+"</td></tr></table>");}
+if( r.tree[ligne][coldInd]!=null){
+     temp.push(r.tree[ligne][coldInd].value());
+
+   // temp.push("<table width=\"100%\" ><tr><td width=\"50%\">"+r.tree[ligne][coldInd].value()[0]+"</td><td>"+r.tree[ligne][coldInd].value()[1]+"</td></tr></table>");
+}
 else{temp.push( "");}
                 // r2d2.push([ligne,col,+r.tree[ligne][col].value()]);
       }
