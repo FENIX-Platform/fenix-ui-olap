@@ -56,6 +56,6 @@ dataConfig.derivedAttributes= {
     "Value2":function(mp){return mp["Value"]}
                     //"Value2": function(mp) {  return "<table><tr><td>"+mp["Value"]+"</td><td>"+mp["Flag"]+"</td></tr></table>" ; }
                     }
-    $("#testinline").pivotUI(dataTest2, dataConfig);
+    $("#fx-olap-ui").pivotUI(dataTest2, dataConfig);
 
 });

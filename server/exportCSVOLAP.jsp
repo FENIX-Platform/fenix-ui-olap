@@ -100,7 +100,7 @@ var t=retConfig(mesOptionsPivotSend.domain,mesOptionsPivotSend.lang);
                          
                          /*console.log(mesOptionsPivot);
                          console.log(response_1);*/
-                        $("#testinline").pivotUI(response_1, mesOptionsPivot, true);
+                        $("#fx-olap-ui").pivotUI(response_1, mesOptionsPivot, true);
                          FAOSTATNEWOLAP.originalData=response_1;
                     /*}else{
                         FAOSTATNEWOLAP.limitPivotPreview=500;
@@ -124,7 +124,7 @@ var t=retConfig(mesOptionsPivotSend.domain,mesOptionsPivotSend.lang);
                         $.get("http://faostat3.fao.org/faostat.olap.ws/rest/GetFlags/" + F3DWLD.CONFIG.lang + "/" + newFlag, function(data) {
                             data = data.replace("localhost:8080/", "faostat3.fao.org/");
                           
-                            $("#testinline").append(data);
+                            $("#fx-olap-ui").append(data);
                             //console.log(document.getElementById('hor-minimalist-b').getElementsByTagName("tbody")[0].getElementsByTagName("tr").length);
                             var flagtr=document.getElementById('hor-minimalist-b').getElementsByTagName("tbody")[0].getElementsByTagName("tr")
                          for (var ij=0;ij<flagtr.length;ij++)
@@ -156,7 +156,7 @@ var t=retConfig(mesOptionsPivotSend.domain,mesOptionsPivotSend.lang);
     </head>
     <body onload="init();">
     <center><img src="/faostat-download-js/pivotAgg/Preload.gif" /></center>
-    <div id="testinline" style="display:none"></div>
+    <div id="fx-olap-ui" style="display:none"></div>
     <form id="csvDataForm" action="/faostat-download-js/pivotAgg/json.jsp" method="POST">
         <input id="csvData" type="hidden" name="data" value="" />
     </form>

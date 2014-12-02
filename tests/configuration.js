@@ -5,7 +5,7 @@ function changechkTreeview()
 {
    FAOSTATOLAPV3.grouped=document.getElementById('chkTreeview').checked;
    FAOSTATOLAPV3.mygrid="";
-$("#testinline").pivotUI(dataTest2,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
+$("#fx-olap-ui").pivotUI(dataTest2,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);}
 
 function newGrid(r){
    var r2d2=[];
@@ -121,12 +121,12 @@ function my_renderer(value ,record,columnObj,grid,colNo,rowNo){
 
 var gridOption={
 	id : grid_demo_id,
-	width: "800",  //"100%", // 700,
-	height: "330",  //"100%", // 330,
+	width: "100%",  //"100%", // 700,
+	height: "100%",  //"100%", // 330,
 	container :"myGrid1_div",//pvtRendererArea",//testinline2",//'',//myGrid1_div',//pivot_table',// 'gridbox',// $(".pvtRendererArea")[0],//
 	replaceContainer : true, 
 	dataset : dsOption ,
-         resizable : true,
+         resizable : false,
 	columns : colsOption,
 	pageSize : 15 ,
         pageSizeList : [15,25,50,150],

@@ -1,0 +1,13 @@
+/* Fenix OLAP - Standlone Host */
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0; }
+
+#fx-olap-ui {
+  position: absolute; }
+
+#mesFlags {
+  position: absolute;
+  display: none; }

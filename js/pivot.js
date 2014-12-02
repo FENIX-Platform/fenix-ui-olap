@@ -315,7 +315,7 @@ selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
     var test2 = {
         datasource: F3DWLD.CONFIG.datasource,thousandSeparator: ',',decimalSeparator: '.',decimalNumbers: '2',
         json: JSON.stringify({"limit": null,   "query": selectFinal, "frequency": "NONE"}),cssFilename: '',valueIndex: 5};
-    $("#testinline").html("<center><img src=\"/faostat-download-js/pivotAgg/Preload.gif\" /></center>");
+    $("#fx-olap-ui").html("<center><img src=\"/faostat-download-js/pivotAgg/Preload.gif\" /></center>");
     FAOSTATNEWOLAP.flags = {};
     $.ajax({
         type: 'POST', url: F3DWLD.CONFIG.data_url + "/table/json", data: test2,
@@ -333,7 +333,7 @@ selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
             if (F3DWLD.CONFIG.wdsPayload.showUnits) {mesOptionsPivot.vals.push("Unit");}
             if (F3DWLD.CONFIG.wdsPayload.showFlags){mesOptionsPivot.vals.push("Flag"); }
             FAOSTATNEWOLAP.originalData = response_1;
-            $("#testinline").pivotUI(response_1, mesOptionsPivot, true);
+            $("#fx-olap-ui").pivotUI(response_1, mesOptionsPivot, true);
             $("#options_menu_box").css("display", "block");
             var newFlag = "";
             for (var i in FAOSTATNEWOLAP.flags) {if (newFlag != "") {  newFlag += ":";} newFlag += "'" + i + "'"; }
@@ -1125,7 +1125,7 @@ arrayFormat = function(opts) {
         formatter = usFmt;
       }
       return function(_arg) {
-          alert("ss")
+          //alert("ss")
         var attr;
         attr = _arg[0];
         return function(data, rowKey, colKey) {
