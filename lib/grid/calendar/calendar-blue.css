@@ -4,11 +4,11 @@ div.calendar { position: relative; z-index:99 }
 
 .calendar, .calendar table {
   border: 1px solid #556;
-  font-size: 11px;
+  /*font-size: 11px;*/
   color: #000;
   cursor: default;
   background: #eef;
-  font-family: tahoma,verdana,sans-serif;
+  /*font-family: tahoma,verdana,sans-serif;*/
 }
 
 /* Header part -- contains navigation buttons and day names. */

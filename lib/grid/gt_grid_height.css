@@ -1,8 +1,8 @@
-body { 	font-size:12px;	}
-form { 	padding: 0px; 	margin: 0px; }
-div { 	font-size:12px;		padding: 0px; 	margin: 0px; }
-td {	font-size:12px;	}
 
+form { 	padding: 0px; 	margin: 0px; }
+div { 	padding: 0px; 	margin: 0px; }
+/*td {vertical-align: middle;	}*/
+/*table td[class*="col-"], table th[class*="col-"]{vertical-align: middle;}*/
 
 /* ========================= */
 .gt-grid {
@@ -23,12 +23,12 @@ td {	font-size:12px;	}
 .gt-b-boxmodel  {}
 
 .gt-grid textarea{
-	font-size : 12px;
+	/*font-size : 12px;*/
 }
 
 .gt-viewport {
 	position: relative;
-	left:0px; 
+	left:0px;
 	top: 0px;
 	width: 100%;
 	overflow: hidden;
@@ -56,9 +56,17 @@ td {	font-size:12px;	}
 	text-align:left;
 	width:100%;
 	padding-left:0px;
-	background: #ebeadb url(./skin/default/images/hd_row_over_bg.gif) repeat-x;
-	height: 24px;
+	height: 30px;
+    vertical-align: top;
 }
+
+/*.gt-head-div .gt-inner{*/
+    /*vertical-align: top;*/
+/*}*/
+
+/*.gt-head-table .gt-inner{*/
+    /*vertical-align: top;*/
+/*}*/
 
 .gt-panel {
 	border:1px solid #cccccc;
@@ -82,7 +90,7 @@ td {	font-size:12px;	}
 	position: static;
 	z-index:1;
 	font-weight:bold ;
-	color : #333333 ; 
+	color : #333333 ;
 	padding : 0px;
 	height: 22px;
 	border-bottom : 1px solid #cccccc;
@@ -133,13 +141,13 @@ td {	font-size:12px;	}
 }
 
 .gt-hd-row .gt-hd-row-over {
-	background: #ebeadb url(./skin/default/images/hd_row_over_bg.gif) repeat-x;
+	background-color: #ebeadb;
 }
 
 
 
 .gt-hd-row td ,.gt-row td {
-	font: normal 12px arial, tahoma, helvetica, sans-serif;	
+	/*font: normal 12px arial, tahoma, helvetica, sans-serif;*/
 	height:21px;
 	vertical-align: top;
 
@@ -165,9 +173,9 @@ td {	font-size:12px;	}
 
 .gt-hd-row td {
 	height:22px;
-	border-right: 1px solid #778899;
-	border-bottom: 1px solid #778899;
-	background: #ebeadb url(./skin/default/images/hd_row_bg.gif) repeat-x;
+	/*border-right: 1px solid #778899;*/
+	/*border-bottom: 1px solid #778899;*/
+	background: #C0C0C0;
 }
 
 /* =============================== */
@@ -175,8 +183,11 @@ td {	font-size:12px;	}
 .gt-inner {
 	qdisplay: block;
 	padding : 1px 2px 1px 2px;
-	height:89px;
-	line-height:16px;
+	height:55px;
+
+    text-align: center;
+
+
 	overflow: hidden;
 	white-space:nowrap;
 	word-break:keep-all;
@@ -188,15 +199,21 @@ td {	font-size:12px;	}
 .gt-hd-row td .gt-inner {
 	position: relative;
 	cursor: default;
-	padding : 3px 1px 0px 3px;
+	padding : 6px 1px 0px 3px;
 	font-weight:bold ;
 	color : #333333 ;
+
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
 	-moz-user-select: none;
 	-khtml-user-select: none;
 }
 
 .gt-inner-left {
 	/* text-align : left ; */
+    /*position: relative;*/
+    /*top: 50%;*/
 }
 .gt-inner-center {
 	text-align : center ;
@@ -262,7 +279,7 @@ margin-top:10px;
 	text-align:right;
 	cursor: pointer;
 	letter-spacing : -1px;
-	font:normal 9px arial, helvetica, sans-serif;
+	/*font:normal 9px arial, helvetica, sans-serif;*/
 	background: #e0e0e0 url(./skin/default/images/cell_index_bg.gif) repeat-x ;
 }
 
@@ -289,11 +306,11 @@ margin-top:10px;
 
 .gt-row-over td.gt-cell-group {
 	/* background: #ffeedd; */
-	background-image: url();
+	/*background-image: url();*/
 }
 
 .gt-row-del td {
-	color:#888888;
+	/*color:#888888;*/
 	background : #e0e0e0 url(./skin/default/images/row_del.gif) repeat-x center center ;
 }
 
@@ -330,9 +347,9 @@ margin-top:10px;
 .gt-hd-split {
 	qdisplay:block;
 	height: 16px;
-	width:6px;
+	width:1px;
 	overflow: hidden;
-	background: url(./skin/default/images/tool_split.gif)  repeat-y 3px center;
+	background-color: transparent;
 
 }
 
@@ -361,13 +378,13 @@ margin-top:10px;
 
 
 .gt-hd-icon {
-	position: relative;	
+	position: relative;
 	left:12px;
 	width:11px;
 	height:10px;
 	background-position: 11px 11px ;
 	background-repeat :no-repeat;
-	background-image: url(./skin/default/images/s_sort_asc_desc.gif);
+	/*background-image: url(./skin/default/images/s_sort_asc_desc.gif);*/
 }
 
 .gt-hd-asc {
@@ -380,7 +397,7 @@ margin-top:10px;
 
 
 .gt-hd-button {
-	position: relative;	
+	position: relative;
 	top:7px;
 	width:12px;
 	height:10px;
@@ -407,7 +424,8 @@ margin-top:10px;
 	top:1px;
 	left:1px;
 	z-index:13;
-	border-right:1px solid #999999;
+    padding-left: 1px;
+	/*border-right:1px solid #999999;*/
 
 }
 
@@ -426,7 +444,7 @@ margin-top:10px;
 .gt-input-select {
 	vertical-align:middle;
 	height:21px;
-	font:normal 12px arial, tahoma, helvetica, sans-serif;
+	/*font:normal 12px arial, tahoma, helvetica, sans-serif;*/
 }
 
 .gt-input-button {
@@ -443,7 +461,7 @@ margin-top:10px;
 .gt-toolbar-box {
 	width:100%;
 	position: relative;
-	height:24px;
+	height:40px;
 	left:0px;
 	bottom:0px;
 	display:block;
@@ -451,7 +469,7 @@ margin-top:10px;
 	overflow:hidden;
 	border: 1px solid #cccccc;
 	border-top: 0px;
-	background:url(./skin/default/images/toolbar_bg.gif) repeat 0px 0px; 
+	/*background:url(./skin/default/images/toolbar_bg.gif) repeat 0px 0px;*/
 
 }
 
@@ -559,7 +577,7 @@ margin-top:10px;
 	height:16px;
 	margin:5px;
 	margin-top:15px;
-	background:url(./skin/default/images/s_loading.gif) no-repeat; 
+	background:url(./skin/default/images/s_loading.gif) no-repeat;
 }
 
 .gt-grid-waiting-text {
@@ -574,7 +592,7 @@ margin-top:10px;
 
 
 .gt-dialog-head {
-	padding:0px;
+	/*padding:0px;*/
 	position: relative;
 	height:19px;
 	width:100%;
@@ -628,7 +646,7 @@ margin-top:10px;
 .gt-dialog-body {
 	border:0px;
 	width:100%;
-	padding:0px;
+	/*padding:0px;*/
 	margin:0px;
 	overflow:auto;
 	text-align:left;
@@ -648,7 +666,7 @@ margin-top:10px;
 .gt-dialog-buttonzone-v {
 	text-align:center;
 	float:left;
-	display:inline; 
+	display:inline;
 	width : 90px;
 }
 
@@ -697,7 +715,7 @@ margin-top:10px;
 	width:90px;
 	height:24px;
 	margin : 0px;
-	padding:0px;
+	/*padding:0px;*/
 	overflow :hidden;
 
 }
@@ -725,7 +743,7 @@ margin-top:10px;
 	position: absolute;
 	top:0px;
 	left:0px;
-	padding:0px;
+	/*padding:0px;*/
 	z-index:22;
 	overflow:hidden;
 	height:21px;
@@ -738,10 +756,10 @@ margin-top:10px;
 	float:left;
 	width:99%;
 	height:20px;
-	font:normal 11px arial, verdana, tahoma, helvetica, sans-serif;	
+	/*font:normal 11px arial, verdana, tahoma, helvetica, sans-serif;*/
 	vertical-align: middle;
 	margin:0px;
-	padding:1px;
+	/*padding:1px;*/
 	border:1px solid #558899;
 	qmargin-right:3px;
 
@@ -783,7 +801,7 @@ td.gt-cell-vaildfailed {
 td.gt-cell-updated {
 	background-repeat :no-repeat;
 	background-position : right top;
-	background-image : url(./skin/default/images/cell_updated.gif) 
+	background-image : url(./skin/default/images/cell_updated.gif)
 
 }
 /* ========================== */
@@ -814,7 +832,7 @@ td.gt-cell-updated {
 	height:20px;
 	display : none;
 
-	font:normal 12px arial, verdana, tahoma, helvetica, sans-serif;	
+	/*font:normal 12px arial, verdana, tahoma, helvetica, sans-serif;*/
 	font-weight:bold;
 
 	line-height:16px;
@@ -822,7 +840,7 @@ td.gt-cell-updated {
 	vertical-align: top;
 	overflow:hidden;
 
-	color: #000000;
+	/*color: #000000;*/
 	background:#cccccc;
 
 	-o-text-overflow: ellipsis;
@@ -844,7 +862,7 @@ td.gt-cell-updated {
 .gt-head-ghost span {
 	display: block;
 	white-space:nowrap;
-	padding: 2px 3px 0px 4px;
+	/*padding: 2px 3px 0px 4px;*/
 	-moz-user-select: none;
 	-khtml-user-select: none;
 }
@@ -890,11 +908,11 @@ td.gt-cell-updated {
 
 .gt-menuitem {
 	display:block;
-	height:23px; 
+	height:23px;
 	cursor:pointer;
 	text-decoration : none;
 	border:0px solid #ff0000;
-	color:#335566;
+	/*color:#335566;*/
 }
 
 .gt-menuitem:hover {
@@ -908,14 +926,14 @@ td.gt-cell-updated {
 .gt-menu-icon {
 	display: block;
 	float:left;
-	height:23px; 
+	height:23px;
 	width:20px;
 	font-size:1px;
 	vertical-align: middle;
 	overflow:hidden;
 	background-repeat:	no-repeat ;
 	background-position : center center;
-	border:0px solid #ff000;
+	border:0px solid transparent;
 	background-color:  #ddeeff;
 	-moz-user-select: none;
 	-khtml-user-select: none;
@@ -924,7 +942,7 @@ td.gt-cell-updated {
 .gt-checkboxtext {
 	display: block;
 	float:left;
-	padding: 5px 0px 0px 2px;
+	/*padding: 5px 0px 0px 2px;*/
 	vertical-align: middle;
 	overflow:hidden;
 	border:0px solid #00ff00;
@@ -983,11 +1001,11 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 .gt-image-button {
 	display: block;
 	float:left;
-	padding:0px;
+	/*padding:0px;*/
 	vertical-align: middle;
 	width:19px;
 	height:19px;
-	padding:0px;
+	/*padding:0px;*/
 	text-decoration : none;
 	margin:1px;
 	font-size:1px;
@@ -998,7 +1016,7 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 }
 
 .gt-image-button:hover {
-	background : url(./skin/default/images/button_bg.gif) no-repeat center center;
+	/*background : url(./skin/default/images/button_bg.gif) no-repeat center center;*/
 }
 
 .gt-image-button div , .gt-image-button button{
@@ -1006,12 +1024,12 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 	height:100%;
 	cursor:pointer;
 	font-size:1px;
-	border:0px solid #ff0000;
+	/*border:0px solid #ff0000;*/
 }
 
 
 .gt-image-button-down {
-	background : url(./skin/default/images/button_down_bg.gif) no-repeat center center;
+	/*background : url(./skin/default/images/button_down_bg.gif) no-repeat center center;*/
 }
 
 .gt-button-disable {
@@ -1022,7 +1040,7 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 }
 
 .gt-button-disable:hover {
-	background : url();
+	/*background : url();*/
 }
 
 .gt-button-disable div, .gt-button-disable button {
@@ -1031,41 +1049,40 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 
 
 .gt-button-split {
-	width:5px;
+	width:1px;
 	height:19px;
-	vertical-align: middle;
-	background : url(./skin/default/images/tool_split.gif)  no-repeat center center
+    background-color: #666666;
 }
 
 
 .gt-first-page {
-	background : url(./skin/default/images/page_first.gif) no-repeat center center;
+	background-color : red;
 }
 
 
 .gt-prev-page {
-	background : url(./skin/default/images/page_prev.gif) no-repeat center center;
+    background-color : red;
 }
 
 .gt-next-page {
-	background : url(./skin/default/images/page_next.gif) no-repeat center center;
+    background-color : red;
 }
 
 .gt-last-page {
-	background : url(./skin/default/images/page_last.gif) no-repeat center center;
+    background-color : red;
 }
 
 .gt-goto-page {
-	background : url(./skin/default/images/page_goto.gif) no-repeat center center;
+    background-color : red;
 }
 
 
 .gt-toolbar-text {
-	font:normal 12px arial, verdana, tahoma, helvetica, sans-serif;	
+	/*font:normal 12px arial, verdana, tahoma, helvetica, sans-serif;*/
 	float:left;
 	vertical-align: top;
 	margin:2px;
-	color:#335566;
+	/*color:#335566;*/
 }
 
 
@@ -1074,14 +1091,14 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 }
 
 .gt-page-input {
-	font:normal 11px  tahoma,verdana,arial, helvetica, sans-serif;
+	/*font:normal 11px  tahoma,verdana,arial, helvetica, sans-serif;*/
 	float:left;
 	width:25px;
 	height:15px;
 	vertical-align: top;
 	margin-top:3px;
 	text-align:right;
-	border:1px solid #558899;
+	border:1px solid #d8d8d8;
 }
 
 
@@ -1091,11 +1108,11 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 	float:left;
 	width:41px;
 	height:16px;
-	font:normal 11px  tahoma,verdana,arial, helvetica, sans-serif;
+	/*font:normal 11px  tahoma,verdana,arial, helvetica, sans-serif;*/
 	vertical-align: bottom;
 	margin-top:2px;
 	text-align:right;
-	border:1px solid #558899;
+	border:1px solid #d8d8d8;
 }
 
 .gt-b-ie .gt-pagesize-select {
@@ -1110,19 +1127,19 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 	display: block;
 	float:right;
 	top:0px;
-	padding-top:2px;
-	font:normal 12px arial, verdana, tahoma, helvetica, sans-serif;	
-	color:#335566;
+	/*padding-top:2px;*/
+	/*font:normal 12px arial, verdana, tahoma, helvetica, sans-serif;*/
+	/*color:#335566;*/
 }
 
 .gt-page-state div {
-	padding:2px 7px 0px 0px;
+	/*padding:2px 7px 0px 0px;*/
 	overflow:hidden;
 }
 
 .gt-page-state-left {
 	float:left;
-	padding-left:5px;
+	/*padding-left:5px;*/
 }
 
 .gt-tool-gridmenu {
@@ -1180,7 +1197,7 @@ background-image: url(./skin/default/images/s_unchecked.gif);
 .gt-hidden {
 	width:0px;
 	height:0px;
-	padding:0px;
+	/*padding:0px;*/
 	margin:0px;
 	overflow : hidden;
 }
