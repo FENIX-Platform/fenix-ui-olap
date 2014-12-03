@@ -11,11 +11,11 @@ height: 300px;
 border: 0px;
 background: #fff;
 overflow: hidden;
-font: 10pt "Courier New",Courier;
+/*font: 10pt "Courier New",Courier;*/
 background: #fcfcfc;
 }
 .jssc {
-font: 10pt "Courier New";
+/*font: 10pt "Courier New";*/
 border: 1px solid #ccc;
 background-color: #f3f3f3;
 padding-top: 1px;
@@ -27,7 +27,7 @@ overflow: auto;
 width:95%;
 }
 .jssccodetitle {
-font: 9pt Verdana;
+/*font: 9pt Verdana;*/
 margin: 0px 0px 5px 40px;
 font-weight: bold;
 color: #79a;
