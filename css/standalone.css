@@ -13,6 +13,3 @@ body, html {
 
 .fx-olap-holder * {
   box-sizing: content-box; }
-
-#fx-olap-ui {
-  position: absolute; }
