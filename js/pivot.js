@@ -1,6 +1,6 @@
 var test;
 
-console.log('c est bien moi')
+console.log('test');
 FAOSTATNEWOLAP = {};
 FAOSTATNEWOLAP.pivotlimit = 10000;
 FAOSTATNEWOLAP.pivotlimitExcel = 200000;
