@@ -2152,7 +2152,7 @@ arrayFormat = function(opts) {
         };
       
         triangleLink = $("<span class='pvtTriangle'>").html(" &#x25BE;").bind("click", showFilterList);
-        attrElem = $("<li class='axis_" + i + "'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
+        attrElem = $("<li class='axis_" + i + "' id='filtre_"+c+"'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
         if (hasExcludedItem) {
           attrElem.addClass('pvtFilteredAttribute');
         }
