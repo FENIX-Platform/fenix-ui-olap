@@ -2173,7 +2173,9 @@ arrayFormat = function(opts) {
       
       
       
-     pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
+  //   pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
+   
+   pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
       if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
         uiTable.find('tr:nth-child(1)').prepend(rendererControl);
         uiTable.find('tr:nth-child(2)').prepend(colList);
