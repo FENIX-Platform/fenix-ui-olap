@@ -1334,6 +1334,14 @@ arrayFormat = function(opts) {
       "Count as Fraction of Columns": tpl.fractionOf(tpl.count(), "col", usFmtPct)
     };
   })(aggregatorTemplates);
+  aggregators2 = (function(tpl) {
+    return {    //"Sum": tpl.sum2(arrayFormat),
+         "Sum": tpl.sum(),
+      "Count": tpl.count(usFmtInt),
+      "Integer Sum": tpl.sum(usFmtInt),
+      "Average": tpl.average(usFmt)
+    };
+  })(aggregatorTemplates);
 
   renderers = {
     "Table": function(pvtData, opts) {
@@ -1353,15 +1361,15 @@ arrayFormat = function(opts) {
     }
   };
    renderers2 = {
-       "NewOLAP":function(pvtData, opts){
+       "Table":function(pvtData, opts){
            
           newGrid(pvtData);
        //   return pivotTableRenderer(pvtData, opts)
            // return pivotTableRenderer(pvtData, opts);
-       },
+       }/*,
     "Table": function(pvtData, opts) {
       return pivotTableRenderer(pvtData, opts);
-    },
+    }*/,
     "Table Barchart": function(pvtData, opts) {
       return $(pivotTableRenderer(pvtData, opts)).barchart();
     }
@@ -1386,7 +1394,7 @@ arrayFormat = function(opts) {
       }
     },
                en: {
-      aggregators: aggregators,
+      aggregators: aggregators2,
       renderers: renderers2,
       localeStrings: {
         renderError: "An error occurred rendering the PivotTable results.",
@@ -2166,8 +2174,10 @@ arrayFormat = function(opts) {
         if (!__hasProp.call(_ref2, x)) continue;
         aggregator.append($("<option>").val(x).html(x));
       }
+	 
+     $("<td class='pvtAxisContainer pvtHorizList pvtCols'>").appendTo(tr1);
+	   
       $("<td class='pvtVals'>").appendTo(tr1).append(aggregator).append($("<br>"));
-      $("<td class='pvtAxisContainer pvtHorizList pvtCols'>").appendTo(tr1);
      tr2 = $("<tr>").appendTo(uiTable);
       
      // tr2.append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>"));
@@ -2180,12 +2190,13 @@ arrayFormat = function(opts) {
    
    pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo($("#fx-olap-holder-div"));
       if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
+	 
         uiTable.find('tr:nth-child(1)').prepend(rendererControl);
         uiTable.find('tr:nth-child(2)').prepend(colList);
         
       } else {
           uiTable.prepend($("<tr>").append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>")).prepend($("<td id='pretd'>&nbsp;</td>")));
-          uiTable.prepend($("<tr>").append(rendererControl).append(colList));
+          uiTable.prepend($("<tr>").append(colList).append(rendererControl));
     }
       this.html(uiTable);
       _ref3 = opts.cols;
