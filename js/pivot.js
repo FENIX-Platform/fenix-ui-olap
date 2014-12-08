@@ -1,5 +1,5 @@
 var test;
-console.log("coucou");
+
 FAOSTATNEWOLAP = {};
 FAOSTATNEWOLAP.pivotlimit = 10000;
 FAOSTATNEWOLAP.pivotlimitExcel = 200000;
@@ -360,9 +360,10 @@ selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
 
 function newFunctions() {
     FAOSTATNEWOLAP.viewVals = 1;
-    $("#mesVals").css("display", "block");
+    $("#vals").css("display", "block");
     $("#unused").css("display", "block");
-    $("#renderer").css("display", "block");
+	$("#unused li").css("display", "inline");
+    $(".pvtRenderer").css("display", "block");
     $("#aggregator").css("display", "block");
     $("#unused").css("background-color", "#ececec");
     $("#unused li nobr").css("color", "#666");
@@ -1781,8 +1782,10 @@ arrayFormat = function(opts) {
         if (x !== -1) {
           th = document.createElement("th");
           th.className = "pvtColLabel";
-          th.textContent = colKey[j];
-          th.setAttribute("colspan", x);
+          //FIG th.textContent = colKey[j];
+          th.innerHTML = colKey[j];
+          
+		  th.setAttribute("colspan", x);
           if (parseInt(j) === colAttrs.length - 1 && rowAttrs.length !== 0) {
             th.setAttribute("rowspan", 2);
           }
@@ -2175,7 +2178,7 @@ arrayFormat = function(opts) {
       
   //   pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
    
-   pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
+   pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo($("#fx-olap-holder-div"));
       if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
         uiTable.find('tr:nth-child(1)').prepend(rendererControl);
         uiTable.find('tr:nth-child(2)').prepend(colList);
