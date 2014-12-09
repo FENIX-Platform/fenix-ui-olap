@@ -657,11 +657,15 @@ function my_exportNew() {
           mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Name");
          
   }
+  flatColKeyst=[];
+tt=FAOSTATNEWOLAP.internalData.getColKeys();
+for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
 //console.log(FAOSTATNEWOLAP.internalData.tree);
  document.getElementById("myJson").value=stringify( {data:FAOSTATNEWOLAP.internalData.tree,
-     header:FAOSTATNEWOLAP.internalData.flatColKeys,cols:mycols,swUnit:FAOSTATNEWOLAP.showUnits,swFlag:FAOSTATNEWOLAP.showFlags
+     header:flatColKeyst,cols:mycols,swUnit:FAOSTATNEWOLAP.showUnits,swFlag:FAOSTATNEWOLAP.showFlags
  
     });
+	
    //document.getElementById("myJson").value=JSON.stringify({data:FAOSTATNEWOLAP.originalData,header:FAOSTATNEWOLAP.internalData.flatColKeys});
     document.getElementById("xlsDataForm").submit();
   }
@@ -674,7 +678,11 @@ function decolrowspanNEW(){
     var reg3 = new RegExp("<span class=\"ordre\"></span>", "g");
     var reg2 = new RegExp("<table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g"); 
     var row = FAOSTATNEWOLAP.internalData.tree;
-    var col = FAOSTATNEWOLAP.internalData.flatColKeys.sort();
+  //  var col = FAOSTATNEWOLAP.internalData.flatColKeys.sort();
+		flatColKeyst=[];
+tt=FAOSTATNEWOLAP.internalData.getColKeys();
+for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
+    var col = flatColKeyst.sort();
     var ret = "";
     for (var j = 0; j < FAOSTATNEWOLAP.internalData.rowKeys[0].length; j++) {
         
@@ -701,12 +709,14 @@ function decolrowspanNEW(){
                     if (FAOSTATNEWOLAP.showFlags) { ret += ","; }
                 }
                 else {
+				 ret += '"' + addCommas(row[i][col[j]].value()) + '",';
+				 /*
                     ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
                      if (FAOSTATNEWOLAP.showUnits) {   ret += '"' + row[i][col[j]].value()[1].replace(/&nbsp;/g, " ") + '",';  }
                         if (FAOSTATNEWOLAP.showFlags) {
                             if(FAOSTATNEWOLAP.showUnits){ ret += '"' + row[i][col[j]].value()[2].replace(/&nbsp;/g, " ") + '",';}
                             else{ret += '"' + row[i][col[j]].value()[1].replace(/&nbsp;/g, " ") + '",';}
-                        }
+                        }*/
                     }
                 }  catch (ER) {}
         }
