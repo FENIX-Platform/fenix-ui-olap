@@ -1130,12 +1130,12 @@ arrayFormat = function(opts) {
       };
     },
     sum: function(formatter) {
-   
+    console.log("sum")
       if (formatter == null) {
         formatter = usFmt;
       }
       return function(_arg) {
-          //alert("ss")
+         
         var attr;
         attr = _arg[0];
         return function(data, rowKey, colKey) {
@@ -1156,6 +1156,7 @@ arrayFormat = function(opts) {
       };
     },
      sum2: function(formatter) {
+	 console.log("sum2")
           { sigfig = 3;}
            { scaler = 1; }
          
@@ -1346,7 +1347,7 @@ arrayFormat = function(opts) {
   })(aggregatorTemplates);
   aggregators2 = (function(tpl) {
     return {    //"Sum": tpl.sum2(arrayFormat),
-         "Sum": tpl.sum(),
+         "Sum": tpl.sum(usFmtInt),
       "Count": tpl.count(usFmtInt),
       "Integer Sum": tpl.sum(usFmtInt),
       "Average": tpl.average(usFmt)
@@ -1382,6 +1383,15 @@ arrayFormat = function(opts) {
     }*/,
     "Table Barchart": function(pvtData, opts) {
       return $(pivotTableRenderer(pvtData, opts)).barchart();
+    },
+    "Heatmap": function(pvtData, opts) {
+      return $(pivotTableRenderer(pvtData, opts)).heatmap();
+    },
+    "Row Heatmap": function(pvtData, opts) {
+      return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
+    },
+    "Col Heatmap": function(pvtData, opts) {
+      return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
     }
   };
   
