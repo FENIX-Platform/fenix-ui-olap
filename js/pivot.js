@@ -1207,6 +1207,7 @@ arrayFormat = function(opts) {
         },
     
     average: function(formatter) {
+	console.log("avg")
       if (formatter == null) {
         formatter = usFmt;
       }
@@ -1327,7 +1328,7 @@ arrayFormat = function(opts) {
 
   aggregators = (function(tpl) {
     return {    //"Sum": tpl.sum2(arrayFormat),
-         "Sum1": tpl.sum(),
+         "Sum": tpl.sum(),
       "Count": tpl.count(usFmtInt),
       "Count Unique Values": tpl.countUnique(usFmtInt),
       "List Unique Values": tpl.listUnique(", "),
