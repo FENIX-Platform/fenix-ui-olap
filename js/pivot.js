@@ -1350,7 +1350,7 @@ arrayFormat = function(opts) {
     return {    //"Sum": tpl.sum2(arrayFormat),
          "Sum": tpl.sum(usFmtInt),
       //"Count": tpl.count(usFmtInt),
-      "Integer Sum": tpl.sum(usFmtInt),
+     // "Integer Sum": tpl.sum(usFmtInt),
       "Average": tpl.average(usFmt)
     };
   })(aggregatorTemplates);
