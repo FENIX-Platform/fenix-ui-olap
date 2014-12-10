@@ -1130,7 +1130,7 @@ arrayFormat = function(opts) {
       };
     },
     sum: function(formatter) {
-    console.log("sum")
+
       if (formatter == null) {
         formatter = usFmt;
       }
@@ -1156,7 +1156,7 @@ arrayFormat = function(opts) {
       };
     },
      sum2: function(formatter) {
-	 console.log("sum2")
+	
           { sigfig = 3;}
            { scaler = 1; }
          
@@ -1207,7 +1207,7 @@ arrayFormat = function(opts) {
         },
     
     average: function(formatter) {
-	console.log("avg")
+	
       if (formatter == null) {
         formatter = usFmt;
       }
@@ -1349,7 +1349,7 @@ arrayFormat = function(opts) {
   aggregators2 = (function(tpl) {
     return {    //"Sum": tpl.sum2(arrayFormat),
          "Sum": tpl.sum(usFmtInt),
-      "Count": tpl.count(usFmtInt),
+      //"Count": tpl.count(usFmtInt),
       "Integer Sum": tpl.sum(usFmtInt),
       "Average": tpl.average(usFmt)
     };
@@ -2062,7 +2062,7 @@ arrayFormat = function(opts) {
         return _results;
       });
       uiTable = $("<table cellpadding='5'>");
-      rendererControl = $("<td id='vals'>");
+      rendererControl = $("<td id='vals' class='pvtAxisContainer pvtUnused'>");
       renderer = $("<select class='pvtRenderer'>").appendTo(rendererControl).bind("change", function() {
         return refresh();
       });
@@ -2163,7 +2163,7 @@ arrayFormat = function(opts) {
         };
         $("<p>").appendTo(valueList).append($("<button>").text("OK").bind("click", updateFilter));
         showFilterList = function(e) {
-          console.log(valueList);
+         
           valueList.css({
             left: 50,//e.pageX,
             top: e.pageY
@@ -2288,9 +2288,7 @@ arrayFormat = function(opts) {
             initialRender = false;
           }
           subopts.aggregatorName = aggregator.val();
-          console.log(subopts.aggregatorName);
-
-console.log(vals);
+        
           subopts.vals = vals;
           subopts.aggregator = opts.aggregators[aggregator.val()](vals);
           subopts.renderer = opts.renderers[renderer.val()];
