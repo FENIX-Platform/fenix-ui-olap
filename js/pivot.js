@@ -2289,6 +2289,8 @@ arrayFormat = function(opts) {
           }
           subopts.aggregatorName = aggregator.val();
           console.log(subopts.aggregatorName);
+
+console.log(vals);
           subopts.vals = vals;
           subopts.aggregator = opts.aggregators[aggregator.val()](vals);
           subopts.renderer = opts.renderers[renderer.val()];
