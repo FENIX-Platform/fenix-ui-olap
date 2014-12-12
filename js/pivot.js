@@ -1,5 +1,5 @@
 var test;
-
+console.log('test 1')
 FAOSTATNEWOLAP = {};
 FAOSTATNEWOLAP.pivotlimit = 10000;
 FAOSTATNEWOLAP.pivotlimitExcel = 200000;
