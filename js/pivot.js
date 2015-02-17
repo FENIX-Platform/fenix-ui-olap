@@ -1,5 +1,5 @@
 var test;
-console.log('test 1.3')
+console.log('test 1.4')
 FAOSTATNEWOLAP = {};
 FAOSTATNEWOLAP.pivotlimit = 10000;
 FAOSTATNEWOLAP.pivotlimitExcel = 200000;
@@ -2166,7 +2166,7 @@ arrayFormat = function(opts) {
          
           valueList.css({
             left: 50,//e.pageX,
-            top: e.pageY
+            top: 0//e.pageY
           }).toggle();
           $('.pvtSearch').val('');
           return $('label').show();
