@@ -1374,8 +1374,10 @@ arrayFormat = function(opts) {
   };
    renderers2 = {
        "Table":function(pvtData, opts){
-           
-          newGrid(pvtData);
+           document.getElementById('myGrid1_div').style="display:block";
+           document.getElementById('fx-olap-holder-div').style="display:none";
+
+           newGrid(pvtData);
        //   return pivotTableRenderer(pvtData, opts)
            // return pivotTableRenderer(pvtData, opts);
        }/*,
@@ -1383,15 +1385,23 @@ arrayFormat = function(opts) {
       return pivotTableRenderer(pvtData, opts);
     }*/,
     "Table Barchart": function(pvtData, opts) {
+        document.getElementById('myGrid1_div').style="display:none";
+        document.getElementById('fx-olap-holder-div').style="display:block";
       return $(pivotTableRenderer(pvtData, opts)).barchart();
     },
     "Heatmap": function(pvtData, opts) {
+        document.getElementById('myGrid1_div').style="display:none";
+        document.getElementById('fx-olap-holder-div').style="display:block";
       return $(pivotTableRenderer(pvtData, opts)).heatmap();
     },
     "Row Heatmap": function(pvtData, opts) {
+        document.getElementById('myGrid1_div').style="display:none";
+        document.getElementById('fx-olap-holder-div').style="display:block";
       return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
     },
     "Col Heatmap": function(pvtData, opts) {
+        document.getElementById('myGrid1_div').style="display:none";
+        document.getElementById('fx-olap-holder-div').style="display:block";
       return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
     }
   };
