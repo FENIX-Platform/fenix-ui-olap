@@ -1,5 +1,4 @@
 var test;
-console.log('test 1.4')
 FAOSTATNEWOLAP = {};
 FAOSTATNEWOLAP.pivotlimit = 10000;
 FAOSTATNEWOLAP.pivotlimitExcel = 200000;
@@ -1374,9 +1373,10 @@ arrayFormat = function(opts) {
   };
    renderers2 = {
        "Table":function(pvtData, opts){
-           document.getElementById('myGrid1_div').style="display:block";
-           document.getElementById('fx-olap-holder-div').style="display:none";
-
+	
+ $("#myGrid1_div").show();
+  $("#fx-olap-holder-div").hide();
+           
            newGrid(pvtData);
        //   return pivotTableRenderer(pvtData, opts)
            // return pivotTableRenderer(pvtData, opts);
@@ -1385,24 +1385,24 @@ arrayFormat = function(opts) {
       return pivotTableRenderer(pvtData, opts);
     }*/,
     "Table Barchart": function(pvtData, opts) {
-        document.getElementById('myGrid1_div').style="display:none";
-        document.getElementById('fx-olap-holder-div').style="display:block";
+ $("#myGrid1_div").hide();
+ $("#fx-olap-holder-div").show();
       return $(pivotTableRenderer(pvtData, opts)).barchart();
     },
     "Heatmap": function(pvtData, opts) {
-        document.getElementById('myGrid1_div').style="display:none";
-        document.getElementById('fx-olap-holder-div').style="display:block";
-      return $(pivotTableRenderer(pvtData, opts)).heatmap();
+ $("#myGrid1_div").hide();
+ $("#fx-olap-holder-div").show();
+ return $(pivotTableRenderer(pvtData, opts)).heatmap();
     },
     "Row Heatmap": function(pvtData, opts) {
-        document.getElementById('myGrid1_div').style="display:none";
-        document.getElementById('fx-olap-holder-div').style="display:block";
-      return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
+ $("#myGrid1_div").hide();
+ $("#fx-olap-holder-div").show();
+ return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
     },
     "Col Heatmap": function(pvtData, opts) {
-        document.getElementById('myGrid1_div').style="display:none";
-        document.getElementById('fx-olap-holder-div').style="display:block";
-      return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
+ $("#myGrid1_div").hide();
+ $("#fx-olap-holder-div").show();
+ return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
     }
   };
   
