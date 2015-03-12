@@ -19,6 +19,7 @@ FAOSTATNEWOLAP.thousandSeparator = " ";
 FAOSTATNEWOLAP.decimalSeparator = ".";
 FAOSTATNEWOLAP.traduction = {"Var1": "Country",
     "Var2": "Element", "Var3": "Item", "Var4": "Year"};
+var F3DWLD={CONFIG:{wdsPayload:{showCodes:false}}};
 
 function utf8_encode(argString) {
   //  discuss at: http://phpjs.org/functions/utf8_encode/
@@ -651,7 +652,8 @@ function my_exportNew() {
   var mycols=[];
   
       for(var c=0;c<FAOSTATNEWOLAP.internalData.rowAttrs.length;c++){
-           if(F3DWLD.CONFIG.wdsPayload.showCodes){ mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Code");
+           if(F3DWLD.CONFIG.wdsPayload.showCodes)
+		   { mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Code");
         }
           mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Name");
          
