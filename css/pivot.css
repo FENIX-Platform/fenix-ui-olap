@@ -1,4 +1,147 @@
 
+#pivot1_fx-olap-ui_pretd{display:none}
+#pivot1_fx-olap-ui_pretd1{display:none}
+#pivot1_fx-olap-ui_vals{display:inline}
+
+#pivot1_chkTreeview{display:none}
+#pivot1_fx-olap-ui_unused li{display:inline;}
+#pivot1_fx-olap-ui_unused{display:block;}
+#pivot1_fx-olap-ui_unused:before {
+	content: 'AGG'; position: relative;
+	top: 5px;left: 0;font-size: 12px;
+	font-weight: 700;text-transform: uppercase; 
+}
+
+#pivot1_nested_by{display:none}
+
+#pivot1_filtre_Value{display:none !important}
+
+
+
+#pivot1_fx-olap-ui > table > tbody {  border: 0; }
+#pivot1_fx-olap-ui > table > tbody > tr {position: relative; }
+
+#pivot1_fx-olap-ui_cols {
+  position: relative;
+  padding-left: 65px;
+}
+#pivot1_fx-olap-ui_cols:before {
+        content: 'COLUMN';
+        position: absolute;
+        top: 5px;
+        left: 0;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase; }
+
+#pivot1_fx-olap-ui_rows {position: relative;padding-left: 65px; }
+#pivot1_fx-olap-ui_rows:before {
+content: 'ROW';position: absolute;
+top: 5px;left: 0;font-size: 12px;
+font-weight: 700;text-transform: uppercase; 
+}
+
+#pivot1_fx-olap-ui_rows:after {
+content: '';position: absolute;
+width: 100%;height: 1px;
+bottom: 0;left: 0;
+background-color: #e4e4e4; 
+}
+
+#pivot1_fx-olap-ui_fx-olap-holder-div {  overflow: auto; }
+
+#pivot1_fx-olap-ui #pivot1_fx-olap-ui_finaltable {  overflow: auto;  width: 100%;  height: 400px; }
+
+
+#pivot1_fx-olap-ui_fx-olap-holder-div{  width: 800px; height: 500px;  overflow: auto;}
+/***Pivot2**/
+
+#pivot2_fx-olap-ui_pretd{display:none}
+#pivot2_fx-olap-ui_pretd1{display:none}
+#pivot2_fx-olap-ui_vals{display:inline}
+
+#pivot2_chkTreeview{display:none}
+#pivot2_fx-olap-ui_unused li{display:inline;}
+#pivot2_fx-olap-ui_unused{display:block;}
+#pivot2_fx-olap-ui_unused:before {
+	content: 'AGG'; position: relative;
+	top: 5px;left: 0;font-size: 12px;
+	font-weight: 700;text-transform: uppercase; 
+}
+
+#pivot2_nested_by{display:none}
+
+#pivot2_filtre_Value{display:none !important}
+
+
+
+#pivot2_fx-olap-ui > table > tbody {  border: 0; }
+#pivot2_fx-olap-ui > table > tbody > tr {position: relative; }
+
+#pivot2_fx-olap-ui_cols {
+  position: relative;
+  padding-left: 65px;
+}
+#pivot2_fx-olap-ui_cols:before {
+        content: 'COLUMN';
+        position: absolute;
+        top: 5px;
+        left: 0;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase; }
+
+#pivot2_fx-olap-ui_rows {position: relative;padding-left: 65px; }
+#pivot2_fx-olap-ui_rows:before {
+content: 'ROW';position: absolute;
+top: 5px;left: 0;font-size: 12px;
+font-weight: 700;text-transform: uppercase; 
+}
+
+#pivot2_fx-olap-ui_rows:after {
+content: '';position: absolute;
+width: 100%;height: 1px;
+bottom: 0;left: 0;
+background-color: #e4e4e4; 
+}
+
+#pivot2_fx-olap-ui_fx-olap-holder-div {  overflow: auto; }
+
+#pivot2_fx-olap-ui #pivot1_fx-olap-ui_finaltable {  overflow: auto;  width: 100%;  height: 400px; }
+
+
+#pivot2_fx-olap-ui_fx-olap-holder-div{  width: 800px; height: 500px;  overflow: auto;}
+
+
+
+
+
+
+.invi{display:none !important;}
+.pvtCols {position: relative;padding-left: 65px; }
+	  
+.pvtCols:after {
+content: '';position: absolute;width: 100%;
+height: 1px;bottom: 0;left: 0;
+background-color: #e4e4e4;}
+		
+.pvtCols:before {
+content: 'COLUMN';position: absolute;
+top: 5px;left: 0;font-size: 12px;
+font-weight: 700;text-transform: uppercase;}
+
+.fx-olap-holder {  overflow: hidden; }
+
+
+
+.pvtVals{display:inline}
+.pvtRenderer{display:block}
+.pvtAttrDropdown{display:none}
+
+/* Afo Pivot */
+.pvtAxisContainer, .pvtVals {  background: transparent; }
+
+.fx-olap-holder * {  box-sizing: content-box; }
 table.pvtTable {
   /*font-family:arial;*/
     /*font-size: 8pt;*/
@@ -25,7 +168,6 @@ table.pvtTable tr td {
 }
 
 .pvtTotal, .pvtGrandTotal { font-weight: bold; }
-
 .pvtVals { text-align: center;}
 .pvtAggregator { margin-bottom: 5px ;}
 
@@ -86,8 +228,8 @@ table.pvtTable tr td {
 }
 .pvtCheckContainer p{ margin: 5px; }
 
-
 /**Modif***/
 .ordre{display:none}
-#pretd{display:none}
-#pretd1{display:none}
+
+
+

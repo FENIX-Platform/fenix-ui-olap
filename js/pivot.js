@@ -1,25 +1,34 @@
 var test;
 FAOSTATNEWOLAP = {};
-FAOSTATNEWOLAP.pivotlimit = 10000;
+FAOSTATNEWOLAP.pivotlimit = 200000;
 FAOSTATNEWOLAP.pivotlimitExcel = 200000;
 FAOSTATNEWOLAP.limitPivotPreview = 5000;//lignes
 FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
-//para&meters for the exclstoredprocedure : to be change to avoir SQL injection
+//para&meters for the exclstoredprocedure : to be change to avoid SQL injection
 FAOSTATNEWOLAP.excelpayload = {};
 FAOSTATNEWOLAP.schema = {};
 FAOSTATNEWOLAP.rendererV = 0;
 FAOSTATNEWOLAP.nestedby = 0;
 FAOSTATNEWOLAP.viewVals = 0;
 FAOSTATNEWOLAP.decimal = 2;
+FAOSTATNEWOLAP.showUnits = 0;
+FAOSTATNEWOLAP.showFlags = 1;
 FAOSTATNEWOLAP.firstCall = 1;
 FAOSTATNEWOLAP.flags = {};
 FAOSTATNEWOLAP.internalData = {};
 FAOSTATNEWOLAP.originalData = [];
 FAOSTATNEWOLAP.thousandSeparator = " ";
 FAOSTATNEWOLAP.decimalSeparator = ".";
-FAOSTATNEWOLAP.traduction = {"Var1": "Country",
-    "Var2": "Element", "Var3": "Item", "Var4": "Year"};
-var F3DWLD={CONFIG:{wdsPayload:{showCodes:false}}};
+
+FAOSTATNEWOLAP.traduction ={
+init:{E:"",F:"",S:""},
+treeview:{E:"Tree view/Flat view ",F:"Vue hierachique / Vue plate",S:"Tree view/Flat view"},
+perPage:{E:"Per Page",F:"Par Page",S:"Por Pagina"}
+,
+Page:{E:"Page",F:"Page",S:"Page"}
+};
+
+
 
 function utf8_encode(argString) {
   //  discuss at: http://phpjs.org/functions/utf8_encode/
@@ -48,7 +57,7 @@ function utf8_encode(argString) {
     var c1 = string.charCodeAt(n);
     var enc = null;
 
-    if (c1 < 128) {      end++;    } else if (c1 > 127 && c1 < 2048) {
+    if (c1 < 128) {end++;} else if (c1 > 127 && c1 < 2048) {
       enc = String.fromCharCode(     (c1 >> 6) | 192, (c1 & 63) | 128   );
     } else if ((c1 & 0xF800) != 0xD800) {
       enc = String.fromCharCode(        (c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128      );
@@ -70,6 +79,7 @@ function utf8_encode(argString) {
 
   return utftext;
 }
+
 function addCommas(nStr) {
         var rgx, x, x1, x2;
         nStr += '';
@@ -83,6 +93,7 @@ function addCommas(nStr) {
         if (FAOSTATNEWOLAP.thousandSeparator === " ") { x1 = x1.replace(/\s/g, ""); }
         return x1 + x2;
     };
+
 function ExtractCode(arr, separateur)
 {
     ret = [];
@@ -93,6 +104,7 @@ function ExtractCode(arr, separateur)
     }
     return ret;
 }
+
 function ExtractCodel(arr)//for aggregate
 {
     ret = [];
@@ -102,11 +114,7 @@ function ExtractCodel(arr)//for aggregate
     return ret;
 }
 
-function checkMemory()
-{for (var b in window) {
-        if (window.hasOwnProperty(b)){ console.log(b + ' ' + memorySizeOf(eval(b)));}
-    }
-}
+function checkMemory(){for (var b in window) { if (window.hasOwnProperty(b)){ console.log(b + ' ' + memorySizeOf(eval(b)));}    }}
 
 function memorySizeOf(obj) {
     var bytes = 0;
@@ -154,8 +162,6 @@ function memorySizeOf(obj) {
 
     return formatByteSize(sizeOf(obj));
 }
-;
-
 
 function oldSchoolCSV(format)
 {
@@ -221,59 +227,10 @@ fileFormat:format
 document.getElementById('exportCSVOLAP').submit();
 
     
-   /*
-    $.post("/faostat-download-js/pivotAgg/exportCSVOLAP.jsp", {
-        sql:selectFinal,
-        json:JSON.stringify(mesOptionsPivot),
-        option:JSON.stringify(
-                {decimal:FAOSTATNEWOLAP.decimal,
-    decimalSeparator:FAOSTATNEWOLAP.decimalSeparator,
-    thousandSeparator:FAOSTATNEWOLAP.thousandSeparator,
-    showUnits:F3DWLD.CONFIG.wdsPayload.showUnits,
- showFlags:F3DWLD.CONFIG.wdsPayload.showFlags, 
- showCodes:F3DWLD.CONFIG.wdsPayload.showCodes,
-fileFormat:format 
-    })}).done(function(data)  
-    {
-        console.log(data)
-    });
-   */
-    /*
-   var w;
-
-function startWorker() {
-    if(typeof(Worker) !== "undefined") {
-        if(typeof(w) == "undefined") {
-            w = new Worker("/faostat-download-js/pivotAgg/worker.js");
-      var message={sql:selectFinal,json:mesOptionsPivot,option:{decimal:FAOSTATNEWOLAP.decimal,
-    decimalSeparator:FAOSTATNEWOLAP.decimalSeparator,
-    thousandSeparator:FAOSTATNEWOLAP.thousandSeparator,
-    showUnits:F3DWLD.CONFIG.wdsPayload.showUnits,
- showFlags:F3DWLD.CONFIG.wdsPayload.showFlags, 
- showCodes:F3DWLD.CONFIG.wdsPayload.showCodes,
-fileFormat:format 
-    }};
-
-console.log(JSON.stringify(message));
-           w.postMessage(JSON.stringify(message));
-
-        }
-        w.onmessage = function(event) {
-            alert(event);
-            document.getElementById("testinline").innerHTML = event.data.id+" "+event.data.mess;
-        };
-    } else {
-        document.getElementById("testinline").innerHTML = "Sorry! No Web Worker support.";
-    }
+  
+   
 }
 
-function stopWorker() {     w.terminate();} 
-    
-    
-   startWorker();  
-    
-    */
-}
 function oldSchool(maLimit, excel){
     var selectFinal = "EXECUTE Warehouse.dbo.usp_GetDataTESTP " +
             " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
@@ -288,7 +245,7 @@ function oldSchool(maLimit, excel){
             "   @NullValues = 0,  " +
             "   @Thousand = '',  " +
             "   @Decimal = '.',  " +
-            "   @DecPlaces = 2 , " +
+            "   @DecPlaces = "+FAOSTATNEWOLAP.decimal+" , " +
             "  @Limit =" + maLimit;
 
 
@@ -308,14 +265,17 @@ selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
             "   @NullValues = 0,  " +
             "   @Thousand = '',  " +
             "   @Decimal = '.',  " +
-            "   @DecPlaces = 2 , " +
+            "   @DecPlaces = "+FAOSTATNEWOLAP.decimal+" , " +
             "  @Limit ="+FAOSTATNEWOLAP.pivotlimitExcel ;
     }
     var test2 = {
         datasource: F3DWLD.CONFIG.datasource,thousandSeparator: ',',decimalSeparator: '.',decimalNumbers: '2',
         json: JSON.stringify({"limit": null,   "query": selectFinal, "frequency": "NONE"}),cssFilename: '',valueIndex: 5};
     $("#fx-olap-ui").html("<center><img src=\"/faostat-download-js/pivotAgg/Preload.gif\" /></center>");
+    //$("#testinline").html("<center><img src=\"/faostat-download-js/pivotAgg/Preload.gif\" /></center>");
+    
     FAOSTATNEWOLAP.flags = {};
+	
     $.ajax({
         type: 'POST', url: F3DWLD.CONFIG.data_url + "/table/json", data: test2,
         success: function(response_1) {
@@ -329,47 +289,34 @@ selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
             var derivers = $.pivotUtilities.derivers;
             var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
             mesOptionsPivot.vals = ["Value"];
-            if (F3DWLD.CONFIG.wdsPayload.showUnits) {mesOptionsPivot.vals.push("Unit");}
-            if (F3DWLD.CONFIG.wdsPayload.showFlags){mesOptionsPivot.vals.push("Flag"); }
+            if (FAOSTATNEWOLAP.showUnits) {mesOptionsPivot.vals.push("Unit");}
+            if (FAOSTATNEWOLAP.showFlags){mesOptionsPivot.vals.push("Flag"); }
             FAOSTATNEWOLAP.originalData = response_1;
             $("#fx-olap-ui").pivotUI(response_1, mesOptionsPivot, true);
+			
+			
+			
+            //$("#testinline").pivotUI(response_1, mesOptionsPivot, true);
+            
             $("#options_menu_box").css("display", "block");
-            var newFlag = "";
-            for (var i in FAOSTATNEWOLAP.flags) {if (newFlag != "") {  newFlag += ":";} newFlag += "'" + i + "'"; }
-            if (newFlag == "") {newFlag = "''";}
-//           try{ $(".pvtAxisLabel")[$(".pvtAxisLabel").length - 1].setAttribute("colspan", 2);} catch(e){console.log("erreur"+e)}
-         /*   var header=$(".pvtAxisLabel");
-             for(var i=0;i<header.length;i++){header[i].innerHTML=header[i].innerHTML.replace("_","");}
-              var header=$("#rows li nobr");
-              for(var i=0;i<header.length;i++){header[i].innerHTML=header[i].innerHTML.replace("_","");}
-                var header=$("#cols li nobr");
-                for(var i=0;i<header.length;i++){header[i].innerHTML=header[i].innerHTML.replace("_","");}
-           */
-            $.get("http://faostat3.fao.org/faostat.olap.ws/rest/GetFlags/" + F3DWLD.CONFIG.lang + "/" + newFlag, function(data) {
-                data = data.replace("localhost:8080/", "faostat3.fao.org/");
-               // alert("ok5")
-                $("#mesFlags").append(data);
-            //    $("#myGrid1_div").height(500);
-                 if(excel){decolrowspanNEW();}
-            });
+          
         }
     });
 //}});
 }
 
-
 function newFunctions() {
     FAOSTATNEWOLAP.viewVals = 1;
     $("#vals").css("display", "block");
     $("#unused").css("display", "block");
-	$("#unused li").css("display", "inline");
+    $("#unused li").css("display", "inline");
     $(".pvtRenderer").css("display", "block");
     $("#aggregator").css("display", "block");
     $("#unused").css("background-color", "#ececec");
     $("#unused li nobr").css("color", "#666");
 }
 
-function changeNested(){ 
+function changeNested(){
     if (document.getElementById('cbNestedBy').checked) {FAOSTATNEWOLAP.nestedby = 1; }
     else {FAOSTATNEWOLAP.nestedby = 0;}
 }
@@ -453,7 +400,6 @@ function recHeader(label, arr, ind){
     return ret;
 }
 
-
 function recTab2(label, cond, arr, ind){
     ret = "";
     if (arr.length == ind + 1) {
@@ -495,8 +441,6 @@ function retPivot3() {
     return ret;
    }
 
-
-
 function ExcelComplete2(outputFormat){
     FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
     for (i = 0; i < document.getElementById('rows').getElementsByTagName('nobr').length; i++){
@@ -517,6 +461,7 @@ function ExcelComplete2(outputFormat){
         else { alert('not found' + d.innerHTML);}
     }
 }
+
 function ExcelComplete(outputFormat){
     FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
     for (i = 0; i < document.getElementById('rows').getElementsByTagName('nobr').length; i++){
@@ -649,12 +594,11 @@ function stringify(obj) {
 };
 
 function my_exportNew() {
+
   var mycols=[];
-  
-      for(var c=0;c<FAOSTATNEWOLAP.internalData.rowAttrs.length;c++){
-           if(F3DWLD.CONFIG.wdsPayload.showCodes)
-		   { mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Code");
-        }
+  for(var c=0;c<FAOSTATNEWOLAP.internalData.rowAttrs.length;c++)
+  {if(F3DWLD.CONFIG.wdsPayload.showCodes && FAOSTATNEWOLAP.internalData.rowAttrs[c]!="Year" && FAOSTATNEWOLAP.internalData.rowAttrs[c]!="Annees" && FAOSTATNEWOLAP.internalData.rowAttrs[c]!="Anos")
+  { mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Code");        }
           mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Name");
          
   }
@@ -663,36 +607,63 @@ tt=FAOSTATNEWOLAP.internalData.getColKeys();
 for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
 //console.log(FAOSTATNEWOLAP.internalData.tree);
  document.getElementById("myJson").value=stringify( {data:FAOSTATNEWOLAP.internalData.tree,
-     header:flatColKeyst,cols:mycols,swUnit:FAOSTATNEWOLAP.showUnits,swFlag:FAOSTATNEWOLAP.showFlags
+     header:flatColKeyst,cols:mycols,swUnit:FAOSTATNEWOLAP.showUnits  ,
+     swFlag:FAOSTATNEWOLAP.showFlags
  
     });
 	
-   //document.getElementById("myJson").value=JSON.stringify({data:FAOSTATNEWOLAP.originalData,header:FAOSTATNEWOLAP.internalData.flatColKeys});
+	
+	/*for(i in FAOSTATNEWOLAP.flags)
+	{document.getElementById("myFlags").value+=',{"title":'+i+',"label":"'+FAOSTATNEWOLAP.flags[i]+'"}'}
+	*/
+	
+	try{
+            console.log('oki');
+            document.getElementById("myFlags").value='{"data":[';
+            var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
+    j = 0;
+    for (i = 0; i < testtd.length; i++) {
+	if(i>0){document.getElementById("myFlags").value+=','}
+        if (j == 0) {  document.getElementById("myFlags").value+='{"title":"'+testtd[i].innerHTML+'","label":"';     j = 1;  }
+        else {document.getElementById("myFlags").value+=testtd[i].innerHTML+'"}';  j = 0;   }
+       // ret += testtd[i].innerHTML;
+		}
+	
+	
+	
+	
+	document.getElementById("myFlags").value+=']}';
+        }catch(er){
+            console.log('probleme');
+    document.getElementById("myFlags").value='{"data":[{"title":"","label":"Official data"}]}';    
+    
+    
+    }
+  //document.getElementById("myJson").value=JSON.stringify({data:FAOSTATNEWOLAP.originalData,header:FAOSTATNEWOLAP.internalData.flatColKeys});
     document.getElementById("xlsDataForm").submit();
   }
 
-
-
 function decolrowspanNEW(){
+    
     var today = new Date();
     var reg = new RegExp("<span class=\"ordre\">[0-9]+</span>", "g");
     var reg3 = new RegExp("<span class=\"ordre\"></span>", "g");
     var reg2 = new RegExp("<table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g"); 
     var row = FAOSTATNEWOLAP.internalData.tree;
   //  var col = FAOSTATNEWOLAP.internalData.flatColKeys.sort();
-		flatColKeyst=[];
+flatColKeyst=[];
 tt=FAOSTATNEWOLAP.internalData.getColKeys();
 for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
     var col = flatColKeyst.sort();
     var ret = "";
     for (var j = 0; j < FAOSTATNEWOLAP.internalData.rowKeys[0].length; j++) {
         
-        if (F3DWLD.CONFIG.wdsPayload.showCodes) { ret += "Code,";  }
+        if (F3DWLD.CONFIG.wdsPayload.showCodes && FAOSTATNEWOLAP.internalData.rowAttrs[j]!="Year") { ret += "Code,";  }
         ret += '"'+FAOSTATNEWOLAP.internalData.rowAttrs[j].replace("_", "") + "\",";
     }
    
     for (j in col){
-        ret += '"'+col[j].replace(/,/g, "").replace(/\|\|/g, "-").replace(/&nbsp;/g, "").replace(reg2, "$1").replace(reg, "").replace(reg3, "")+'"';
+        ret += '"'+col[j].replace(/,/g, "").replace(/\|\|/g, "-").replace(/&nbsp;/g, "").replace(reg2, "$2").replace(reg, "").replace(reg3, "")+'"';
         if (FAOSTATNEWOLAP.showUnits) { ret += ",unit"; }
         if (FAOSTATNEWOLAP.showFlags) {ret += ",flag"; }
         ret += ",";
@@ -710,7 +681,9 @@ for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
                     if (FAOSTATNEWOLAP.showFlags) { ret += ","; }
                 }
                 else {
-				 ret += '"' + addCommas(row[i][col[j]].value()) + '",';
+                    ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
+                    if (FAOSTATNEWOLAP.showUnits) {    ret +=  '"' + addCommas(row[i][col[j]].value()[1]) + '",'; }
+                    if (FAOSTATNEWOLAP.showFlags) { ret +=  '"' + addCommas(row[i][col[j]].value()[2]) + '",'; }
 				 /*
                     ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
                      if (FAOSTATNEWOLAP.showUnits) {   ret += '"' + row[i][col[j]].value()[1].replace(/&nbsp;/g, " ") + '",';  }
@@ -757,7 +730,7 @@ function decolrowspanExcell(table){
     var today = new Date(); 
     ret="";
     ret += "FAOSTAT " + today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
-//ret=utf8_encode(ret);
+    //ret=utf8_encode(ret);
     var link = document.createElement("a");
     if (link.download !== undefined) { // feature detection
         // Browsers that support HTML5 download attribute
@@ -779,7 +752,6 @@ function decolrowspanExcell(table){
     document.body.removeChild(link);
 }
 
-
 function colapseCol(t, colspan, pos){
     /*
      var mySel=[];
@@ -789,6 +761,7 @@ function colapseCol(t, colspan, pos){
      test=$(mySel.join(","));
      */
 }
+
 function showHideTotals() {//Not yet used
     if ($("#cols li nobr").length * $("#rows li nobr").length == 0) {
         $(".pvtTotalLabel").show();
@@ -825,7 +798,7 @@ function my_export(t) {
     //var c=window.open('data:application/vnd.ms-excel,'+encodeURIComponent(monclone.html())) ;//t.preventDefault();
     // c.document.write(encodeURIComponent(monclone.html()));
 }
-
+/*
 function myInitOLAP(){
     monXML = "";
     var mesItems = "";
@@ -834,25 +807,23 @@ function myInitOLAP(){
     var arrItem = $('#gridItemsAggregated').jqxGrid('selectedrowindexes');
     var listItem = "";
     var mySelecteds = F3DWLD.CONFIG.selectedValues;
-    //if (FAOSTATDownload.domainCode != 'GY')
-    {
-        for (i = 0; i < mySelecteds.items.length; i++) {
+     for (i = 0; i < mySelecteds.items.length; i++) {
             arr = mySelecteds.items[i];
             if (arr.type == "list") {
                 if (listItem == "") {listItem = "[{code:'" + arr.code + "',type:'list'}"; }
-                else {listItem += ",{code:'" + arr.code + "',type:'list'}"; }
+                else {listItem += ",{code:'" + arr.code + "',type:'list'}";}
             }
             else {
-                if (mesItems == "") {   mesItems = arr.code;  }
+                if (mesItems == "") {mesItems = arr.code;}
                 else { mesItems += "," + arr.code;}
                 if (bItem != 0) { mesItemsXML += ",";}
-                else { bItem = 1;  }
+                else { bItem = 1;}
                 mesItemsXML += "'" + arr.code + "':{'E':'" + arr.label.replace(/'/g, " ") + "'}";
             }
         }
-    }
+    
     if (listItem != "") {listItem += "]";}
-    else {listItem = "[]"; }
+    else {listItem = "[]";}
     var mesElements = "";
     var mesElementsXML = "{name:'ElementCode','nb':'1','val':{";
     for (i = 0; i < mySelecteds.elements.length; i++) {
@@ -951,10 +922,9 @@ function myInitOLAP(){
             });
         }
     });
-}
+}*/
 
 var internalTest;
-
 
 // Generated by CoffeeScript 1.7.1
 (function() {
@@ -963,14 +933,10 @@ var internalTest;
     __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty;
-
   $ = jQuery;
-
-
   /*
   Utilities
    */
-
   addSeparators = function(nStr, thousandsSep, decimalSep) {
     var rgx, x, x1, x2;
     nStr += '';
@@ -984,43 +950,17 @@ var internalTest;
     return x1 + x2;
   };
 
-
 arrayFormat = function(opts) {
-    
         { sigfig = 3;  }
          { scaler = 1;  }
-    
        return function(x) {
       var result;
-      if (isNaN(x) || !isFinite(x)) {
-        return "";
-      }
-      if (x === 0 && !opts.showZero) {
-        return "";
-      }
+      if (isNaN(x) || !isFinite(x)) { return "";  }
+      if (x === 0 && !opts.showZero) {  return "";  }
       result = addSeparators((opts.scaler * x).toFixed(opts.digitsAfterDecimal), opts.thousandsSep, opts.decimalSep);
       return "" + opts.prefix + result + opts.suffix;
     };
-     /*
-     **
-        return function(x1) {
-          var ret = "<table class=\"tableVCell\" style=\"width:100%\"><tr>";
-        //     var ret = "<table><tr>";
-            for (k in x1) {
-                var x = x1[k];
-                if (x != "_") {
-                    if (!isNaN(k)) {
-                        if(k==0 && isNaN(x)   ){ret += "<td></td>";}
-                        else if (k > 0 || x === 0 ||isNaN(x)|| !isFinite(x)) {ret += "<td>" + x + "</td>";}
-                        else { ret += "<td>" + addCommas((scaler * x).toFixed(FAOSTATNEWOLAP.decimal)) + "</td>"; }
-                        // else {ret+= "<td>"+ x.toFixed(FAOSTATNEWOLAP.decimal).toLocaleString()+"</td>"; }
-                    }
-                }
-            }
-            ret += "</tr></table>";
-            return ret;
-        };*/
-    };
+  };
 
 
   numberFormat = function(opts) {
@@ -1037,54 +977,36 @@ arrayFormat = function(opts) {
     opts = $.extend(defaults, opts);
     return function(x) {
       var result;
-      if (isNaN(x) || !isFinite(x)) {
-        return "";
-      }
-      if (x === 0 && !opts.showZero) {
-        return "";
-      }
+      if (isNaN(x) || !isFinite(x)) { return "";}
+      if (x === 0 && !opts.showZero) { return ""; }
       result = addSeparators((opts.scaler * x).toFixed(opts.digitsAfterDecimal), opts.thousandsSep, opts.decimalSep);
       return "" + opts.prefix + result + opts.suffix;
     };
   };
 
   usFmt = numberFormat();
-    arrFmt = arrayFormat();
+  arrFmt = arrayFormat();
+  
+  usFmtInt = numberFormat({  digitsAfterDecimal: 0  });
 
-  usFmtInt = numberFormat({
-    digitsAfterDecimal: 0
-  });
-
-  usFmtPct = numberFormat({
-    digitsAfterDecimal: 1,
-    scaler: 100,
-    suffix: "%"
-  });
+  usFmtPct = numberFormat({ digitsAfterDecimal: 1,   scaler: 100,    suffix: "%"  });
 
   aggregatorTemplates = {
     count: function(formatter) {
-      if (formatter == null) {
-        formatter = usFmtInt;
-      }
+      if (formatter == null) { formatter = usFmtInt; }
       return function() {
         return function(data, rowKey, colKey) {
           return {
             count: 0,
-            push: function() {
-              return this.count++;
-            },
-            value: function() {
-              return this.count;
-            },
+            push: function() {  return this.count++;      },
+            value: function() {  return this.count;        },
             format: formatter
           };
         };
       };
     },
     countUnique: function(formatter) {
-      if (formatter == null) {
-        formatter = usFmtInt;
-      }
+      if (formatter == null) { formatter = usFmtInt; }
       return function(_arg) {
         var attr;
         attr = _arg[0];
@@ -1097,9 +1019,7 @@ arrayFormat = function(opts) {
                 return this.uniq.push(record[attr]);
               }
             },
-            value: function() {
-              return this.uniq.length;
-            },
+            value: function() { return this.uniq.length;},
             format: formatter,
             numInputs: attr != null ? 0 : 1
           };
@@ -1115,119 +1035,74 @@ arrayFormat = function(opts) {
             uniq: [],
             push: function(record) {
               var _ref;
-              if (_ref = record[attr], __indexOf.call(this.uniq, _ref) < 0) {
-                return this.uniq.push(record[attr]);
-              }
+              if (_ref = record[attr], __indexOf.call(this.uniq, _ref) < 0) { return this.uniq.push(record[attr]); }
             },
-            value: function() {
-              return this.uniq.join(sep);
-            },
-            format: function(x) {
-              return x;
-            },
+            value: function() {  return this.uniq.join(sep);},
+            format: function(x) {  return x; },
             numInputs: attr != null ? 0 : 1
           };
         };
       };
     },
     sum: function(formatter) {
-
-      if (formatter == null) {
-        formatter = usFmt;
-      }
+    if (formatter == null) {formatter = usFmt;}
       return function(_arg) {
          
         var attr;
         attr = _arg[0];
         return function(data, rowKey, colKey) {
           return {
-            sum: 0,
+            sum: null,
+            push: function(record) {
+              if (!isNaN(parseFloat(record[attr]))) {  return this.sum += parseFloat(record[attr]);  }
+            },
+            value: function() {  return this.sum; },
+            format: formatter,
+            numInputs: attr != null ? 0 : 1
+          };
+        };
+      };
+    },  
+    sum2: function(formatter) {
+    if (formatter == null) { formatter = usFmt;}
+      return function(_arg) {
+          var attr;
+          attr = _arg[0];
+        return function(data, rowKey, colKey) {
+          return {
+            sum:[null, "_", "_"],
             push: function(record) {
               if (!isNaN(parseFloat(record[attr]))) {
-                return this.sum += parseFloat(record[attr]);
-              }
+                  this.sum[0] += parseFloat(record[attr]);
+                 if( this.sum[2]=="_"){this.sum[2]=record["Flag"];
+				 FAOSTATNEWOLAP.flags[record["Flag"]]=1;} 
+                   if( this.sum[1]=="_"){this.sum[1]=record["Unit"];}
+                  return this.sum;}
             },
-            value: function() {
-              return this.sum;
-            },
+            value: function() {  return this.sum; },
             format: formatter,
             numInputs: attr != null ? 0 : 1
           };
         };
       };
     },
-     sum2: function(formatter) {
-	
-          { sigfig = 3;}
-           { scaler = 1; }
-         
-            return function(_arg) {
-                var attr;//function(){var ret=[];for(var i=0;i<_arg;i++){ret.push(0);};return ret}
-                attr = _arg[0];
-                var emptyInitTab = [0, "", ""];
-                //for(var i in _arg){emptyInitTab.push(0);}
-                /*function(){t=[0];
-                 if(FAOSTATOLAP2.displayOption.showFlag==1){t.push("");}
-                 if(FAOSTATOLAP2.displayOption.showUnit==1){t.push("");}
-                 return t;
-                 }*/
-                return function() {
-                    return {
-                        sum: [0, "_", "_"],
-                        push: function(record) {
-                            //if (!isNaN(parseFloat(record[_arg[j]]))) {
-                            for (var j = 0; j < _arg.length; j++)  {
-                               // _arg[j] = _arg[j];
-                                if (_arg[j] == "Flag" ) {
-                                    if (this.sum[j] == "_") {//|| this.sum[j]==record[_arg[j]]){
-                                        if (record[_arg[j]] != "") { this.sum[j] =  record[_arg[j]]; }
-                                        else {this.sum[j] = "&nbsp;";}
-                                        FAOSTATNEWOLAP.flags[record[_arg[j]]] = 1;
-                                    }
-                                    else {this.sum[j] = "Agg";}
-                                }
-                                else if (_arg[j] == "Value" ) { this.sum[j] =parseFloat(record[_arg[j]]);   }
-                                else if (_arg[j] == "Unit" ) {
-                                    if (this.sum[j] == "_" || this.sum[j] == record[_arg[j]] ) {
-                                        // this.sum[j]="("+record[_arg[j]]+")";
-                                        if (record[_arg[j]] != "") {  this.sum[j] =  record[_arg[j]] ;}
-                                        else {this.sum[j] = "&nbsp;";}
-                                    }
-                                    else { this.sum[0] = NaN;this.sum[j] = "nan"; }
-                                }
-                            }
-                            
-                            return this.sum;
-                        },
-                        value: function() {   return this.sum;  },
-                        format: arrFmt,
-                        label: "Sum of " + attr
-                    };
-                };
-            };
-        },
+     
     
     average: function(formatter) {
-	
-      if (formatter == null) {
-        formatter = usFmt;
-      }
+      if (formatter == null) {  formatter = usFmt;  }
       return function(_arg) {
         var attr;
         attr = _arg[0];
         return function(data, rowKey, colKey) {
           return {
-            sum: 0,
-            len: 0,
+            sum: 0, len: 0,
             push: function(record) {
               if (!isNaN(parseFloat(record[attr]))) {
                 this.sum += parseFloat(record[attr]);
                 return this.len++;
               }
             },
-            value: function() {
-              return this.sum / this.len;
-            },
+            value: function() {  return this.sum / this.len; },
             format: formatter,
             numInputs: attr != null ? 0 : 1
           };
@@ -1235,9 +1110,7 @@ arrayFormat = function(opts) {
       };
     },
     sumOverSum: function(formatter) {
-      if (formatter == null) {
-        formatter = usFmt;
-      }
+      if (formatter == null) { formatter = usFmt;  }
       return function(_arg) {
         var denom, num;
         num = _arg[0], denom = _arg[1];
@@ -1246,16 +1119,10 @@ arrayFormat = function(opts) {
             sumNum: 0,
             sumDenom: 0,
             push: function(record) {
-              if (!isNaN(parseFloat(record[num]))) {
-                this.sumNum += parseFloat(record[num]);
-              }
-              if (!isNaN(parseFloat(record[denom]))) {
-                return this.sumDenom += parseFloat(record[denom]);
-              }
+              if (!isNaN(parseFloat(record[num]))) {  this.sumNum += parseFloat(record[num]);  }
+              if (!isNaN(parseFloat(record[denom]))) {return this.sumDenom += parseFloat(record[denom]);}
             },
-            value: function() {
-              return this.sumNum / this.sumDenom;
-            },
+            value: function() {return this.sumNum / this.sumDenom; },
             format: formatter,
             numInputs: (num != null) && (denom != null) ? 0 : 2
           };
@@ -1263,26 +1130,17 @@ arrayFormat = function(opts) {
       };
     },
     sumOverSumBound80: function(upper, formatter) {
-      if (upper == null) {
-        upper = true;
-      }
-      if (formatter == null) {
-        formatter = usFmt;
-      }
+      if (upper == null) {  upper = true;}
+      if (formatter == null) {  formatter = usFmt;}
       return function(_arg) {
         var denom, num;
         num = _arg[0], denom = _arg[1];
         return function(data, rowKey, colKey) {
           return {
-            sumNum: 0,
-            sumDenom: 0,
+            sumNum: 0, sumDenom: 0,
             push: function(record) {
-              if (!isNaN(parseFloat(record[num]))) {
-                this.sumNum += parseFloat(record[num]);
-              }
-              if (!isNaN(parseFloat(record[denom]))) {
-                return this.sumDenom += parseFloat(record[denom]);
-              }
+              if (!isNaN(parseFloat(record[num]))) { this.sumNum += parseFloat(record[num]); }
+              if (!isNaN(parseFloat(record[denom]))) {return this.sumDenom += parseFloat(record[denom]); }
             },
             value: function() {
               var sign;
@@ -1296,12 +1154,8 @@ arrayFormat = function(opts) {
       };
     },
     fractionOf: function(wrapped, type, formatter) {
-      if (type == null) {
-        type = "total";
-      }
-      if (formatter == null) {
-        formatter = usFmtPct;
-      }
+      if (type == null) { type = "total";  }
+      if (formatter == null) {formatter = usFmtPct; }
       return function() {
         var x;
         x = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -1313,13 +1167,9 @@ arrayFormat = function(opts) {
               col: [[], colKey]
             }[type],
             inner: wrapped.apply(null, x)(data, rowKey, colKey),
-            push: function(record) {
-              return this.inner.push(record);
-            },
+            push: function(record) { return this.inner.push(record); },
             format: formatter,
-            value: function() {
-              return this.inner.value() / data.getAggregator.apply(data, this.selector).inner.value();
-            },
+            value: function() {return this.inner.value() / data.getAggregator.apply(data, this.selector).inner.value();},
             numInputs: wrapped.apply(null, x)().numInputs
           };
         };
@@ -1333,7 +1183,6 @@ arrayFormat = function(opts) {
       "Count": tpl.count(usFmtInt),
       "Count Unique Values": tpl.countUnique(usFmtInt),
       "List Unique Values": tpl.listUnique(", "),
-  
       "Integer Sum": tpl.sum(usFmtInt),
       "Average": tpl.average(usFmt),
       "Sum over Sum": tpl.sumOverSum(usFmt),
@@ -1349,7 +1198,9 @@ arrayFormat = function(opts) {
   })(aggregatorTemplates);
   aggregators2 = (function(tpl) {
     return {    //"Sum": tpl.sum2(arrayFormat),
-         "Sum": tpl.sum(usFmtInt),
+        // "Sum": tpl.sum(usFmtInt),
+          "SumUnit": tpl.sum2(arrayFormat),
+          "Sum": tpl.sum(usFmtInt),
       //"Count": tpl.count(usFmtInt),
      // "Integer Sum": tpl.sum(usFmtInt),
       "Average": tpl.average(usFmt)
@@ -1357,58 +1208,109 @@ arrayFormat = function(opts) {
   })(aggregatorTemplates);
 
   renderers = {
-    "Table": function(pvtData, opts) {
-      return pivotTableRenderer(pvtData, opts);
-    },
-    "Table Barchart": function(pvtData, opts) {
-      return $(pivotTableRenderer(pvtData, opts)).barchart();
-    },
-    "Heatmap": function(pvtData, opts) {
-      return $(pivotTableRenderer(pvtData, opts)).heatmap();
-    },
-    "Row Heatmap": function(pvtData, opts) {
-      return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
-    },
-    "Col Heatmap": function(pvtData, opts) {
-      return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
-    }
+    "Table": function(pvtData, opts) {      return pivotTableRenderer(pvtData, opts);    },
+    "Table Barchart": function(pvtData, opts) {      return $(pivotTableRenderer(pvtData, opts)).barchart();    },
+    "Heatmap": function(pvtData, opts) {      return $(pivotTableRenderer(pvtData, opts)).heatmap();    },
+    "Row Heatmap": function(pvtData, opts) { return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");    },
+    "Col Heatmap": function(pvtData, opts) { return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");    }
   };
    renderers2 = {
        "Table":function(pvtData, opts){
-	
- $("#myGrid1_div").show();
-  $("#fx-olap-holder-div").hide();
-           
-           newGrid(pvtData);
-       //   return pivotTableRenderer(pvtData, opts)
-           // return pivotTableRenderer(pvtData, opts);
-       }/*,
-    "Table": function(pvtData, opts) {
+	   if(navigator.appName.indexOf("Internet Explorer")!=-1){    //yeah, he's using IE
+    var badBrowser=(
+        /*navigator.appVersion.indexOf("MSIE 10")==-1 &&*/   //v9 is ok
+        navigator.appVersion.indexOf("MSIE 1")==-1  //v10, 11, 12, etc. is fine too
+    );
+
+    if(badBrowser){
+        // navigate to error page
+		  $("#myGrid1_div").hide();
+          $("#fx-olap-graph-div").hide();
+           $("#fx-olap-holder-div").show();
+		  // $('#aggregator option[value="Sum"]').prop('selected', true);
+		  displayFlags();
       return pivotTableRenderer(pvtData, opts);
-    }*/,
-    "Table Barchart": function(pvtData, opts) {
- $("#myGrid1_div").hide();
- $("#fx-olap-holder-div").show();
-      return $(pivotTableRenderer(pvtData, opts)).barchart();
-    },
-    "Heatmap": function(pvtData, opts) {
- $("#myGrid1_div").hide();
- $("#fx-olap-holder-div").show();
- return $(pivotTableRenderer(pvtData, opts)).heatmap();
-    },
-    "Row Heatmap": function(pvtData, opts) {
- $("#myGrid1_div").hide();
- $("#fx-olap-holder-div").show();
- return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
-    },
-    "Col Heatmap": function(pvtData, opts) {
- $("#myGrid1_div").hide();
- $("#fx-olap-holder-div").show();
- return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
     }
+	else{
+	
+	$("#myGrid1_div").show();
+           $("#fx-olap-graph-div").hide();
+           $("#fx-olap-holder-div").hide();
+          newGrid(pvtData);}
+}
+else{
+	
+           $("#myGrid1_div").show();
+           $("#fx-olap-graph-div").hide();
+           $("#fx-olap-holder-div").hide();
+          newGrid(pvtData);}
+	   
+         // return pivotTableRenderer(pvtData, opts)
+       },
+    "Table2": function(pvtData, opts) {
+          $("#myGrid1_div").hide();
+          $("#fx-olap-graph-div").hide();
+           $("#fx-olap-holder-div").show();
+      return pivotTableRenderer(pvtData, opts);
+    },
+    "Table Barchart": function(pvtData, opts) {
+        $("#myGrid1_div").hide();
+        $("#fx-olap-graph-div").hide();
+        $("#fx-olap-holder-div").show();
+        return $(pivotTableRenderer(pvtData, opts)).barchart();},
+    "Heatmap": function(pvtData, opts) {
+           $("#myGrid1_div").hide();
+           
+          $("#fx-olap-graph-div").hide();
+           $("#fx-olap-holder-div").show();
+        return $(pivotTableRenderer(pvtData, opts)).heatmap(); },
+    "Row Heatmap": function(pvtData, opts) {
+           $("#myGrid1_div").hide();
+           
+          $("#fx-olap-graph-div").hide();
+           $("#fx-olap-holder-div").show();
+        return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");},
+    "Col Heatmap": function(pvtData, opts) {
+           $("#myGrid1_div").hide();
+           
+          $("#fx-olap-graph-div").hide();
+           $("#fx-olap-holder-div").show();
+        return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");}
+    ,"barchart":function(pvtData,opts){
+         $("#myGrid1_div").hide();
+           $("#fx-olap-holder-div").hide();
+             $("#fx-olap-graph-div").show();
+         $(pivotTableRenderer(pvtData, opts)).barhightchart("#fx-olap-graph-div","barchart"  );
+        
+    } ,"line chart":function(pvtData,opts){
+         $("#myGrid1_div").hide();
+           $("#fx-olap-holder-div").hide();
+             $("#fx-olap-graph-div").show();
+         $(pivotTableRenderer(pvtData, opts)).barhightchart("#fx-olap-graph-div","line"  );
+        
+    },"Area":function(pvtData,opts){
+         $("#myGrid1_div").hide();
+           $("#fx-olap-holder-div").hide();
+             $("#fx-olap-graph-div").show();
+         $(pivotTableRenderer(pvtData, opts)).barhightchart("#fx-olap-graph-div","area"  );
+        
+    },"Stacked barchart":function(pvtData,opts){
+         $("#myGrid1_div").hide();
+           $("#fx-olap-holder-div").hide();
+             $("#fx-olap-graph-div").show();
+         $(pivotTableRenderer(pvtData, opts)).barhightchart("#fx-olap-graph-div","stackedColumn"  );
+        
+    },
+    "OLAP":function(pvtData,opts){
+         $("#myGrid1_div").hide();
+           $("#fx-olap-holder-div").hide();
+             $("#fx-olap-graph-div").show();
+         $(pivotTableRenderer(pvtData, opts)).HPivot("#fx-olap-graph-div"  );
+        
+    }
+    
   };
   
-
   locales = {
     en2: {
       aggregators: aggregators,
@@ -1426,7 +1328,7 @@ arrayFormat = function(opts) {
         by: "by"
       }
     },
-               en: {
+    en: {
       aggregators: aggregators2,
       renderers: renderers2,
       localeStrings: {
@@ -1445,54 +1347,30 @@ arrayFormat = function(opts) {
   };
 
   mthNamesEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
   dayNamesEn = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-  zeroPad = function(number) {
-    return ("0" + number).substr(-2, 2);
-  };
+  zeroPad = function(number) { return ("0" + number).substr(-2, 2); };
 
   derivers = {
-    bin: function(col, binWidth) {
-      return function(record) {
-        return record[col] - record[col] % binWidth;
-      };
-    },
+    bin: function(col, binWidth) { return function(record) { return record[col] - record[col] % binWidth; }; },
     dateFormat: function(col, formatString, mthNames, dayNames) {
-      if (mthNames == null) {
-        mthNames = mthNamesEn;
-      }
-      if (dayNames == null) {
-        dayNames = dayNamesEn;
-      }
+      if (mthNames == null) {        mthNames = mthNamesEn;      }
+      if (dayNames == null) {        dayNames = dayNamesEn;      }
       return function(record) {
         var date;
         date = new Date(Date.parse(record[col]));
-        if (isNaN(date)) {
-          return "";
-        }
+        if (isNaN(date)) {  return "";  }
         return formatString.replace(/%(.)/g, function(m, p) {
           switch (p) {
-            case "y":
-              return date.getFullYear();
-            case "m":
-              return zeroPad(date.getMonth() + 1);
-            case "n":
-              return mthNames[date.getMonth()];
-            case "d":
-              return zeroPad(date.getDate());
-            case "w":
-              return dayNames[date.getDay()];
-            case "x":
-              return date.getDay();
-            case "H":
-              return zeroPad(date.getHours());
-            case "M":
-              return zeroPad(date.getMinutes());
-            case "S":
-              return zeroPad(date.getSeconds());
-            default:
-              return "%" + p;
+            case "y":return date.getFullYear();
+            case "m":return zeroPad(date.getMonth() + 1);
+            case "n":return mthNames[date.getMonth()];
+            case "d":return zeroPad(date.getDate());
+            case "w":return dayNames[date.getDay()];
+            case "x":return date.getDay();
+            case "H":return zeroPad(date.getHours());
+            case "M":return zeroPad(date.getMinutes());
+            case "S":return zeroPad(date.getSeconds());
+            default: return "%" + p;
           }
         });
       };
@@ -1506,33 +1384,22 @@ arrayFormat = function(opts) {
       rd = /\d/;
       rz = /^0/;
       if (typeof as === "number" || typeof bs === "number") {
-        if (isNaN(as)) {
-          return 1;
-        }
-        if (isNaN(bs)) {
-          return -1;
-        }
+        if (isNaN(as)) { return 1;  }
+        if (isNaN(bs)) { return -1; }
         return as - bs;
       }
       a = String(as).toLowerCase();
       b = String(bs).toLowerCase();
-      if (a === b) {
-        return 0;
-      }
-      if (!(rd.test(a) && rd.test(b))) {
-        return (a > b ? 1 : -1);
-      }
+      if (a === b) {return 0;}
+      if (!(rd.test(a) && rd.test(b))) {return (a > b ? 1 : -1);}
       a = a.match(rx);
       b = b.match(rx);
       while (a.length && b.length) {
         a1 = a.shift();
         b1 = b.shift();
         if (a1 !== b1) {
-          if (rd.test(a1) && rd.test(b1)) {
-            return a1.replace(rz, ".0") - b1.replace(rz, ".0");
-          } else {
-            return (a1 > b1 ? 1 : -1);
-          }
+          if (rd.test(a1) && rd.test(b1)) { return a1.replace(rz, ".0") - b1.replace(rz, ".0"); } 
+          else {return (a1 > b1 ? 1 : -1); }
         }
       }
       return a.length - b.length;
@@ -1548,7 +1415,6 @@ arrayFormat = function(opts) {
     naturalSort: naturalSort,
     numberFormat: numberFormat
   };
-
 
   /*
   Data Model class
@@ -1575,11 +1441,7 @@ arrayFormat = function(opts) {
       this.allTotal = this.aggregator(this, [], []);
       this.sorted = false;
       PivotData.forEachRecord(input, opts.derivedAttributes, (function(_this) {
-        return function(record) {
-          if (opts.filter(record)) {
-            return _this.processRecord(record);
-          }
-        };
+        return function(record) {if (opts.filter(record)) {return _this.processRecord(record); } };
       })(this));
     }
 
@@ -1590,24 +1452,18 @@ arrayFormat = function(opts) {
       } else {
         addRecord = function(record) {
           var k, v, _ref;
-          for (k in derivedAttributes) {
-            v = derivedAttributes[k];
-            record[k] = (_ref = v(record)) != null ? _ref : record[k];
-          }
+          for (k in derivedAttributes) {v = derivedAttributes[k]; record[k] = (_ref = v(record)) != null ? _ref : record[k]; }
           return f(record);
         };
       }
-      if ($.isFunction(input)) {
-        return input(addRecord);
-      } else if ($.isArray(input)) {
+      if ($.isFunction(input)) { return input(addRecord);} 
+      else if ($.isArray(input)) {
         if ($.isArray(input[0])) {
           _results = [];
           for (i in input) {
             if (!__hasProp.call(input, i)) continue;
             compactRecord = input[i];
-            if (!(i > 0)) {
-              continue;
-            }
+            if (!(i > 0)) { continue;  }
             record = {};
             _ref = input[0];
             for (j in _ref) {
@@ -1633,32 +1489,22 @@ arrayFormat = function(opts) {
         });
         return $("tbody > tr", input).each(function(i) {
           record = {};
-          $("td", this).each(function(j) {
-            return record[tblCols[j]] = $(this).text();
-          });
+          $("td", this).each(function(j) { return record[tblCols[j]] = $(this).text(); });
           return addRecord(record);
         });
-      } else {
-        throw new Error("unknown input format");
-      }
+      } else {throw new Error("unknown input format");      }
     };
 
     PivotData.convertToArray = function(input) {
       var result;
       result = [];
-      PivotData.forEachRecord(input, {}, function(record) {
-        return result.push(record);
-      });
+      PivotData.forEachRecord(input, {}, function(record) { return result.push(record);      });
       return result;
     };
 
-    PivotData.prototype.natSort = function(as, bs) {
-      return naturalSort(as, bs);
-    };
+    PivotData.prototype.natSort = function(as, bs) {      return naturalSort(as, bs);    };
 
-    PivotData.prototype.arrSort = function(a, b) {
-      return this.natSort(a.join(), b.join());
-    };
+    PivotData.prototype.arrSort = function(a, b) {      return this.natSort(a.join(), b.join());    };
 
     PivotData.prototype.sortKeys = function() {
       if (!this.sorted) {
@@ -1668,24 +1514,17 @@ arrayFormat = function(opts) {
       return this.sorted = true;
     };
 
-    PivotData.prototype.getColKeys = function() {
-      this.sortKeys();
-      return this.colKeys;
-    };
+    PivotData.prototype.getColKeys = function() {      this.sortKeys();      return this.colKeys;    };
 
-    PivotData.prototype.getRowKeys = function() {
-      this.sortKeys();
-      return this.rowKeys;
-    };
+    PivotData.prototype.getRowKeys = function() {      this.sortKeys();      return this.rowKeys;    };
 
     PivotData.prototype.processRecord = function(record) {
       var colKey, flatColKey, flatRowKey, rowKey, x, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3;
       colKey = [];
       rowKey = [];
       _ref = this.colAttrs;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        x = _ref[_i];
-        colKey.push((_ref1 = record[x]) != null ? _ref1 : "null");
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) { 
+          x = _ref[_i];  colKey.push((_ref1 = record[x]) != null ? _ref1 : "null");
       }
       _ref2 = this.rowAttrs;
       for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
@@ -1694,7 +1533,7 @@ arrayFormat = function(opts) {
       }
     /*FIG MODIF  flatRowKey = rowKey.join(String.fromCharCode(0));
       flatColKey = colKey.join(String.fromCharCode(0));*/
-         flatRowKey = rowKey.join("||");
+      flatRowKey = rowKey.join("||");
       flatColKey = colKey.join("||");
       this.allTotal.push(record);
       if (rowKey.length !== 0) {
@@ -1712,11 +1551,9 @@ arrayFormat = function(opts) {
         this.colTotals[flatColKey].push(record);
       }
       if (colKey.length !== 0 && rowKey.length !== 0) {
-        if (!this.tree[flatRowKey]) {
-          this.tree[flatRowKey] = {};
-        }
+        if (!this.tree[flatRowKey]) {  this.tree[flatRowKey] = {};        }
         if (!this.tree[flatRowKey][flatColKey]) {
-          this.tree[flatRowKey][flatColKey] = this.aggregator(this, rowKey, colKey);
+            this.tree[flatRowKey][flatColKey] = this.aggregator(this, rowKey, colKey);
         }
         return this.tree[flatRowKey][flatColKey].push(record);
       }
@@ -1726,33 +1563,18 @@ arrayFormat = function(opts) {
       var agg, flatColKey, flatRowKey;
       /*flatRowKey = rowKey.join(String.fromCharCode(0));
       flatColKey = colKey.join(String.fromCharCode(0));*/
-        flatRowKey = rowKey.join("||");
-      flatColKey = colKey.join("||");
-      if (rowKey.length === 0 && colKey.length === 0) {
-        agg = this.allTotal;
-      } else if (rowKey.length === 0) {
-        agg = this.colTotals[flatColKey];
-      } else if (colKey.length === 0) {
-        agg = this.rowTotals[flatRowKey];
-      } else {
-         /* console.log( this.tree);
-           console.log( flatRowKey);
-            console.log( flatColKey);
-             console.log(this.tree[flatRowKey]);*/
-        agg = this.tree[flatRowKey][flatColKey];
-      }
+     flatRowKey = rowKey.join("||");
+     flatColKey = colKey.join("||");
+      if (rowKey.length === 0 && colKey.length === 0) {   agg = this.allTotal;  } 
+      else if (rowKey.length === 0) {agg = this.colTotals[flatColKey];}
+      else if (colKey.length === 0) { agg = this.rowTotals[flatRowKey]; } 
+      else { agg = this.tree[flatRowKey][flatColKey];}
       return agg != null ? agg : {
-        value: (function() {
-          return null;
-        }),
-        format: function() {
-          return "";
-        }
+        value: (function() {return null;}),
+        format: function() {return "";}
       };
     };
-
     return PivotData;
-
   })();
 
 
@@ -1762,11 +1584,7 @@ arrayFormat = function(opts) {
 
   pivotTableRenderer = function(pivotData, opts) {
     var aggregator, c, colAttrs, colKey, colKeys, defaults, i, j, r, result, rowAttrs, rowKey, rowKeys, spanSize, td, th, totalAggregator, tr, txt, val, x;
-    defaults = {
-      localeStrings: {
-        totals: "Totals"
-      }
-    };
+    defaults = {localeStrings: { totals: "Totals"  }};
     opts = $.extend(defaults, opts);
     colAttrs = pivotData.colAttrs;
     rowAttrs = pivotData.rowAttrs;
@@ -1779,25 +1597,17 @@ arrayFormat = function(opts) {
       if (i !== 0) {
         noDraw = true;
         for (x = _i = 0; 0 <= j ? _i <= j : _i >= j; x = 0 <= j ? ++_i : --_i) {
-          if (arr[i - 1][x] !== arr[i][x]) {
-            noDraw = false;
-          }
+          if (arr[i - 1][x] !== arr[i][x]) {noDraw = false;}
         }
-        if (noDraw) {
-          return -1;
-        }
+        if (noDraw) {  return -1;  }
       }
       len = 0;
       while (i + len < arr.length) {
         stop = false;
         for (x = _j = 0; 0 <= j ? _j <= j : _j >= j; x = 0 <= j ? ++_j : --_j) {
-          if (arr[i][x] !== arr[i + len][x]) {
-            stop = true;
-          }
+          if (arr[i][x] !== arr[i + len][x]) {stop = true;}
         }
-        if (stop) {
-          break;
-        }
+        if (stop) {break;}
         len++;
       }
       return len;
@@ -1825,11 +1635,8 @@ arrayFormat = function(opts) {
           th.className = "pvtColLabel";
           //FIG th.textContent = colKey[j];
           th.innerHTML = colKey[j];
-          
-		  th.setAttribute("colspan", x);
-          if (parseInt(j) === colAttrs.length - 1 && rowAttrs.length !== 0) {
-            th.setAttribute("rowspan", 2);
-          }
+          th.setAttribute("colspan", x);
+          if (parseInt(j) === colAttrs.length - 1 && rowAttrs.length !== 0) { th.setAttribute("rowspan", 2); }
           tr.appendChild(th);
         }
       }
@@ -1873,9 +1680,7 @@ arrayFormat = function(opts) {
           th.className = "pvtRowLabel";
           th.innerHTML =txt;
           th.setAttribute("rowspan", x);
-          if (parseInt(j) === rowAttrs.length - 1 && colAttrs.length !== 0) {
-            th.setAttribute("colspan", 2);
-          }
+          if (parseInt(j) === rowAttrs.length - 1 && colAttrs.length !== 0) { th.setAttribute("colspan", 2); }
           tr.appendChild(th);
         }
       }
@@ -1884,9 +1689,20 @@ arrayFormat = function(opts) {
         colKey = colKeys[j];
         aggregator = pivotData.getAggregator(rowKey, colKey);
         val = aggregator.value();
+	//	console.log(aggregator.format(val));
         td = document.createElement("td");
         td.className = "pvtVal row" + i + " col" + j;
-        td.innerHTML = aggregator.format(val);
+		//valDisplay=val.split(",");
+		
+       try{ var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);
+		if(FAOSTATNEWOLAP.showUnits){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}
+		if(FAOSTATNEWOLAP.showFlags){monInnerTemp +="<td width=\"33%\">"+val[2]+"</td>";}
+		
+		monInnerTemp+="</tr></table>";
+		
+		 td.innerHTML=monInnerTemp;
+		}
+                catch(er){monInnerTemp=aggregator.format(val);}
         td.setAttribute("data-value", val);
         tr.appendChild(td);
       }
@@ -1941,9 +1757,7 @@ arrayFormat = function(opts) {
     defaults = {
       cols: [],
       rows: [],
-      filter: function() {
-        return true;
-      },
+      filter: function() {        return true;      },
       aggregator: aggregatorTemplates.count()(),
       aggregatorName: "Count",
       derivedAttributes: {},
@@ -1953,54 +1767,19 @@ arrayFormat = function(opts) {
     };
     opts = $.extend(defaults, opts);
     result = null;
-    //try 
-    {
-        FAOSTATNEWOLAP.internalData = new PivotData(input, opts);
-    //  pivotData = new PivotData(input, opts);
-  
-  //    try
-      {
-         
-       // result = opts.renderer(pivotData, opts.rendererOptions);
-       result = opts.renderer(FAOSTATNEWOLAP.internalData, opts.rendererOptions);
-    
-      } 
-      /*catch (_error) {
-        e = _error;
-        if (typeof console != "undefined")  {
-          console.error(e.stack);
-        }
-        if( console != null){console.error("trois");console.error(e.stack);}
-        result = $("<span>").html(opts.localeStrings.renderError);
-      }*/
-    }
-    /*catch (_error) {
-      e = _error;
-      if (typeof console !== "undefined" && console !== null) {
-        console.error(e.stack);
-      }
-      result = $("<span>").html(opts.localeStrings.computeError);
-    }*/
-    x = this[0];
-    while (x.hasChildNodes()) {
-      x.removeChild(x.lastChild);
-    }
+    FAOSTATNEWOLAP.internalData = new PivotData(input, opts);
+    result = opts.renderer(FAOSTATNEWOLAP.internalData, opts.rendererOptions);
+   x = this[0];
+   while (x.hasChildNodes()) {      x.removeChild(x.lastChild);    }
     return this.append(result);
   };
-
-
   /*
   Pivot Table UI: calls Pivot Table core above with options set by user
    */
-
   $.fn.pivotUI = function(input, inputOpts, overwrite, locale) {
     var a, aggregator, attrLength, axisValues, c, colList, defaults, e, existingOpts, i, initialRender, k, opts, pivotTable, refresh, refreshDelayed, renderer, rendererControl, shownAttributes, tblCols, tr1, tr2, uiTable, unusedAttrsVerticalAutoOverride, x, _fn, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _ref4;
-    if (overwrite == null) {
-      overwrite = false;
-    }
-    if (locale == null) {
-      locale = "en";
-    }
+    if (overwrite == null) {  overwrite = false;    }
+    if (locale == null) { locale = "en";    }
     defaults = {
       derivedAttributes: {},
       aggregators: locales[locale].aggregators,
@@ -2013,25 +1792,16 @@ arrayFormat = function(opts) {
       exclusions: {},
       unusedAttrsVertical:false,// "auto",
       autoSortUnusedAttrs: false,
-      rendererOptions: {
-        localeStrings: locales[locale].localeStrings
-      },
+      rendererOptions: { localeStrings: locales[locale].localeStrings},
       onRefresh: null,
-      filter: function() {
-        return true;
-      },
+      filter: function() { return true;},
       localeStrings: locales[locale].localeStrings
     };
     existingOpts = this.data("pivotUIOptions");
-    if ((existingOpts == null) || overwrite) {
-      opts = $.extend(defaults, inputOpts);
-    } else {
-      opts = existingOpts;
-    }
+    if ((existingOpts == null) || overwrite) {opts = $.extend(defaults, inputOpts);} else {opts = existingOpts;}
     //try 
 	{
       input = PivotData.convertToArray(input);
-      
       tblCols = (function() {
         var _ref, _results;
         _ref = input[0];
@@ -2045,9 +1815,7 @@ arrayFormat = function(opts) {
       _ref = opts.derivedAttributes;
       for (c in _ref) {
         if (!__hasProp.call(_ref, c)) continue;
-        if ((__indexOf.call(tblCols, c) < 0)) {
-          tblCols.push(c);
-        }
+        if ((__indexOf.call(tblCols, c) < 0)) {tblCols.push(c); }
       }
       axisValues = {};
       for (_i = 0, _len = tblCols.length; _i < _len; _i++) {
@@ -2060,23 +1828,19 @@ arrayFormat = function(opts) {
         for (k in record) {
           if (!__hasProp.call(record, k)) continue;
           v = record[k];
-          if (!(opts.filter(record))) {
-            continue;
-          }
-          if (v == null) {
-            v = "null";
-          }
-          if ((_base = axisValues[k])[v] == null) {
-            _base[v] = 0;
-          }
+          if (!(opts.filter(record))) { continue;  }
+          if (v == null) {   v = "null";  }
+          if ((_base = axisValues[k])[v] == null) {  _base[v] = 0; }
           _results.push(axisValues[k][v]++);
         }
         return _results;
       });
       uiTable = $("<table cellpadding='5'>");
-      rendererControl = $("<td id='vals' class='pvtAxisContainer pvtUnused'>");
-      renderer = $("<select class='pvtRenderer'>").appendTo(rendererControl).bind("change", function() {
-        return refresh();
+      rendererControl = $("<td id='vals' >");//class='pvtAxisContainer pvtUnused'
+      renderer = $("<select id='renderer' class='pvtRenderer'>").appendTo(rendererControl).bind("change", function() 
+      { if ($("#renderer").val() == "Table" || $("#renderer").val() == "OLAP") { $('#aggregator option[value="SumUnit"]').prop('selected', true); }
+        else { $('#aggregator option[value="Sum"]').prop('selected', true);}
+        return refresh(); 
       });
       _ref1 = opts.renderers;
       for (x in _ref1) {
@@ -2090,11 +1854,9 @@ arrayFormat = function(opts) {
         _results = [];
         for (_j = 0, _len1 = tblCols.length; _j < _len1; _j++) {
           c = tblCols[_j];
-          if (__indexOf.call(opts.hiddenAttributes, c) < 0) {
-            _results.push(c);
-          }
-        }
-        return _results;
+          _results.push(c); 
+      }
+      return _results;
       })();
       unusedAttrsVerticalAutoOverride = false;
       if (opts.unusedAttrsVertical === "auto") {
@@ -2105,27 +1867,21 @@ arrayFormat = function(opts) {
         }
         unusedAttrsVerticalAutoOverride = attrLength > 120;
       }
-      if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
-        colList.addClass('pvtVertList');
-      } else {
-        colList.addClass('pvtHorizList');
-      }
+      if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) { colList.addClass('pvtVertList'); } 
+      else { colList.addClass('pvtHorizList');}
       _fn = function(c) {
         var attrElem, btns, checkContainer, filterItem, filterItemExcluded, hasExcludedItem, keys, showFilterList, triangleLink, updateFilter, v, valueList, _k, _len2, _ref2;
         keys = (function() {
           var _results;
           _results = [];
-          for (k in axisValues[c]) {
-            _results.push(k);
-          }
+          for (k in axisValues[c]) {  _results.push(k);  }
           return _results;
         })();
         hasExcludedItem = false;
         valueList = $("<div>").addClass('pvtFilterBox').hide();
         valueList.append($("<h4>").text("" + c + " (" + keys.length + ")"));
-        if (keys.length > opts.menuLimit) {
-          valueList.append($("<p>").html(opts.localeStrings.tooMany));
-        } else {
+        if (keys.length > opts.menuLimit) {valueList.append($("<p>").html(opts.localeStrings.tooMany));} 
+        else {
           btns = $("<p>").appendTo(valueList);
           btns.append($("<button>").html(opts.localeStrings.selectAll).bind("click", function() {
             return valueList.find("input:visible").prop("checked", true);
@@ -2136,14 +1892,11 @@ arrayFormat = function(opts) {
           btns.append($("<input>").addClass("pvtSearch").attr("placeholder", opts.localeStrings.filterResults).bind("keyup", function() {
             var filter;
             filter = $(this).val().toLowerCase();
-            return $(this).parents(".pvtFilterBox").find('label span').each(function() {
+            return $(this).parents(".pvtFilterBox").find('label >span').each(function() {
               var testString;
               testString = $(this).text().toLowerCase().indexOf(filter);
-              if (testString !== -1) {
-                return $(this).parent().show();
-              } else {
-                return $(this).parent().hide();
-              }
+              if (testString !== -1) {return $(this).parent().show();} 
+              else {  return $(this).parent().hide();  }
             });
           }));
           checkContainer = $("<div>").addClass("pvtCheckContainer").appendTo(valueList);
@@ -2162,74 +1915,55 @@ arrayFormat = function(opts) {
         updateFilter = function() {
           var unselectedCount;
           unselectedCount = $(valueList).find("[type='checkbox']").length - $(valueList).find("[type='checkbox']:checked").length;
-          if (unselectedCount > 0) {
-            attrElem.addClass("pvtFilteredAttribute");
-          } else {
-            attrElem.removeClass("pvtFilteredAttribute");
-          }
-          if (keys.length > opts.menuLimit) {
-            return valueList.toggle();
-          } else {
-            return valueList.toggle(0, refresh);
-          }
+          if (unselectedCount > 0) {attrElem.addClass("pvtFilteredAttribute");   }
+          else {attrElem.removeClass("pvtFilteredAttribute");  }
+          if (keys.length > opts.menuLimit) {  return valueList.toggle();  } 
+          else { return valueList.toggle(0, refresh); }
         };
         $("<p>").appendTo(valueList).append($("<button>").text("OK").bind("click", updateFilter));
         showFilterList = function(e) {
-         
-          valueList.css({
-            left: 50,//e.pageX,
-            top: 0//e.pageY
+            valueList.css({
+            left:300,// e.pageX,
+            top: 550//e.pageY
           }).toggle();
           $('.pvtSearch').val('');
           return $('label').show();
         };
       
         triangleLink = $("<span class='pvtTriangle'>").html(" &#x25BE;").bind("click", showFilterList);
-        attrElem = $("<li class='axis_" + i + "' id='filtre_"+c+"'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
-        if (hasExcludedItem) {
-          attrElem.addClass('pvtFilteredAttribute');
-        }
+         if (__indexOf.call(opts.hiddenAttributes, c) < 0) { attrElem = $("<li class='axis_" + i + "' id='filtre_"+c+"'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
+      }
+         else{
+              attrElem = $("<li class='axis_" + i + " invi' id='filtre_"+c+"'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
+         }
+         if (hasExcludedItem) { attrElem.addClass('pvtFilteredAttribute');        }
         colList.append(attrElem).append(valueList);
-       // $("body").append(attrElem).append(valueList);
-        
+       //$("body").append(attrElem).append(valueList);
         return attrElem.bind("dblclick", showFilterList);
       };
-      for (i in shownAttributes) {
-        c = shownAttributes[i];
-        _fn(c);
-      }
+      for (i in shownAttributes){c = shownAttributes[i]; _fn(c);}
       tr1 = $("<tr>").appendTo(uiTable);
-      aggregator = $("<select class='pvtAggregator'>").bind("change", function() {
-        return refresh();
-      });
+      aggregator = $("<select  id='aggregator' class='pvtAggregator'>").bind("change", function() {       return refresh();      });
       _ref2 = opts.aggregators;
       for (x in _ref2) {
         if (!__hasProp.call(_ref2, x)) continue;
         aggregator.append($("<option>").val(x).html(x));
       }
-	 
-     $("<td class='pvtAxisContainer pvtHorizList pvtCols'>").appendTo(tr1);
-	   
-      $("<td class='pvtVals'>").appendTo(tr1).append(aggregator).append($("<br>"));
+     $("<td id='cols' class='pvtAxisContainer pvtHorizList pvtCols'>").appendTo(tr1);
+      $("<td class='pvtVals'>").appendTo(uiTable).append(aggregator).append($("<br>"));
      tr2 = $("<tr>").appendTo(uiTable);
-      
      // tr2.append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>"));
-     
-  tr2.append($("<td id=pretd1>"));
-      
-      
-      
-  //   pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
-   
+    tr2.append($("<td id=pretd1>"));
+    // pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
+   $("#fx-olap-holder-div").empty();
    pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo($("#fx-olap-holder-div"));
       if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
-	 
-        uiTable.find('tr:nth-child(1)').prepend(rendererControl);
-        uiTable.find('tr:nth-child(2)').prepend(colList);
-        
+        uiTable.find('tr:nth-child(1)').prepend(colList);
+        uiTable.find('tr:nth-child(2)').prepend(rendererControl);
       } else {
           uiTable.prepend($("<tr>").append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>")).prepend($("<td id='pretd'>&nbsp;</td>")));
-          uiTable.prepend($("<tr>").append(colList).append(rendererControl));
+          uiTable.prepend($("<tr>").append(colList));
+         uiTable.prepend($("<tr>").append(rendererControl)); 
     }
       this.html(uiTable);
       _ref3 = opts.cols;
@@ -2242,12 +1976,8 @@ arrayFormat = function(opts) {
         x = _ref4[_l];
         this.find(".pvtRows").append(this.find(".axis_" + (shownAttributes.indexOf(x))));
       }
-      if (opts.aggregatorName != null) {
-        this.find(".pvtAggregator").val(opts.aggregatorName);
-      }
-      if (opts.rendererName != null) {
-        this.find(".pvtRenderer").val(opts.rendererName);
-      }
+      if (opts.aggregatorName != null) { this.find(".pvtAggregator").val(opts.aggregatorName); }
+      if (opts.rendererName != null) {this.find(".pvtRenderer").val(opts.rendererName);}
       initialRender = true;
       refreshDelayed = (function(_this) {
         return function() {
@@ -2256,25 +1986,17 @@ arrayFormat = function(opts) {
             derivedAttributes: opts.derivedAttributes,
             localeStrings: opts.localeStrings,
             rendererOptions: opts.rendererOptions,
-            cols: [],
-            rows: []
+            cols: [], rows: []
           };
           numInputsToProcess = (_ref5 = opts.aggregators[aggregator.val()]([])().numInputs) != null ? _ref5 : 0;
           vals = [];
-          _this.find(".pvtRows li span.pvtAttr").each(function() {
-            return subopts.rows.push($(this).data("attrName"));
-          });
-          _this.find(".pvtCols li span.pvtAttr").each(function() {
-            return subopts.cols.push($(this).data("attrName"));
-          });
+          _this.find(".pvtRows li span.pvtAttr").each(function() { return subopts.rows.push($(this).data("attrName"));});
+          _this.find(".pvtCols li span.pvtAttr").each(function() {return subopts.cols.push($(this).data("attrName"));});
           _this.find(".pvtVals select.pvtAttrDropdown").each(function() {
-            if (numInputsToProcess === 0) {
-              return $(this).remove();
-            } else {
+            if (numInputsToProcess === 0) {  return $(this).remove(); } 
+            else {
               numInputsToProcess--;
-              if ($(this).val() !== "") {
-                return vals.push($(this).val());
-              }
+              if ($(this).val() !== "") {  return vals.push($(this).val()); }
             }
           });
           if (numInputsToProcess !== 0) {
@@ -2300,7 +2022,6 @@ arrayFormat = function(opts) {
             initialRender = false;
           }
           subopts.aggregatorName = aggregator.val();
-        
           subopts.vals = vals;
           subopts.aggregator = opts.aggregators[aggregator.val()](vals);
           subopts.renderer = opts.renderers[renderer.val()];
@@ -2308,22 +2029,15 @@ arrayFormat = function(opts) {
           _this.find('input.pvtFilter').not(':checked').each(function() {
             var filter;
             filter = $(this).data("filter");
-            if (exclusions[filter[0]] != null) {
-              return exclusions[filter[0]].push(filter[1]);
-            } else {
-              return exclusions[filter[0]] = [filter[1]];
-            }
+            if (exclusions[filter[0]] != null) { return exclusions[filter[0]].push(filter[1]); } 
+            else {return exclusions[filter[0]] = [filter[1]];   }
           });
           subopts.filter = function(record) {
             var excludedItems, _ref6;
-            if (!opts.filter(record)) {
-              return false;
-            }
+            if (!opts.filter(record)) { return false; }
             for (k in exclusions) {
               excludedItems = exclusions[k];
-              if (_ref6 = "" + record[k], __indexOf.call(excludedItems, _ref6) >= 0) {
-                return false;
-              }
+              if (_ref6 = "" + record[k], __indexOf.call(excludedItems, _ref6) >= 0) { return false; }
             }
             return true;
           };
@@ -2352,6 +2066,7 @@ arrayFormat = function(opts) {
         };
       })(this);
       refresh = (function(_this) {
+       
         return function() {
           pivotTable.css("opacity", 0.5);
           return setTimeout(refreshDelayed, 10);
@@ -2360,9 +2075,7 @@ arrayFormat = function(opts) {
       refresh();
       this.find(".pvtAxisContainer").sortable({
         update: function(e, ui) {
-          if (ui.sender == null) {
-            return refresh();
-          }
+          if (ui.sender == null) { return refresh(); }
         },
         connectWith: this.find(".pvtAxisContainer"),
         items: 'li',
@@ -2384,11 +2097,178 @@ arrayFormat = function(opts) {
   Heatmap post-processing
    */
 
+    $.fn.HPivot=function(id)
+{
+    
+    
+    
+   var mydata=[];
+   var myfield={ Area: {field: 'Area', sort: "asc", showAll: true, agregateType: "distinct", label: "Area"},
+  Item: {field: 'Item', sort: "asc", showAll: true, agregateType: "distinct", label: "Item"},
+  Element: {field: 'Element', sort: "asc", showAll: true, agregateType: "distinct", label: "Element"},
+  Year: {field: 'Year', sort: "asc", showAll: true, agregateType: "distinct", label: "Year"},
+    count: {agregateType: "count", groupType: "none", label: "Counts"},
+    sum: {field: 'Value', agregateType: "sum", groupType: "none", label: "Sum"},
+    average: {field: 'Value', agregateType: "average", groupType: "none", label: "Average", 
+    formatter: function(V, f) {var res = null;if (typeof(V) === "number") {res = V.toFixed(2);}return res;}},
+Unit: {field: 'Unit', sort: "asc", showAll: true, agregateType: "distinct", label: "Unit"},
+Flag: {field: 'Flag', sort: "asc", showAll: true, agregateType: "distinct", label: "Flag"}
+};
+/*
+   for(var i=1;i<FAOSTATNEWOLAP.originalData.length;i++)
+    {
+    ft={};
+        for(var j=0;j<FAOSTATNEWOLAP.originalData[0].length;j++)
+            {
+              ft[FAOSTATNEWOLAP.originalData[0][j]]= FAOSTATNEWOLAP.originalData[i][j];
+            }
+    mydata.push(ft)
+    }*/
+   for(var i in FAOSTATNEWOLAP.internalData.tree)
+    {
+   
+var  rowTemp=i.split("||");
+
+for(var k in FAOSTATNEWOLAP.internalData.tree[i])
+{
+    ft={};
+    for(var j=0;j<FAOSTATNEWOLAP.internalData.rowAttrs.length;j++)
+{ft[FAOSTATNEWOLAP.internalData.rowAttrs[j]]=rowTemp[j];}
+var colTemp=k.split("||");
+for(var j=0;j<FAOSTATNEWOLAP.internalData.colAttrs.length;j++)
+{ft[FAOSTATNEWOLAP.internalData.colAttrs[j]]=colTemp[j];}
+    ft["Value"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[0];
+    ft["Unit"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[1];
+    ft["flag"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[2];
+     
+
+ mydata.push(ft);
+    
+}
+}
+    
+    
+    if(typeof HPivott !== 'undefined' ){
+        $(id).data('unc-jbPivot').options.xfields= FAOSTATNEWOLAP.internalData.rowAttrs;
+         $(id).data('unc-jbPivot').options.yfields= FAOSTATNEWOLAP.internalData.colAttrs;
+        // $("#fx-olap-graph-div").data('unc-jbPivot')._create()
+         $(id).data('unc-jbPivot').reset();
+          $(id).data('unc-jbPivot').insertRecords(mydata);
+       $(id).data('unc-jbPivot')._renderHtml();
+         
+ }
+     else
+     {
+     
+            $(id).jbPivot(
+                    {
+                       fields: myfield,
+                       xfields: FAOSTATNEWOLAP.internalData.rowAttrs,
+                       yfields: FAOSTATNEWOLAP.internalData.colAttrs,
+                       zfields: ["sum", "Unit","Flag"],
+                       data: mydata,
+                       copyright: false,
+                       summary: true,
+                       l_all: "All",
+                       l_unused_fields: "Available fields"
+                    }
+            );
+    
+}
+}
+$.fn.barhightchart=function(id,scope){
+var r=FAOSTATNEWOLAP.internalData;
+var monXaxis=[];
+
+for(entry in FAOSTATNEWOLAP.internalData.colKeys)
+{monXaxis.push(FAOSTATNEWOLAP.internalData.colKeys[entry].toString().replace(/<span class="ordre">\d+<\/span>/g,"").replace(/\|\|/g," X "));}
+
+var maSeries=[];
+   if(r.colKeys.length>0){
+    
+    for(ligne in r.tree){
+        var temp={"name":ligne.replace(/<span class="ordre">\d+<\/span>/g,"").replace(/\|\|/g," X "),"data":[]};
+        for(col in r.colKeys){
+        var coldInd=r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9 ]/g,"_");
+        
+        if( r.tree[ligne][coldInd]!=null){ temp.data.push(r.tree[ligne][coldInd].value()); }
+        else{temp.data.push( null);}
+//temp.push(r.rowTotals[ligne].sum);
+                // r2d2.push([ligne,col,+r.tree[ligne][col].value()]);
+      }
+      maSeries.push(temp);
+     }
+}
+else{/*
+     for(ligne in r.rowTotals){
+          var temp=ligne.split('||');
+          if( r.rowTotals[ligne]!=null){temp.push(r.rowTotals[ligne].value());}
+            else{temp.push( null);}
+      r2d2.push(temp);
+     }*/
+}
+
+
+/*  series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function (e) {
+                                hs.htmlExpand(null, { pageOrigin: {x: e.pageX || e.clientX,y: e.pageY || e.clientY},
+                                    headingText: this.series.name,
+                                    maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
+                                        this.y + ' visits',
+                                    width: 200
+                                });
+                            }
+                        }
+                    },
+                    marker: {
+                        lineWidth: 1
+                    }
+                },*/
+
+
+
+var commonJson={  title: {text: ' '    },
+    plotOptions: {
+        
+    column: { pointPadding: 0.2,  borderWidth: 0     },
+     line: { connectNulls: false }
+    },
+        subtitle: {  text: 'Source: FAOSTAT'        },
+        xAxis: {  categories:monXaxis ,crosshair: true        },
+        yAxis: {         min: 0/*,  title: {   text: 'Rainfall (mm)'  }*/   },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+       
+        series: maSeries
+    };
+   
+    if(scope=="barchart"){commonJson.chart={   type: 'column' };}
+    else if(scope=="line"){commonJson.plotLines=[];}
+    else if(scope=="area"){
+        commonJson.chart= {  type: 'area'        };
+        commonJson.plotOptions={area: {  stacking: 'normal'}}
+    }
+     else if(scope=="stackedColumn"){
+         
+         commonJson.chart= {  type: 'column'        };
+        commonJson.plotOptions={column: {  stacking: 'normal'}}}
+ $(id).highcharts(commonJson);
+
+}
+
+
   $.fn.heatmap = function(scope) {
     var colorGen, heatmapper, i, j, numCols, numRows, _i, _j;
-    if (scope == null) {
-      scope = "heatmap";
-    }
+    if (scope == null) { scope = "heatmap";    }
     numRows = this.data("numrows");
     numCols = this.data("numcols");
     colorGen = function(color, min, max) {
@@ -2396,26 +2276,18 @@ arrayFormat = function(opts) {
       hexGen = (function() {
         switch (color) {
           case "red":
-            return function(hex) {
-              return "ff" + hex + hex;
-            };
+            return function(hex) {    return "ff" + hex + hex; };
           case "green":
-            return function(hex) {
-              return "" + hex + "ff" + hex;
-            };
+            return function(hex) {  return "" + hex + "ff" + hex;  };
           case "blue":
-            return function(hex) {
-              return "" + hex + hex + "ff";
-            };
+            return function(hex) {    return "" + hex + hex + "ff"; };
         }
       })();
       return function(x) {
         var hex, intensity;
         intensity = 255 - Math.round(255 * (x - min) / (max - min));
         hex = intensity.toString(16).split(".")[0];
-        if (hex.length === 1) {
-          hex = 0 + hex;
-        }
+        if (hex.length === 1) {    hex = 0 + hex;        }
         return hexGen(hex);
       };
     };
@@ -2423,22 +2295,16 @@ arrayFormat = function(opts) {
       return function(scope, color) {
         var colorFor, forEachCell, values;
         forEachCell = function(f) {
-          return _this.find(scope).each(function() {
+          return _this.find(scope).each(function(){
             var x;
             x = $(this).data("value");
-            if ((x != null) && isFinite(x)) {
-              return f(x, $(this));
-            }
+            if ((x != null) && isFinite(x)) {return f(x, $(this)); }
           });
         };
         values = [];
-        forEachCell(function(x) {
-          return values.push(x);
-        });
+        forEachCell(function(x) {return values.push(x); });
         colorFor = colorGen(color, Math.min.apply(Math, values), Math.max.apply(Math, values));
-        return forEachCell(function(x, elem) {
-          return elem.css("background-color", "#" + colorFor(x));
-        });
+        return forEachCell(function(x, elem) { return elem.css("background-color", "#" + colorFor(x)); });
       };
     })(this);
     switch (scope) {
@@ -2459,12 +2325,9 @@ arrayFormat = function(opts) {
     heatmapper(".pvtTotal.colTotal", "red");
     return this;
   };
-
-
   /*
   Barchart post-processing
    */
-
   $.fn.barchart = function() {
     var barcharter, i, numCols, numRows, _i;
     numRows = this.data("numrows");
@@ -2476,26 +2339,17 @@ arrayFormat = function(opts) {
           return _this.find(scope).each(function() {
             var x;
             x = $(this).data("value");
-            if ((x != null) && isFinite(x)) {
-              return f(x, $(this));
-            }
+            if ((x != null) && isFinite(x)) { return f(x, $(this));}
           });
         };
         values = [];
-        forEachCell(function(x) {
-          return values.push(x);
-        });
+        forEachCell(function(x) {  return values.push(x);});
         max = Math.max.apply(Math, values);
-        scaler = function(x) {
-          return 100 * x / (1.4 * max);
-        };
+        scaler = function(x) { return 100 * x / (1.4 * max);  };
         return forEachCell(function(x, elem) {
           var text, wrapper;
           text = elem.text();
-          wrapper = $("<div>").css({
-            "position": "relative",
-            "height": "55px"
-          });
+          wrapper = $("<div>").css({"position": "relative","height": "55px"});
           wrapper.append($("<div>").css({
             "position": "absolute",
             "bottom": 0,
@@ -2517,11 +2371,9 @@ arrayFormat = function(opts) {
         });
       };
     })(this);
-    for (i = _i = 0; 0 <= numRows ? _i < numRows : _i > numRows; i = 0 <= numRows ? ++_i : --_i) {
-      barcharter(".pvtVal.row" + i);
-    }
+    for (i = _i = 0; 0 <= numRows ? _i < numRows : _i > numRows; i = 0 <= numRows ? ++_i : --_i) 
+    { barcharter(".pvtVal.row" + i);}
     barcharter(".pvtTotal.colTotal");
     return this;
   };
-
 }).call(this);
