@@ -13,7 +13,7 @@ requirejs.config({
         gt_msg: "lib/grid/gt_msg_en",
         gt_msg_grid: "lib/grid/gt_grid_all",
         //fusioncharts: "grid/flashchart/fusioncharts/FusionCharts",        
-        configuration: "tests/configuration",
+       // configuration: "tests/configuration",
         pivot: "js/pivotNew",
 		'highcharts': "//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts",
 		'HPivot' :'lib/HierachicalRender/pivot',
@@ -25,20 +25,22 @@ requirejs.config({
 		'HPivot6':'lib/HierachicalRender/group_distinct'
     },
     shim: {jqueryui:{deps: ['jquery']},
-        //i18n : {deps: ['jquery']},
-       /* calendar: {exports: 'Calendar'},
+        /*i18n : {deps: ['jquery']},
+        calendar: {exports: 'Calendar'},
         calendar_utf8: {exports: 'Calendar'},*/
 		'highcharts': ['jquery'],
         gt_msg: {deps: ['jquery']},
         gt_msg_grid: {deps: ['jquery','gt_msg']},
         pivot: {
             deps: [
-                'jquery','jqueryui',//'i18n',
-               // 'jssc3',//'calendar',
+                'jquery','jqueryui',
+				//'i18n',
+				// 'jssc3',
+				//'calendar',
 				//'calendar_utf8',
 				'gt_msg','gt_msg_grid',
-                'configuration'
-				,'HPivot','HPivot1','HPivot2','HPivot3','HPivot4','HPivot5','HPivot6'
+                //'configuration',*/
+				'HPivot','HPivot1','HPivot2','HPivot3','HPivot4','HPivot5','HPivot6'
             ]
         },
 		'HPivot':['jquery','jqueryui'/*,'i18n'*/],

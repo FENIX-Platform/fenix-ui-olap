@@ -24,19 +24,20 @@
 		 <div id="fx-olap-graph-div"></div>
 		 <div id="mesFlags" style="clear:both"></div-->
 	 <div class="fx-olap-holder" id="pivot1"></div>
+		<div class="fx-olap-holder" id="pivot2"></div>
 	 
 	 
-	  <div class="fx-olap-holder" id="pivot2"></div>
 	 
-	 <button id="pivot_download" style="display:none" class="btn btn-default" type="button">
-	 <i class="glyphicon glyphicon-download"></i>Download XLS File</button>
-	 <form id="xlsDataForm" action="http://faostat3.fao.org/faostat-olapws/ExportPOI2" method="POST">
-	 <!--textarea id="myJson"  name="myJson" ></textarea-->
-	 <input id="myJson" name="myJson" type="hidden" value=""/>
-	 <input id="myFlags" name="myFlags" type="hidden"
-	 value='{"data":[{"title":"","label":"Official data"}]}'/>
-	 <input type="submit" />
-	 </form>
+	 
+	 	 <!--textarea id="myJson"  name="myJson" ></textarea-->
+		 <!--button id="pivot_download" style="display:none" class="btn btn-default" type="button">
+		 <i class="glyphicon glyphicon-download"></i>Download XLS File</button>
+		 <form id="xlsDataForm" action="http://faostat3.fao.org/faostat-olapws/ExportPOI2" method="POST">
+		 <input id="myJson" name="myJson" type="hidden" value=""/>
+		 <input id="myFlags" name="myFlags" type="hidden"
+		 value='{"data":[{"title":"","label":"Official data"}]}'/>
+		 <input type="submit" />
+		 </form-->
 	
 	
     <script type="text/javascript" data-main="main" src="../lib/require.js"></script>
