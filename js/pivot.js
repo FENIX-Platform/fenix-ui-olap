@@ -1,938 +1,12 @@
-var test;
-FAOSTATNEWOLAP = {};
-FAOSTATNEWOLAP.pivotlimit = 200000;
-FAOSTATNEWOLAP.pivotlimitExcel = 200000;
-FAOSTATNEWOLAP.limitPivotPreview = 5000;//lignes
-FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
-//para&meters for the exclstoredprocedure : to be change to avoid SQL injection
-FAOSTATNEWOLAP.excelpayload = {};
-FAOSTATNEWOLAP.schema = {};
-FAOSTATNEWOLAP.rendererV = 0;
-FAOSTATNEWOLAP.nestedby = 0;
-FAOSTATNEWOLAP.viewVals = 0;
-FAOSTATNEWOLAP.decimal = 2;
-FAOSTATNEWOLAP.showUnits = 0;
-FAOSTATNEWOLAP.showFlags = 1;
-FAOSTATNEWOLAP.firstCall = 1;
-FAOSTATNEWOLAP.flags = {};
-FAOSTATNEWOLAP.internalData = {};
-FAOSTATNEWOLAP.originalData = [];
-FAOSTATNEWOLAP.thousandSeparator = " ";
-FAOSTATNEWOLAP.decimalSeparator = ".";
-
-FAOSTATNEWOLAP.traduction ={
-init:{E:"",F:"",S:""},
-treeview:{E:"Tree view/Flat view ",F:"Vue hierachique / Vue plate",S:"Tree view/Flat view"},
-perPage:{E:"Per Page",F:"Par Page",S:"Por Pagina"}
-,
-Page:{E:"Page",F:"Page",S:"Page"}
-};
-
-
-
-function utf8_encode(argString) {
-  //  discuss at: http://phpjs.org/functions/utf8_encode/
-  // original by: Webtoolkit.info (http://www.webtoolkit.info/)
-  // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-  // improved by: sowberry
-  // improved by: Jack
-  // improved by: Yves Sucaet
-  // improved by: kirilloid
-  // bugfixed by: Onno Marsman
-  // bugfixed by: Onno Marsman
-  // bugfixed by: Ulrich
-  // bugfixed by: Rafal Kukawski
-  // bugfixed by: kirilloid
-  //   example 1: utf8_encode('Kevin van Zonneveld');
-  //   returns 1: 'Kevin van Zonneveld'
-
-  if (argString === null || typeof argString === 'undefined') { return ''; }
-
-  var string = (argString + ''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-  var utftext = '', start, end, stringl = 0;
-
-  start = end = 0;
-  stringl = string.length;
-  for (var n = 0; n < stringl; n++) {
-    var c1 = string.charCodeAt(n);
-    var enc = null;
-
-    if (c1 < 128) {end++;} else if (c1 > 127 && c1 < 2048) {
-      enc = String.fromCharCode(     (c1 >> 6) | 192, (c1 & 63) | 128   );
-    } else if ((c1 & 0xF800) != 0xD800) {
-      enc = String.fromCharCode(        (c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128      );
-    } else { // surrogate pairs
-      if ((c1 & 0xFC00) != 0xD800) { throw new RangeError('Unmatched trail surrogate at ' + n);      }
-      var c2 = string.charCodeAt(++n);
-      if ((c2 & 0xFC00) != 0xDC00) {  throw new RangeError('Unmatched lead surrogate at ' + (n - 1));   }
-      c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000;
-      enc = String.fromCharCode( (c1 >> 18) | 240, ((c1 >> 12) & 63) | 128, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128 );
-    }
-    if (enc !== null) {
-      if (end > start) {        utftext += string.slice(start, end);      }
-      utftext += enc;
-      start = end = n + 1;
-    }
-  }
-
-  if (end > start) {    utftext += string.slice(start, stringl);  }
-
-  return utftext;
-}
-
-function addCommas(nStr) {
-        var rgx, x, x1, x2;
-        nStr += '';
-        x = nStr.split('.');
-        x1 = x[0];
-        x2 = x.length > 1 ? FAOSTATNEWOLAP.decimalSeparator + x[1] : '';
-        rgx = /(\d+)(\d{3})/;
-
-        while (rgx.test(x1)) {  x1 = x1.replace(rgx, '$1' + FAOSTATNEWOLAP.thousandSeparator + '$2');  }
-        //console.log("ij"+FAOSTATNEWOLAP.thousandSeparator+"r");
-        if (FAOSTATNEWOLAP.thousandSeparator === " ") { x1 = x1.replace(/\s/g, ""); }
-        return x1 + x2;
-    };
-
-function ExtractCode(arr, separateur)
-{
-    ret = [];
-    for (i = 0; i < arr.length; i++)
-    {
-        if (arr[i].type === ">") {   ret.push(separateur + arr[i].code + ">" + separateur);     }
-        else {  ret.push(separateur + arr[i].code + separateur);   }
-    }
-    return ret;
-}
-
-function ExtractCodel(arr)//for aggregate
-{
-    ret = [];
-    for (i = 0; i < arr.length; i++){
-        if (arr[i].type === ">") {ret.push({'code':arr[i].code,'type':'list'} );  }
-    }
-    return ret;
-}
-
-function checkMemory(){for (var b in window) { if (window.hasOwnProperty(b)){ console.log(b + ' ' + memorySizeOf(eval(b)));}    }}
-
-function memorySizeOf(obj) {
-    var bytes = 0;
-
-    function sizeOf(obj) {
-        if (obj !== null && obj !== undefined) {
-            switch (typeof obj) {
-                case 'number':
-                    bytes += 8;
-                    break;
-                case 'string':
-                    bytes += obj.length * 2;
-                    break;
-                case 'boolean':
-                    bytes += 4;
-                    break;
-                case 'object':
-                    var objClass = Object.prototype.toString.call(obj).slice(8, -1);
-                    if (objClass === 'Object' || objClass === 'Array') {
-                        for (var key in obj) {
-                            if (!obj.hasOwnProperty(key))
-                                continue;
-                            sizeOf(obj[key]);
-                        }
-                    } else
-                        bytes += obj.toString().length * 2;
-                    break;
-            }
-        }
-        return bytes;
-    }
-    ;
-
-    function formatByteSize(bytes) {
-        if (bytes < 1024)
-            return bytes + " bytes";
-        else if (bytes < 1048576)
-            return(bytes / 1024).toFixed(3) + " KiB";
-        else if (bytes < 1073741824)
-            return(bytes / 1048576).toFixed(3) + " MiB";
-        else
-            return(bytes / 1073741824).toFixed(3) + " GiB";
-    }
-    ;
-
-    return formatByteSize(sizeOf(obj));
-}
-
-function oldSchoolCSV(format)
-{
-    var selectFinal = "EXECUTE Warehouse.dbo.usp_GetDataTESTP " +
-            " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
-            " @lang = '" + F3DWLD.CONFIG.lang + "',  " +
-            " @List1Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[0], "''") + ")', " +
-            "  @List2Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[1], "''") + ")',  " +
-            " @List3Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[2], "''") + ")', " +
-            "  @List4Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[3], "") + ")', " +
-            "   @List5Codes = '',  " +
-            "   @List6Codes = '',  " +
-            "   @List7Codes = '',  " +
-            "   @NullValues = 0,  " +
-            "   @Thousand = '',  " +
-            "   @Decimal = '.',  " +
-            "   @DecPlaces = 2 , " +
-            "  @Limit ="+FAOSTATNEWOLAP.pivotlimitExcel ;
-
-var mesOptionsPivot = {};
-for(var j in FAOSTATOLAP2.options)
-{mesOptionsPivot[j]=FAOSTATOLAP2.options[j];}
-mesOptionsPivot.lang=F3DWLD.CONFIG.lang;
-    if (F3DWLD.CONFIG.domainCode == "HS" ||F3DWLD.CONFIG.domainCode == "TM" || F3DWLD.CONFIG.domainCode == "FT") {
-        mesOptionsPivot.rows=["Reporter Countries","Partner Countries","Item","Element"];
-	mesOptionsPivot.cols= ["Year"];
-        selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
-            " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
-            " @lang = '" + F3DWLD.CONFIG.lang + "',  " +
-            " @List1Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[0], "''") + ")', " +
-            "  @List2Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[1], "''") + ")',  " +
-            " @List3Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[2], "''") + ")', " +
-            "  @List4Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[3], "''") + ")', " +
-            "   @List5Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[4], "") + ")',  " +
-            "   @List6Codes = '',  " +
-            "   @List7Codes = '',  " +
-            "   @NullValues = 0,  " +
-            "   @Thousand = '',  " +
-            "   @Decimal = '.',  " +
-            "   @DecPlaces = 2 , " +
-            "  @Limit ="+FAOSTATNEWOLAP.pivotlimitExcel ;
-}
-if(FAOSTATNEWOLAP.firstCall==0){
-    mesOptionsPivot.rows = FAOSTATNEWOLAP.internalData.rowAttrs;
-    mesOptionsPivot.cols = FAOSTATNEWOLAP.internalData.colAttrs;}
-else{mesOptionsPivot.rows =null;mesOptionsPivot.cols=null}
-    mesOptionsPivot.vals = ["Value"];
-    mesOptionsPivot.domain = F3DWLD.CONFIG.domainCode;
-    if (F3DWLD.CONFIG.wdsPayload.showUnits){ mesOptionsPivot.vals.push("Unit");}
-    if (F3DWLD.CONFIG.wdsPayload.showFlags){  mesOptionsPivot.vals.push("Flag");}
-
-
-document.getElementById('CSVOLAPsql').value= selectFinal;  
-document.getElementById('CSVOLAPjson').value= JSON.stringify(mesOptionsPivot);
-document.getElementById('CSVOLAPoption').value= JSON.stringify({decimal:FAOSTATNEWOLAP.decimal,
-    decimalSeparator:FAOSTATNEWOLAP.decimalSeparator,
-    thousandSeparator:FAOSTATNEWOLAP.thousandSeparator,
-    showUnits:F3DWLD.CONFIG.wdsPayload.showUnits,
- showFlags:F3DWLD.CONFIG.wdsPayload.showFlags, 
- showCodes:F3DWLD.CONFIG.wdsPayload.showCodes,
-fileFormat:format 
-    });
-document.getElementById('exportCSVOLAP').submit();
-
-    
-  
-   
-}
-
-function oldSchool(maLimit, excel){
-    var selectFinal = "EXECUTE Warehouse.dbo.usp_GetDataTESTP " +
-            " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
-            " @lang = '" + F3DWLD.CONFIG.lang + "',  " +
-            " @List1Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[0], "''") + ")', " +
-            "  @List2Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[1], "''") + ")',  " +
-            " @List3Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[2], "''") + ")', " +
-            "  @List4Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[3], "") + ")', " +
-            "   @List5Codes = '',  " +
-            "   @List6Codes = '',  " +
-            "   @List7Codes = '',  " +
-            "   @NullValues = 0,  " +
-            "   @Thousand = '',  " +
-            "   @Decimal = '.',  " +
-            "   @DecPlaces = "+FAOSTATNEWOLAP.decimal+" , " +
-            "  @Limit =" + maLimit;
-
-
-    if (F3DWLD.CONFIG.domainCode == "HS" || F3DWLD.CONFIG.domainCode == "TM" || F3DWLD.CONFIG.domainCode == "FT") {
-   /*   mesOptionsPivot.rows=["Reporter Countries","Partner Countries","Item","Element"];
-	mesOptionsPivot.cols= ["Year"];*/
-selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
-            " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
-            " @lang = '" + F3DWLD.CONFIG.lang + "',  " +
-            " @List1Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[0], "''") + ")', " +
-            "  @List2Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[1], "''") + ")',  " +
-            " @List3Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[2], "''") + ")', " +
-            "  @List4Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[3], "''") + ")', " +
-            "   @List5Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[4], "") + ")',  " +
-            "   @List6Codes = '',  " +
-            "   @List7Codes = '',  " +
-            "   @NullValues = 0,  " +
-            "   @Thousand = '',  " +
-            "   @Decimal = '.',  " +
-            "   @DecPlaces = "+FAOSTATNEWOLAP.decimal+" , " +
-            "  @Limit ="+FAOSTATNEWOLAP.pivotlimitExcel ;
-    }
-    var test2 = {
-        datasource: F3DWLD.CONFIG.datasource,thousandSeparator: ',',decimalSeparator: '.',decimalNumbers: '2',
-        json: JSON.stringify({"limit": null,   "query": selectFinal, "frequency": "NONE"}),cssFilename: '',valueIndex: 5};
-    $("#fx-olap-ui").html("<center><img src=\"/faostat-download-js/pivotAgg/Preload.gif\" /></center>");
-    //$("#testinline").html("<center><img src=\"/faostat-download-js/pivotAgg/Preload.gif\" /></center>");
-    
-    FAOSTATNEWOLAP.flags = {};
-	
-    $.ajax({
-        type: 'POST', url: F3DWLD.CONFIG.data_url + "/table/json", data: test2,
-        success: function(response_1) {
-            var response2_2 =[];
-            var mesOptionsPivot = {};
-            var t=retConfig(F3DWLD.CONFIG.domainCode,F3DWLD.CONFIG.lang);
-            response2_2=t[0];
-            mesOptionsPivot=t[1];
-            response_1 = response2_2.concat(response_1);
-            FAOSTATNEWOLAP.firstCall = 0;
-            var derivers = $.pivotUtilities.derivers;
-            var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
-            mesOptionsPivot.vals = ["Value"];
-            if (FAOSTATNEWOLAP.showUnits) {mesOptionsPivot.vals.push("Unit");}
-            if (FAOSTATNEWOLAP.showFlags){mesOptionsPivot.vals.push("Flag"); }
-            FAOSTATNEWOLAP.originalData = response_1;
-            $("#fx-olap-ui").pivotUI(response_1, mesOptionsPivot, true);
-			
-			
-			
-            //$("#testinline").pivotUI(response_1, mesOptionsPivot, true);
-            
-            $("#options_menu_box").css("display", "block");
-          
-        }
-    });
-//}});
-}
-
-function newFunctions() {
-    FAOSTATNEWOLAP.viewVals = 1;
-    $("#vals").css("display", "block");
-    $("#unused").css("display", "block");
-    $("#unused li").css("display", "inline");
-    $(".pvtRenderer").css("display", "block");
-    $("#aggregator").css("display", "block");
-    $("#unused").css("background-color", "#ececec");
-    $("#unused li nobr").css("color", "#666");
-}
-
-function changeNested(){
-    if (document.getElementById('cbNestedBy').checked) {FAOSTATNEWOLAP.nestedby = 1; }
-    else {FAOSTATNEWOLAP.nestedby = 0;}
-}
-
-function directExcel(query){
-    var sql = {};
-    sql.query = "SELECT D.ItemCode, D.ElementCode, AVG(D.value) " +
-            "FROM Data AS D " +
-            "WHERE D.DomainCode IN ('GT', 'GM', 'GE', 'GR', 'GY', 'GU', 'GP', 'GA', 'GV', 'GB') " +
-            "AND D.AreaCode = 10 " +
-            "AND D.ElementCode IN (7244, 7243, 72254, 72256, 72306, 72255, 7243, 72343, 72341, 72342, 72308, 72340, 7237, 72259, 72309, 72257, 72307) " +
-            "AND D.ItemCode IN (1711, 1755, 27, 1709, 3107, 1712, 6729, 5057, 6795) " +
-            "GROUP BY D.ItemCode, D.ElementCode";
-    var data = {};
-    data.datasource = FAOSTATDownload.datasource; 
-    data.thousandSeparator = ',';
-    data.decimalSeparator = '.';
-    data.decimalNumbers = 2;
-    data.json = JSON.stringify({"limit": null,"query": query, "frequency": "NONE"}),
-    data.cssFilename = '';
-    data.nowrap = false;
-    data.valuesIndex = 0;
-    $('#datasource_WQ').val(FAOSTATDownload.datasource);
-    $('#json_WQ').val(data.json);
-    document.excelFormWithQuotes.submit();
-}
-
-function directCSV(query) {
-    var sql = {};
-    sql.query = "SELECT D.ItemCode, D.ElementCode, AVG(D.value) " +
-            "FROM Data AS D " +
-            "WHERE D.DomainCode IN ('GT', 'GM', 'GE', 'GR', 'GY', 'GU', 'GP', 'GA', 'GV', 'GB') " +
-            "AND D.AreaCode = 10 " +
-            "AND D.ElementCode IN (7244, 7243, 72254, 72256, 72306, 72255, 7243, 72343, 72341, 72342, 72308, 72340, 7237, 72259, 72309, 72257, 72307) " +
-            "AND D.ItemCode IN (1711, 1755, 27, 1709, 3107, 1712, 6729, 5057, 6795) " +
-            "GROUP BY D.ItemCode, D.ElementCode";
-    var data = {};
-    data.datasource = FAOSTATDownload.datasource;
-    data.thousandSeparator = ',';
-    data.decimalSeparator = '.';
-    data.decimalNumbers = 2;
-    data.json = JSON.stringify({"limit": null, "query": query,"frequency": "NONE" }),
-    data.cssFilename = '';
-    data.nowrap = false;
-    data.valuesIndex = 0;
-    $('#datasource_WQ_csv').val(FAOSTATDownload.datasource);
-    $('#json_WQ_csv').val(data.json);
-    document.csvFormWithQuotes.submit();
-}
-
-function recTab1(label, arr, ind){
-    ret = "";
-    if (arr.length == ind + 1){
-        for (var i = 0; i < arr[ind].data.length; i++){
-            /* ret+=",MIN(["+label+arr[ind].data[i].label+"]) as ["+label+arr[ind].data[i].label+
-             "],MIN(["+label+arr[ind].data[i].label+"_u]) as ["
-             +label+arr[ind].data[i].label+"_u],MIN(["+label+arr[ind].data[i].label+"_f]) as ["+label+arr[ind].data[i].label+"_f]";*/
-            ret += ",CONCAT('''',MIN([" + label + arr[ind].data[i].label + "])) as [" + label + arr[ind].data[i].label +
-                    "],CONCAT('''',MIN([" + label + arr[ind].data[i].label + "_u])) as ["
-                    + label + arr[ind].data[i].label + "_u],CONCAT('''',MIN([" + label + arr[ind].data[i].label + "_f])) as [" + label + arr[ind].data[i].label + "_f]";
-        }
-    }
-    else{ for (var i = 0; i < arr[ind].data.length; i++){ret += recTab1(label + arr[ind].data[i].label + "_", arr, ind + 1);}}
-    return ret;
-}
-
-function recHeader(label, arr, ind){
-    ret = "";
-    if (arr.length == ind + 1){
-        for (var i = 0; i < arr[ind].data.length; i++){
-            ret += ",\"" + label + arr[ind].data[i].label +
-                "\",\"" + label + arr[ind].data[i].label + "_u\",\"" + label + arr[ind].data[i].label + "_f\"";
-        }
-    }
-    else{
-        for (var i = 0; i < arr[ind].data.length; i++){
-            //label+=arr[ind][i].label;
-            ret += recHeader(label + arr[ind].data[i].label + "_", arr, ind + 1);
-        }
-    }
-    return ret;
-}
-
-function recTab2(label, cond, arr, ind){
-    ret = "";
-    if (arr.length == ind + 1) {
-        for (var i = 0; i < arr[ind].data.length; i++){
-            ret += ",CASE when " + cond + " [" + FAOSTATNEWOLAP.traduction[arr[ind].title] + " Code]=''" + arr[ind].data[i].code + "''  then MIN(Value) end as [" + label + arr[ind].data[i].label + "],";
-            ret += "CASE when " + cond + " [" + FAOSTATNEWOLAP.traduction[arr[ind].title] + " Code]=''" + arr[ind].data[i].code + "''   then MIN(Unit) end as [" + label + arr[ind].data[i].label + "_u],";
-            ret += "CASE when " + cond + " [" + FAOSTATNEWOLAP.traduction[arr[ind].title] + " Code]=''" + arr[ind].data[i].code + "''   then MIN(Flag) end as [" + label + arr[ind].data[i].label + "_f]";
-        }
-    }
-    else {for (var i = 0; i < arr[ind].data.length; i++) {
-            my_cond = "[" + FAOSTATNEWOLAP.traduction[arr[ind].title] + " Code]=''" + arr[ind].data[i].code + "''";
-            ret += recTab2(label + arr[ind].data[i].label + "_", my_cond + " AND " + cond, arr, ind + 1);
-        }
-    }
-    return ret;
-}
-
-
-function retPivot1() {
-    var ret = "'" + retPivot3();
-    ret += recTab1("", FAOSTATNEWOLAP.PP.PP1, 0);
-    ret += "'";
-    return ret;
-}
-
-function retPivot2() {
-    var ret = "'" + retPivot3();
-    ret += recTab2("", "", FAOSTATNEWOLAP.PP.PP1, 0);
-    ret += "'"; 
-    return ret;
-}
-
-function retPivot3() {
-    ret = "";
-    for (i = 0; i < FAOSTATNEWOLAP.PP.PP3.length; i++){
-        if (i > 0) { ret += "," + FAOSTATNEWOLAP.traduction[FAOSTATNEWOLAP.PP.PP3[i]]; }
-        else {ret += FAOSTATNEWOLAP.traduction[FAOSTATNEWOLAP.PP.PP3[0]]; }
-    }
-    return ret;
-   }
-
-function ExcelComplete2(outputFormat){
-    FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
-    for (i = 0; i < document.getElementById('rows').getElementsByTagName('nobr').length; i++){
-        var d = document.getElementById('rows').getElementsByTagName('nobr')[i];
-        FAOSTATNEWOLAP.PP.PP3.push(d.innerHTML);
-    }
-    for (i = 0; i < document.getElementById('cols').getElementsByTagName('nobr').length; i++){
-        var d = document.getElementById('cols').getElementsByTagName('nobr')[i];
-        jj = -1;   title = "";
-        for (j = 0; j < FAOSTATNEWOLAP.schema.length; j++) {
-            if (FAOSTATNEWOLAP.schema[j][6] == d.innerHTML) {
-                jj = parseInt(FAOSTATNEWOLAP.schema[j][4]) - 1;
-                title = FAOSTATNEWOLAP.schema[j][1];
-                break;
-            }
-        }
-        if (jj > -1) {FAOSTATNEWOLAP.PP.PP1.push({"title": title, "data": F3DWLD.CONFIG.selectedValues[jj]});}
-        else { alert('not found' + d.innerHTML);}
-    }
-}
-
-function ExcelComplete(outputFormat){
-    FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
-    for (i = 0; i < document.getElementById('rows').getElementsByTagName('nobr').length; i++){
-        var d = document.getElementById('rows').getElementsByTagName('nobr')[i];
-        for (j = 0; j < FAOSTATNEWOLAP.schema.length; j++) {
-            if (FAOSTATNEWOLAP.schema[j][6] == d.innerHTML) {FAOSTATNEWOLAP.PP.PP3.push(FAOSTATNEWOLAP.schema[j][1]);}
-        }
-    }
-    for (i = 0; i < document.getElementById('cols').getElementsByTagName('nobr').length; i++){
-        var d = document.getElementById('cols').getElementsByTagName('nobr')[i];
-        jj = -1;  title = "";
-        for (j = 0; j < FAOSTATNEWOLAP.schema.length; j++) {
-            if (FAOSTATNEWOLAP.schema[j][6] == d.innerHTML){
-                jj = parseInt(FAOSTATNEWOLAP.schema[j][4]) - 1;
-                title = FAOSTATNEWOLAP.schema[j][1];
-                break;
-            }
-        }
-        if (jj > -1) { FAOSTATNEWOLAP.PP.PP1.push({"title": title, "data": F3DWLD.CONFIG.selectedValues[jj]}); }
-        else { alert('not found' + d.innerHTML); }
-    }
-    var data2 = {
-        datasource: F3DWLD.CONFIG.datasource,
-        thousandSeparator: " ",
-        decimalSeparator: ".",
-        decimalNumbers: "2",
-        json: JSON.stringify({"selects": null,
-            "froms": null, "wheres": null,"limit": null,
-            "query": "EXECUTE Warehouse.dbo.usp_GetData4 @DomainCode = " + F3DWLD.CONFIG.domainCode + ", " +
-                    "@lang = 'E'," +
-                    "@List1Codes = " + JSON.stringify(FAOSTATNEWOLAP.excelpayload.list1Codes).replace(/\"/g, "'").replace(/\[/g, "'(").replace(/\]/g, ")'") + "," +
-                    "@List2Codes = " + JSON.stringify(FAOSTATNEWOLAP.excelpayload.list2Codes).replace(/\"/g, "'").replace(/\[/g, "'(").replace(/\]/g, ")'") + ", " +
-                    "@List3Codes = " + JSON.stringify(FAOSTATNEWOLAP.excelpayload.list3Codes).replace(/\"/g, "'").replace(/\[/g, "'(").replace(/\]/g, ")'") + "," +
-                    "@List4Codes = " + JSON.stringify(FAOSTATNEWOLAP.excelpayload.list4Codes).replace(/\"/g, "'").replace(/\[/g, "'(").replace(/\]/g, ")'") + ", " +
-                    "@List5Codes = '', @List6Codes = '',  @List7Codes = '', " +
-                    "@NullValues = 0, " +
-                    "@Thousand = ''," +
-                    "@Decimal = ',',  " +
-                    "@DecPlaces = 2, " +
-                    "@Pivot1=" + retPivot1() + "," +
-                    "@Pivot2=" + retPivot2() + "," +
-                    "@Pivot3='" + retPivot3() + "'",
-            "frequency": "NONE"}),   cssFilename: "faostat", valueIndex: 1
-    };
- $.ajax({
-        type: 'POST', url: F3DWLD.CONFIG.data_url + '/table/' + outputFormat,data: data2,
-        success: function(response) {
-            document.getElementById('csvData').value = "";
-            for (j = 0; j < FAOSTATNEWOLAP.PP.PP3.length; j++){
-                if (j > 0) {   document.getElementById('csvData').value += ",";}
-                document.getElementById('csvData').value += FAOSTATNEWOLAP.traduction[FAOSTATNEWOLAP.PP.PP3[j]]
-            }
-            document.getElementById('csvData').value += recHeader("", FAOSTATNEWOLAP.PP.PP1, 0);
-            document.getElementById('csvData').value += "\n";
-           
-            if (outputFormat === 'html') {
-                document.getElementById("excelData").value = response;
-                document.getElementById("formExcel").submit();
-            }
-            else {
-                for (var i = 0; i < response.length; i++)
-                { document.getElementById('csvData').value += '"' + response[i].join('","') + "\"\n"; }
-                var r = confirm("Press a button!");
-                if (r == true) { document.getElementById('csvDataForm').submit();}
-            }
-        },
-        error: function(err, b, c) {   console.log(err);    }
-    });
-}
-
-function my_exportNewHTML() {
-    monclone = $("#pivot_table").clone();
-    $("#renderer", monclone).remove();
-    $(".ordre", monclone).remove();
-    $("#unused", monclone).remove();
-    $("#aggregator", monclone).remove();
-    $("#vals", monclone).remove();
-    $("#cols", monclone).remove();
-    $("#rows", monclone).remove();
-    $(".pvtTotalLabel", monclone).remove();
-    $(".pvtTotal", monclone).remove();
-    $(".invi", monclone).remove();
-    $("thead", monclone).remove();
-    $(".pvtGrandTotal", monclone).remove();
-    $("td", monclone).css("border", "1px solid black");
-    $("th", monclone).css("border", "1px solid black");
-    $(".table", monclone).css("border", "1px solid black");
-// var c=window.open('data:application/vnd.ms-excel,'+encodeURIComponent(monclone.html())) ;//t.preventDefault();
-
-    var today = new Date();
-    document.getElementById("excelData").value = "<table><tr><td>FAOSTAT " + today.getFullYear() + "</td><td colspan=2>Date : " + today.toLocaleDateString() + "</td></tr></table><table>" + monclone.html() + "</table>";
-    document.getElementById("excelData").value += "<table><tr><td></td></tr>";
-
-    var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
-    j = 0;
-    for (i = 0; i < testtd.length; i++) {       
-        if (j == 0) { document.getElementById("excelData").value += "<tr><td>"; j = 1;}
-        else { document.getElementById("excelData").value += "</td><td>";j = 0; }
-        document.getElementById("excelData").value += testtd[i].innerHTML;
-        if (j == 0) {  document.getElementById("excelData").value += "</tr>";  }
-    }
-    document.getElementById("excelData").value += "</table>";
-    document.getElementById("formExcel").submit();
-}
-
-function stringify(obj) {
-  var type = Object.prototype.toString.call(obj);
-  // IE8 <= 8 does not have array map
-  var map = Array.prototype.map || function map(callback) {
-    var ret = [];
-    for (var i = 0; i < this.length; i++) { ret.push(callback(this[i]));}
-    return ret;
-  };
-  if (type === '[object Object]') {
-    var pairs = [];
-    for (var k in obj) {
-      if (!obj.hasOwnProperty(k)) continue;
-      pairs.push([k, stringify(obj[k])]);
-    }
-    pairs.sort(function(a, b) { return a[0] < b[0] ? -1 : 1 });
-    pairs = map.call(pairs, function(v) {
-        if(v[0]!="format" && v[0]!="push" &&  v[0]!="value"){return '"' + v[0].replace(/"/g,"\\\"") + '":' +v[1];}
-        else{  return '"' + v[0].replace(/"/g,"\\\"") + '":""'; }
-    }
-);
-    return '{' + pairs + '}';
-  }
-  if (type === '[object Array]') {  return '[' + map.call(obj, function(v) {  return stringify(v) }) + ']';  }
-  return JSON.stringify(obj);
-};
-
-function my_exportNew() {
-
-  var mycols=[];
-  for(var c=0;c<FAOSTATNEWOLAP.internalData.rowAttrs.length;c++)
-  {if(F3DWLD.CONFIG.wdsPayload.showCodes && FAOSTATNEWOLAP.internalData.rowAttrs[c]!="Year" && FAOSTATNEWOLAP.internalData.rowAttrs[c]!="Annees" && FAOSTATNEWOLAP.internalData.rowAttrs[c]!="Anos")
-  { mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Code");        }
-          mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Name");
-         
-  }
-  flatColKeyst=[];
-tt=FAOSTATNEWOLAP.internalData.getColKeys();
-for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
-//console.log(FAOSTATNEWOLAP.internalData.tree);
- document.getElementById("myJson").value=stringify( {data:FAOSTATNEWOLAP.internalData.tree,
-     header:flatColKeyst,cols:mycols,swUnit:FAOSTATNEWOLAP.showUnits  ,
-     swFlag:FAOSTATNEWOLAP.showFlags
- 
-    });
-	
-	
-	/*for(i in FAOSTATNEWOLAP.flags)
-	{document.getElementById("myFlags").value+=',{"title":'+i+',"label":"'+FAOSTATNEWOLAP.flags[i]+'"}'}
-	*/
-	
-	try{
-            console.log('oki');
-            document.getElementById("myFlags").value='{"data":[';
-            var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
-    j = 0;
-    for (i = 0; i < testtd.length; i++) {
-	if(i>0){document.getElementById("myFlags").value+=','}
-        if (j == 0) {  document.getElementById("myFlags").value+='{"title":"'+testtd[i].innerHTML+'","label":"';     j = 1;  }
-        else {document.getElementById("myFlags").value+=testtd[i].innerHTML+'"}';  j = 0;   }
-       // ret += testtd[i].innerHTML;
-		}
-	
-	
-	
-	
-	document.getElementById("myFlags").value+=']}';
-        }catch(er){
-            console.log('probleme');
-    document.getElementById("myFlags").value='{"data":[{"title":"","label":"Official data"}]}';    
-    
-    
-    }
-  //document.getElementById("myJson").value=JSON.stringify({data:FAOSTATNEWOLAP.originalData,header:FAOSTATNEWOLAP.internalData.flatColKeys});
-    document.getElementById("xlsDataForm").submit();
-  }
-
-function decolrowspanNEW(){
-    
-    var today = new Date();
-    var reg = new RegExp("<span class=\"ordre\">[0-9]+</span>", "g");
-    var reg3 = new RegExp("<span class=\"ordre\"></span>", "g");
-    var reg2 = new RegExp("<table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g"); 
-    var row = FAOSTATNEWOLAP.internalData.tree;
-  //  var col = FAOSTATNEWOLAP.internalData.flatColKeys.sort();
-flatColKeyst=[];
-tt=FAOSTATNEWOLAP.internalData.getColKeys();
-for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
-    var col = flatColKeyst.sort();
-    var ret = "";
-    for (var j = 0; j < FAOSTATNEWOLAP.internalData.rowKeys[0].length; j++) {
-        
-        if (F3DWLD.CONFIG.wdsPayload.showCodes && FAOSTATNEWOLAP.internalData.rowAttrs[j]!="Year") { ret += "Code,";  }
-        ret += '"'+FAOSTATNEWOLAP.internalData.rowAttrs[j].replace("_", "") + "\",";
-    }
-   
-    for (j in col){
-        ret += '"'+col[j].replace(/,/g, "").replace(/\|\|/g, "-").replace(/&nbsp;/g, "").replace(reg2, "$2").replace(reg, "").replace(reg3, "")+'"';
-        if (FAOSTATNEWOLAP.showUnits) { ret += ",unit"; }
-        if (FAOSTATNEWOLAP.showFlags) {ret += ",flag"; }
-        ret += ",";
-    }
-    ret += "\n";
-    for (i in row) {
-        var temp=i.split("||");
-       for(var count=0;count<temp.length;count++)
-       {ret+='"'+temp[count].replace(/,/g, "").replace(reg2, "$1\",\"$2").replace(reg, "").replace(reg3, "")+"\",";}
-        for (j in col) {
-            try {
-                if (!row[i][col[j]]) {
-                    ret += ",";
-                    if (FAOSTATNEWOLAP.showUnits) {    ret += ","; }
-                    if (FAOSTATNEWOLAP.showFlags) { ret += ","; }
-                }
-                else {
-                    ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
-                    if (FAOSTATNEWOLAP.showUnits) {    ret +=  '"' + addCommas(row[i][col[j]].value()[1]) + '",'; }
-                    if (FAOSTATNEWOLAP.showFlags) { ret +=  '"' + addCommas(row[i][col[j]].value()[2]) + '",'; }
-				 /*
-                    ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
-                     if (FAOSTATNEWOLAP.showUnits) {   ret += '"' + row[i][col[j]].value()[1].replace(/&nbsp;/g, " ") + '",';  }
-                        if (FAOSTATNEWOLAP.showFlags) {
-                            if(FAOSTATNEWOLAP.showUnits){ ret += '"' + row[i][col[j]].value()[2].replace(/&nbsp;/g, " ") + '",';}
-                            else{ret += '"' + row[i][col[j]].value()[1].replace(/&nbsp;/g, " ") + '",';}
-                        }*/
-                    }
-                }  catch (ER) {}
-        }
-        ret += "\n";
-    }
-   try{ var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
-    j = 0;
-    for (i = 0; i < testtd.length; i++) {
-        if (j == 0) {   ret += "\n";     j = 1;  }
-        else {ret += ",";  j = 0;   }
-        ret += testtd[i].innerHTML;
-    }
-}catch(e){ console.log("WS getFlag not available");}
-    ret += "\n\nFAOSTAT " + today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
-    var link = document.createElement("a");
-    if (link.download !== undefined) { // feature detection
-        // Browsers that support HTML5 download attribute
-        var blob = new Blob(["\ufeff",ret], {type: 'text/csv;charset=UTF-8;'});
-        var url = URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", "fileName.csv");
-        link.style = "visibility:hidden";
-    }
-    else if (navigator.msSaveBlob) { // IE 10+
-        link.addEventListener("click", function(event) {
-            var blob = new Blob(["\ufeff",ret], { "type": "text/csv;charset=UTF-8;"});
-            navigator.msSaveBlob(blob, "fileName.csv");
-        }, false);
-    }
-    else{ document.getElementById('csvData').value=ret;   document.getElementById('csvDataForm').submit();}
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-function decolrowspanExcell(table){
-    var today = new Date(); 
-    ret="";
-    ret += "FAOSTAT " + today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
-    //ret=utf8_encode(ret);
-    var link = document.createElement("a");
-    if (link.download !== undefined) { // feature detection
-        // Browsers that support HTML5 download attribute
-        var blob = new Blob(["\ufeff",ret,table], {type: 'text/csv;charset=UTF-8;'});
-        var url = URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", "fileName.xls");
-        link.style = "visibility:hidden";
-    }
-    else  if (navigator.msSaveBlob) { // IE 10+
-        link.addEventListener("click", function(event) {
-            var blob = new Blob(["\ufeff",ret,table], {"type": "text/csv;charset=UTF-8;"});
-            navigator.msSaveBlob(blob, "fileName.xls");
-        }, false);
-    }
-    else{document.getElementById('csvData').value=ret+table;document.getElementById('csvDataForm').submit();}
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-function colapseCol(t, colspan, pos){
-    /*
-     var mySel=[];
-     for(var i=0;i<colspan;i++)
-     {c=pos+i;
-     mySel.push(".col"+c);}
-     test=$(mySel.join(","));
-     */
-}
-
-function showHideTotals() {//Not yet used
-    if ($("#cols li nobr").length * $("#rows li nobr").length == 0) {
-        $(".pvtTotalLabel").show();
-        $(".pvtTotal").show();
-        $(".pvtGrandTotal").show();
-    }
-    else {
-        $(".pvtTotalLabel").hide();
-        $(".pvtTotal").hide();
-        $(".pvtGrandTotal").hide();
-    }
-}
-
-function my_export(t) {
-    monclone = $("#newOlap").clone();
-    $("#renderer", monclone).remove();
-    $("#unused", monclone).remove();
-    $("#aggregator", monclone).remove();
-    $("#vals", monclone).remove();
-    $("#cols", monclone).remove();
-    $("#rows", monclone).remove();
-    $(".pvtTotalLabel", monclone).remove();
-    $(".pvtTotal", monclone).remove();
-    $(".invi", monclone).remove();
-    $(".pvtGrandTotal", monclone).remove();
-    $("td", monclone).css("border-left", "1px solid black");
-    $("td", monclone).css("border-top", "1px solid black");
-    $("th", monclone).css("border-left", "1px solid black");
-    $("th", monclone).css("border-top", "1px solid black");
-    $(".table", monclone).css("border-right", "1px solid black");
-    $(".table", monclone).css("border-bottom", "1px solid black");
-    document.getElementById("excelData").value = monclone.html();
-    document.getElementById("formExcel").submit();
-    //var c=window.open('data:application/vnd.ms-excel,'+encodeURIComponent(monclone.html())) ;//t.preventDefault();
-    // c.document.write(encodeURIComponent(monclone.html()));
-}
-/*
-function myInitOLAP(){
-    monXML = "";
-    var mesItems = "";
-    var bItem = 0;
-    var mesItemsXML = "{name:'ItemCode','nb':'1','val':{";
-    var arrItem = $('#gridItemsAggregated').jqxGrid('selectedrowindexes');
-    var listItem = "";
-    var mySelecteds = F3DWLD.CONFIG.selectedValues;
-     for (i = 0; i < mySelecteds.items.length; i++) {
-            arr = mySelecteds.items[i];
-            if (arr.type == "list") {
-                if (listItem == "") {listItem = "[{code:'" + arr.code + "',type:'list'}"; }
-                else {listItem += ",{code:'" + arr.code + "',type:'list'}";}
-            }
-            else {
-                if (mesItems == "") {mesItems = arr.code;}
-                else { mesItems += "," + arr.code;}
-                if (bItem != 0) { mesItemsXML += ",";}
-                else { bItem = 1;}
-                mesItemsXML += "'" + arr.code + "':{'E':'" + arr.label.replace(/'/g, " ") + "'}";
-            }
-        }
-    
-    if (listItem != "") {listItem += "]";}
-    else {listItem = "[]";}
-    var mesElements = "";
-    var mesElementsXML = "{name:'ElementCode','nb':'1','val':{";
-    for (i = 0; i < mySelecteds.elements.length; i++) {
-        arr = mySelecteds.elements[i];
-        if (mesElements == "") { mesElements = arr.code;}
-        else {mesElements += "," + arr.code;}
-        if (i != 0) {mesElementsXML += ",";}
-        mesElementsXML += "'" + arr.code + "':{'E':'" + arr.label.replace(/'/g, " ") + "'}";
-    }
-    mesElementsXML += "}}";
-    var mesCountries = "";
-    var bCountry = 0;
-    var mesCountriesXML = "{'name':'AreaCode','nb':'1','val':{";
-    var listCountry = "";
-    for (i = 0; i < mySelecteds.countries.length; i++) {
-        arr = mySelecteds.countries[i];
-        if (arr.type == "list") {
-            if (listCountry == "") {listCountry = "[{code:'" + arr.code + "',type:'list'}"; }
-            else { listCountry += ",{code:'" + arr.code + "',type:'list'}";}
-        }
-        else {
-            if (mesCountries == "") {mesCountries = arr.code;}
-            else {mesCountries += "," + arr.code;}
-            if (bCountry != 0) {mesCountriesXML += ",";} else { bCountry = 1;}
-            mesCountriesXML += "'" + arr.code + "':{'E':'" + arr.label.replace(/'/g, " ") + "'}";
-        }
-    }
-    if (listCountry != "" || listCountry == null) {listCountry += "]";}
-    else { listCountry = "[]";}
-    var data = {};
-    data.datasource = FAOSTATDownload.datasource;
-    data.domainCode = FAOSTATDownload.domainCode;
-    data.language = FAOSTATDownload.language;
-    data.countries = listCountry;
-    data.items = listItem;
-
-    $.ajax({
-        type: 'POST',
-        url: 'http://' + FAOSTATDownload.baseurl + '/bletchley/rest/codes/list/post',
-        data: data,
-        success: function(response) {
-            if (response.constructor === String) { response = jQuery.parseJSON(response);}  ;
-            testAjax = response[0];
-            for (var i = 0; i < testAjax.length; i++){
-                testAjax2 = testAjax[i];
-                if (mesCountries == "") {  mesCountries = testAjax2.code;}
-                else {mesCountries += "," + testAjax2.code;}
-                if (bCountry != 0) {mesCountriesXML += ",";}
-                else {bCountry = 1;}
-                mesCountriesXML += "'" + testAjax2.code + "':{'E':'" + testAjax2.label.replace(/'/g, " ") + "'}";
-            }
-            mesCountriesXML += "}}";
-            testAjax = response[1];
-            for (var i = 0; i < testAjax.length; i++) {
-                testAjax2 = testAjax[i];
-                if (mesItems == "") { mesItems = testAjax2.code;}
-                else {mesItems += "," + testAjax2.code;  }
-                if (bItem != 0) { mesItemsXML += ",";} else {bItem = 1;}
-                mesItemsXML += "'" + testAjax2.code + "':{'E':'" + testAjax2.label.replace(/'/g, " ") + "'}";
-            }
-            mesItemsXML += "}}";
-            var mesYears = "";
-            var mesYearsXML = "{'name':'Year',nb:'1','val':{";
-            for (i = 0; i < mySelecteds.years.length; i++) {
-                arr = mySelecteds.years[i];
-                if (mesYears == "") {mesYears = arr.code; }
-                else {mesYears += "," + arr.code;}
-                if (i != 0) {mesYearsXML += ",";}
-                mesYearsXML += "'" + arr.code + "':{'E':'" + arr.label.toString().replace(/'/g, " ") + "'}";
-            }
-            mesYearsXML += "}}";
-            FAOSTATOLAP2.queryParams.json = JSON.stringify(
-                    {"selects": [{"aggregation": "NONE", "column": "DOM.DomainNameE", "alias": "Domain"},
-                            {"aggregation": "NONE", "column": "A.AreaCode", "alias": "AreaCode"},
-                            {"aggregation": "NONE", "column": "A.AreaNameE", "alias": "Area"},
-                            {"aggregation": "NONE", "column": "I.ItemCode", "alias": "ItemCode"},
-                            {"aggregation": "NONE", "column": "I.ItemNameE", "alias": "Item"},
-                            {"aggregation": "NONE", "column": "E.ElementCode", "alias": "ElementCode"},
-                            {"aggregation": "NONE", "column": "E.ElementNameE", "alias": "Element"}, {"aggregation": "NONE", "column": "D.Year", "alias": "Year"},
-                            {"aggregation": "NONE", "column": "D.Value", "alias": "Value"},
-                            {"aggregation": "NONE", "column": "E.UnitNameE", "alias": "Unit"},
-                            {"aggregation": "NONE", "column": "Flag", "alias": "Flag"}
-                        ], "froms": [{"column": "Data", "alias": "D"}, {"column": "Item", "alias": "I"}, {"column": "Element", "alias": "E"},
-                            {"column": "Area", "alias": "A"}, {"column": "Domain", "alias": "DOM"}],
-                        "wheres": [
-                            {"datatype": "TEXT", "column": "D.DomainCode", "operator": "=", "value": "" + FAOSTATDownload.domainCode + "", "ins": []},
-                            {"datatype": "TEXT", "column": "DOM.DomainCode", "operator": "=", "value": "" + FAOSTATDownload.domainCode + "", "ins": []},
-                            {"datatype": "DATE", "column": "D.AreaCode", "operator": "=", "value": "A.AreaCode", "ins": []}, {"datatype": "DATE", "column": "D.DomainCode", "operator": "=", "value": "DOM.DomainCode", "ins": []}, {"datatype": "DATE", "column": "D.ItemCode", "operator": "=", "value": "I.ItemCode", "ins": []}, {"datatype": "DATE", "column": "D.ElementCode", "operator": "=", "value": "E.ElementCode", "ins": []}, {"datatype": "TEXT", "column": "D.ElementCode", "operator": "IN", "value": "E.ElementCode", "ins": eval("[" + mesElements + "]")}, {"datatype": "TEXT", "column": "D.AreaCode", "operator": "IN", "value": "A.AreaCode", "ins": eval("[" + mesCountries + "]")}, {"datatype": "TEXT", "column": "D.ItemCode", "operator": "IN", "value": "I.ItemCode", "ins": eval("[" + mesItems + "]")}, {"datatype": "TEXT", "column": "D.Year", "operator": "IN", "value": "D.Year", "ins": eval("[" + mesYears + "]")}], "orderBys": [{"column": "D.Year", "direction": "DESC"}, {"column": "A.AreaNameE", "direction": "ASC"}, {"column": "I.ItemNameE", "direction": "ASC"},
-                            {"column": "E.ElementNameE", "direction": "ASC"}], "limit": null, "query": null, "frequency": "NONE"}
-            );
-            //console.log(mesElements+"#"+mesCountries+"#"+mesItems+"#"+mesYears);
-            //myInitOLAP();
-            $.post("/wds/rest/table/json", FAOSTATOLAP2.queryParams).done(function(data) {
-                data = FAOSTATOLAP2.attr.concat(data);
-                $("#newOlap").pivotUI(data, FAOSTATOLAP2.options, FAOSTATOLAP2.displayOption.overwrite);
-            });
-        }
-    });
-}*/
-
-var internalTest;
-
-// Generated by CoffeeScript 1.7.1
 (function() {
+
   var $, PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, renderers, usFmt, usFmtInt, usFmtPct, zeroPad,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty;
+    __hasProp = {}.hasOwnProperty,
+	InternalID;
+	
   $ = jQuery;
   /*
   Utilities
@@ -944,24 +18,21 @@ var internalTest;
     x1 = x[0];
     x2 = x.length > 1 ? decimalSep + x[1] : '';
     rgx = /(\d+)(\d{3})/;
-    while (rgx.test(x1)) {
-      x1 = x1.replace(rgx, '$1' + thousandsSep + '$2');
-    }
+    while (rgx.test(x1)) {x1 = x1.replace(rgx, '$1' + thousandsSep + '$2');}
     return x1 + x2;
   };
 
-arrayFormat = function(opts) {
-        { sigfig = 3;  }
-         { scaler = 1;  }
-       return function(x) {
-      var result;
-      if (isNaN(x) || !isFinite(x)) { return "";  }
-      if (x === 0 && !opts.showZero) {  return "";  }
-      result = addSeparators((opts.scaler * x).toFixed(opts.digitsAfterDecimal), opts.thousandsSep, opts.decimalSep);
-      return "" + opts.prefix + result + opts.suffix;
-    };
-  };
-
+  arrayFormat = function(opts) {
+	  sigfig = 3;  
+	  scaler = 1;  
+	  return function(x) {
+	  var result;
+	  if (isNaN(x) || !isFinite(x)) {return "";}
+	  if (x === 0 && !opts.showZero) {return "";}
+	  result = addSeparators((opts.scaler * x).toFixed(opts.digitsAfterDecimal), opts.thousandsSep, opts.decimalSep);
+	  return "" + opts.prefix + result + opts.suffix;
+	  };
+	};
 
   numberFormat = function(opts) {
     var defaults;
@@ -974,6 +45,7 @@ arrayFormat = function(opts) {
       suffix: "",
       showZero: false
     };
+	
     opts = $.extend(defaults, opts);
     return function(x) {
       var result;
@@ -986,10 +58,8 @@ arrayFormat = function(opts) {
 
   usFmt = numberFormat();
   arrFmt = arrayFormat();
-  
   usFmtInt = numberFormat({  digitsAfterDecimal: 0  });
-
-  usFmtPct = numberFormat({ digitsAfterDecimal: 1,   scaler: 100,    suffix: "%"  });
+  usFmtPct = numberFormat({ digitsAfterDecimal: 1,scaler: 100,suffix: "%"  });
 
   aggregatorTemplates = {
     count: function(formatter) {
@@ -998,8 +68,8 @@ arrayFormat = function(opts) {
         return function(data, rowKey, colKey) {
           return {
             count: 0,
-            push: function() {  return this.count++;      },
-            value: function() {  return this.count;        },
+            push: function() {  return this.count++;},
+            value: function() {  return this.count;},
             format: formatter
           };
         };
@@ -1047,7 +117,6 @@ arrayFormat = function(opts) {
     sum: function(formatter) {
     if (formatter == null) {formatter = usFmt;}
       return function(_arg) {
-         
         var attr;
         attr = _arg[0];
         return function(data, rowKey, colKey) {
@@ -1074,8 +143,9 @@ arrayFormat = function(opts) {
             push: function(record) {
               if (!isNaN(parseFloat(record[attr]))) {
                   this.sum[0] += parseFloat(record[attr]);
-                 if( this.sum[2]=="_"){this.sum[2]=record["Flag"];
-				 FAOSTATNEWOLAP.flags[record["Flag"]]=1;} 
+                 if( this.sum[2]=="_"){this.sum[2]=record["Flag"]; 
+				 /*FAOSTATNEWOLAP.flags[record["Flag"]]=1;*/
+				 } 
                    if( this.sum[1]=="_"){this.sum[1]=record["Unit"];}
                   return this.sum;}
             },
@@ -1087,7 +157,6 @@ arrayFormat = function(opts) {
       };
     },
      
-    
     average: function(formatter) {
       if (formatter == null) {  formatter = usFmt;  }
       return function(_arg) {
@@ -1178,7 +247,7 @@ arrayFormat = function(opts) {
   };
 
   aggregators = (function(tpl) {
-    return {    //"Sum": tpl.sum2(arrayFormat),
+    return {//"Sum": tpl.sum2(arrayFormat),
          "Sum": tpl.sum(),
       "Count": tpl.count(usFmtInt),
       "Count Unique Values": tpl.countUnique(usFmtInt),
@@ -1196,120 +265,115 @@ arrayFormat = function(opts) {
       "Count as Fraction of Columns": tpl.fractionOf(tpl.count(), "col", usFmtPct)
     };
   })(aggregatorTemplates);
+  
   aggregators2 = (function(tpl) {
-    return {    //"Sum": tpl.sum2(arrayFormat),
-        // "Sum": tpl.sum(usFmtInt),
-          "SumUnit": tpl.sum2(arrayFormat),
-          "Sum": tpl.sum(usFmtInt),
-      //"Count": tpl.count(usFmtInt),
-     // "Integer Sum": tpl.sum(usFmtInt),
-      "Average": tpl.average(usFmt)
+    return {
+	//"Sum": tpl.sum2(arrayFormat),
+	// "Sum": tpl.sum(usFmtInt),
+	"SumUnit": tpl.sum2(arrayFormat),
+	"Sum": tpl.sum(usFmtInt),
+	//"Count": tpl.count(usFmtInt),
+	// "Integer Sum": tpl.sum(usFmtInt),
+	"Average": tpl.average(usFmt)
     };
   })(aggregatorTemplates);
 
-  renderers = {
-    "Table": function(pvtData, opts) {      return pivotTableRenderer(pvtData, opts);    },
-    "Table Barchart": function(pvtData, opts) {      return $(pivotTableRenderer(pvtData, opts)).barchart();    },
-    "Heatmap": function(pvtData, opts) {      return $(pivotTableRenderer(pvtData, opts)).heatmap();    },
-    "Row Heatmap": function(pvtData, opts) { return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");    },
-    "Col Heatmap": function(pvtData, opts) { return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");    }
-  };
-   renderers2 = {
+  /*renderers = {
+    "Table": function(pvtData, opts) {return pivotTableRenderer(pvtData, opts);},
+    "Table Barchart": function(pvtData, opts) {return $(pivotTableRenderer(pvtData, opts)).barchart();},
+    "Heatmap": function(pvtData, opts) {return $(pivotTableRenderer(pvtData, opts)).heatmap();},
+    "Row Heatmap": function(pvtData, opts) { return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");},
+    "Col Heatmap": function(pvtData, opts) { return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");}
+  };*/
+  
+  renderers2 = {
        "Table":function(pvtData, opts){
-	   if(navigator.appName.indexOf("Internet Explorer")!=-1){    //yeah, he's using IE
-    var badBrowser=(
+	
+	   if(navigator.appName.indexOf("Internet Explorer")!=-1){//yeah, he's using IE
+		var badBrowser=(
         /*navigator.appVersion.indexOf("MSIE 10")==-1 &&*/   //v9 is ok
-        navigator.appVersion.indexOf("MSIE 1")==-1  //v10, 11, 12, etc. is fine too
+        navigator.appVersion.indexOf("MSIE 1")==-1//v10, 11, 12, etc. is fine too
     );
-
-    if(badBrowser){
-        // navigate to error page
-		  $("#myGrid1_div").hide();
-          $("#fx-olap-graph-div").hide();
-           $("#fx-olap-holder-div").show();
-		  // $('#aggregator option[value="Sum"]').prop('selected', true);
-		  displayFlags();
-      return pivotTableRenderer(pvtData, opts);
+	if(badBrowser){
+	//navigate to error page
+	$("#"+opts.id+"_myGrid1_div").hide();
+	$("#"+opts.id+"_fx-olap-graph-div").hide();
+	$("#"+opts.id+"_fx-olap-holder-div").show();
+	// $('#aggregator option[value="Sum"]').prop('selected', true);
+	displayFlags();
+	return pivotTableRenderer(pvtData, opts);
     }
 	else{
-	
-	$("#myGrid1_div").show();
-           $("#fx-olap-graph-div").hide();
-           $("#fx-olap-holder-div").hide();
-          newGrid(pvtData);}
-}
-else{
-	
-           $("#myGrid1_div").show();
-           $("#fx-olap-graph-div").hide();
-           $("#fx-olap-holder-div").hide();
-          newGrid(pvtData);}
-	   
-         // return pivotTableRenderer(pvtData, opts)
-       },
-    "Table2": function(pvtData, opts) {
-          $("#myGrid1_div").hide();
-          $("#fx-olap-graph-div").hide();
-           $("#fx-olap-holder-div").show();
-      return pivotTableRenderer(pvtData, opts);
+	$("#"+opts.id+"_myGrid1_div").show();
+	$("#"+opts.id+"_fx-olap-graph-div").hide();
+	$("#"+opts.id+"_fx-olap-holder-div").hide();
+	newGrid(pvtData,opts.id);}
+	}
+	else{
+	$("#"+opts.id+"_myGrid1_div").show();
+	$("#"+opts.id+"_fx-olap-graph-div").hide();
+	$("#"+opts.id+"_fx-olap-holder-div").hide();
+	newGrid(pvtData,opts.id);}
+	// return pivotTableRenderer(pvtData, opts)
+	},
+	"Table2": function(pvtData, opts) {
+          $("#"+opts.id+"_myGrid1_div").hide();
+          $("#"+opts.id+"_fx-olap-graph-div").hide();
+           $("#"+opts.id+"_fx-olap-holder-div").show();
+		   return pivotTableRenderer(pvtData, opts);
     },
-    "Table Barchart": function(pvtData, opts) {
-        $("#myGrid1_div").hide();
-        $("#fx-olap-graph-div").hide();
-        $("#fx-olap-holder-div").show();
+	"Table Barchart": function(pvtData, opts) {
+        $("#"+opts.id+"_myGrid1_div").hide();
+        $("#"+opts.id+"_fx-olap-graph-div").hide();
+        $("#"+opts.id+"_fx-olap-holder-div").show();
         return $(pivotTableRenderer(pvtData, opts)).barchart();},
-    "Heatmap": function(pvtData, opts) {
-           $("#myGrid1_div").hide();
-           
-          $("#fx-olap-graph-div").hide();
-           $("#fx-olap-holder-div").show();
+	"Heatmap": function(pvtData, opts) {
+           $("#"+opts.id+"_myGrid1_div").hide();
+          $("#"+opts.id+"_fx-olap-graph-div").hide();
+           $("#"+opts.id+"_fx-olap-holder-div").show();
         return $(pivotTableRenderer(pvtData, opts)).heatmap(); },
-    "Row Heatmap": function(pvtData, opts) {
-           $("#myGrid1_div").hide();
-           
-          $("#fx-olap-graph-div").hide();
-           $("#fx-olap-holder-div").show();
-        return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");},
-    "Col Heatmap": function(pvtData, opts) {
-           $("#myGrid1_div").hide();
-           
-          $("#fx-olap-graph-div").hide();
-           $("#fx-olap-holder-div").show();
-        return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");}
-    ,"barchart":function(pvtData,opts){
-         $("#myGrid1_div").hide();
-           $("#fx-olap-holder-div").hide();
-             $("#fx-olap-graph-div").show();
-         $(pivotTableRenderer(pvtData, opts)).barhightchart("#fx-olap-graph-div","barchart"  );
+	"Row Heatmap": function(pvtData, opts) {
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").show();
+		return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");},
+	"Col Heatmap": function(pvtData, opts) {
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").show();
+        return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");},
+	"barchart":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).barhightchart(pvtData,"#"+opts.id+"_fx-olap-graph-div","barchart"  );
         
-    } ,"line chart":function(pvtData,opts){
-         $("#myGrid1_div").hide();
-           $("#fx-olap-holder-div").hide();
-             $("#fx-olap-graph-div").show();
-         $(pivotTableRenderer(pvtData, opts)).barhightchart("#fx-olap-graph-div","line"  );
-        
-    },"Area":function(pvtData,opts){
-         $("#myGrid1_div").hide();
-           $("#fx-olap-holder-div").hide();
-             $("#fx-olap-graph-div").show();
-         $(pivotTableRenderer(pvtData, opts)).barhightchart("#fx-olap-graph-div","area"  );
-        
-    },"Stacked barchart":function(pvtData,opts){
-         $("#myGrid1_div").hide();
-           $("#fx-olap-holder-div").hide();
-             $("#fx-olap-graph-div").show();
-         $(pivotTableRenderer(pvtData, opts)).barhightchart("#fx-olap-graph-div","stackedColumn"  );
-        
-    },
-    "OLAP":function(pvtData,opts){
-         $("#myGrid1_div").hide();
-           $("#fx-olap-holder-div").hide();
-             $("#fx-olap-graph-div").show();
-         $(pivotTableRenderer(pvtData, opts)).HPivot("#fx-olap-graph-div"  );
-        
-    }
-    
-  };
+		} ,
+	"line chart":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).barhightchart(pvtData,"#"+opts.id+"_fx-olap-graph-div","line"  );
+    	},
+	"Area":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).barhightchart(pvtData,"#"+opts.id+"_fx-olap-graph-div","area"  );
+		},
+	"Stacked barchart":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).barhightchart(pvtData,"#"+opts.id+"_fx-olap-graph-div","stackedColumn"  );
+		},
+	"OLAP":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).HPivot(pvtData,"#"+opts.id+"_fx-olap-graph-div"  );
+		}
+		};
   
   locales = {
     en2: {
@@ -1323,9 +387,7 @@ else{
         selectNone: "Select None",
         tooMany: "(too many to list)",
         filterResults: "Filter results",
-        totals: "Totals",
-        vs: "vs",
-        by: "by"
+        totals: "Totals",vs: "vs",by: "by"
       }
     },
     en: {
@@ -1339,9 +401,7 @@ else{
         selectNone: "Select None",
         tooMany: "(too many to list)",
         filterResults: "Filter results",
-        totals: "Totals",
-        vs: "vs",
-        by: "by"
+        totals: "Totals",vs: "vs",by: "by"
       }
     }
   };
@@ -1353,12 +413,12 @@ else{
   derivers = {
     bin: function(col, binWidth) { return function(record) { return record[col] - record[col] % binWidth; }; },
     dateFormat: function(col, formatString, mthNames, dayNames) {
-      if (mthNames == null) {        mthNames = mthNamesEn;      }
-      if (dayNames == null) {        dayNames = dayNamesEn;      }
+      if (mthNames == null) {mthNames = mthNamesEn;}
+      if (dayNames == null) {dayNames = dayNamesEn;}
       return function(record) {
         var date;
         date = new Date(Date.parse(record[col]));
-        if (isNaN(date)) {  return "";  }
+        if (isNaN(date)) {return "";}
         return formatString.replace(/%(.)/g, function(m, p) {
           switch (p) {
             case "y":return date.getFullYear();
@@ -1496,8 +556,7 @@ else{
     };
 
     PivotData.convertToArray = function(input) {
-      var result;
-      result = [];
+      var result;result = [];
       PivotData.forEachRecord(input, {}, function(record) { return result.push(record);      });
       return result;
     };
@@ -1514,17 +573,15 @@ else{
       return this.sorted = true;
     };
 
-    PivotData.prototype.getColKeys = function() {      this.sortKeys();      return this.colKeys;    };
+    PivotData.prototype.getColKeys = function() {this.sortKeys();return this.colKeys;};
 
-    PivotData.prototype.getRowKeys = function() {      this.sortKeys();      return this.rowKeys;    };
+    PivotData.prototype.getRowKeys = function() {this.sortKeys();return this.rowKeys;};
 
     PivotData.prototype.processRecord = function(record) {
       var colKey, flatColKey, flatRowKey, rowKey, x, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3;
-      colKey = [];
-      rowKey = [];
-      _ref = this.colAttrs;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) { 
-          x = _ref[_i];  colKey.push((_ref1 = record[x]) != null ? _ref1 : "null");
+      colKey = [];rowKey = [];_ref = this.colAttrs;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+	  x = _ref[_i];  colKey.push((_ref1 = record[x]) != null ? _ref1 : "null");
       }
       _ref2 = this.rowAttrs;
       for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
@@ -1569,20 +626,407 @@ else{
       else if (rowKey.length === 0) {agg = this.colTotals[flatColKey];}
       else if (colKey.length === 0) { agg = this.rowTotals[flatRowKey]; } 
       else { agg = this.tree[flatRowKey][flatColKey];}
-      return agg != null ? agg : {
-        value: (function() {return null;}),
-        format: function() {return "";}
-      };
+      return agg != null ? agg : {value: (function() {return null;}),format: function() {return "";}};
     };
     return PivotData;
   })();
-
 
   /*
   Default Renderer for hierarchical table layout
    */
 
-  pivotTableRenderer = function(pivotData, opts) {
+  /*
+  Pivot Table core: create PivotData object and call Renderer on it
+   */
+
+  $.fn.pivot = function(input, opts) {
+    var defaults, e, pivotData, result, x;
+    defaults = {
+      cols: [],rows: [],
+      filter: function() {return true;},
+      aggregator: aggregatorTemplates.count()(),
+      aggregatorName: "Count",derivedAttributes: {},
+      renderer: pivotTableRenderer,
+      rendererOptions: null,
+      localeStrings: locales.en.localeStrings
+    };
+    opts = $.extend(defaults, opts);
+    result = null;
+   /* FAOSTATNEWOLAP.internalData = new PivotData(input, opts);
+    result = opts.renderer(FAOSTATNEWOLAP.internalData, opts.rendererOptions);*/
+	 result = opts.renderer(new PivotData(input, opts), opts.rendererOptions);
+	x = this[0];
+	try{while (x.hasChildNodes()) {x.removeChild(x.lastChild);}}
+	catch(er){}
+	//$("#pivot1_fx-olap-holder-div").html(result)
+   
+	return this.append(result);
+  };
+
+  $.fn.pivotFin = function(input, inputOpts,internalDD, overwrite, locale){
+	InternalID=this.attr('id');
+	document.getElementById(InternalID).innerHTML="<div id='"+InternalID+"_fx-olap-ui'></div>"+
+	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-holder-div'></div>"+
+	"<div id='"+InternalID+"_fx-olap-ui_myGrid1_div'></div>"+
+	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-graph-div'></div>"+
+	"<div id='"+InternalID+"_fx-olap-ui_mesFlags' style='clear:both'></div>";
+	inputOpts.internalID=InternalID;
+	ret= $("#"+InternalID+"_fx-olap-ui").pivotUI(input, inputOpts, overwrite, locale);
+	return ret;
+	}
+  /*
+  Pivot Table UI: calls Pivot Table core above with options set by user
+   */
+  
+  
+  $.fn.pivotUI = function(input, inputOpts,overwrite, locale) {
+ 
+	var FAOSTATNEWOLAP = {};
+	FAOSTATNEWOLAP.pivotlimit = 200000;
+	FAOSTATNEWOLAP.pivotlimitExcel = 200000;
+	FAOSTATNEWOLAP.limitPivotPreview = 5000;//lignes
+	FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
+	FAOSTATNEWOLAP.excelpayload = {};
+	FAOSTATNEWOLAP.schema = {};
+	FAOSTATNEWOLAP.rendererV = 0;
+	FAOSTATNEWOLAP.nestedby = 0;
+	FAOSTATNEWOLAP.viewVals = 0;
+	FAOSTATNEWOLAP.decimal = 2;
+	FAOSTATNEWOLAP.showUnits = 0;
+	FAOSTATNEWOLAP.showFlags = 1;
+	FAOSTATNEWOLAP.firstCall = 1;
+	FAOSTATNEWOLAP.flags = {};
+	FAOSTATNEWOLAP.internalData = {};
+	FAOSTATNEWOLAP.originalData = [];
+	FAOSTATNEWOLAP.thousandSeparator = " ";
+	FAOSTATNEWOLAP.decimalSeparator = ".";
+
+
+	FAOSTATNEWOLAP.traduction ={
+	init:{E:"",F:"",S:""},
+	treeview:{E:"Tree view/Flat view ",F:"Vue hierachique / Vue plate",S:"Tree view/Flat view"},
+	perPage:{E:"Per Page",F:"Par Page",S:"Por Pagina"},
+	Page:{E:"Page",F:"Page",S:"Page"}
+	};
+
+ 
+    var a, aggregator, attrLength, axisValues, c, colList, defaults, e, existingOpts, i, initialRender, k, opts, pivotTable, refresh, refreshDelayed, renderer, rendererControl, shownAttributes, tblCols, tr1, tr2, uiTable, unusedAttrsVerticalAutoOverride, x, _fn, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _ref4;
+    if (overwrite == null) {overwrite = false;}
+    if (locale == null) {locale = "en";}
+	InternalID=this.attr('id');
+	defaults = {
+      derivedAttributes: {},
+      aggregators: locales[locale].aggregators,
+      renderers: locales[locale].renderers,
+      hiddenAttributes: [],menuLimit: 500,
+      cols: [],rows: [],vals: [],exclusions: {},
+      unusedAttrsVertical:false,// "auto",
+      autoSortUnusedAttrs: false,
+      rendererOptions: { localeStrings: locales[locale].localeStrings,id:InternalID},
+      onRefresh: null,filter: function() { return true;},
+      localeStrings: locales[locale].localeStrings
+    };
+    existingOpts = this.data("pivotUIOptions");
+    if ((existingOpts == null) || overwrite) {opts = $.extend(defaults, inputOpts);} else {opts = existingOpts;}
+    //try 
+	
+      input = PivotData.convertToArray(input);
+      tblCols = (function() {
+        var _ref, _results;
+        _ref = input[0];
+        _results = [];
+        for (k in _ref) {
+          if (!__hasProp.call(_ref, k)) continue;
+          _results.push(k);
+        }
+        return _results;
+      })();
+      _ref = opts.derivedAttributes;
+      for (c in _ref) {
+        if (!__hasProp.call(_ref, c)) continue;
+        if ((__indexOf.call(tblCols, c) < 0)) {tblCols.push(c); }
+      }
+      axisValues = {};
+      for (_i = 0, _len = tblCols.length; _i < _len; _i++) {
+        x = tblCols[_i];
+        axisValues[x] = {};
+      }
+      PivotData.forEachRecord(input, opts.derivedAttributes, function(record) {
+        var v, _base, _results;
+        _results = [];
+        for (k in record) {
+          if (!__hasProp.call(record, k)) continue;
+          v = record[k];
+          if (!(opts.filter(record))) { continue;  }
+          if (v == null) {   v = "null";  }
+          if ((_base = axisValues[k])[v] == null) {  _base[v] = 0; }
+          _results.push(axisValues[k][v]++);
+        }
+        return _results;
+      });
+      uiTable = $("<table cellpadding='5'>");
+      rendererControl = $("<td id='"+InternalID+"_vals'>");//class='pvtAxisContainer pvtUnused'
+      renderer = $("<select id='"+InternalID+"_renderer' class='pvtRenderer'>").appendTo(rendererControl).bind("change", function() 
+      { if ($("#"+InternalID+"_renderer").val() == "Table2" ||
+	  $("#"+InternalID+"_renderer").val() == "Table" || 
+	  $("#"+InternalID+"_renderer").val() == "OLAP") 
+		{ $('#'+InternalID+'_aggregator option[value="SumUnit"]').prop('selected', true); }
+        else { $('#'+InternalID+'_aggregator option[value="Sum"]').prop('selected', true);}
+        return refresh(); 
+      });
+	  
+      _ref1 = opts.renderers;
+	  
+      for (x in _ref1) {
+        if (!__hasProp.call(_ref1, x)) continue;
+        $("<option>").val(x).html(x).appendTo(renderer);
+      }
+  
+      colList = $("<td id='"+InternalID+"_unused' class='pvtAxisContainer pvtUnused'>");
+      shownAttributes = (function() {
+        var _j, _len1, _results;
+        _results = [];
+        for (_j = 0, _len1 = tblCols.length; _j < _len1; _j++) {
+          c = tblCols[_j];
+          _results.push(c); 
+      }
+      return _results;
+      })();
+      unusedAttrsVerticalAutoOverride = false;
+      if (opts.unusedAttrsVertical === "auto") {
+        attrLength = 0;
+        for (_j = 0, _len1 = shownAttributes.length; _j < _len1; _j++) {
+          a = shownAttributes[_j];
+          attrLength += a.length;
+        }
+        unusedAttrsVerticalAutoOverride = attrLength > 120;
+      }
+      if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) 
+	  { colList.addClass('pvtVertList'); } 
+      else {colList.addClass('pvtHorizList');}
+      _fn = function(c) {
+        var attrElem, btns, checkContainer, filterItem, filterItemExcluded, hasExcludedItem, keys, showFilterList, triangleLink, updateFilter, v, valueList, _k, _len2, _ref2;
+        keys = (function() {
+          var _results;
+          _results = [];
+          for (k in axisValues[c]) {  _results.push(k);  }
+          return _results;
+        })();
+        hasExcludedItem = false;
+        valueList = $("<div>").addClass('pvtFilterBox').hide();
+        valueList.append($("<h4>").text("" + c + " (" + keys.length + ")"));
+        if (keys.length > opts.menuLimit) {valueList.append($("<p>").html(opts.localeStrings.tooMany));} 
+        else {
+          btns = $("<p>").appendTo(valueList);
+          btns.append($("<button>").html(opts.localeStrings.selectAll).bind("click", function() {
+            return valueList.find("input:visible").prop("checked", true);
+          }));
+          btns.append($("<button>").html(opts.localeStrings.selectNone).bind("click", function() {
+            return valueList.find("input:visible").prop("checked", false);
+          }));
+          btns.append($("<input>").addClass("pvtSearch").attr("placeholder", opts.localeStrings.filterResults).bind("keyup", function() {
+            var filter;
+            filter = $(this).val().toLowerCase();
+            return $(this).parents(".pvtFilterBox").find('label >span').each(function() {
+              var testString;
+              testString = $(this).text().toLowerCase().indexOf(filter);
+              if (testString !== -1) {return $(this).parent().show();} 
+              else {  return $(this).parent().hide();  }
+            });
+          }));
+          checkContainer = $("<div>").addClass("pvtCheckContainer").appendTo(valueList);
+          _ref2 = keys.sort(naturalSort);
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            k = _ref2[_k];
+            v = axisValues[c][k];
+            filterItem = $("<label>");
+            filterItemExcluded = opts.exclusions[c] ? (__indexOf.call(opts.exclusions[c], k) >= 0) : false;
+            hasExcludedItem || (hasExcludedItem = filterItemExcluded);
+            $("<input type='checkbox' class='pvtFilter'>").attr("checked", !filterItemExcluded).data("filter", [c, k]).appendTo(filterItem);
+            filterItem.append($("<span>").html("" + k + " (" + v + ")"));
+            checkContainer.append($("<p>").append(filterItem));
+          }
+        }
+        updateFilter = function() {
+          var unselectedCount;
+          unselectedCount = $(valueList).find("[type='checkbox']").length - $(valueList).find("[type='checkbox']:checked").length;
+          if (unselectedCount > 0) {attrElem.addClass("pvtFilteredAttribute");   }
+          else {attrElem.removeClass("pvtFilteredAttribute");  }
+          if (keys.length > opts.menuLimit) {  return valueList.toggle();  } 
+          else { return valueList.toggle(0, refresh); }
+        };
+        $("<p>").appendTo(valueList).append($("<button>").text("OK").bind("click", updateFilter));
+        showFilterList = function(e) {
+            valueList.css({
+            left:300,// e.pageX,
+            top: 0//e.pageY
+          }).toggle();
+          $('.pvtSearch').val('');
+          return $('label').show();
+        };
+        triangleLink = $("<span class='pvtTriangle'>").html(" &#x25BE;").bind("click", showFilterList);
+         if (__indexOf.call(opts.hiddenAttributes, c) < 0) 
+		 { attrElem = $("<li class='axis_" + i + "' id='"+InternalID+"_filtre_"+c+"'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
+		}
+         else{
+		 attrElem = $("<li class='axis_" + i + " invi' id='"+InternalID+"_filtre_"+c+"'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
+         }
+         if (hasExcludedItem) { attrElem.addClass('pvtFilteredAttribute');}
+        colList.append(attrElem).append(valueList);
+       //$("body").append(attrElem).append(valueList);
+        return attrElem.bind("dblclick", showFilterList);
+      };
+      for (i in shownAttributes){c = shownAttributes[i]; _fn(c);}
+      tr1 = $("<tr>").appendTo(uiTable);
+      aggregator = $("<select  id='"+InternalID+"_aggregator' class='pvtAggregator'>").bind("change", function() 
+	  {return refresh();});
+      _ref2 = opts.aggregators;
+      for (x in _ref2) {
+        if (!__hasProp.call(_ref2, x)) continue;
+        aggregator.append($("<option>").val(x).html(x));
+      }
+    $("<td id='"+InternalID+"_cols' class='pvtAxisContainer pvtHorizList pvtCols'>").appendTo(tr1);
+    $("<td class='pvtVals'>").appendTo(uiTable).append(aggregator).append($("<br>"));
+    tr2 = $("<tr>").appendTo(uiTable);
+     // tr2.append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>"));
+	tr2.append($("<td id="+InternalID+"_pretd1>"));
+    // pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
+	
+   $("#"+InternalID+"_fx-olap-holder-div").empty();
+   
+   pivotTable = $("<td valign='top' id='"+InternalID+"_pvtRendererArea' class='pvtRendererArea'>").append("<div  id='"+InternalID+"_pivot_table'>").appendTo($("#"+InternalID+"_fx-olap-holder-div"));
+
+      if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
+        uiTable.find('tr:nth-child(1)').prepend(colList);
+        uiTable.find('tr:nth-child(2)').prepend(rendererControl);
+      } else {
+		uiTable.prepend($("<tr>").append($("<td id='"+InternalID+"_rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>")).prepend($("<td id='"+InternalID+"_pretd'>&nbsp;</td>")));
+		uiTable.prepend($("<tr>").append(colList));
+		uiTable.prepend($("<tr>").append(rendererControl)); 
+    }
+	
+	//$("#fx-olap-holder-div").html(uiTable);
+      this.html(uiTable);
+      _ref3 = opts.cols;
+      for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
+        x = _ref3[_k];
+        this.find(".pvtCols").append(this.find(".axis_" + (shownAttributes.indexOf(x))));
+      }
+      _ref4 = opts.rows;
+      for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+        x = _ref4[_l];
+        this.find(".pvtRows").append(this.find(".axis_" + (shownAttributes.indexOf(x))));
+      }
+      if (opts.aggregatorName != null) {this.find(".pvtAggregator").val(opts.aggregatorName);}
+      if (opts.rendererName != null) {this.find(".pvtRenderer").val(opts.rendererName);}
+      initialRender = true;
+      refreshDelayed = (function(_this) {
+        return function() {
+          var attr, exclusions, natSort, newDropdown, numInputsToProcess, pivotUIOptions, pvtVals, subopts, unusedAttrsContainer, vals, _len4, _m, _n, _ref5;
+          subopts = {
+            derivedAttributes: opts.derivedAttributes,
+            localeStrings: opts.localeStrings,
+            rendererOptions: opts.rendererOptions,
+            cols: [], rows: []
+          };
+          numInputsToProcess = (_ref5 = opts.aggregators[aggregator.val()]([])().numInputs) != null ? _ref5 : 0;
+          vals = [];
+          _this.find(".pvtRows li span.pvtAttr").each(function() { return subopts.rows.push($(this).data("attrName"));});
+          _this.find(".pvtCols li span.pvtAttr").each(function() {return subopts.cols.push($(this).data("attrName"));});
+          _this.find(".pvtVals select.pvtAttrDropdown").each(function() {
+            if (numInputsToProcess === 0) {  return $(this).remove(); } 
+            else {
+              numInputsToProcess--;
+              if ($(this).val() !== "") {  return vals.push($(this).val()); }
+            }
+          });
+          if (numInputsToProcess !== 0) {
+            pvtVals = _this.find(".pvtVals");
+            for (x = _m = 0; 0 <= numInputsToProcess ? _m < numInputsToProcess : _m > numInputsToProcess; x = 0 <= numInputsToProcess ? ++_m : --_m) {
+              newDropdown = $("<select class='pvtAttrDropdown'>").append($("<option>")).bind("change", function() {
+                return refresh();
+              });
+              for (_n = 0, _len4 = shownAttributes.length; _n < _len4; _n++) {
+                attr = shownAttributes[_n];
+                newDropdown.append($("<option>").val(attr).html(attr));
+              }
+              pvtVals.append(newDropdown);
+            }
+          }
+          if (initialRender) {
+            vals = opts.vals;
+            i = 0;
+            _this.find(".pvtVals select.pvtAttrDropdown").each(function() {
+              $(this).val(vals[i]);
+              return i++;
+            });
+            initialRender = false;
+          }
+          subopts.aggregatorName = aggregator.val();
+          subopts.vals = vals;
+          subopts.aggregator = opts.aggregators[aggregator.val()](vals);
+          subopts.renderer = opts.renderers[renderer.val()];
+          exclusions = {};
+          _this.find('input.pvtFilter').not(':checked').each(function() {
+            var filter;
+            filter = $(this).data("filter");
+            if (exclusions[filter[0]] != null) { return exclusions[filter[0]].push(filter[1]); } 
+            else {return exclusions[filter[0]] = [filter[1]];   }
+          });
+          subopts.filter = function(record) {
+            var excludedItems, _ref6;
+            if (!opts.filter(record)) { return false; }
+            for (k in exclusions) {
+              excludedItems = exclusions[k];
+              if (_ref6 = "" + record[k], __indexOf.call(excludedItems, _ref6) >= 0) { return false; }
+            }
+            return true;
+          };
+        var d = new Date();
+
+
+		pivotTable.pivot(input, subopts);
+          pivotUIOptions = $.extend(opts, {
+            cols: subopts.cols,
+            rows: subopts.rows,
+            vals: vals,
+            exclusions: exclusions,
+            aggregatorName: aggregator.val(),
+            rendererName: renderer.val()
+          });
+          _this.data("pivotUIOptions", pivotUIOptions);
+          if (opts.autoSortUnusedAttrs) {
+            natSort = $.pivotUtilities.naturalSort;
+            unusedAttrsContainer = _this.find("td.pvtUnused.pvtAxisContainer");
+            $(unusedAttrsContainer).children("li").sort(function(a, b) {
+              return natSort($(a).text(), $(b).text());
+            }).appendTo(unusedAttrsContainer);
+          }
+          pivotTable.css("opacity", 1);
+          if (opts.onRefresh != null) {return opts.onRefresh(pivotUIOptions);}
+        };
+      })(this);
+      refresh = (function(_this) {
+        return function() {
+          pivotTable.css("opacity", 0.5);
+          return setTimeout(refreshDelayed, 10);
+        };
+      })(this);
+      refresh();
+      this.find(".pvtAxisContainer").sortable({
+        update: function(e, ui) {if (ui.sender == null) {return refresh();}},
+        connectWith: this.find(".pvtAxisContainer"),
+        items: 'li',
+        placeholder: 'pvtPlaceholder'
+      });
+	  
+    return this;
+  };
+ /*
+  Heatmap post-processing
+   */
+   
+   pivotTableRenderer = function(pivotData, opts) {
     var aggregator, c, colAttrs, colKey, colKeys, defaults, i, j, r, result, rowAttrs, rowKey, rowKeys, spanSize, td, th, totalAggregator, tr, txt, val, x;
     defaults = {localeStrings: { totals: "Totals"  }};
     opts = $.extend(defaults, opts);
@@ -1596,10 +1040,9 @@ else{
       var len, noDraw, stop, x, _i, _j;
       if (i !== 0) {
         noDraw = true;
-        for (x = _i = 0; 0 <= j ? _i <= j : _i >= j; x = 0 <= j ? ++_i : --_i) {
-          if (arr[i - 1][x] !== arr[i][x]) {noDraw = false;}
-        }
-        if (noDraw) {  return -1;  }
+        for (x = _i = 0; 0 <= j ? _i <= j : _i >= j; x = 0 <= j ? ++_i : --_i) 
+		{if (arr[i - 1][x] !== arr[i][x]) {noDraw = false;}}
+        if (noDraw) {return -1;}
       }
       len = 0;
       while (i + len < arr.length) {
@@ -1689,21 +1132,21 @@ else{
         colKey = colKeys[j];
         aggregator = pivotData.getAggregator(rowKey, colKey);
         val = aggregator.value();
-	//	console.log(aggregator.format(val));
         td = document.createElement("td");
         td.className = "pvtVal row" + i + " col" + j;
-		//valDisplay=val.split(",");
+       //V1	  
+	   td.innerHTML = aggregator.format(val);
+
+       /*try{
+		var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);		
+		if(FAOSTATNEWOLAP.showUnits){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}		
+		if(FAOSTATNEWOLAP.showFlags){monInnerTemp +="<td width=\"33%\">"+val[2]+"</td>";}		
+		monInnerTemp+="</tr></table>";		
+		td.innerHTML=monInnerTemp;		
+		}catch(er){monInnerTemp=aggregator.format(val);}
+		*/
 		
-       try{ var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);
-		if(FAOSTATNEWOLAP.showUnits){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}
-		if(FAOSTATNEWOLAP.showFlags){monInnerTemp +="<td width=\"33%\">"+val[2]+"</td>";}
-		
-		monInnerTemp+="</tr></table>";
-		
-		 td.innerHTML=monInnerTemp;
-		}
-                catch(er){monInnerTemp=aggregator.format(val);}
-        td.setAttribute("data-value", val);
+		td.setAttribute("data-value", val);
         tr.appendChild(td);
       }
       totalAggregator = pivotData.getAggregator(rowKey, []);
@@ -1747,454 +1190,86 @@ else{
     return result;
   };
 
-
-  /*
-  Pivot Table core: create PivotData object and call Renderer on it
-   */
-
-  $.fn.pivot = function(input, opts) {
-    var defaults, e, pivotData, result, x;
-    defaults = {
-      cols: [],
-      rows: [],
-      filter: function() {        return true;      },
-      aggregator: aggregatorTemplates.count()(),
-      aggregatorName: "Count",
-      derivedAttributes: {},
-      renderer: pivotTableRenderer,
-      rendererOptions: null,
-      localeStrings: locales.en.localeStrings
-    };
-    opts = $.extend(defaults, opts);
-    result = null;
-    FAOSTATNEWOLAP.internalData = new PivotData(input, opts);
-    result = opts.renderer(FAOSTATNEWOLAP.internalData, opts.rendererOptions);
-   x = this[0];
-   while (x.hasChildNodes()) {      x.removeChild(x.lastChild);    }
-    return this.append(result);
-  };
-  /*
-  Pivot Table UI: calls Pivot Table core above with options set by user
-   */
-  $.fn.pivotUI = function(input, inputOpts, overwrite, locale) {
-    var a, aggregator, attrLength, axisValues, c, colList, defaults, e, existingOpts, i, initialRender, k, opts, pivotTable, refresh, refreshDelayed, renderer, rendererControl, shownAttributes, tblCols, tr1, tr2, uiTable, unusedAttrsVerticalAutoOverride, x, _fn, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _ref4;
-    if (overwrite == null) {  overwrite = false;    }
-    if (locale == null) { locale = "en";    }
-    defaults = {
-      derivedAttributes: {},
-      aggregators: locales[locale].aggregators,
-      renderers: locales[locale].renderers,
-      hiddenAttributes: [],
-      menuLimit: 500,
-      cols: [],
-      rows: [],
-      vals: [],
-      exclusions: {},
-      unusedAttrsVertical:false,// "auto",
-      autoSortUnusedAttrs: false,
-      rendererOptions: { localeStrings: locales[locale].localeStrings},
-      onRefresh: null,
-      filter: function() { return true;},
-      localeStrings: locales[locale].localeStrings
-    };
-    existingOpts = this.data("pivotUIOptions");
-    if ((existingOpts == null) || overwrite) {opts = $.extend(defaults, inputOpts);} else {opts = existingOpts;}
-    //try 
-	{
-      input = PivotData.convertToArray(input);
-      tblCols = (function() {
-        var _ref, _results;
-        _ref = input[0];
-        _results = [];
-        for (k in _ref) {
-          if (!__hasProp.call(_ref, k)) continue;
-          _results.push(k);
-        }
-        return _results;
-      })();
-      _ref = opts.derivedAttributes;
-      for (c in _ref) {
-        if (!__hasProp.call(_ref, c)) continue;
-        if ((__indexOf.call(tblCols, c) < 0)) {tblCols.push(c); }
-      }
-      axisValues = {};
-      for (_i = 0, _len = tblCols.length; _i < _len; _i++) {
-        x = tblCols[_i];
-        axisValues[x] = {};
-      }
-      PivotData.forEachRecord(input, opts.derivedAttributes, function(record) {
-        var v, _base, _results;
-        _results = [];
-        for (k in record) {
-          if (!__hasProp.call(record, k)) continue;
-          v = record[k];
-          if (!(opts.filter(record))) { continue;  }
-          if (v == null) {   v = "null";  }
-          if ((_base = axisValues[k])[v] == null) {  _base[v] = 0; }
-          _results.push(axisValues[k][v]++);
-        }
-        return _results;
-      });
-      uiTable = $("<table cellpadding='5'>");
-      rendererControl = $("<td id='vals' >");//class='pvtAxisContainer pvtUnused'
-      renderer = $("<select id='renderer' class='pvtRenderer'>").appendTo(rendererControl).bind("change", function() 
-      { if ($("#renderer").val() == "Table" || $("#renderer").val() == "OLAP") { $('#aggregator option[value="SumUnit"]').prop('selected', true); }
-        else { $('#aggregator option[value="Sum"]').prop('selected', true);}
-        return refresh(); 
-      });
-      _ref1 = opts.renderers;
-      for (x in _ref1) {
-        if (!__hasProp.call(_ref1, x)) continue;
-        $("<option>").val(x).html(x).appendTo(renderer);
-      }
-  
-      colList = $("<td id='unused' class='pvtAxisContainer pvtUnused'>");
-      shownAttributes = (function() {
-        var _j, _len1, _results;
-        _results = [];
-        for (_j = 0, _len1 = tblCols.length; _j < _len1; _j++) {
-          c = tblCols[_j];
-          _results.push(c); 
-      }
-      return _results;
-      })();
-      unusedAttrsVerticalAutoOverride = false;
-      if (opts.unusedAttrsVertical === "auto") {
-        attrLength = 0;
-        for (_j = 0, _len1 = shownAttributes.length; _j < _len1; _j++) {
-          a = shownAttributes[_j];
-          attrLength += a.length;
-        }
-        unusedAttrsVerticalAutoOverride = attrLength > 120;
-      }
-      if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) { colList.addClass('pvtVertList'); } 
-      else { colList.addClass('pvtHorizList');}
-      _fn = function(c) {
-        var attrElem, btns, checkContainer, filterItem, filterItemExcluded, hasExcludedItem, keys, showFilterList, triangleLink, updateFilter, v, valueList, _k, _len2, _ref2;
-        keys = (function() {
-          var _results;
-          _results = [];
-          for (k in axisValues[c]) {  _results.push(k);  }
-          return _results;
-        })();
-        hasExcludedItem = false;
-        valueList = $("<div>").addClass('pvtFilterBox').hide();
-        valueList.append($("<h4>").text("" + c + " (" + keys.length + ")"));
-        if (keys.length > opts.menuLimit) {valueList.append($("<p>").html(opts.localeStrings.tooMany));} 
-        else {
-          btns = $("<p>").appendTo(valueList);
-          btns.append($("<button>").html(opts.localeStrings.selectAll).bind("click", function() {
-            return valueList.find("input:visible").prop("checked", true);
-          }));
-          btns.append($("<button>").html(opts.localeStrings.selectNone).bind("click", function() {
-            return valueList.find("input:visible").prop("checked", false);
-          }));
-          btns.append($("<input>").addClass("pvtSearch").attr("placeholder", opts.localeStrings.filterResults).bind("keyup", function() {
-            var filter;
-            filter = $(this).val().toLowerCase();
-            return $(this).parents(".pvtFilterBox").find('label >span').each(function() {
-              var testString;
-              testString = $(this).text().toLowerCase().indexOf(filter);
-              if (testString !== -1) {return $(this).parent().show();} 
-              else {  return $(this).parent().hide();  }
-            });
-          }));
-          checkContainer = $("<div>").addClass("pvtCheckContainer").appendTo(valueList);
-          _ref2 = keys.sort(naturalSort);
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            k = _ref2[_k];
-            v = axisValues[c][k];
-            filterItem = $("<label>");
-            filterItemExcluded = opts.exclusions[c] ? (__indexOf.call(opts.exclusions[c], k) >= 0) : false;
-            hasExcludedItem || (hasExcludedItem = filterItemExcluded);
-            $("<input type='checkbox' class='pvtFilter'>").attr("checked", !filterItemExcluded).data("filter", [c, k]).appendTo(filterItem);
-            filterItem.append($("<span>").html("" + k + " (" + v + ")"));
-            checkContainer.append($("<p>").append(filterItem));
-          }
-        }
-        updateFilter = function() {
-          var unselectedCount;
-          unselectedCount = $(valueList).find("[type='checkbox']").length - $(valueList).find("[type='checkbox']:checked").length;
-          if (unselectedCount > 0) {attrElem.addClass("pvtFilteredAttribute");   }
-          else {attrElem.removeClass("pvtFilteredAttribute");  }
-          if (keys.length > opts.menuLimit) {  return valueList.toggle();  } 
-          else { return valueList.toggle(0, refresh); }
-        };
-        $("<p>").appendTo(valueList).append($("<button>").text("OK").bind("click", updateFilter));
-        showFilterList = function(e) {
-            valueList.css({
-            left:300,// e.pageX,
-            top: 550//e.pageY
-          }).toggle();
-          $('.pvtSearch').val('');
-          return $('label').show();
-        };
-      
-        triangleLink = $("<span class='pvtTriangle'>").html(" &#x25BE;").bind("click", showFilterList);
-         if (__indexOf.call(opts.hiddenAttributes, c) < 0) { attrElem = $("<li class='axis_" + i + "' id='filtre_"+c+"'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
-      }
-         else{
-              attrElem = $("<li class='axis_" + i + " invi' id='filtre_"+c+"'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
-         }
-         if (hasExcludedItem) { attrElem.addClass('pvtFilteredAttribute');        }
-        colList.append(attrElem).append(valueList);
-       //$("body").append(attrElem).append(valueList);
-        return attrElem.bind("dblclick", showFilterList);
-      };
-      for (i in shownAttributes){c = shownAttributes[i]; _fn(c);}
-      tr1 = $("<tr>").appendTo(uiTable);
-      aggregator = $("<select  id='aggregator' class='pvtAggregator'>").bind("change", function() {       return refresh();      });
-      _ref2 = opts.aggregators;
-      for (x in _ref2) {
-        if (!__hasProp.call(_ref2, x)) continue;
-        aggregator.append($("<option>").val(x).html(x));
-      }
-     $("<td id='cols' class='pvtAxisContainer pvtHorizList pvtCols'>").appendTo(tr1);
-      $("<td class='pvtVals'>").appendTo(uiTable).append(aggregator).append($("<br>"));
-     tr2 = $("<tr>").appendTo(uiTable);
-     // tr2.append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>"));
-    tr2.append($("<td id=pretd1>"));
-    // pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
-   $("#fx-olap-holder-div").empty();
-   pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo($("#fx-olap-holder-div"));
-      if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
-        uiTable.find('tr:nth-child(1)').prepend(colList);
-        uiTable.find('tr:nth-child(2)').prepend(rendererControl);
-      } else {
-          uiTable.prepend($("<tr>").append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>")).prepend($("<td id='pretd'>&nbsp;</td>")));
-          uiTable.prepend($("<tr>").append(colList));
-         uiTable.prepend($("<tr>").append(rendererControl)); 
-    }
-      this.html(uiTable);
-      _ref3 = opts.cols;
-      for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
-        x = _ref3[_k];
-        this.find(".pvtCols").append(this.find(".axis_" + (shownAttributes.indexOf(x))));
-      }
-      _ref4 = opts.rows;
-      for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
-        x = _ref4[_l];
-        this.find(".pvtRows").append(this.find(".axis_" + (shownAttributes.indexOf(x))));
-      }
-      if (opts.aggregatorName != null) { this.find(".pvtAggregator").val(opts.aggregatorName); }
-      if (opts.rendererName != null) {this.find(".pvtRenderer").val(opts.rendererName);}
-      initialRender = true;
-      refreshDelayed = (function(_this) {
-        return function() {
-          var attr, exclusions, natSort, newDropdown, numInputsToProcess, pivotUIOptions, pvtVals, subopts, unusedAttrsContainer, vals, _len4, _m, _n, _ref5;
-          subopts = {
-            derivedAttributes: opts.derivedAttributes,
-            localeStrings: opts.localeStrings,
-            rendererOptions: opts.rendererOptions,
-            cols: [], rows: []
-          };
-          numInputsToProcess = (_ref5 = opts.aggregators[aggregator.val()]([])().numInputs) != null ? _ref5 : 0;
-          vals = [];
-          _this.find(".pvtRows li span.pvtAttr").each(function() { return subopts.rows.push($(this).data("attrName"));});
-          _this.find(".pvtCols li span.pvtAttr").each(function() {return subopts.cols.push($(this).data("attrName"));});
-          _this.find(".pvtVals select.pvtAttrDropdown").each(function() {
-            if (numInputsToProcess === 0) {  return $(this).remove(); } 
-            else {
-              numInputsToProcess--;
-              if ($(this).val() !== "") {  return vals.push($(this).val()); }
-            }
-          });
-          if (numInputsToProcess !== 0) {
-            pvtVals = _this.find(".pvtVals");
-            for (x = _m = 0; 0 <= numInputsToProcess ? _m < numInputsToProcess : _m > numInputsToProcess; x = 0 <= numInputsToProcess ? ++_m : --_m) {
-              newDropdown = $("<select class='pvtAttrDropdown'>").append($("<option>")).bind("change", function() {
-                return refresh();
-              });
-              for (_n = 0, _len4 = shownAttributes.length; _n < _len4; _n++) {
-                attr = shownAttributes[_n];
-                newDropdown.append($("<option>").val(attr).html(attr));
-              }
-              pvtVals.append(newDropdown);
-            }
-          }
-          if (initialRender) {
-            vals = opts.vals;
-            i = 0;
-            _this.find(".pvtVals select.pvtAttrDropdown").each(function() {
-              $(this).val(vals[i]);
-              return i++;
-            });
-            initialRender = false;
-          }
-          subopts.aggregatorName = aggregator.val();
-          subopts.vals = vals;
-          subopts.aggregator = opts.aggregators[aggregator.val()](vals);
-          subopts.renderer = opts.renderers[renderer.val()];
-          exclusions = {};
-          _this.find('input.pvtFilter').not(':checked').each(function() {
-            var filter;
-            filter = $(this).data("filter");
-            if (exclusions[filter[0]] != null) { return exclusions[filter[0]].push(filter[1]); } 
-            else {return exclusions[filter[0]] = [filter[1]];   }
-          });
-          subopts.filter = function(record) {
-            var excludedItems, _ref6;
-            if (!opts.filter(record)) { return false; }
-            for (k in exclusions) {
-              excludedItems = exclusions[k];
-              if (_ref6 = "" + record[k], __indexOf.call(excludedItems, _ref6) >= 0) { return false; }
-            }
-            return true;
-          };
-        
-          pivotTable.pivot(input, subopts);
-          pivotUIOptions = $.extend(opts, {
-            cols: subopts.cols,
-            rows: subopts.rows,
-            vals: vals,
-            exclusions: exclusions,
-            aggregatorName: aggregator.val(),
-            rendererName: renderer.val()
-          });
-          _this.data("pivotUIOptions", pivotUIOptions);
-          if (opts.autoSortUnusedAttrs) {
-            natSort = $.pivotUtilities.naturalSort;
-            unusedAttrsContainer = _this.find("td.pvtUnused.pvtAxisContainer");
-            $(unusedAttrsContainer).children("li").sort(function(a, b) {
-              return natSort($(a).text(), $(b).text());
-            }).appendTo(unusedAttrsContainer);
-          }
-          pivotTable.css("opacity", 1);
-          if (opts.onRefresh != null) {
-            return opts.onRefresh(pivotUIOptions);
-          }
-        };
-      })(this);
-      refresh = (function(_this) {
-       
-        return function() {
-          pivotTable.css("opacity", 0.5);
-          return setTimeout(refreshDelayed, 10);
-        };
-      })(this);
-      refresh();
-      this.find(".pvtAxisContainer").sortable({
-        update: function(e, ui) {
-          if (ui.sender == null) { return refresh(); }
-        },
-        connectWith: this.find(".pvtAxisContainer"),
-        items: 'li',
-        placeholder: 'pvtPlaceholder'
-      });
-    }
-	/*catch (_error) {
-      e = _error;
-      if (typeof console !== "undefined" && console !== null) {
-        console.error(e.stack);
-      }
-      this.html(opts.localeStrings.uiRenderError);
-    }*/
-    return this;
-  };
-
-
-  /*
-  Heatmap post-processing
-   */
-
-    $.fn.HPivot=function(id)
-{
-    
-    
-    
-   var mydata=[];
-   var myfield={ Area: {field: 'Area', sort: "asc", showAll: true, agregateType: "distinct", label: "Area"},
-  Item: {field: 'Item', sort: "asc", showAll: true, agregateType: "distinct", label: "Item"},
-  Element: {field: 'Element', sort: "asc", showAll: true, agregateType: "distinct", label: "Element"},
-  Year: {field: 'Year', sort: "asc", showAll: true, agregateType: "distinct", label: "Year"},
+	$.fn.HPivot=function(pivotData,id){
+	var mydata=[];
+	var myfield=
+	{/* Area: {field: 'Area', sort: "asc", showAll: true, agregateType: "distinct", label: "Area"},
+	Item: {field: 'Item', sort: "asc", showAll: true, agregateType: "distinct", label: "Indicator"},
+	Element: {field: 'Element', sort: "asc", showAll: true, agregateType: "distinct", label: "Month"},
+	Year: {field: 'Year', sort: "asc", showAll: true, agregateType: "distinct", label: "Year"},*/
     count: {agregateType: "count", groupType: "none", label: "Counts"},
     sum: {field: 'Value', agregateType: "sum", groupType: "none", label: "Sum"},
-    average: {field: 'Value', agregateType: "average", groupType: "none", label: "Average", 
+	average: {field: 'Value', agregateType: "average", groupType: "none", label: "Average", 
     formatter: function(V, f) {var res = null;if (typeof(V) === "number") {res = V.toFixed(2);}return res;}},
-Unit: {field: 'Unit', sort: "asc", showAll: true, agregateType: "distinct", label: "Unit"},
-Flag: {field: 'Flag', sort: "asc", showAll: true, agregateType: "distinct", label: "Flag"}
-};
-/*
-   for(var i=1;i<FAOSTATNEWOLAP.originalData.length;i++)
-    {
-    ft={};
-        for(var j=0;j<FAOSTATNEWOLAP.originalData[0].length;j++)
-            {
-              ft[FAOSTATNEWOLAP.originalData[0][j]]= FAOSTATNEWOLAP.originalData[i][j];
-            }
-    mydata.push(ft)
-    }*/
-   for(var i in FAOSTATNEWOLAP.internalData.tree)
-    {
-   
-var  rowTemp=i.split("||");
+	Unit: {field: 'Unit', sort: "asc", showAll: true, agregateType: "distinct", label: "Unit"},
+	Flag: {field: 'Flag', sort: "asc", showAll: true, agregateType: "distinct", label: "Flag"}
+	};
+	for(i in pivotData.rowAttrs){
+		myfield[pivotData.rowAttrs[i]]={field: pivotData.rowAttrs[i], sort: "asc",  agregateType: "distinct", label: pivotData.rowAttrs[i]};//showAll: true,
+	}
+	for(i in pivotData.colAttrs){
+		myfield[pivotData.colAttrs[i]]={field: pivotData.colAttrs[i], sort: "asc",  agregateType: "distinct", label: pivotData.colAttrs[i]};//showAll: true,
+	}
+	for(var i in pivotData.tree){   
+		var  rowTemp=i.split("||");
+		for(var k in pivotData.tree[i]){
+			ft={};
+			for(var j=0;j<pivotData.rowAttrs.length;j++)
+			{ft[pivotData.rowAttrs[j]]=rowTemp[j];}
+		var colTemp=k.split("||");
+		for(var j=0;j<pivotData.colAttrs.length;j++)
+		{ft[pivotData.colAttrs[j]]=colTemp[j];}
 
-for(var k in FAOSTATNEWOLAP.internalData.tree[i])
-{
-    ft={};
-    for(var j=0;j<FAOSTATNEWOLAP.internalData.rowAttrs.length;j++)
-{ft[FAOSTATNEWOLAP.internalData.rowAttrs[j]]=rowTemp[j];}
-var colTemp=k.split("||");
-for(var j=0;j<FAOSTATNEWOLAP.internalData.colAttrs.length;j++)
-{ft[FAOSTATNEWOLAP.internalData.colAttrs[j]]=colTemp[j];}
-    ft["Value"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[0];
-    ft["Unit"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[1];
-    ft["flag"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[2];
-     
+		ft["Value"]=pivotData.tree[i][k].value()[0];
+	   /* 	ft["Unit"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[1];
+			ft["flag"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[2];
+		*/
+	 mydata.push(ft); 
+	}
+}
+    if( /*typeof HPivott !== 'undefined' 
+	&&*/ typeof $(id).data('unc-jbPivot') !== 'undefined'
+	){
+	console.log("ici")
+		$(id).data('unc-jbPivot').options.xfields= pivotData.rowAttrs;
+		$(id).data('unc-jbPivot').options.yfields= pivotData.colAttrs;
+		//$("#fx-olap-graph-div").data('unc-jbPivot')._create()
+		$(id).data('unc-jbPivot').reset();
+		$(id).data('unc-jbPivot').insertRecords(mydata);
+		$(id).data('unc-jbPivot')._renderHtml();
+	}
+	else{console.log("la"+pivotData.rowAttrs);
+		$(id).jbPivot({
+		 fields: myfield,
+		 xfields: pivotData.rowAttrs,
+		 yfields: pivotData.colAttrs,
+		 zfields: ["sum", "Unit","Flag"],
+		 data: mydata,
+		 copyright: false,
+		 summary: true,
+		 l_all: "All",
+		 l_unused_fields: "Available fields",
+		 InternalID:id
+		}
+	 );
+	}
+}
 
- mydata.push(ft);
-    
-}
-}
-    
-    
-    if(typeof HPivott !== 'undefined' ){
-        $(id).data('unc-jbPivot').options.xfields= FAOSTATNEWOLAP.internalData.rowAttrs;
-         $(id).data('unc-jbPivot').options.yfields= FAOSTATNEWOLAP.internalData.colAttrs;
-        // $("#fx-olap-graph-div").data('unc-jbPivot')._create()
-         $(id).data('unc-jbPivot').reset();
-          $(id).data('unc-jbPivot').insertRecords(mydata);
-       $(id).data('unc-jbPivot')._renderHtml();
-         
- }
-     else
-     {
-     
-            $(id).jbPivot(
-                    {
-                       fields: myfield,
-                       xfields: FAOSTATNEWOLAP.internalData.rowAttrs,
-                       yfields: FAOSTATNEWOLAP.internalData.colAttrs,
-                       zfields: ["sum", "Unit","Flag"],
-                       data: mydata,
-                       copyright: false,
-                       summary: true,
-                       l_all: "All",
-                       l_unused_fields: "Available fields"
-                    }
-            );
-    
-}
-}
-$.fn.barhightchart=function(id,scope){
-var r=FAOSTATNEWOLAP.internalData;
+	$.fn.barhightchart=function(r,id,scope){
 var monXaxis=[];
-
-for(entry in FAOSTATNEWOLAP.internalData.colKeys)
-{monXaxis.push(FAOSTATNEWOLAP.internalData.colKeys[entry].toString().replace(/<span class="ordre">\d+<\/span>/g,"").replace(/\|\|/g," X "));}
+for(entry in r.colKeys)
+{monXaxis.push(r.colKeys[entry].toString().replace(/<span class="ordre">\d+<\/span>/g,"").replace(/\|\|/g," X "));}
 
 var maSeries=[];
    if(r.colKeys.length>0){
-    
     for(ligne in r.tree){
         var temp={"name":ligne.replace(/<span class="ordre">\d+<\/span>/g,"").replace(/\|\|/g," X "),"data":[]};
         for(col in r.colKeys){
         var coldInd=r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9 ]/g,"_");
-        
         if( r.tree[ligne][coldInd]!=null){ temp.data.push(r.tree[ligne][coldInd].value()); }
         else{temp.data.push( null);}
-//temp.push(r.rowTotals[ligne].sum);
-                // r2d2.push([ligne,col,+r.tree[ligne][col].value()]);
+		//temp.push(r.rowTotals[ligne].sum);
+		// r2d2.push([ligne,col,+r.tree[ligne][col].value()]);
       }
       maSeries.push(temp);
      }
@@ -2231,42 +1306,38 @@ else{/*
 
 
 var commonJson={  title: {text: ' '    },
-    plotOptions: {
-        
+    plotOptions: {  
     column: { pointPadding: 0.2,  borderWidth: 0     },
      line: { connectNulls: false }
     },
-        subtitle: {  text: 'Source: FAOSTAT'        },
-        xAxis: {  categories:monXaxis ,crosshair: true        },
-        yAxis: {         min: 0/*,  title: {   text: 'Rainfall (mm)'  }*/   },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-       
-        series: maSeries
+	subtitle: {text: 'Source: FAOSTAT'},
+    xAxis: {categories:monXaxis ,crosshair: true},
+    yAxis: {min: 0/*,  title: {   text: 'Rainfall (mm)'  }*/   },
+    tooltip: {
+	headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+    footerFormat: '</table>',
+    shared: true,
+	useHTML: true
+    },
+	series: maSeries
     };
    
-    if(scope=="barchart"){commonJson.chart={   type: 'column' };}
+    if(scope=="barchart"){commonJson.chart={type: 'column'};}
     else if(scope=="line"){commonJson.plotLines=[];}
     else if(scope=="area"){
-        commonJson.chart= {  type: 'area'        };
-        commonJson.plotOptions={area: {  stacking: 'normal'}}
+        commonJson.chart= {type: 'area'};
+        commonJson.plotOptions={area: {stacking: 'normal'}}
     }
      else if(scope=="stackedColumn"){
-         
-         commonJson.chart= {  type: 'column'        };
-        commonJson.plotOptions={column: {  stacking: 'normal'}}}
+		commonJson.chart= {type: 'column'};
+        commonJson.plotOptions={column: {  stacking: 'normal'}}
+		}
  $(id).highcharts(commonJson);
-
 }
 
-
-  $.fn.heatmap = function(scope) {
+	$.fn.heatmap = function(scope) {
     var colorGen, heatmapper, i, j, numCols, numRows, _i, _j;
     if (scope == null) { scope = "heatmap";    }
     numRows = this.data("numrows");
@@ -2325,10 +1396,11 @@ var commonJson={  title: {text: ' '    },
     heatmapper(".pvtTotal.colTotal", "red");
     return this;
   };
-  /*
+	/*
   Barchart post-processing
    */
-  $.fn.barchart = function() {
+  
+	$.fn.barchart = function() {
     var barcharter, i, numCols, numRows, _i;
     numRows = this.data("numrows");
     numCols = this.data("numcols");
@@ -2376,4 +1448,844 @@ var commonJson={  title: {text: ' '    },
     barcharter(".pvtTotal.colTotal");
     return this;
   };
+ 
+	function newGrid(r,id){
+		var FAOSTATOLAPV3={};
+		FAOSTATOLAPV3.grouped=true;
+		var r2d2=[];
+		$("#"+id+"mesFlags").empty();
+		for(ligne in r.tree){
+			var temp=ligne.split('||');
+			for(col in r.colKeys){
+				var coldInd=r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9]/g,"_")
+				if( r.tree[ligne][coldInd]!=null){temp.push(r.tree[ligne][coldInd].value());}
+				else{temp.push("");}
+			}
+			r2d2.push(temp);
+		}
+	var grid_demo_id = id+"_myGrid1" ;
+	var dsOption= {	fields :[],	recordType : 'array',	data : r2d2};
+
+	var colsOption = [];
+	for(var i in r.rowAttrs){
+		dsOption.fields.push({name : r.rowAttrs[i]  });
+		colsOption.push({id:  r.rowAttrs[i] , header:  r.rowAttrs[i] , frozen : true ,grouped : FAOSTATOLAPV3.grouped});  
+	}
+	var reg = new RegExp("<span class=\"ordre\">[0-9]*</span>", "g"); 
+	var reg2 = new RegExp("<span class=\"ordre\">[0-9]*</span><table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g"); 
+
+	for(var i in r.colKeys){
+   dsOption.fields.push({name : r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_")  });
+   montitle="";
+   for(var ii=0;ii<r.colKeys[i].length;ii++){
+	   if(true || F3DWLD.CONFIG.wdsPayload.showCodes)
+	   {montitle+="<br>"+r.colKeys[i][ii].replace(reg2, "$2 ($1)")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
+	   else{montitle+="<br>"+r.colKeys[i][ii].replace(reg, "")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
+	   }
+	   colsOption.push({id:  r.colKeys[i].join("_").replace(/[^a-zA-Z0-9]/g,"_") ,
+		header: montitle, toolTip : true ,toolTipWidth : 150});
+}
+	var gridOption={
+	id : grid_demo_id,
+	width: "100%",  //"100%", // 700,
+	height: "250",  //"100%", // 330,
+	container :grid_demo_id+"_div",//pvtRendererArea",//testinline2",//'',//myGrid1_div',//pivot_table',// 'gridbox',// $(".pvtRendererArea")[0],//
+	replaceContainer : true, 
+	dataset : dsOption ,
+	resizable : false,
+	columns : colsOption,
+	pageSize : 15 ,
+	pageSizeList : [15,25,50,150],
+	SigmaGridPath : 'grid/',
+	toolbarContent : 'nav | goto | pagesize ',/*| mybutton |*/
+	onMouseOver : function(value,  record,  cell,  row,  colNo, rowNo,  columnObj,  grid){
+		if (columnObj && columnObj.toolTip) {grid.showCellToolTip(cell,columnObj.toolTipWidth);}
+		else{grid.hideCellToolTip();}
+	},
+	onMouseOut : function(value,  record,  cell,  row,  colNo, rowNo,  columnObj,  grid){grid.hideCellToolTip();}
+};
+	FAOSTATOLAPV3.mygrid=new Sigma.Grid( gridOption );
+  
+	Sigma.Grid.render(FAOSTATOLAPV3.mygrid)();
+	document.getElementById('page_after').id=id+"_page_after"
+	document.getElementById(id+'_page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
+	
+	FAOSTATOLAPV3.mygrid.pageSizeSelect.onchange=function()
+	{document.getElementById(id+'_page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;};
+	if(FAOSTATOLAPV3.grouped){$("#"+id+"_mesFlags").append($("<label for=\"chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));}
+	else{$("#"+id+"mesFlags").append($("<label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));}
+	$("#nested_by").hide();
+	} 
 }).call(this);
+
+
+/**Others Functions*/
+
+
+/*function changechkTreeview(){
+   FAOSTATOLAPV3.grouped=document.getElementById('chkTreeview').checked;
+   FAOSTATOLAPV3.mygrid="";
+$("#fx-olap-ui").pivotUI(dataTest2,{"rows":["Area","Item","Year"],"cols":["Element"],"vals":["Value"]},false);
+}*/
+/*
+function utf8_encode(argString) {
+ alert("dd")
+  if (argString === null || typeof argString === 'undefined') { return ''; }
+
+  var string = (argString + ''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  var utftext = '', start, end, stringl = 0;
+
+  start = end = 0;
+  stringl = string.length;
+  for (var n = 0; n < stringl; n++) {
+    var c1 = string.charCodeAt(n);
+    var enc = null;
+
+    if (c1 < 128) {end++;} else if (c1 > 127 && c1 < 2048) {
+      enc = String.fromCharCode(     (c1 >> 6) | 192, (c1 & 63) | 128   );
+    } else if ((c1 & 0xF800) != 0xD800) {
+      enc = String.fromCharCode(        (c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128      );
+    } else { // surrogate pairs
+      if ((c1 & 0xFC00) != 0xD800) { throw new RangeError('Unmatched trail surrogate at ' + n);      }
+      var c2 = string.charCodeAt(++n);
+      if ((c2 & 0xFC00) != 0xDC00) {  throw new RangeError('Unmatched lead surrogate at ' + (n - 1));   }
+      c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000;
+      enc = String.fromCharCode( (c1 >> 18) | 240, ((c1 >> 12) & 63) | 128, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128 );
+    }
+    if (enc !== null) {
+      if (end > start) {        utftext += string.slice(start, end);      }
+      utftext += enc;
+      start = end = n + 1;
+    }
+  }
+  if (end > start) {    utftext += string.slice(start, stringl);  }
+  return utftext;
+}
+*/
+function addCommas(nStr) {
+        var rgx, x, x1, x2;
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? FAOSTATNEWOLAP.decimalSeparator + x[1] : '';
+        rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {  x1 = x1.replace(rgx, '$1' + FAOSTATNEWOLAP.thousandSeparator + '$2');  }
+        if (FAOSTATNEWOLAP.thousandSeparator === " ") { x1 = x1.replace(/\s/g, ""); }
+        return x1 + x2;
+    };
+/*
+function ExtractCode(arr, separateur)
+{
+    ret = [];
+    for (i = 0; i < arr.length; i++)
+    {
+        if (arr[i].type === ">") {   ret.push(separateur + arr[i].code + ">" + separateur);     }
+        else {  ret.push(separateur + arr[i].code + separateur);   }
+    }
+    return ret;
+}
+
+function ExtractCodel(arr)//for aggregate
+{
+    ret = [];
+    for (i = 0; i < arr.length; i++){
+        if (arr[i].type === ">") {ret.push({'code':arr[i].code,'type':'list'} );  }
+    }
+    return ret;
+}
+
+function checkMemory(){for (var b in window) { if (window.hasOwnProperty(b)){ console.log(b + ' ' + memorySizeOf(eval(b)));}    }}
+
+function memorySizeOf(obj) {
+    var bytes = 0;
+
+    function sizeOf(obj) {
+        if (obj !== null && obj !== undefined) {
+            switch (typeof obj) {
+                case 'number':
+                    bytes += 8;
+                    break;
+                case 'string':
+                    bytes += obj.length * 2;
+                    break;
+                case 'boolean':
+                    bytes += 4;
+                    break;
+                case 'object':
+                    var objClass = Object.prototype.toString.call(obj).slice(8, -1);
+                    if (objClass === 'Object' || objClass === 'Array') {
+                        for (var key in obj) {
+                            if (!obj.hasOwnProperty(key))
+                                continue;
+                            sizeOf(obj[key]);
+                        }
+                    } else
+                        bytes += obj.toString().length * 2;
+                    break;
+            }
+        }
+        return bytes;
+    }
+    ;
+
+    function formatByteSize(bytes) {
+        if (bytes < 1024)
+            return bytes + " bytes";
+        else if (bytes < 1048576)
+            return(bytes / 1024).toFixed(3) + " KiB";
+        else if (bytes < 1073741824)
+            return(bytes / 1048576).toFixed(3) + " MiB";
+        else
+            return(bytes / 1073741824).toFixed(3) + " GiB";
+    }
+    ;
+
+    return formatByteSize(sizeOf(obj));
+}
+*/
+/*
+function oldSchoolCSV(format)
+{
+    var selectFinal = "EXECUTE Warehouse.dbo.usp_GetDataTESTP " +
+            " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
+            " @lang = '" + F3DWLD.CONFIG.lang + "',  " +
+            " @List1Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[0], "''") + ")', " +
+            "  @List2Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[1], "''") + ")',  " +
+            " @List3Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[2], "''") + ")', " +
+            "  @List4Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[3], "") + ")', " +
+            "   @List5Codes = '',  " +
+            "   @List6Codes = '',  " +
+            "   @List7Codes = '',  " +
+            "   @NullValues = 0,  " +
+            "   @Thousand = '',  " +
+            "   @Decimal = '.',  " +
+            "   @DecPlaces = 2 , " +
+            "  @Limit ="+FAOSTATNEWOLAP.pivotlimitExcel ;
+
+var mesOptionsPivot = {};
+for(var j in FAOSTATOLAP2.options)
+{mesOptionsPivot[j]=FAOSTATOLAP2.options[j];}
+mesOptionsPivot.lang=F3DWLD.CONFIG.lang;
+    if (F3DWLD.CONFIG.domainCode == "HS" ||F3DWLD.CONFIG.domainCode == "TM" || F3DWLD.CONFIG.domainCode == "FT") {
+        mesOptionsPivot.rows=["Reporter Countries","Partner Countries","Item","Element"];
+	mesOptionsPivot.cols= ["Year"];
+        selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
+            " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
+            " @lang = '" + F3DWLD.CONFIG.lang + "',  " +
+            " @List1Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[0], "''") + ")', " +
+            "  @List2Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[1], "''") + ")',  " +
+            " @List3Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[2], "''") + ")', " +
+            "  @List4Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[3], "''") + ")', " +
+            "   @List5Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[4], "") + ")',  " +
+            "   @List6Codes = '',  " +
+            "   @List7Codes = '',  " +
+            "   @NullValues = 0,  " +
+            "   @Thousand = '',  " +
+            "   @Decimal = '.',  " +
+            "   @DecPlaces = 2 , " +
+            "  @Limit ="+FAOSTATNEWOLAP.pivotlimitExcel ;
+}
+if(FAOSTATNEWOLAP.firstCall==0){
+    mesOptionsPivot.rows = FAOSTATNEWOLAP.internalData.rowAttrs;
+    mesOptionsPivot.cols = FAOSTATNEWOLAP.internalData.colAttrs;}
+else{mesOptionsPivot.rows =null;mesOptionsPivot.cols=null}
+    mesOptionsPivot.vals = ["Value"];
+    mesOptionsPivot.domain = F3DWLD.CONFIG.domainCode;
+    if (F3DWLD.CONFIG.wdsPayload.showUnits){ mesOptionsPivot.vals.push("Unit");}
+    if (F3DWLD.CONFIG.wdsPayload.showFlags){  mesOptionsPivot.vals.push("Flag");}
+
+
+document.getElementById('CSVOLAPsql').value= selectFinal;  
+document.getElementById('CSVOLAPjson').value= JSON.stringify(mesOptionsPivot);
+document.getElementById('CSVOLAPoption').value= JSON.stringify({decimal:FAOSTATNEWOLAP.decimal,
+    decimalSeparator:FAOSTATNEWOLAP.decimalSeparator,
+    thousandSeparator:FAOSTATNEWOLAP.thousandSeparator,
+    showUnits:F3DWLD.CONFIG.wdsPayload.showUnits,
+ showFlags:F3DWLD.CONFIG.wdsPayload.showFlags, 
+ showCodes:F3DWLD.CONFIG.wdsPayload.showCodes,
+fileFormat:format 
+    });
+document.getElementById('exportCSVOLAP').submit();   
+}*/
+/*
+function oldSchool(maLimit, excel){
+    var selectFinal = "EXECUTE Warehouse.dbo.usp_GetDataTESTP " +
+            " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
+            " @lang = '" + F3DWLD.CONFIG.lang + "',  " +
+            " @List1Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[0], "''") + ")', " +
+            "  @List2Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[1], "''") + ")',  " +
+            " @List3Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[2], "''") + ")', " +
+            "  @List4Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[3], "") + ")', " +
+            "   @List5Codes = '',  " +
+            "   @List6Codes = '',  " +
+            "   @List7Codes = '',  " +
+            "   @NullValues = 0,  " +
+            "   @Thousand = '',  " +
+            "   @Decimal = '.',  " +
+            "   @DecPlaces = "+FAOSTATNEWOLAP.decimal+" , " +
+            "  @Limit =" + maLimit;
+
+    if (F3DWLD.CONFIG.domainCode == "HS" || F3DWLD.CONFIG.domainCode == "TM" || F3DWLD.CONFIG.domainCode == "FT") {
+	selectFinal = "EXECUTE Warehouse.dbo.usp_GetData " +
+            " @DomainCode = '" + F3DWLD.CONFIG.domainCode + "',  " +
+            " @lang = '" + F3DWLD.CONFIG.lang + "',  " +
+            " @List1Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[0], "''") + ")', " +
+            "  @List2Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[1], "''") + ")',  " +
+            " @List3Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[2], "''") + ")', " +
+            "  @List4Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[3], "''") + ")', " +
+            "   @List5Codes = '(" + ExtractCode(F3DWLD.CONFIG.selectedValues[4], "") + ")',  " +
+            "   @List6Codes = '',  " +
+            "   @List7Codes = '',  " +
+            "   @NullValues = 0,  " +
+            "   @Thousand = '',  " +
+            "   @Decimal = '.',  " +
+            "   @DecPlaces = "+FAOSTATNEWOLAP.decimal+" , " +
+            "  @Limit ="+FAOSTATNEWOLAP.pivotlimitExcel ;
+    }
+    var test2 = {
+        datasource: F3DWLD.CONFIG.datasource,thousandSeparator: ',',decimalSeparator: '.',decimalNumbers: '2',
+        json: JSON.stringify({"limit": null,   "query": selectFinal, "frequency": "NONE"}),cssFilename: '',valueIndex: 5};
+    $("#fx-olap-ui").html("<center><img src=\"/faostat-download-js/pivotAgg/Preload.gif\" /></center>");
+    
+    FAOSTATNEWOLAP.flags = {};
+    $.ajax({
+        type: 'POST', url: F3DWLD.CONFIG.data_url + "/table/json", data: test2,
+        success: function(response_1) {
+            var response2_2 =[];
+            var mesOptionsPivot = {};
+            var t=retConfig(F3DWLD.CONFIG.domainCode,F3DWLD.CONFIG.lang);
+            response2_2=t[0];
+            mesOptionsPivot=t[1];
+            response_1 = response2_2.concat(response_1);
+            FAOSTATNEWOLAP.firstCall = 0;
+            var derivers = $.pivotUtilities.derivers;
+            var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
+            mesOptionsPivot.vals = ["Value"];
+            if (F3DWLD.CONFIG.wdsPayload.showUnits) {mesOptionsPivot.vals.push("Unit");}
+            if (F3DWLD.CONFIG.wdsPayload.showFlags){mesOptionsPivot.vals.push("Flag"); }
+            FAOSTATNEWOLAP.originalData = response_1;
+            $("#fx-olap-ui").pivotUI(response_1, mesOptionsPivot, true);
+            $("#options_menu_box").css("display", "block");
+            var newFlag = "";
+            for (var i in FAOSTATNEWOLAP.flags) 
+				{if (newFlag != "") {  newFlag += ":";} newFlag += "'" + i + "'"; }
+            if (newFlag == "") {newFlag = "''";}
+
+            $.get("http://faostat3.fao.org/faostat.olap.ws/rest/GetFlags/" + F3DWLD.CONFIG.lang + "/" + newFlag, function(data) 
+			{
+                data = data.replace("localhost:8080/", "faostat3.fao.org/");
+                $("#mesFlags").append(data);
+                 if(excel){decolrowspanNEW();}
+            });
+        }
+    });
+
+}*/
+/*
+function newFunctions() {
+    FAOSTATNEWOLAP.viewVals = 1;
+    $("#vals").css("display", "block");
+    $("#unused").css("display", "block");
+    $("#unused li").css("display", "inline");
+    $(".pvtRenderer").css("display", "block");
+    $("#aggregator").css("display", "block");
+    $("#unused").css("background-color", "#ececec");
+    $("#unused li nobr").css("color", "#666");
+}*/
+/*
+function changeNested(){
+    if (document.getElementById('cbNestedBy').checked) {FAOSTATNEWOLAP.nestedby = 1; }
+    else {FAOSTATNEWOLAP.nestedby = 0;}
+}
+*/
+/*
+function directExcel(query){
+    var sql = {};
+    sql.query = "SELECT D.ItemCode, D.ElementCode, AVG(D.value) " +
+            "FROM Data AS D " +
+            "WHERE D.DomainCode IN ('GT', 'GM', 'GE', 'GR', 'GY', 'GU', 'GP', 'GA', 'GV', 'GB') " +
+            "AND D.AreaCode = 10 " +
+            "AND D.ElementCode IN (7244, 7243, 72254, 72256, 72306, 72255, 7243, 72343, 72341, 72342, 72308, 72340, 7237, 72259, 72309, 72257, 72307) " +
+            "AND D.ItemCode IN (1711, 1755, 27, 1709, 3107, 1712, 6729, 5057, 6795) " +
+            "GROUP BY D.ItemCode, D.ElementCode";
+    var data = {};
+    data.datasource = FAOSTATDownload.datasource; 
+    data.thousandSeparator = ',';
+    data.decimalSeparator = '.';
+    data.decimalNumbers = 2;
+    data.json = JSON.stringify({"limit": null,"query": query, "frequency": "NONE"}),
+    data.cssFilename = '';
+    data.nowrap = false;
+    data.valuesIndex = 0;
+    $('#datasource_WQ').val(FAOSTATDownload.datasource);
+    $('#json_WQ').val(data.json);
+    document.excelFormWithQuotes.submit();
+}
+*/
+/*
+function directCSV(query) {
+    var sql = {};
+    sql.query = "SELECT D.ItemCode, D.ElementCode, AVG(D.value) " +
+            "FROM Data AS D " +
+            "WHERE D.DomainCode IN ('GT', 'GM', 'GE', 'GR', 'GY', 'GU', 'GP', 'GA', 'GV', 'GB') " +
+            "AND D.AreaCode = 10 " +
+            "AND D.ElementCode IN (7244, 7243, 72254, 72256, 72306, 72255, 7243, 72343, 72341, 72342, 72308, 72340, 7237, 72259, 72309, 72257, 72307) " +
+            "AND D.ItemCode IN (1711, 1755, 27, 1709, 3107, 1712, 6729, 5057, 6795) " +
+            "GROUP BY D.ItemCode, D.ElementCode";
+    var data = {};
+    data.datasource = FAOSTATDownload.datasource;
+    data.thousandSeparator = ',';
+    data.decimalSeparator = '.';
+    data.decimalNumbers = 2;
+    data.json = JSON.stringify({"limit": null, "query": query,"frequency": "NONE" }),
+    data.cssFilename = '';
+    data.nowrap = false;
+    data.valuesIndex = 0;
+    $('#datasource_WQ_csv').val(FAOSTATDownload.datasource);
+    $('#json_WQ_csv').val(data.json);
+    document.csvFormWithQuotes.submit();
+}
+*/
+/*
+function ExcelComplete2(outputFormat){
+    FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
+    for (i = 0; i < document.getElementById('rows').getElementsByTagName('nobr').length; i++){
+        var d = document.getElementById('rows').getElementsByTagName('nobr')[i];
+        FAOSTATNEWOLAP.PP.PP3.push(d.innerHTML);
+    }
+    for (i = 0; i < document.getElementById('cols').getElementsByTagName('nobr').length; i++){
+        var d = document.getElementById('cols').getElementsByTagName('nobr')[i];
+        jj = -1;   title = "";
+        for (j = 0; j < FAOSTATNEWOLAP.schema.length; j++) {
+            if (FAOSTATNEWOLAP.schema[j][6] == d.innerHTML) {
+                jj = parseInt(FAOSTATNEWOLAP.schema[j][4]) - 1;
+                title = FAOSTATNEWOLAP.schema[j][1];
+                break;
+            }
+        }
+        if (jj > -1) {FAOSTATNEWOLAP.PP.PP1.push({"title": title, "data": F3DWLD.CONFIG.selectedValues[jj]});}
+        else { alert('not found' + d.innerHTML);}
+    }
+}
+*/
+/*
+function ExcelComplete(outputFormat){
+    FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
+    for (i = 0; i < document.getElementById('rows').getElementsByTagName('nobr').length; i++){
+        var d = document.getElementById('rows').getElementsByTagName('nobr')[i];
+        for (j = 0; j < FAOSTATNEWOLAP.schema.length; j++) {
+            if (FAOSTATNEWOLAP.schema[j][6] == d.innerHTML) {FAOSTATNEWOLAP.PP.PP3.push(FAOSTATNEWOLAP.schema[j][1]);}
+        }
+    }
+    for (i = 0; i < document.getElementById('cols').getElementsByTagName('nobr').length; i++){
+        var d = document.getElementById('cols').getElementsByTagName('nobr')[i];
+        jj = -1;  title = "";
+        for (j = 0; j < FAOSTATNEWOLAP.schema.length; j++) {
+            if (FAOSTATNEWOLAP.schema[j][6] == d.innerHTML){
+                jj = parseInt(FAOSTATNEWOLAP.schema[j][4]) - 1;
+                title = FAOSTATNEWOLAP.schema[j][1];
+                break;
+            }
+        }
+        if (jj > -1) { FAOSTATNEWOLAP.PP.PP1.push({"title": title, "data": F3DWLD.CONFIG.selectedValues[jj]}); }
+        else { alert('not found' + d.innerHTML); }
+    }
+    var data2 = {
+        datasource: F3DWLD.CONFIG.datasource,
+        thousandSeparator: " ",
+        decimalSeparator: ".",
+        decimalNumbers: "2",
+        json: JSON.stringify({"selects": null,
+            "froms": null, "wheres": null,"limit": null,
+            "query": "EXECUTE Warehouse.dbo.usp_GetData4 @DomainCode = " + F3DWLD.CONFIG.domainCode + ", " +
+                    "@lang = 'E'," +
+                    "@List1Codes = " + JSON.stringify(FAOSTATNEWOLAP.excelpayload.list1Codes).replace(/\"/g, "'").replace(/\[/g, "'(").replace(/\]/g, ")'") + "," +
+                    "@List2Codes = " + JSON.stringify(FAOSTATNEWOLAP.excelpayload.list2Codes).replace(/\"/g, "'").replace(/\[/g, "'(").replace(/\]/g, ")'") + ", " +
+                    "@List3Codes = " + JSON.stringify(FAOSTATNEWOLAP.excelpayload.list3Codes).replace(/\"/g, "'").replace(/\[/g, "'(").replace(/\]/g, ")'") + "," +
+                    "@List4Codes = " + JSON.stringify(FAOSTATNEWOLAP.excelpayload.list4Codes).replace(/\"/g, "'").replace(/\[/g, "'(").replace(/\]/g, ")'") + ", " +
+                    "@List5Codes = '', @List6Codes = '',  @List7Codes = '', " +
+                    "@NullValues = 0, " +
+                    "@Thousand = ''," +
+                    "@Decimal = ',',  " +
+                    "@DecPlaces = 2, " +
+                    "@Pivot1=" + retPivot1() + "," +
+                    "@Pivot2=" + retPivot2() + "," +
+                    "@Pivot3='" + retPivot3() + "'",
+            "frequency": "NONE"}),   cssFilename: "faostat", valueIndex: 1
+    };
+ $.ajax({
+        type: 'POST', url: F3DWLD.CONFIG.data_url + '/table/' + outputFormat,data: data2,
+        success: function(response) {
+            document.getElementById('csvData').value = "";
+            for (j = 0; j < FAOSTATNEWOLAP.PP.PP3.length; j++){
+                if (j > 0) {   document.getElementById('csvData').value += ",";}
+                document.getElementById('csvData').value += FAOSTATNEWOLAP.traduction[FAOSTATNEWOLAP.PP.PP3[j]]
+            }
+            document.getElementById('csvData').value += recHeader("", FAOSTATNEWOLAP.PP.PP1, 0);
+            document.getElementById('csvData').value += "\n";
+           
+            if (outputFormat === 'html') {
+                document.getElementById("excelData").value = response;
+                document.getElementById("formExcel").submit();
+            }
+            else {
+                for (var i = 0; i < response.length; i++)
+                { document.getElementById('csvData').value += '"' + response[i].join('","') + "\"\n"; }
+                var r = confirm("Press a button!");
+                if (r == true) { document.getElementById('csvDataForm').submit();}
+            }
+        },
+        error: function(err, b, c) {   console.log(err);    }
+    });
+}
+*/
+/*
+function my_exportNewHTML() {
+    monclone = $("#pivot_table").clone();
+    $("#renderer", monclone).remove();
+    $(".ordre", monclone).remove();
+    $("#unused", monclone).remove();
+    $("#aggregator", monclone).remove();
+    $("#vals", monclone).remove();
+    $("#cols", monclone).remove();
+    $("#rows", monclone).remove();
+    $(".pvtTotalLabel", monclone).remove();
+    $(".pvtTotal", monclone).remove();
+    $(".invi", monclone).remove();
+    $("thead", monclone).remove();
+    $(".pvtGrandTotal", monclone).remove();
+    $("td", monclone).css("border", "1px solid black");
+    $("th", monclone).css("border", "1px solid black");
+    $(".table", monclone).css("border", "1px solid black");
+
+    var today = new Date();
+    document.getElementById("excelData").value = "<table><tr><td>FAOSTAT " + today.getFullYear() + "</td><td colspan=2>Date : " + today.toLocaleDateString() + "</td></tr></table><table>" + monclone.html() + "</table>";
+    document.getElementById("excelData").value += "<table><tr><td></td></tr>";
+
+    var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
+    j = 0;
+    for (i = 0; i < testtd.length; i++) {       
+        if (j == 0) { document.getElementById("excelData").value += "<tr><td>"; j = 1;}
+        else { document.getElementById("excelData").value += "</td><td>";j = 0; }
+        document.getElementById("excelData").value += testtd[i].innerHTML;
+        if (j == 0) {document.getElementById("excelData").value += "</tr>";}
+    }
+    document.getElementById("excelData").value += "</table>";
+    document.getElementById("formExcel").submit();
+}
+*/
+/*
+function stringify(obj) {
+  var type = Object.prototype.toString.call(obj);
+  // IE8 <= 8 does not have array map
+  var map = Array.prototype.map || function map(callback) {
+    var ret = [];
+    for (var i = 0; i < this.length; i++) { ret.push(callback(this[i]));}
+    return ret;
+  };
+  if (type === '[object Object]') {
+    var pairs = [];
+    for (var k in obj) {
+      if (!obj.hasOwnProperty(k)) continue;
+      pairs.push([k, stringify(obj[k])]);
+    }
+    pairs.sort(function(a, b) { return a[0] < b[0] ? -1 : 1 });
+    pairs = map.call(pairs, function(v) {
+        if(v[0]!="format" && v[0]!="push" &&  v[0]!="value"){return '"' + v[0].replace(/"/g,"\\\"") + '":' +v[1];}
+        else{  return '"' + v[0].replace(/"/g,"\\\"") + '":""'; }
+    }
+);
+    return '{' + pairs + '}';
+  }
+  if (type === '[object Array]') {  return '[' + map.call(obj, function(v) {  return stringify(v) }) + ']';  }
+  return JSON.stringify(obj);
+};
+*/
+/*
+function my_exportNew() {
+  var mycols=[];
+  for(var c=0;c<FAOSTATNEWOLAP.internalData.rowAttrs.length;c++)
+  { mycols.push(FAOSTATNEWOLAP.internalData.rowAttrs[c]+"Name");     
+  }
+  flatColKeyst=[];
+tt=FAOSTATNEWOLAP.internalData.getColKeys();
+for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
+ document.getElementById("myJson").value=stringify( {data:FAOSTATNEWOLAP.internalData.tree,
+     header:flatColKeyst,cols:mycols,swUnit:"1" ,swFlag:"1"
+ 
+    });
+
+    document.getElementById("xlsDataForm").submit();
+  }
+*/
+/*
+function decolrowspanNEW(){
+    
+    var today = new Date();
+    var reg = new RegExp("<span class=\"ordre\">[0-9]+</span>", "g");
+    var reg3 = new RegExp("<span class=\"ordre\"></span>", "g");
+    var reg2 = new RegExp("<table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g"); 
+    var row = FAOSTATNEWOLAP.internalData.tree;
+  //  var col = FAOSTATNEWOLAP.internalData.flatColKeys.sort();
+flatColKeyst=[];
+tt=FAOSTATNEWOLAP.internalData.getColKeys();
+for(tti in tt){flatColKeyst.push(tt[tti].join("||"))}
+    var col = flatColKeyst.sort();
+    var ret = "";
+    for (var j = 0; j < FAOSTATNEWOLAP.internalData.rowKeys[0].length; j++) {
+      if (F3DWLD.CONFIG.wdsPayload.showCodes) { ret += "Code,";  }
+        ret += '"'+FAOSTATNEWOLAP.internalData.rowAttrs[j].replace("_", "") + "\",";
+    }
+   
+    for (j in col){
+        ret += '"'+col[j].replace(/,/g, "").replace(/\|\|/g, "-").replace(/&nbsp;/g, "").replace(reg2, "$1").replace(reg, "").replace(reg3, "")+'"';
+        if (FAOSTATNEWOLAP.showUnits) { ret += ",unit"; }
+        if (FAOSTATNEWOLAP.showFlags) {ret += ",flag"; }
+        ret += ",";
+    }
+    ret += "\n";
+    for (i in row) {
+        var temp=i.split("||");
+       for(var count=0;count<temp.length;count++)
+       {ret+='"'+temp[count].replace(/,/g, "").replace(reg2, "$1\",\"$2").replace(reg, "").replace(reg3, "")+"\",";}
+        for (j in col) {
+            try {
+                if (!row[i][col[j]]) {
+                    ret += ",";
+                    if (FAOSTATNEWOLAP.showUnits) {    ret += ","; }
+                    if (FAOSTATNEWOLAP.showFlags) { ret += ","; }
+                }
+                else {
+                    ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
+                    if (FAOSTATNEWOLAP.showUnits) {    ret +=  '"' + addCommas(row[i][col[j]].value()[1]) + '",'; }
+                    if (FAOSTATNEWOLAP.showFlags) { ret +=  '"' + addCommas(row[i][col[j]].value()[2]) + '",'; }
+				
+                    }
+                }  catch (ER) {}
+        }
+        ret += "\n";
+    }
+   try{ var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
+    j = 0;
+    for (i = 0; i < testtd.length; i++) {
+        if (j == 0) {   ret += "\n";     j = 1;  }
+        else {ret += ",";  j = 0;   }
+        ret += testtd[i].innerHTML;
+    }
+}catch(e){ console.log("WS getFlag not available");}
+    ret += "\n\nFAOSTAT " + today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
+    var link = document.createElement("a");
+    if (link.download !== undefined) { // feature detection
+        // Browsers that support HTML5 download attribute
+        var blob = new Blob(["\ufeff",ret], {type: 'text/csv;charset=UTF-8;'});
+        var url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "fileName.csv");
+        link.style = "visibility:hidden";
+    }
+    else if (navigator.msSaveBlob) { // IE 10+
+        link.addEventListener("click", function(event) {
+            var blob = new Blob(["\ufeff",ret], { "type": "text/csv;charset=UTF-8;"});
+            navigator.msSaveBlob(blob, "fileName.csv");
+        }, false);
+    }
+    else{ document.getElementById('csvData').value=ret;   document.getElementById('csvDataForm').submit();}
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}*/
+/*
+function decolrowspanExcell(table){
+    var today = new Date(); 
+    ret="";
+    ret += "FAOSTAT " + today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
+    
+    var link = document.createElement("a");
+    if (link.download !== undefined) { // feature detection
+        // Browsers that support HTML5 download attribute
+        var blob = new Blob(["\ufeff",ret,table], {type: 'text/csv;charset=UTF-8;'});
+        var url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "fileName.xls");
+        link.style = "visibility:hidden";
+    }
+    else  if (navigator.msSaveBlob) { // IE 10+
+        link.addEventListener("click", function(event) {
+            var blob = new Blob(["\ufeff",ret,table], {"type": "text/csv;charset=UTF-8;"});
+            navigator.msSaveBlob(blob, "fileName.xls");
+        }, false);
+    }
+    else{document.getElementById('csvData').value=ret+table;document.getElementById('csvDataForm').submit();}
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+*/
+/*
+function showHideTotals() {//Not yet used
+    if ($("#cols li nobr").length * $("#rows li nobr").length == 0) {
+        $(".pvtTotalLabel").show();
+        $(".pvtTotal").show();
+        $(".pvtGrandTotal").show();
+    }
+    else {
+        $(".pvtTotalLabel").hide();
+        $(".pvtTotal").hide();
+        $(".pvtGrandTotal").hide();
+    }
+}
+*/
+/*
+function my_export(t) {
+    monclone = $("#newOlap").clone();
+    $("#renderer", monclone).remove();
+    $("#unused", monclone).remove();
+    $("#aggregator", monclone).remove();
+    $("#vals", monclone).remove();
+    $("#cols", monclone).remove();
+    $("#rows", monclone).remove();
+    $(".pvtTotalLabel", monclone).remove();
+    $(".pvtTotal", monclone).remove();
+    $(".invi", monclone).remove();
+    $(".pvtGrandTotal", monclone).remove();
+    $("td", monclone).css("border-left", "1px solid black");
+    $("td", monclone).css("border-top", "1px solid black");
+    $("th", monclone).css("border-left", "1px solid black");
+    $("th", monclone).css("border-top", "1px solid black");
+    $(".table", monclone).css("border-right", "1px solid black");
+    $(".table", monclone).css("border-bottom", "1px solid black");
+    document.getElementById("excelData").value = monclone.html();
+    document.getElementById("formExcel").submit();
+    //var c=window.open('data:application/vnd.ms-excel,'+encodeURIComponent(monclone.html())) ;//t.preventDefault();
+    // c.document.write(encodeURIComponent(monclone.html()));
+}
+*/
+/*
+function myInitOLAP(){
+    monXML = "";
+    var mesItems = "";
+    var bItem = 0;
+    var mesItemsXML = "{name:'ItemCode','nb':'1','val':{";
+    var arrItem = $('#gridItemsAggregated').jqxGrid('selectedrowindexes');
+    var listItem = "";
+    var mySelecteds = F3DWLD.CONFIG.selectedValues;
+     for (i = 0; i < mySelecteds.items.length; i++) {
+            arr = mySelecteds.items[i];
+            if (arr.type == "list") {
+                if (listItem == "") {listItem = "[{code:'" + arr.code + "',type:'list'}"; }
+                else {listItem += ",{code:'" + arr.code + "',type:'list'}";}
+            }
+            else {
+                if (mesItems == "") {mesItems = arr.code;}
+                else { mesItems += "," + arr.code;}
+                if (bItem != 0) { mesItemsXML += ",";}
+                else { bItem = 1;}
+                mesItemsXML += "'" + arr.code + "':{'E':'" + arr.label.replace(/'/g, " ") + "'}";
+            }
+        }
+    
+    if (listItem != "") {listItem += "]";}
+    else {listItem = "[]";}
+    var mesElements = "";
+    var mesElementsXML = "{name:'ElementCode','nb':'1','val':{";
+    for (i = 0; i < mySelecteds.elements.length; i++) {
+        arr = mySelecteds.elements[i];
+        if (mesElements == "") { mesElements = arr.code;}
+        else {mesElements += "," + arr.code;}
+        if (i != 0) {mesElementsXML += ",";}
+        mesElementsXML += "'" + arr.code + "':{'E':'" + arr.label.replace(/'/g, " ") + "'}";
+    }
+    mesElementsXML += "}}";
+    var mesCountries = "";
+    var bCountry = 0;
+    var mesCountriesXML = "{'name':'AreaCode','nb':'1','val':{";
+    var listCountry = "";
+    for (i = 0; i < mySelecteds.countries.length; i++) {
+        arr = mySelecteds.countries[i];
+        if (arr.type == "list") {
+            if (listCountry == "") {listCountry = "[{code:'" + arr.code + "',type:'list'}"; }
+            else { listCountry += ",{code:'" + arr.code + "',type:'list'}";}
+        }
+        else {
+            if (mesCountries == "") {mesCountries = arr.code;}
+            else {mesCountries += "," + arr.code;}
+            if (bCountry != 0) {mesCountriesXML += ",";} else { bCountry = 1;}
+            mesCountriesXML += "'" + arr.code + "':{'E':'" + arr.label.replace(/'/g, " ") + "'}";
+        }
+    }
+    if (listCountry != "" || listCountry == null) {listCountry += "]";}
+    else { listCountry = "[]";}
+    var data = {};
+    data.datasource = FAOSTATDownload.datasource;
+    data.domainCode = FAOSTATDownload.domainCode;
+    data.language = FAOSTATDownload.language;
+    data.countries = listCountry;
+    data.items = listItem;
+
+    $.ajax({
+        type: 'POST',
+        url: 'http://' + FAOSTATDownload.baseurl + '/bletchley/rest/codes/list/post',
+        data: data,
+        success: function(response) {
+            if (response.constructor === String) { response = jQuery.parseJSON(response);}  ;
+            testAjax = response[0];
+            for (var i = 0; i < testAjax.length; i++){
+                testAjax2 = testAjax[i];
+                if (mesCountries == "") {  mesCountries = testAjax2.code;}
+                else {mesCountries += "," + testAjax2.code;}
+                if (bCountry != 0) {mesCountriesXML += ",";}
+                else {bCountry = 1;}
+                mesCountriesXML += "'" + testAjax2.code + "':{'E':'" + testAjax2.label.replace(/'/g, " ") + "'}";
+            }
+            mesCountriesXML += "}}";
+            testAjax = response[1];
+            for (var i = 0; i < testAjax.length; i++) {
+                testAjax2 = testAjax[i];
+                if (mesItems == "") { mesItems = testAjax2.code;}
+                else {mesItems += "," + testAjax2.code;  }
+                if (bItem != 0) { mesItemsXML += ",";} else {bItem = 1;}
+                mesItemsXML += "'" + testAjax2.code + "':{'E':'" + testAjax2.label.replace(/'/g, " ") + "'}";
+            }
+            mesItemsXML += "}}";
+            var mesYears = "";
+            var mesYearsXML = "{'name':'Year',nb:'1','val':{";
+            for (i = 0; i < mySelecteds.years.length; i++) {
+                arr = mySelecteds.years[i];
+                if (mesYears == "") {mesYears = arr.code; }
+                else {mesYears += "," + arr.code;}
+                if (i != 0) {mesYearsXML += ",";}
+                mesYearsXML += "'" + arr.code + "':{'E':'" + arr.label.toString().replace(/'/g, " ") + "'}";
+            }
+            mesYearsXML += "}}";
+            FAOSTATOLAP2.queryParams.json = JSON.stringify(
+                    {"selects": [{"aggregation": "NONE", "column": "DOM.DomainNameE", "alias": "Domain"},
+                            {"aggregation": "NONE", "column": "A.AreaCode", "alias": "AreaCode"},
+                            {"aggregation": "NONE", "column": "A.AreaNameE", "alias": "Area"},
+                            {"aggregation": "NONE", "column": "I.ItemCode", "alias": "ItemCode"},
+                            {"aggregation": "NONE", "column": "I.ItemNameE", "alias": "Item"},
+                            {"aggregation": "NONE", "column": "E.ElementCode", "alias": "ElementCode"},
+                            {"aggregation": "NONE", "column": "E.ElementNameE", "alias": "Element"}, {"aggregation": "NONE", "column": "D.Year", "alias": "Year"},
+                            {"aggregation": "NONE", "column": "D.Value", "alias": "Value"},
+                            {"aggregation": "NONE", "column": "E.UnitNameE", "alias": "Unit"},
+                            {"aggregation": "NONE", "column": "Flag", "alias": "Flag"}
+                        ], "froms": [{"column": "Data", "alias": "D"}, {"column": "Item", "alias": "I"}, {"column": "Element", "alias": "E"},
+                            {"column": "Area", "alias": "A"}, {"column": "Domain", "alias": "DOM"}],
+                        "wheres": [
+                            {"datatype": "TEXT", "column": "D.DomainCode", "operator": "=", "value": "" + FAOSTATDownload.domainCode + "", "ins": []},
+                            {"datatype": "TEXT", "column": "DOM.DomainCode", "operator": "=", "value": "" + FAOSTATDownload.domainCode + "", "ins": []},
+                            {"datatype": "DATE", "column": "D.AreaCode", "operator": "=", "value": "A.AreaCode", "ins": []}, {"datatype": "DATE", "column": "D.DomainCode", "operator": "=", "value": "DOM.DomainCode", "ins": []}, {"datatype": "DATE", "column": "D.ItemCode", "operator": "=", "value": "I.ItemCode", "ins": []}, {"datatype": "DATE", "column": "D.ElementCode", "operator": "=", "value": "E.ElementCode", "ins": []}, {"datatype": "TEXT", "column": "D.ElementCode", "operator": "IN", "value": "E.ElementCode", "ins": eval("[" + mesElements + "]")}, {"datatype": "TEXT", "column": "D.AreaCode", "operator": "IN", "value": "A.AreaCode", "ins": eval("[" + mesCountries + "]")}, {"datatype": "TEXT", "column": "D.ItemCode", "operator": "IN", "value": "I.ItemCode", "ins": eval("[" + mesItems + "]")}, {"datatype": "TEXT", "column": "D.Year", "operator": "IN", "value": "D.Year", "ins": eval("[" + mesYears + "]")}], "orderBys": [{"column": "D.Year", "direction": "DESC"}, {"column": "A.AreaNameE", "direction": "ASC"}, {"column": "I.ItemNameE", "direction": "ASC"},
+                            {"column": "E.ElementNameE", "direction": "ASC"}], "limit": null, "query": null, "frequency": "NONE"}
+            );
+            //console.log(mesElements+"#"+mesCountries+"#"+mesItems+"#"+mesYears);
+            //myInitOLAP();
+            $.post("/wds/rest/table/json", FAOSTATOLAP2.queryParams).done(function(data) {
+                data = FAOSTATOLAP2.attr.concat(data);
+                $("#newOlap").pivotUI(data, FAOSTATOLAP2.options, FAOSTATOLAP2.displayOption.overwrite);
+            });
+        }
+    });
+}
+*/
+//var internalTest;
+
+

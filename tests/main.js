@@ -4,7 +4,8 @@ requirejs.config({
         text: 'lib/text',
        
         //jquery: "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
-        jquery: "lib/jquery-2.1.1.min",
+        jquery: "//fenixapps.fao.org/repository/js/jquery/2.1.1/jquery.min",
+
         jqueryui: "lib/jquery-ui-1.9.2.custom.min",
         //i18n: 'lib/jquery.i18n.properties-min',
         //jssc3: "lib/highlight/jssc3",
@@ -14,9 +15,10 @@ requirejs.config({
         gt_msg_grid: "lib/grid/gt_grid_all",
         //fusioncharts: "grid/flashchart/fusioncharts/FusionCharts",        
        // configuration: "tests/configuration",
-        pivot: "js/pivotNew",
+        pivot: "js/pivot",
 		'highcharts': "//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts",
-		'HPivot' :'lib/HierachicalRender/monJbPivot',/*PROD*/
+		'HPivot' :'//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min',
+		/*PROD*/
 				/*
 DEV
 				'HPivot' :'lib/HierachicalRender/pivot',
