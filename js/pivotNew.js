@@ -671,7 +671,8 @@
 	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-graph-div'></div>"+
 	"<div id='"+InternalID+"_fx-olap-ui_mesFlags' style='clear:both'></div>";
 	inputOpts.internalID=InternalID;
-	$("#"+InternalID+"_fx-olap-ui").pivotUI(input, inputOpts, overwrite, locale);
+	ret= $("#"+InternalID+"_fx-olap-ui").pivotUI(input, inputOpts, overwrite, locale);
+	return ret;
 	}
   /*
   Pivot Table UI: calls Pivot Table core above with options set by user
@@ -1506,12 +1507,11 @@ var commonJson={  title: {text: ' '    },
 	FAOSTATOLAPV3.mygrid=new Sigma.Grid( gridOption );
   
 	Sigma.Grid.render(FAOSTATOLAPV3.mygrid)();
-	
-	document.getElementById('page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
+	document.getElementById('page_after').id=id+"_page_after"
+	document.getElementById(id+'_page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
 	
 	FAOSTATOLAPV3.mygrid.pageSizeSelect.onchange=function()
-	{document.getElementById('page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;};
- alert(id)
+	{document.getElementById(id+'_page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;};
 	if(FAOSTATOLAPV3.grouped){$("#"+id+"_mesFlags").append($("<label for=\"chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));}
 	else{$("#"+id+"mesFlags").append($("<label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));}
 	$("#nested_by").hide();

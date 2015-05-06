@@ -57,7 +57,8 @@ require(['text!config/dataTest.json','text!config/dataTest2.json','text!config/d
    // $("#fx-olap-ui").pivotUI(dataTest2, dataConfig);
     console.log(dataTest1_1);
 	console.log(dataTest1_2);
- $("#pivot1").pivotFin(dataTest1_1, dataConfig);
+var apivot= $("#pivot1").pivotFin(dataTest1_1, dataConfig);
+console.log(apivot)
  $("#pivot2").pivotFin(dataTest1_2, dataConfig);
 
    });
