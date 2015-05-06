@@ -16,13 +16,17 @@ requirejs.config({
        // configuration: "tests/configuration",
         pivot: "js/pivotNew",
 		'highcharts': "//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts",
-		'HPivot' :'lib/HierachicalRender/pivot',
+		'HPivot' :'lib/HierachicalRender/monJbPivot',/*PROD*/
+				/*
+DEV
+				'HPivot' :'lib/HierachicalRender/pivot',
+
 		'HPivot1':'lib/HierachicalRender/agregate_average',
 		'HPivot2':'lib/HierachicalRender/agregate_count',
 		'HPivot3':'lib/HierachicalRender/agregate_distinct',
 		'HPivot4':'lib/HierachicalRender/agregate_sum',
 		'HPivot5':'lib/HierachicalRender/formatter_default',
-		'HPivot6':'lib/HierachicalRender/group_distinct'
+		'HPivot6':'lib/HierachicalRender/group_distinct'*/
     },
     shim: {jqueryui:{deps: ['jquery']},
         /*i18n : {deps: ['jquery']},
@@ -40,13 +44,13 @@ requirejs.config({
 				//'calendar_utf8',
 				'gt_msg','gt_msg_grid',
                 //'configuration',*/
-				'HPivot','HPivot1','HPivot2','HPivot3','HPivot4','HPivot5','HPivot6'
+				'HPivot'/*,'HPivot1','HPivot2','HPivot3','HPivot4','HPivot5','HPivot6'*/
             ]
         },
-		'HPivot':['jquery','jqueryui'/*,'i18n'*/],
+		'HPivot':['jquery','jqueryui'/*,'i18n'*/]/*,
 		'HPivot1':['HPivot'],'HPivot2':['HPivot'],
 		'HPivot3':['HPivot'],'HPivot4':['HPivot'],
-		'HPivot5':['HPivot'],'HPivot6':['HPivot']     
+		'HPivot5':['HPivot'],'HPivot6':['HPivot']     */
     }
 });
 require(['text!config/dataTest.json','text!config/dataTest2.json','text!config/dataConfig.json','pivot', 'highcharts'],
