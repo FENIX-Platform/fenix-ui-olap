@@ -56,26 +56,29 @@ DEV
     }
 });
 require([
-	//'text!config/dataTest.json',
+	'text!config/dataTest.json',
 	'text!config/dataTest2.json',
 	'text!config/dataConfig.json',
 	'pivot',
 	'highcharts',
-	'renderes/jacque'
+	'js/renderes/jacque'
 	], function(
-    	//dataTest1_1,
+    	dataTest1_1,
     	dataTest1_2,
     	dataConfig,
     	pivot,
-    	dmreandy,
     	highcharts,
     	jacque
     	) {
 
-a = {ciao:1}
+
+var  a = {ciao:1};
+
+console.log('before plugin',a);
+
 a = jacque(a);
 
-a= 
+console.log('after plugin', a);
 
     dataTest1_1 = JSON.parse(dataTest1_1);
 	dataTest1_2 = JSON.parse(dataTest1_2);

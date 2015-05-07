@@ -2,10 +2,8 @@ define(function() {
 
 	return function(param) {
 		
-		param.cose = {};
+		param.jacque = 'jacque';
 
-		return "jacques": {
-			"a": param
-		};
+		return param;
 	};
 });
