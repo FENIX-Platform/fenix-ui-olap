@@ -663,7 +663,10 @@
 	return this.append(result);
   };
 
-  $.fn.pivotFin = function(input, inputOpts,internalDD, overwrite, locale){
+  $.fn.pivotFin = function(input, inputOpts, overwrite, locale){
+  	console.log("dataTest1_1");
+  	console.log(dataTest1_1);
+
 	InternalID=this.attr('id');
 	document.getElementById(InternalID).innerHTML="<div id='"+InternalID+"_fx-olap-ui'></div>"+
 	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-holder-div'></div>"+
