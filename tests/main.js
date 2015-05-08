@@ -18,6 +18,8 @@ requirejs.config({
         pivot: "js/pivot",
 		'highcharts': "//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts",
 		'HPivot' :'//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min',
+		pivotRenderer:"js/rendererers"
+		
 		/*PROD*/
 				/*
 DEV
@@ -37,6 +39,7 @@ DEV
 		'highcharts': ['jquery'],
         gt_msg: {deps: ['jquery']},
         gt_msg_grid: {deps: ['jquery','gt_msg']},
+		"pivotRenderer":["pivot"],
         pivot: {
             deps: [
                 'jquery','jqueryui',
@@ -55,16 +58,16 @@ DEV
 		'HPivot5':['HPivot'],'HPivot6':['HPivot']     */
     }
 });
-require(['text!config/dataTest.json','text!config/dataTest2.json','text!config/dataConfig.json','pivot', 'highcharts'],
+require(['text!config/dataTest.json','text!config/dataTest2.json','text!config/dataConfig.json','pivot', 'highcharts',"pivotRenderer"],
     function(dataTest1_1,dataTest1_2, dataConfig, pivot,dmreandy,highcharts ) {
     dataTest1_1 = JSON.parse(dataTest1_1);
 	dataTest1_2 = JSON.parse(dataTest1_2);
     dataConfig = JSON.parse(dataConfig);
    // $("#fx-olap-ui").pivotUI(dataTest2, dataConfig);
-    console.log(dataTest1_1);
-	console.log(dataTest1_2);
-var apivot= $("#pivot1").pivotFin(dataTest1_1, dataConfig);
+ /*   console.log(dataTest1_1);
+	console.log(dataTest1_2);*/
+var apivot= $("#pivot1").pivotFin(dataTest1_1, dataConfig,true,"en");
 console.log(apivot)
- $("#pivot2").pivotFin(dataTest1_2, dataConfig);
+ $("#pivot2").pivotFin(dataTest1_2, dataConfig,true,"en2");
 
    });
