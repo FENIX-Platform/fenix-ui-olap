@@ -549,22 +549,7 @@ define(['jquery'], function($) {
   Pivot Table core: create PivotData object and call Renderer on it
    */
 
-  var pivotFin = function(InternalID,input, inputOpts, overwrite, locale){
-	//InternalID=this.attr('id');
-	document.getElementById(InternalID).innerHTML="<div id='"+InternalID+"_fx-olap-ui'></div>"+
-	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-holder-div'></div>"+
-	"<div id='"+InternalID+"_fx-olap-ui_myGrid1_div'></div>"+
-	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-graph-div'></div>"+
-	"<div id='"+InternalID+"_fx-olap-ui_mesFlags' style='clear:both'></div>";
-	inputOpts.internalID=InternalID;
-	ret= $("#"+InternalID+"_fx-olap-ui").pivotUI(input, inputOpts, overwrite, locale);
-	return ret;
-	}
-  /*
-  Pivot Table UI: calls Pivot Table core above with options set by user
-   */
-  
-   $.fn.pivot = function(input, opts) {
+$.fn.pivot = function(input, opts) {
     var defaults, e, pivotData, result, x;
     defaults = {
       cols: [],rows: [],
@@ -587,6 +572,25 @@ define(['jquery'], function($) {
    
 	return this.append(result);
   };
+
+
+
+  var pivotFin = function(InternalID,input, inputOpts, overwrite, locale){
+	//InternalID=this.attr('id');
+	document.getElementById(InternalID).innerHTML="<div id='"+InternalID+"_fx-olap-ui'></div>"+
+
+	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-holder-div'></div>"+
+	"<div id='"+InternalID+"_fx-olap-ui_myGrid1_div'></div>"+
+	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-graph-div'></div>"+
+	"<div id='"+InternalID+"_fx-olap-ui_mesFlags' style='clear:both'></div>";
+	inputOpts.internalID=InternalID;
+	ret= $("#"+InternalID+"_fx-olap-ui").pivotUI(input, inputOpts, overwrite, locale);
+	return ret;
+	}
+  /*
+  Pivot Table UI: calls Pivot Table core above with options set by user
+   */
+ 
 
  
   $.fn.pivotUI = function(input, inputOpts,overwrite, locale) {
@@ -1064,7 +1068,7 @@ define(['jquery'], function($) {
   
 
   return {
-  	pivotFin: pivotFin
+  	render: pivotFin
 
   };
  

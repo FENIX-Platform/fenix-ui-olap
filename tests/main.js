@@ -46,7 +46,8 @@ DEV
         pivotRenderers: ['pivotRenderersFuncs'],		
         pivot: {
             deps: [
-                'jquery','jqueryui',
+                'jquery',
+                'jqueryui',
 				// 'jssc3',
 				//'calendar',
 				//'calendar_utf8',
@@ -63,15 +64,16 @@ DEV
 		'HPivot5':['HPivot'],'HPivot6':['HPivot']     */
     }
 });
-require(['jquery','underscore','highcharts',
+require(['jquery','underscore',
 
 		'text!tests/dataTest.json',
 		'text!tests/dataTest2.json',
 		'config/dataConfig',
 
 		'pivot',
-		"pivotRenderers"],
-    function($, _, highcharts,
+		"pivotRenderers"
+		],
+    function($, _,
 		dataTest1_1,
 		dataTest1_2,
 		dataConfig, 
@@ -85,8 +87,10 @@ require(['jquery','underscore','highcharts',
 			rendererDisplay: pivotRenderers
 		});
 
-		pivot.pivotFin("pivot1",dataTest1_1, dataConfig);
+		var pivot1 = pivot.render("pivot1",dataTest1_1, dataConfig);
 
-		pivot.pivotFin("pivot2",dataTest1_2, dataConfig);
+		//TODO pivot1.refresh(newData);
+
+		pivot.render("pivot2",dataTest1_2, dataConfig);
 
 });
