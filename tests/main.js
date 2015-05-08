@@ -61,12 +61,12 @@ DEV
     }
 });
 require(['text!config/dataTest.json',
-'text!config/dataTest2.json',
-'text!config/dataConfig.json',
-'pivot',
- 'highcharts',
- "js/rend/function_rendererers", 
- "js/rend/rendererers"],
+		'text!config/dataTest2.json',
+		'text!config/dataConfig.json',
+		'pivot',
+		'highcharts',
+		"js/rend/function_rendererers", 
+		"js/rend/rendererers"],
     function(
 	dataTest1_1,
 	dataTest1_2,
@@ -82,7 +82,7 @@ require(['text!config/dataTest.json',
 	
 //dataConfig.renderer=function_rendererers;
 dataConfig.rendererDisplay=display_rendereres;
-$("#pivot1").pivotFin(dataTest1_1, dataConfig,true,"en");
- $("#pivot2").pivotFin(dataTest1_2, dataConfig,true,"en2");
+pivotFin("pivot1",dataTest1_1, dataConfig);
+pivotFin("pivot2",dataTest1_2, dataConfig);
 
    });

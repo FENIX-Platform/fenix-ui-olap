@@ -40,7 +40,7 @@
         $("#"+opts.id+"_myGrid1_div").hide();
         $("#"+opts.id+"_fx-olap-graph-div").hide();
         $("#"+opts.id+"_fx-olap-holder-div").show();
-        return $(pivotTableRenderer(pvtData, opts)).barchart();},
+        return barchart($(pivotTableRenderer(pvtData, opts)));},
 	"Heatmap": function(pvtData, opts) {
            $("#"+opts.id+"_myGrid1_div").hide();
           $("#"+opts.id+"_fx-olap-graph-div").hide();
