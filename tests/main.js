@@ -65,9 +65,11 @@ DEV
 });
 require(['jquery','underscore',
 
-		'text!config/dataTest.json',
-		'text!config/dataTest2.json',
-		'text!config/dataConfig.json',
+		'text!tests/dataTest.json',
+		'text!tests/dataTest2.json',
+
+		'config/dataConfig',
+
 		'pivot',
 		'highcharts',
 		"pivotRenderers"],
@@ -81,7 +83,6 @@ require(['jquery','underscore',
 		
 	    dataTest1_1 = JSON.parse(dataTest1_1);
 		dataTest1_2 = JSON.parse(dataTest1_2);
-	    dataConfig = JSON.parse(dataConfig);
 				
 
 		var renderersActives = {
@@ -93,7 +94,9 @@ require(['jquery','underscore',
 			}
 		};
 
-		dataConfig.rendererDisplay=	pivotRenderers;
+		dataConfig = _.extend(dataConfig, {
+			rendererDisplay: pivotRenderers
+		});
 
 		pivot.pivotFin("pivot1",dataTest1_1, dataConfig);
 
