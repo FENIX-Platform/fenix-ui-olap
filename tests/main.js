@@ -65,20 +65,21 @@ require(['text!config/dataTest.json',
 'text!config/dataConfig.json',
 'pivot',
  'highcharts',
- "js/rend/rendererers"],
+ "js/rend/function_rendererers", "text!js/rend/rendererers.js"],
     function(
 	dataTest1_1,
 	dataTest1_2,
 	dataConfig, 
 	pivot,
 	highcharts,
-	renders ) {
+	function_rendererers,display_rendereres ) {
 	
     dataTest1_1 = JSON.parse(dataTest1_1);
 	dataTest1_2 = JSON.parse(dataTest1_2);
     dataConfig = JSON.parse(dataConfig);
-	
-dataConfig.renderer=renders;
+	console.log(eval(display_rendereres))
+dataConfig.renderer=function_rendererers;
+dataConfig.rendererDisplay=eval(display_rendereres)
    // $("#fx-olap-ui").pivotUI(dataTest2, dataConfig);
  /*   console.log(dataTest1_1);
 	console.log(dataTest1_2);*/

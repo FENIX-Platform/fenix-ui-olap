@@ -663,8 +663,9 @@
 	return this.append(result);
   };
 
-  $.fn.pivotFin = function(input, inputOpts,internalDD, overwrite, locale){
+  $.fn.pivotFin = function(input, inputOpts, overwrite, locale){
 	InternalID=this.attr('id');
+	console.log(inputOpts)
 	document.getElementById(InternalID).innerHTML="<div id='"+InternalID+"_fx-olap-ui'></div>"+
 	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-holder-div'></div>"+
 	"<div id='"+InternalID+"_fx-olap-ui_myGrid1_div'></div>"+
@@ -726,10 +727,14 @@
       onRefresh: null,filter: function() { return true;},
       localeStrings: locales[locale].localeStrings
     };
+	
+	
     existingOpts = this.data("pivotUIOptions");
     if ((existingOpts == null) || overwrite) {opts = $.extend(defaults, inputOpts);} else {opts = existingOpts;}
     //try 
-	
+	console.log(inputOpts.rendererDisplay)
+	for(i in inputOpts.rendererDisplay){opts.renderers["Sec"+i]=inputOpts.rendererDisplay[i];}
+	console.log(opts.renderers)
       input = PivotData.convertToArray(input);
       tblCols = (function() {
         var _ref, _results;
@@ -1137,7 +1142,6 @@
         td.className = "pvtVal row" + i + " col" + j;
        //V1	  
 	   //;
-console.log(val)
 	   if(val!=null && val.length>1){
 	   
 	   var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);	
