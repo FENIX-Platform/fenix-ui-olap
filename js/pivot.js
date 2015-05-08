@@ -1,4 +1,4 @@
-(function() {
+define(['jquery'], function($) {
 
   var $, PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, renderers, usFmt, usFmtInt, usFmtPct, zeroPad,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
@@ -6,8 +6,6 @@
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
 	InternalID;
-	
-  $ = jQuery;
   /*
   Utilities
    */
@@ -551,7 +549,7 @@
   Pivot Table core: create PivotData object and call Renderer on it
    */
 
-  pivotFin = function(InternalID,input, inputOpts, overwrite, locale){
+  var pivotFin = function(InternalID,input, inputOpts, overwrite, locale){
 	//InternalID=this.attr('id');
 	document.getElementById(InternalID).innerHTML="<div id='"+InternalID+"_fx-olap-ui'></div>"+
 	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-holder-div'></div>"+
@@ -1064,8 +1062,13 @@
         return x1 + x2;
     };
   
+
+  return {
+  	pivotFin: pivotFin
+
+  };
  
-	}).call(this);
+});
 
 
 /**Others Functions*/

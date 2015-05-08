@@ -95,7 +95,8 @@ require(['jquery','underscore',
 
 		dataConfig.rendererDisplay=	pivotRenderers;
 
-		pivotFin("pivot1",dataTest1_1, dataConfig);
-		pivotFin("pivot2",dataTest1_2, dataConfig);
+		pivot.pivotFin("pivot1",dataTest1_1, dataConfig);
+
+		pivot.pivotFin("pivot2",dataTest1_2, dataConfig);
 
 });
