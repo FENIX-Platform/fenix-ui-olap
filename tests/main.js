@@ -39,7 +39,7 @@ DEV
         /*i18n : {deps: ['jquery']},
         calendar: {exports: 'Calendar'},
         calendar_utf8: {exports: 'Calendar'},*/
-		'highcharts': ['jquery'],
+		highcharts: ['jquery'],
         gt_msg: {deps: ['jquery']},
         gt_msg_grid: {deps: ['jquery','gt_msg']},
 		
@@ -63,37 +63,24 @@ DEV
 		'HPivot5':['HPivot'],'HPivot6':['HPivot']     */
     }
 });
-require(['jquery','underscore',
+require(['jquery','underscore','highcharts',
 
 		'text!tests/dataTest.json',
 		'text!tests/dataTest2.json',
-
 		'config/dataConfig',
 
 		'pivot',
-		'highcharts',
 		"pivotRenderers"],
-    function($, _,
-	dataTest1_1,
-	dataTest1_2,
-	dataConfig, 
-	pivot,
-	highcharts,
-	pivotRenderers ) {
+    function($, _, highcharts,
+		dataTest1_1,
+		dataTest1_2,
+		dataConfig, 
+		pivot,
+		pivotRenderers ) {
 		
 	    dataTest1_1 = JSON.parse(dataTest1_1);
 		dataTest1_2 = JSON.parse(dataTest1_2);
 				
-
-		var renderersActives = {
-			"Table": {
-				label: "Grid"
-			},
-			"Heatmap": {
-				label: "HEATMAP"
-			}
-		};
-
 		dataConfig = _.extend(dataConfig, {
 			rendererDisplay: pivotRenderers
 		});
