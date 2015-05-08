@@ -663,7 +663,7 @@
 	return this.append(result);
   };
 
-  $.fn.pivotFin = function(input, inputOpts, overwrite, locale){
+  $.fn.pivotFin = function(id,input, inputOpts, overwrite, locale){
 	InternalID=this.attr('id');
 	console.log(inputOpts)
 	document.getElementById(InternalID).innerHTML="<div id='"+InternalID+"_fx-olap-ui'></div>"+
@@ -733,7 +733,7 @@
     if ((existingOpts == null) || overwrite) {opts = $.extend(defaults, inputOpts);} else {opts = existingOpts;}
     //try 
 	console.log(inputOpts.rendererDisplay)
-	for(i in inputOpts.rendererDisplay){opts.renderers["Sec"+i]=inputOpts.rendererDisplay[i];}
+	//for(i in inputOpts.rendererDisplay){opts.renderers["Sec"+i]=inputOpts.rendererDisplay[i];}
 	console.log(opts.renderers)
       input = PivotData.convertToArray(input);
       tblCols = (function() {
