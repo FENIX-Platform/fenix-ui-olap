@@ -17,8 +17,9 @@ requirejs.config({
        // configuration: "tests/configuration",
         pivot: "js/pivot",
 		'highcharts': "//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts",
-		'HPivot' :'//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min',
-		pivotRenderer:"js/rendererers"
+		'HPivot' :'//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min'
+		
+		,pivotRenderer:"js/rend/rendererers"
 		
 		/*PROD*/
 				/*
@@ -39,7 +40,7 @@ DEV
 		'highcharts': ['jquery'],
         gt_msg: {deps: ['jquery']},
         gt_msg_grid: {deps: ['jquery','gt_msg']},
-		"pivotRenderer":["pivot"],
+		"pivotRenderer":{deps: ["pivot"]},
         pivot: {
             deps: [
                 'jquery','jqueryui',
@@ -50,6 +51,7 @@ DEV
 				'gt_msg','gt_msg_grid',
                 //'configuration',*/
 				'HPivot'/*,'HPivot1','HPivot2','HPivot3','HPivot4','HPivot5','HPivot6'*/
+				
             ]
         },
 		'HPivot':['jquery','jqueryui'/*,'i18n'*/]/*,
@@ -58,16 +60,29 @@ DEV
 		'HPivot5':['HPivot'],'HPivot6':['HPivot']     */
     }
 });
-require(['text!config/dataTest.json','text!config/dataTest2.json','text!config/dataConfig.json','pivot', 'highcharts',"pivotRenderer"],
-    function(dataTest1_1,dataTest1_2, dataConfig, pivot,dmreandy,highcharts ) {
+require(['text!config/dataTest.json',
+'text!config/dataTest2.json',
+'text!config/dataConfig.json',
+'pivot',
+ 'highcharts',
+ "js/rend/rendererers"],
+    function(
+	dataTest1_1,
+	dataTest1_2,
+	dataConfig, 
+	pivot,
+	highcharts,
+	renders ) {
+	
     dataTest1_1 = JSON.parse(dataTest1_1);
 	dataTest1_2 = JSON.parse(dataTest1_2);
     dataConfig = JSON.parse(dataConfig);
+	
+dataConfig.renderer=renders;
    // $("#fx-olap-ui").pivotUI(dataTest2, dataConfig);
  /*   console.log(dataTest1_1);
 	console.log(dataTest1_2);*/
-var apivot= $("#pivot1").pivotFin(dataTest1_1, dataConfig,true,"en");
-console.log(apivot)
+$("#pivot1").pivotFin(dataTest1_1, dataConfig,true,"en");
  $("#pivot2").pivotFin(dataTest1_2, dataConfig,true,"en2");
 
    });
