@@ -147,7 +147,6 @@ var commonJson={  title: {text: ' '    },
 
 	
 newGrid=function(r,id){
-	
 		var FAOSTATOLAPV3={};
 		FAOSTATOLAPV3.grouped=true;
 		var r2d2=[];

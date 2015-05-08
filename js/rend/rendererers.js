@@ -1,4 +1,6 @@
- g={
+ define(
+ 
+ {
        "Table":function(pvtData, opts){
 	
 	   if(navigator.appName.indexOf("Internet Explorer")!=-1){//yeah, he's using IE
@@ -85,4 +87,4 @@
 		$("#"+opts.id+"_fx-olap-graph-div").show();
 		HPivot(pvtData,"#"+opts.id+"_fx-olap-graph-div"  );
 		}
-		}
+		});

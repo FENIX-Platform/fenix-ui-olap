@@ -287,7 +287,92 @@
   };*/
   
   renderers2 = {
-      
+       "Table":function(pvtData, opts){
+	
+	   if(navigator.appName.indexOf("Internet Explorer")!=-1){//yeah, he's using IE
+		var badBrowser=(
+        /*navigator.appVersion.indexOf("MSIE 10")==-1 &&*/   //v9 is ok
+        navigator.appVersion.indexOf("MSIE 1")==-1//v10, 11, 12, etc. is fine too
+    );
+	if(badBrowser){
+	//navigate to error page
+	$("#"+opts.id+"_myGrid1_div").hide();
+	$("#"+opts.id+"_fx-olap-graph-div").hide();
+	$("#"+opts.id+"_fx-olap-holder-div").show();
+	// $('#aggregator option[value="Sum"]').prop('selected', true);
+	displayFlags();
+	return pivotTableRenderer(pvtData, opts);
+    }
+	else{
+	$("#"+opts.id+"_myGrid1_div").show();
+	$("#"+opts.id+"_fx-olap-graph-div").hide();
+	$("#"+opts.id+"_fx-olap-holder-div").hide();
+	newGrid(pvtData,opts.id);}
+	}
+	else{
+	$("#"+opts.id+"_myGrid1_div").show();
+	$("#"+opts.id+"_fx-olap-graph-div").hide();
+	$("#"+opts.id+"_fx-olap-holder-div").hide();
+	newGrid(pvtData,opts.id);}
+	// return pivotTableRenderer(pvtData, opts)
+	},
+	"Table2": function(pvtData, opts) {
+          $("#"+opts.id+"_myGrid1_div").hide();
+          $("#"+opts.id+"_fx-olap-graph-div").hide();
+           $("#"+opts.id+"_fx-olap-holder-div").show();
+		   return pivotTableRenderer(pvtData, opts);
+    },
+	"Table Barchart": function(pvtData, opts) {
+        $("#"+opts.id+"_myGrid1_div").hide();
+        $("#"+opts.id+"_fx-olap-graph-div").hide();
+        $("#"+opts.id+"_fx-olap-holder-div").show();
+        return $(pivotTableRenderer(pvtData, opts)).barchart();},
+	"Heatmap": function(pvtData, opts) {
+           $("#"+opts.id+"_myGrid1_div").hide();
+          $("#"+opts.id+"_fx-olap-graph-div").hide();
+           $("#"+opts.id+"_fx-olap-holder-div").show();
+        return $(pivotTableRenderer(pvtData, opts)).heatmap(); },
+	"Row Heatmap": function(pvtData, opts) {
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").show();
+		return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");},
+	"Col Heatmap": function(pvtData, opts) {
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").show();
+        return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");},
+	"barchart":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).barhightchart(pvtData,"#"+opts.id+"_fx-olap-graph-div","barchart"  );
+        
+		} ,
+	"line chart":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).barhightchart(pvtData,"#"+opts.id+"_fx-olap-graph-div","line"  );
+    	},
+	"Area":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).barhightchart(pvtData,"#"+opts.id+"_fx-olap-graph-div","area"  );
+		},
+	"Stacked barchart":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).barhightchart(pvtData,"#"+opts.id+"_fx-olap-graph-div","stackedColumn"  );
+		},
+	"OLAP":function(pvtData,opts){
+		$("#"+opts.id+"_myGrid1_div").hide();
+		$("#"+opts.id+"_fx-olap-holder-div").hide();
+		$("#"+opts.id+"_fx-olap-graph-div").show();
+		$(pivotTableRenderer(pvtData, opts)).HPivot(pvtData,"#"+opts.id+"_fx-olap-graph-div"  );
+		}
 		};
   
   locales = {
@@ -578,9 +663,8 @@
 	return this.append(result);
   };
 
-  $.fn.pivotFin = function(id,input, inputOpts, overwrite, locale){
+  $.fn.pivotFin = function(input, inputOpts,internalDD, overwrite, locale){
 	InternalID=this.attr('id');
-	console.log(inputOpts)
 	document.getElementById(InternalID).innerHTML="<div id='"+InternalID+"_fx-olap-ui'></div>"+
 	"<div id='"+InternalID+"_fx-olap-ui_fx-olap-holder-div'></div>"+
 	"<div id='"+InternalID+"_fx-olap-ui_myGrid1_div'></div>"+
@@ -596,12 +680,10 @@
   
   
   $.fn.pivotUI = function(input, inputOpts,overwrite, locale) {
- 
 	var FAOSTATNEWOLAP = {};
 	FAOSTATNEWOLAP.pivotlimit = 200000;
 	FAOSTATNEWOLAP.pivotlimitExcel = 200000;
 	FAOSTATNEWOLAP.limitPivotPreview = 5000;//lignes
-	FAOSTATNEWOLAP.PP = {PP1: [], PP2: [], PP3: []};
 	FAOSTATNEWOLAP.excelpayload = {};
 	FAOSTATNEWOLAP.schema = {};
 	FAOSTATNEWOLAP.rendererV = 0;
@@ -633,8 +715,10 @@
 	defaults = {
       derivedAttributes: {},
       aggregators: locales[locale].aggregators,
-      renderers: locales[locale].renderers,
-      hiddenAttributes: [],menuLimit: 500,
+      //renderers: locales[locale].renderers,
+   renderers: inputOpts.rendererDisplay,
+      
+   hiddenAttributes: [],menuLimit: 500,
       cols: [],rows: [],vals: [],exclusions: {},
       unusedAttrsVertical:false,// "auto",
       autoSortUnusedAttrs: false,
@@ -642,14 +726,10 @@
       onRefresh: null,filter: function() { return true;},
       localeStrings: locales[locale].localeStrings
     };
-	
-	
     existingOpts = this.data("pivotUIOptions");
     if ((existingOpts == null) || overwrite) {opts = $.extend(defaults, inputOpts);} else {opts = existingOpts;}
     //try 
-	console.log(inputOpts.rendererDisplay)
-	//for(i in inputOpts.rendererDisplay){opts.renderers["Sec"+i]=inputOpts.rendererDisplay[i];}
-	console.log(opts.renderers)
+	
       input = PivotData.convertToArray(input);
       tblCols = (function() {
         var _ref, _results;
@@ -949,7 +1029,6 @@
    pivotTableRenderer = function(pivotData, opts) {
     var aggregator, c, colAttrs, colKey, colKeys, defaults, i, j, r, result, rowAttrs, rowKey, rowKeys, spanSize, td, th, totalAggregator, tr, txt, val, x;
     defaults = {localeStrings: { totals: "Totals"  }};
-	console.log(opts)
     opts = $.extend(defaults, opts);
     colAttrs = pivotData.colAttrs;
     rowAttrs = pivotData.rowAttrs;
@@ -1056,15 +1135,8 @@
         td = document.createElement("td");
         td.className = "pvtVal row" + i + " col" + j;
        //V1	  
-	   //;
-	   if(val!=null && val.length>1){
-	   
-	   var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);	
-for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}
-		monInnerTemp+="</tr></table>";		
-		td.innerHTML=monInnerTemp;	}
-		else{td.innerHTML = aggregator.format(val)}
-	   
+	   td.innerHTML = aggregator.format(val);
+
        /*try{
 		var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);		
 		if(FAOSTATNEWOLAP.showUnits){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}		
@@ -1081,16 +1153,7 @@ for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>
       val = totalAggregator.value();
       td = document.createElement("td");
       td.className = "pvtTotal rowTotal";
-    //  td.innerHTML = totalAggregator.format(val);
-	  
-	  if(val!=null && val.length>1){
-	   
-	   var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);	
-for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}
-		monInnerTemp+="</tr></table>";		
-		td.innerHTML=monInnerTemp;	}
-	  else{td.innerHTML = totalAggregator.format(val)}
-	  
+      td.innerHTML = totalAggregator.format(val);
       td.setAttribute("data-value", val);
       td.setAttribute("data-for", "row" + i);
       tr.appendChild(td);
@@ -1109,16 +1172,8 @@ for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>
       val = totalAggregator.value();
       td = document.createElement("td");
       td.className = "pvtTotal colTotal";
-    //  td.innerHTML = totalAggregator.format(val);
-        if(val!=null && val.length>1){
-	   
-	   var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);	
-for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}
-		monInnerTemp+="</tr></table>";		
-		td.innerHTML=monInnerTemp;	}
-	  else{td.innerHTML = totalAggregator.format(val)}
-	  
-	  td.setAttribute("data-value", val);
+      td.innerHTML = totalAggregator.format(val);
+      td.setAttribute("data-value", val);
       td.setAttribute("data-for", "col" + j);
       tr.appendChild(td);
     }
@@ -1126,16 +1181,8 @@ for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>
     val = totalAggregator.value();
     td = document.createElement("td");
     td.className = "pvtGrandTotal";
-   // td.innerHTML = totalAggregator.format(val);
-    if(val!=null && val.length>1){
-	   
-	   var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);	
-for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}
-		monInnerTemp+="</tr></table>";		
-		td.innerHTML=monInnerTemp;	}
-	  else{td.innerHTML = totalAggregator.format(val)}
-	
-	td.setAttribute("data-value", val);
+    td.innerHTML = totalAggregator.format(val);
+    td.setAttribute("data-value", val);
     tr.appendChild(td);
     result.appendChild(tr);
     result.setAttribute("data-numrows", rowKeys.length);
@@ -1143,10 +1190,13 @@ for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>
     return result;
   };
 
-	/*$.fn.HPivot=function(pivotData,id){
+	$.fn.HPivot=function(pivotData,id){
 	var mydata=[];
 	var myfield=
-	{
+	{/* Area: {field: 'Area', sort: "asc", showAll: true, agregateType: "distinct", label: "Area"},
+	Item: {field: 'Item', sort: "asc", showAll: true, agregateType: "distinct", label: "Indicator"},
+	Element: {field: 'Element', sort: "asc", showAll: true, agregateType: "distinct", label: "Month"},
+	Year: {field: 'Year', sort: "asc", showAll: true, agregateType: "distinct", label: "Year"},*/
     count: {agregateType: "count", groupType: "none", label: "Counts"},
     sum: {field: 'Value', agregateType: "sum", groupType: "none", label: "Sum"},
 	average: {field: 'Value', agregateType: "average", groupType: "none", label: "Average", 
@@ -1171,13 +1221,16 @@ for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>
 		{ft[pivotData.colAttrs[j]]=colTemp[j];}
 
 		ft["Value"]=pivotData.tree[i][k].value()[0];
-	   
+	   /* 	ft["Unit"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[1];
+			ft["flag"]=FAOSTATNEWOLAP.internalData.tree[i][k].value()[2];
+		*/
 	 mydata.push(ft); 
 	}
 }
-    if(  typeof $(id).data('unc-jbPivot') !== 'undefined'
+    if( /*typeof HPivott !== 'undefined' 
+	&&*/ typeof $(id).data('unc-jbPivot') !== 'undefined'
 	){
-	
+	console.log("ici")
 		$(id).data('unc-jbPivot').options.xfields= pivotData.rowAttrs;
 		$(id).data('unc-jbPivot').options.yfields= pivotData.colAttrs;
 		//$("#fx-olap-graph-div").data('unc-jbPivot')._create()
@@ -1185,7 +1238,7 @@ for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>
 		$(id).data('unc-jbPivot').insertRecords(mydata);
 		$(id).data('unc-jbPivot')._renderHtml();
 	}
-	else{
+	else{console.log("la"+pivotData.rowAttrs);
 		$(id).jbPivot({
 		 fields: myfield,
 		 xfields: pivotData.rowAttrs,
@@ -1200,63 +1253,9 @@ for(var t=1;t<val.length;t++){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>
 		}
 	 );
 	}
-}*/
-
-	/*$.fn.barhightchart=function(r,id,scope){
-var monXaxis=[];
-for(entry in r.colKeys)
-{monXaxis.push(r.colKeys[entry].toString().replace(/<span class="ordre">\d+<\/span>/g,"").replace(/\|\|/g," X "));}
-
-var maSeries=[];
-   if(r.colKeys.length>0){
-    for(ligne in r.tree){
-        var temp={"name":ligne.replace(/<span class="ordre">\d+<\/span>/g,"").replace(/\|\|/g," X "),"data":[]};
-        for(col in r.colKeys){
-        var coldInd=r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9 ]/g,"_");
-        if( r.tree[ligne][coldInd]!=null){ temp.data.push(r.tree[ligne][coldInd].value()); }
-        else{temp.data.push( null);}
-		//temp.push(r.rowTotals[ligne].sum);
-		// r2d2.push([ligne,col,+r.tree[ligne][col].value()]);
-      }
-      maSeries.push(temp);
-     }
-}
-else{
 }
 
-
-
-var commonJson={  title: {text: ' '    },
-    plotOptions: {  
-    column: { pointPadding: 0.2,  borderWidth: 0     },
-     line: { connectNulls: false }
-    },
-	subtitle: {text: 'Source: FAOSTAT'},
-    xAxis: {categories:monXaxis ,crosshair: true},
-    yAxis: {min: 0  },
-    tooltip: {
-	headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-    footerFormat: '</table>',
-    shared: true,
-	useHTML: true
-    },
-	series: maSeries
-    };
-   
-    if(scope=="barchart"){commonJson.chart={type: 'column'};}
-    else if(scope=="line"){commonJson.plotLines=[];}
-    else if(scope=="area"){
-        commonJson.chart= {type: 'area'};
-        commonJson.plotOptions={area: {stacking: 'normal'}}
-    }
-     else if(scope=="stackedColumn"){
-		commonJson.chart= {type: 'column'};
-        commonJson.plotOptions={column: {  stacking: 'normal'}}
-		}
- $(id).highcharts(commonJson);
-}*/
+	
 
 	$.fn.heatmap = function(scope) {
     var colorGen, heatmapper, i, j, numCols, numRows, _i, _j;
@@ -1369,75 +1368,8 @@ var commonJson={  title: {text: ' '    },
     barcharter(".pvtTotal.colTotal");
     return this;
   };
- /*
-	function newGrid(r,id){
-		var FAOSTATOLAPV3={};
-		FAOSTATOLAPV3.grouped=true;
-		var r2d2=[];
-		$("#"+id+"mesFlags").empty();
-		for(ligne in r.tree){
-			var temp=ligne.split('||');
-			for(col in r.colKeys){
-				var coldInd=r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9]/g,"_")
-				if( r.tree[ligne][coldInd]!=null){temp.push(r.tree[ligne][coldInd].value());}
-				else{temp.push("");}
-			}
-			r2d2.push(temp);
-		}
-	var grid_demo_id = id+"_myGrid1" ;
-	var dsOption= {	fields :[],	recordType : 'array',	data : r2d2};
-
-	var colsOption = [];
-	for(var i in r.rowAttrs){
-		dsOption.fields.push({name : r.rowAttrs[i]  });
-		colsOption.push({id:  r.rowAttrs[i] , header:  r.rowAttrs[i] , frozen : true ,grouped : FAOSTATOLAPV3.grouped});  
-	}
-	var reg = new RegExp("<span class=\"ordre\">[0-9]*</span>", "g"); 
-	var reg2 = new RegExp("<span class=\"ordre\">[0-9]*</span><table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g"); 
-
-	for(var i in r.colKeys){
-   dsOption.fields.push({name : r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g,"_")  });
-   montitle="";
-   for(var ii=0;ii<r.colKeys[i].length;ii++){
-	   if(true || F3DWLD.CONFIG.wdsPayload.showCodes)
-	   {montitle+="<br>"+r.colKeys[i][ii].replace(reg2, "$2 ($1)");}
-	   else{montitle+="<br>"+r.colKeys[i][ii].replace(reg, "");}
-	   }
-	   colsOption.push({id:  r.colKeys[i].join("_").replace(/[^a-zA-Z0-9]/g,"_") ,
-		header: montitle, toolTip : true ,toolTipWidth : 150});
-}
-	var gridOption={
-	id : grid_demo_id,
-	width: "100%",  //"100%", // 700,
-	height: "250",  //"100%", // 330,
-	container :grid_demo_id+"_div",//pvtRendererArea",//testinline2",//'',//myGrid1_div',//pivot_table',// 'gridbox',// $(".pvtRendererArea")[0],//
-	replaceContainer : true, 
-	dataset : dsOption ,
-	resizable : false,
-	columns : colsOption,
-	pageSize : 15 ,
-	pageSizeList : [15,25,50,150],
-	SigmaGridPath : 'grid/',
-	toolbarContent : 'nav | goto | pagesize ',
-	onMouseOver : function(value,  record,  cell,  row,  colNo, rowNo,  columnObj,  grid){
-		if (columnObj && columnObj.toolTip) {grid.showCellToolTip(cell,columnObj.toolTipWidth);}
-		else{grid.hideCellToolTip();}
-	},
-	onMouseOut : function(value,  record,  cell,  row,  colNo, rowNo,  columnObj,  grid){grid.hideCellToolTip();}
-};
-	FAOSTATOLAPV3.mygrid=new Sigma.Grid( gridOption );
-  
-	Sigma.Grid.render(FAOSTATOLAPV3.mygrid)();
-	document.getElementById('page_after').id=id+"_page_after"
-	document.getElementById(id+'_page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
-	
-	FAOSTATOLAPV3.mygrid.pageSizeSelect.onchange=function()
-	{document.getElementById(id+'_page_after').innerHTML="/"+FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;};
-	if(FAOSTATOLAPV3.grouped){$("#"+id+"_mesFlags").append($("<label for=\"chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));}
-	else{$("#"+id+"mesFlags").append($("<label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));}
-	$("#nested_by").hide();
-	} */
-}).call(this);
+ 
+	}).call(this);
 
 
 /**Others Functions*/
