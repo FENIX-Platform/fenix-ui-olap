@@ -89,8 +89,6 @@ require(['jquery','underscore',
 
 		var pivot1 = pivot.render("pivot1",dataTest1_1, dataConfig);
 
-		//TODO pivot1.refresh(newData);
-
 		pivot.render("pivot2",dataTest1_2, dataConfig);
 
 });
