@@ -1,10 +1,11 @@
 requirejs.config({
     baseUrl: '../',
     paths : {
-        text: 'lib/text',
-       
-        //jquery: "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
-        jquery: "//fenixapps.fao.org/repository/js/jquery/2.1.1/jquery.min",
+		'text': "//fenixapps.fao.org/repository/js/requirejs/plugins/text/2.0.12/text",
+		'i18n': "//fenixapps.fao.org/repository/js/requirejs/plugins/i18n/2.0.4/i18n",
+		'domready': "//fenixapps.fao.org/repository/js/requirejs/plugins/domready/2.0.1/domReady",
+		'underscore': "//fenixapps.fao.org/repository/js/underscore/1.7.0/underscore.min",
+        'jquery': "//fenixapps.fao.org/repository/js/jquery/2.1.1/jquery.min",
 
         jqueryui: "lib/jquery-ui-1.9.2.custom.min",
         //i18n: 'lib/jquery.i18n.properties-min',
@@ -17,9 +18,10 @@ requirejs.config({
        // configuration: "tests/configuration",
         pivot: "js/pivot",
 		'highcharts': "//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts",
-		'HPivot' :'//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min'
+		'HPivot' :'//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min',
 		
-		,pivotRenderer:"js/rend/rendererers"
+		pivotRenderersFuncs: 'js/rend/function_rendererers',
+		pivotRenderers:      'js/rend/rendererers',
 		
 		/*PROD*/
 				/*
@@ -40,49 +42,60 @@ DEV
 		'highcharts': ['jquery'],
         gt_msg: {deps: ['jquery']},
         gt_msg_grid: {deps: ['jquery','gt_msg']},
-		"pivotRenderer":{deps: ["pivot"]},
+		
+        pivotRenderers: ['pivotRenderersFuncs'],		
         pivot: {
             deps: [
                 'jquery','jqueryui',
-				//'i18n',
 				// 'jssc3',
 				//'calendar',
 				//'calendar_utf8',
 				'gt_msg','gt_msg_grid',
                 //'configuration',*/
-				'HPivot'/*,'HPivot1','HPivot2','HPivot3','HPivot4','HPivot5','HPivot6'*/
-				
+				'HPivot',/*'HPivot1','HPivot2','HPivot3','HPivot4','HPivot5','HPivot6'*/
+				'pivotRenderers'
             ]
         },
-		'HPivot':['jquery','jqueryui'/*,'i18n'*/]/*,
+
+		'HPivot':['jquery','jqueryui']/*,
 		'HPivot1':['HPivot'],'HPivot2':['HPivot'],
 		'HPivot3':['HPivot'],'HPivot4':['HPivot'],
 		'HPivot5':['HPivot'],'HPivot6':['HPivot']     */
     }
 });
-require(['text!config/dataTest.json',
+require(['jquery','underscore',
+
+		'text!config/dataTest.json',
 		'text!config/dataTest2.json',
 		'text!config/dataConfig.json',
 		'pivot',
 		'highcharts',
-		"js/rend/function_rendererers", 
-		"js/rend/rendererers"],
-    function(
+		"pivotRenderers"],
+    function($, _,
 	dataTest1_1,
 	dataTest1_2,
 	dataConfig, 
 	pivot,
 	highcharts,
-	function_rendererers,
-	display_rendereres ) {
-	
-    dataTest1_1 = JSON.parse(dataTest1_1);
-	dataTest1_2 = JSON.parse(dataTest1_2);
-    dataConfig = JSON.parse(dataConfig);
-	
-//dataConfig.renderer=function_rendererers;
-dataConfig.rendererDisplay=display_rendereres;
-pivotFin("pivot1",dataTest1_1, dataConfig);
-pivotFin("pivot2",dataTest1_2, dataConfig);
+	pivotRenderers ) {
+		
+	    dataTest1_1 = JSON.parse(dataTest1_1);
+		dataTest1_2 = JSON.parse(dataTest1_2);
+	    dataConfig = JSON.parse(dataConfig);
+				
 
-   });
+		var renderersActives = {
+			"Table": {
+				label: "Grid"
+			},
+			"Heatmap": {
+				label: "HEATMAP"
+			}
+		};
+
+		dataConfig.rendererDisplay=	pivotRenderers;
+
+		pivotFin("pivot1",dataTest1_1, dataConfig);
+		pivotFin("pivot2",dataTest1_2, dataConfig);
+
+});
