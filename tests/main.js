@@ -66,9 +66,9 @@ DEV
 });
 require(['jquery','underscore',
 
-		'text!tests/dataTest.json',
-		'text!tests/dataTest2.json',
-		'text!config/dataConfig.js',
+		'text!tests/data/test.json',
+		'text!tests/data/test2.json',
+		'config/dataConfig',
 
 		'pivot',
 		"pivotRenderers"
@@ -82,7 +82,7 @@ require(['jquery','underscore',
 		
 	    dataTest1_1 = JSON.parse(dataTest1_1);
 		dataTest1_2 = JSON.parse(dataTest1_2);
-			dataConfig=JSON.parse(dataConfig)
+		
 		dataConfig = _.extend(dataConfig, {
 			rendererDisplay: pivotRenderers
 		});
