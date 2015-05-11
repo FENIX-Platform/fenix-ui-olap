@@ -68,7 +68,7 @@ require(['jquery','underscore',
 
 		'text!tests/dataTest.json',
 		'text!tests/dataTest2.json',
-		'config/dataConfig',
+		'text!config/dataConfig.js',
 
 		'pivot',
 		"pivotRenderers"
@@ -82,7 +82,7 @@ require(['jquery','underscore',
 		
 	    dataTest1_1 = JSON.parse(dataTest1_1);
 		dataTest1_2 = JSON.parse(dataTest1_2);
-				
+			dataConfig=JSON.parse(dataConfig)
 		dataConfig = _.extend(dataConfig, {
 			rendererDisplay: pivotRenderers
 		});
