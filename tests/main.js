@@ -11,7 +11,7 @@ requirejs.config({
         //i18n: 'lib/jquery.i18n.properties-min',
         //jssc3: "lib/highlight/jssc3",
         //calendar: "lib/grid/calendar/calendar",
-    //    calendar_utf8: "lib/grid/calendar/calendar-cn-utf8",
+		//calendar_utf8: "lib/grid/calendar/calendar-cn-utf8",
         gt_msg: "lib/grid/gt_msg_en",
         gt_msg_grid: "lib/grid/gt_grid_all",
         //fusioncharts: "grid/flashchart/fusioncharts/FusionCharts",        
@@ -22,6 +22,8 @@ requirejs.config({
 		
 		pivotRenderersFuncs: 'js/rend/function_rendererers',
 		pivotRenderers:      'js/rend/rendererers',
+		pivotAggregatorsFuncs: 'js/rend/function_aggregators',
+		pivotAggregators:      'js/rend/aggregators',
 		
 		/*PROD*/
 				/*
@@ -43,7 +45,8 @@ DEV
         gt_msg: {deps: ['jquery']},
         gt_msg_grid: {deps: ['jquery','gt_msg']},
 		
-        pivotRenderers: ['pivotRenderersFuncs'],		
+        pivotRenderers: ['pivotRenderersFuncs'],	
+		pivotAggregators: ['pivotAggregatorsFuncs','jquery'],			
         pivot: {
             deps: [
                 'jquery',
@@ -65,30 +68,36 @@ DEV
     }
 });
 require(['jquery','underscore',
-
-		'text!tests/data/test.json',
-		'text!tests/data/test2.json',
-		'config/dataConfig',
-
 		'pivot',
-		"pivotRenderers"
+		"pivotRenderers",
+		"pivotAggregators",
+		'text!tests/data/test.json',
+		'config/dataConfig1',
+		'text!tests/data/test2.json',
+		'config/dataConfig2'
+		
 		],
     function($, _,
-		dataTest1_1,
-		dataTest1_2,
-		dataConfig, 
 		pivot,
-		pivotRenderers ) {
+		pivotRenderers,
+		pivotAggregators,
+		dataTest1_1,
+		dataConfig1, 
+		dataTest1_2,
+		dataConfig2 
+		 ) {
+		
 		
 	    dataTest1_1 = JSON.parse(dataTest1_1);
 		dataTest1_2 = JSON.parse(dataTest1_2);
 		
-		dataConfig = _.extend(dataConfig, {
-			rendererDisplay: pivotRenderers
-		});
-
-		var pivot1 = pivot.render("pivot1",dataTest1_1, dataConfig);
-
-		pivot.render("pivot2",dataTest1_2, dataConfig);
+		dataConfig1 = _.extend(dataConfig1, {rendererDisplay: pivotRenderers});
+		dataConfig1 = _.extend(dataConfig1, {aggregatorDisplay: pivotAggregators});
+		
+		dataConfig2 = _.extend(dataConfig2, {rendererDisplay: pivotRenderers});
+		dataConfig2 = _.extend(dataConfig2, {aggregatorDisplay: pivotAggregators});
+		
+		var pivot1 = pivot.render("pivot1",dataTest1_1, dataConfig1);
+		pivot.render("pivot2",dataTest1_2, dataConfig2);
 
 });
