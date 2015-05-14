@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+define(['jquery','i18n!nls/pivot'], function($,i18n) {
 
     var $, PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, renderers, usFmt, usFmtInt, usFmtPct, zeroPad,
             __indexOf = [].indexOf || function(item) {
@@ -17,40 +17,20 @@ define(['jquery'], function($) {
             __hasProp = {}.hasOwnProperty,
             InternalID;
 
-
     locales = {
         en2: {
 //aggregators: aggregators,
-
-            localeStrings: {
-                renderError: "An error occurred rendering the PivotTable results.",
-                computeError: "An error occurred computing the PivotTable results.",
-                uiRenderError: "An error occurred rendering the PivotTable UI.",
-                selectAll: "Select All",
-                selectNone: "Select None",
-                tooMany: "(too many to list)",
-                filterResults: "Filter results",
-                totals: "Totals", vs: "vs", by: "by"
-            }
+            localeStrings: i18n
         },
         en: {
 //aggregators: aggregators2,
-
-            localeStrings: {
-                renderError: "An error occurred rendering the PivotTable results.",
-                computeError: "An error occurred computing the PivotTable results.",
-                uiRenderError: "An error occurred rendering the PivotTable UI.",
-                selectAll: "Select All",
-                selectNone: "Select None",
-                tooMany: "(too many to list)",
-                filterResults: "Filter results",
-                totals: "Totals", vs: "vs", by: "by"
-            }
+            localeStrings: i18n
         }
     };
+    
+    mthNamesEn = i18n.months;
+    dayNamesEn = i18n.days;
 
-    mthNamesEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    dayNamesEn = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     zeroPad = function(number) {
         return ("0" + number).substr(-2, 2);
     };
