@@ -21,4 +21,6 @@ define({
 		"VarOrder3",
 		"VarOrder4"
 	]
+	//,"InstanceRenderers":[{label:"Table",func:"Table"},{label:"line chart",func:"line chart"}]
+	//,"InstanceAggregators":[{label:"Sum2",func:"Sum2"},{label:"Sum",func:"Sum"}]
 });
