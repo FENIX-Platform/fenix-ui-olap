@@ -5,8 +5,7 @@ requirejs.config(
     baseUrl: '../',
     paths : {
 		'text': "//fenixapps.fao.org/repository/js/requirejs/plugins/text/2.0.12/text",
-		//'i18n': "//fenixapps.fao.org/repository/js/requirejs/plugins/i18n/2.0.4/i18n",
-		'i18n': "tests/i18n",
+		'i18n': "//fenixapps.fao.org/repository/js/requirejs/plugins/i18n/2.0.4/i18n",
 		
 		'domready': "//fenixapps.fao.org/repository/js/requirejs/plugins/domready/2.0.1/domReady",
 		'underscore': "//fenixapps.fao.org/repository/js/underscore/1.7.0/underscore.min",

@@ -11,6 +11,7 @@ define({
 	    totals: "Totals", vs: "vs", by: "by",
     	months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 	    days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-	}	,en-en: true,
-	fr-fr: true,
+	}	,
+	en: true,
+	fr: true
 });
