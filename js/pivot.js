@@ -30,7 +30,7 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
     
     mthNamesEn = i18n.months;
     dayNamesEn = i18n.days;
-
+alert(mthNamesEn);
     zeroPad = function(number) {
         return ("0" + number).substr(-2, 2);
     };

@@ -436,7 +436,7 @@ define(['highcharts'], function(highcharts) {
 
             for (var i in r.colKeys) {
                 dsOption.fields.push({name: r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g, "_")});
-                montitle = "";
+               var montitle = "";
                 for (var ii = 0; ii < r.colKeys[i].length; ii++) {
                     if (true || F3DWLD.CONFIG.wdsPayload.showCodes)
                     {
@@ -486,10 +486,10 @@ define(['highcharts'], function(highcharts) {
                 document.getElementById(id + '_page_after').innerHTML = "/" + FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
             };
             if (FAOSTATOLAPV3.grouped) {
-                $("#" + id + "_mesFlags").html($("<label for=\"chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));
+                $("#" + id + "_mesFlags").html($("<br><label for=\""+id+"_chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
             }
             else {
-                $("#" + id + "mesFlags").html($("<label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview()\" type=\"checkbox\" id=\"chkTreeview\">"));
+                $("#" + id + "mesFlags").html($("<br><label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
             }
             $("#nested_by").hide();
         }
