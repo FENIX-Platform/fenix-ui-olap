@@ -41,13 +41,13 @@ DEV
 		'HPivot5':'lib/HierachicalRender/formatter_default',
 		'HPivot6':'lib/HierachicalRender/group_distinct'*/
     },
-    shim: {jqueryui:{deps: ['jquery']},
-        /*i18n : {deps: ['jquery']},
-        calendar: {exports: 'Calendar'},
+    shim: {
+    	jqueryui: ['jquery'],
+        /*calendar: {exports: 'Calendar'},
         calendar_utf8: {exports: 'Calendar'},*/
-		highcharts: ['jquery'],
-        gt_msg: {deps: ['jquery']},
-        gt_msg_grid: {deps: ['jquery','gt_msg']},
+		highcharts:  ['jquery'],
+        gt_msg:      ['jquery'],
+        gt_msg_grid: ['jquery','gt_msg'],
 		
         pivotRenderers: ['pivotRenderersFuncs'],	
 		pivotAggregators: ['pivotAggregatorsFuncs','jquery'],			
@@ -55,7 +55,7 @@ DEV
             deps: [
                 'jquery',
                 'jqueryui',
-				// 'jssc3',
+				//'jssc3',
 				//'calendar',
 				//'calendar_utf8',
 				'gt_msg','gt_msg_grid',
@@ -64,8 +64,8 @@ DEV
 				'pivotRenderers'
             ]
         },
-
-		'HPivot':['jquery','jqueryui']/*,
+		HPivot: ['jquery','jqueryui']
+		/*,
 		'HPivot1':['HPivot'],'HPivot2':['HPivot'],
 		'HPivot3':['HPivot'],'HPivot4':['HPivot'],
 		'HPivot5':['HPivot'],'HPivot6':['HPivot']     */
