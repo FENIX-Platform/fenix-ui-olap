@@ -16,7 +16,7 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
     },
             __hasProp = {}.hasOwnProperty,
             InternalID;
-
+			
     locales = {
         en2: {
 //aggregators: aggregators,
@@ -30,7 +30,6 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
     
     mthNamesEn = i18n.months;
     dayNamesEn = i18n.days;
-alert("e in francese?"+mthNamesEn);
     zeroPad = function(number) {
         return ("0" + number).substr(-2, 2);
     };
@@ -376,17 +375,21 @@ alert("e in francese?"+mthNamesEn);
 
 
 
-    var pivotFin = function(InternalID, input, inputOpts, overwrite, locale) {
-        //InternalID=this.attr('id');
-        document.getElementById(InternalID).innerHTML = "<div id='" + InternalID + "_fx-olap-ui'></div>" +
-                "<div id='" + InternalID + "_fx-olap-ui_fx-olap-holder-div'></div>" +
-                "<div id='" + InternalID + "_fx-olap-ui_myGrid1_div'></div>" +
-                "<div id='" + InternalID + "_fx-olap-ui_fx-olap-graph-div'></div>" +
-                "<div id='" + InternalID + "_fx-olap-ui_mesFlags' style='clear:both'></div>";
-        inputOpts.internalID = InternalID;
-        ret = $("#" + InternalID + "_fx-olap-ui").pivotUI(input, inputOpts, overwrite, locale);
+    var render = function(ii, input, inputOpts, overwrite, locale) {
+        this.InternalID=ii;
+		
+        document.getElementById(ii).innerHTML = "<div id='" + ii + "_fx-olap-ui'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_myGrid1_div'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>";
+        inputOpts.internalID = ii;
+        ret = $("#" + ii + "_fx-olap-ui").pivotUI(input, inputOpts, overwrite, locale);
         return ret;
     }
+	var destroy=function(){
+		alert(this.InternalID)
+		$("#"+this.InternalID+" .tooff").off();}
     /*
      Pivot Table UI: calls Pivot Table core above with options set by user
      */
@@ -429,7 +432,7 @@ alert("e in francese?"+mthNamesEn);
         if (locale == null) {
             locale = "en";
         }
-        InternalID = this.attr('id');
+       InternalID = this.attr('id');
         defaults = {
             derivedAttributes: {},
             //aggregators: locales[locale].aggregators,
@@ -518,7 +521,7 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
         });
         uiTable = $("<table cellpadding='5'>");
         rendererControl = $("<td id='" + InternalID + "_vals'>");//class='pvtAxisContainer pvtUnused'
-        renderer = $("<select id='" + InternalID + "_renderer' class='pvtRenderer'>").appendTo(rendererControl).bind("change", function(){return refresh();});
+        renderer = $("<select id='" + InternalID + "_renderer' class='pvtRenderer tooff'>").appendTo(rendererControl).on("change", function(){return refresh();});
 
         _ref1 = opts.renderers;
 
@@ -572,13 +575,15 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
             }
             else {
                 btns = $("<p>").appendTo(valueList);
-                btns.append($("<button>").html(opts.localeStrings.selectAll).bind("click", function() {
+                btns.append(
+				$("<button class=\"tooff\">").html(opts.localeStrings.selectAll).on("click", function() {
                     return valueList.find("input:visible").prop("checked", true);
-                }));
-                btns.append($("<button>").html(opts.localeStrings.selectNone).bind("click", function() {
+                })
+				);
+                btns.append($("<button  class=\"tooff\">>").html(opts.localeStrings.selectNone).on("click", function() {
                     return valueList.find("input:visible").prop("checked", false);
                 }));
-                btns.append($("<input>").addClass("pvtSearch").attr("placeholder", opts.localeStrings.filterResults).bind("keyup", function() {
+                btns.append($("<input class=\"tooff\">").addClass("pvtSearch").attr("placeholder", opts.localeStrings.filterResults).on("keyup", function() {
                     var filter;
                     filter = $(this).val().toLowerCase();
                     return $(this).parents(".pvtFilterBox").find('label >span').each(function() {
@@ -621,7 +626,7 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
                     return valueList.toggle(0, refresh);
                 }
             };
-            $("<p>").appendTo(valueList).append($("<button>").text("OK").bind("click", updateFilter));
+            $("<p>").appendTo(valueList).append($("<button class=\"tooff\">").text("OK").on("click", updateFilter));
             showFilterList = function(e) {
                 valueList.css({
                     left: 300, // e.pageX,
@@ -630,10 +635,10 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
                 $('.pvtSearch').val('');
                 return $('label').show();
             };
-            triangleLink = $("<span class='pvtTriangle'>").html(" &#x25BE;").bind("click", showFilterList);
+            triangleLink = $("<span class='pvtTriangle tooff'>").html(" &#x25BE;").on("click", showFilterList);
             if (__indexOf.call(opts.hiddenAttributes, c) < 0)
             {
-                attrElem = $("<li class='axis_" + i + "' id='" + InternalID + "_filtre_" + c + "'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
+                attrElem = $("<li class='axis_" + i + " tooff' id='" + InternalID + "_filtre_" + c + "'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
             }
             else {
                 attrElem = $("<li class='axis_" + i + " invi' id='" + InternalID + "_filtre_" + c + "'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
@@ -643,14 +648,14 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
             }
             colList.append(attrElem).append(valueList);
             //$("body").append(attrElem).append(valueList);
-            return attrElem.bind("dblclick", showFilterList);
+            return attrElem.on("dblclick", showFilterList);
         };
         for (i in shownAttributes) {
             c = shownAttributes[i];
             _fn(c);
         }
         tr1 = $("<tr>").appendTo(uiTable);
-        aggregator = $("<select  id='" + InternalID + "_aggregator' class='pvtAggregator'>").bind("change", function()
+        aggregator = $("<select  id='" + InternalID + "_aggregator' class='pvtAggregator tooff'>").on("change", function()
         {
             return refresh();
         });
@@ -730,7 +735,7 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
                 if (numInputsToProcess !== 0) {
                     pvtVals = _this.find(".pvtVals");
                     for (x = _m = 0; 0 <= numInputsToProcess ? _m < numInputsToProcess : _m > numInputsToProcess; x = 0 <= numInputsToProcess ? ++_m : --_m) {
-                        newDropdown = $("<select class='pvtAttrDropdown'>").append($("<option>")).bind("change", function() {
+                        newDropdown = $("<select class='pvtAttrDropdown tooff'>").append($("<option>")).on("change", function() {
                             return refresh();
                         });
                         for (_n = 0, _len4 = shownAttributes.length; _n < _len4; _n++) {
@@ -983,10 +988,12 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
     ;
 
 
-    return {
-        render: pivotFin
-
-    };
+    return function(){
+		return{
+        render: render,
+		destroy:destroy,
+		InternalID:InternalID
+    }};
 
 });
 
