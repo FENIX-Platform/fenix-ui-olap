@@ -388,9 +388,10 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
         return ret;
     }
 	var destroy=function(){
-		alert(this.InternalID)
+
 		$("#"+this.InternalID+" .tooff").off();}
-    /*
+		$("#"+this.InternalID).empty();
+		/*
      Pivot Table UI: calls Pivot Table core above with options set by user
      */
 
