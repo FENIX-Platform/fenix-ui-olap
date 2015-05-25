@@ -5,7 +5,7 @@
 */
 .pvtUnused li{display:inline;}
 .pvtUnused {display:block;}
-.pvtUnused :before {
+.pvtUnused:before {
 	content: 'AGG'; position: relative;
 	top: 5px;left: 0;font-size: 12px;
 	font-weight: 700;text-transform: uppercase; 
@@ -121,7 +121,7 @@ font-weight: 700;text-transform: uppercase;}
 
 .pvtVals{display:inline}
 .pvtRenderer{display:block}
-.pvtAttrDropdown{display:none}
+/*.pvtAttrDropdown{display:none}*/
 
 /* Afo Pivot */
 .pvtAxisContainer, .pvtVals {  background: transparent; }

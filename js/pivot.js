@@ -719,13 +719,18 @@ define(['jquery', 'i18n!nls/pivot'], function($, i18n) {
         renderer = $("<select id='" + inputOpts.id + "_renderer' class='pvtRenderer tooff'>").appendTo(rendererControl).on("change", function() {
             return refresh();
         });
+		if (inputOpts.showRender!=true){renderer.addClass("invi");}
         _ref1 = opts.renderers;
         for (x in _ref1) {
             if (!__hasProp.call(_ref1, x))
                 continue;
             $("<option>").val(x).html(x).appendTo(renderer);
         }
-        colList = $("<td id='" + inputOpts.id + "_unused' class='pvtAxisContainer pvtUnused'>");
+        colList = $("<td id='" + inputOpts.id + "_unused' class='pvtAxisContainer '>");
+		if (inputOpts.showAgg==true){colList.addClass("pvtUnused");}
+		else{colList.addClass("pvtUnusedInvi");}
+		//pvtUnused
+	//if (inputOpts.showAgg==false){$()}		
         shownAttributes = (function() {
             var _j, _len1, _results;
             _results = [];
@@ -850,6 +855,7 @@ define(['jquery', 'i18n!nls/pivot'], function($, i18n) {
         aggregator = $("<select  id='" + InternalID + "_aggregator' class='pvtAggregator tooff'>").on("change", function() {
             return refresh();
         });
+		if (inputOpts.showAgg!=true){aggregator.addClass("invi");}
 
         _ref2 = opts.aggregators;
         for (x in _ref2) {
@@ -895,8 +901,8 @@ define(['jquery', 'i18n!nls/pivot'], function($, i18n) {
             this.find(".pvtRenderer").val(opts.rendererName);
         }
         initialRender = true;
-        test = null;
         refreshDelayed = (function(_this) {
+		
             return function() {
                 var attr, exclusions, natSort, newDropdown, numInputsToProcess, pivotUIOptions, pvtVals, subopts, unusedAttrsContainer, vals, _len4, _m, _n, _ref5;
                 subopts = {
@@ -931,9 +937,10 @@ define(['jquery', 'i18n!nls/pivot'], function($, i18n) {
                 if (numInputsToProcess !== 0) {
                     pvtVals = _this.find(".pvtVals");
                     for (x = _m = 0; 0 <= numInputsToProcess ? _m < numInputsToProcess : _m > numInputsToProcess; x = 0 <= numInputsToProcess ? ++_m : --_m) {
-                        newDropdown = $("<select class='pvtAttrDropdown tooff'>").append($("<option>")).on("change", function() {
+                        newDropdown = $("<select class='pvtAttrDropdown invi tooff'>").append($("<option>")).on("change", function() {
                             return refresh();
                         });
+
                         for (_n = 0, _len4 = shownAttributes.length; _n < _len4; _n++) {
                             attr = shownAttributes[_n];
                             newDropdown.append($("<option>").val(attr).html(attr));
@@ -1011,6 +1018,9 @@ define(['jquery', 'i18n!nls/pivot'], function($, i18n) {
             };
         })(this);
         refresh();
+		
+		
+		
         this.find(".pvtAxisContainer").sortable({
             update: function(e, ui) {
                 if (ui.sender == null) {
@@ -1020,6 +1030,11 @@ define(['jquery', 'i18n!nls/pivot'], function($, i18n) {
             connectWith: this.find(".pvtAxisContainer"),
             items: 'li', placeholder: 'pvtPlaceholder'
         });
+		
+		
+		
+		
+		
         return this;
 
     };
