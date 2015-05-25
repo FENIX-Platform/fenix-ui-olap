@@ -1,4 +1,4 @@
-define(['highcharts'], function(highcharts) {
+define(['highcharts','i18n!nls/pivot'], function(highcharts,i18n) {
 
     return	{
         HPivot: function(pivotData, id) {
@@ -74,7 +74,6 @@ define(['highcharts'], function(highcharts) {
             }
         },
         pivotTableRenderer: function(pivotData, opts) {
-
             __hasProp = {}.hasOwnProperty;
 
             var aggregator, c, colAttrs, colKey, colKeys, defaults, i, j, r, result, rowAttrs, rowKey, rowKeys, spanSize, td, th, totalAggregator, tr, txt, val, x;
@@ -405,14 +404,16 @@ define(['highcharts'], function(highcharts) {
             }
             $(id).highcharts(commonJson);
         },
-        newGrid: function(r, id) {
+        newGrid: function(r, options) {
+			
             var FAOSTATOLAPV3 = {};
-            FAOSTATOLAPV3.grouped = true;
+			var id=options.id+ "_fx-olap-ui"
+			var grouped = options.grouped;
             var r2d2 = [];
-            $("#" + id + "mesFlags").empty();
-            for (ligne in r.tree) {
+            $("#" + id + "_mesFlags").empty();
+            for (var ligne in r.tree) {
                 var temp = ligne.split('||');
-                for (col in r.colKeys) {
+                for (var col in r.colKeys) {
                     var coldInd = r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9]/g,"_")
                     if (r.tree[ligne][coldInd] != null) {
                         temp.push(r.tree[ligne][coldInd].value());
@@ -429,7 +430,7 @@ define(['highcharts'], function(highcharts) {
             var colsOption = [];
             for (var i in r.rowAttrs) {
                 dsOption.fields.push({name: r.rowAttrs[i]});
-                colsOption.push({id: r.rowAttrs[i], header: r.rowAttrs[i], frozen: true, grouped: FAOSTATOLAPV3.grouped});
+                colsOption.push({id: r.rowAttrs[i], header: r.rowAttrs[i], frozen: true, grouped: grouped});
             }
             var reg = new RegExp("<span class=\"ordre\">[0-9]*</span>", "g");
             var reg2 = new RegExp("<span class=\"ordre\">[0-9]*</span><table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g");
@@ -485,12 +486,22 @@ define(['highcharts'], function(highcharts) {
             {
                 document.getElementById(id + '_page_after').innerHTML = "/" + FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
             };
+			
+			
+/*
+//Now out of the pivot : connected throug the exposed function
             if (FAOSTATOLAPV3.grouped) {
+                $("#" + id + "_myGrid1_div").prepend($("<br><label for=\""+id+"_chkTreeview\">"+i18n.TreeView+"</label><input checked onchange=\"pp2.changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
+            }
+            else {
+                 $("#" + id + "_myGrid1_div").prepend($("<br><label for=\"chkTreeview\">"+i18n.TreeView+"</label><input  onchange=\"changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
+            }*/
+			  /*if (FAOSTATOLAPV3.grouped) {
                 $("#" + id + "_mesFlags").html($("<br><label for=\""+id+"_chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
             }
             else {
                 $("#" + id + "mesFlags").html($("<br><label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
-            }
+            }*/
             $("#nested_by").hide();
         }
     };

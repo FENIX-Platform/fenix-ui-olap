@@ -1,4 +1,4 @@
-define(['jquery','i18n!nls/pivot'], function($,i18n) {
+define(['jquery', 'i18n!nls/pivot'], function($, i18n) {
 
     var $, PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, renderers, usFmt, usFmtInt, usFmtPct, zeroPad,
             __indexOf = [].indexOf || function(item) {
@@ -15,8 +15,8 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
         };
     },
             __hasProp = {}.hasOwnProperty,
-            InternalID;
-			
+            originalData, myinputOpts;
+    myinputOpts = {grouped: true}
     locales = {
         en2: {
 //aggregators: aggregators,
@@ -27,7 +27,7 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
             localeStrings: i18n
         }
     };
-    
+
     mthNamesEn = i18n.months;
     dayNamesEn = i18n.days;
     zeroPad = function(number) {
@@ -132,6 +132,51 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
         numberFormat: numberFormat
     };
 
+    function stringify(obj) {
+        var type = Object.prototype.toString.call(obj);
+        // IE8 <= 8 does not have array map
+        var map = Array.prototype.map || function map(callback) {
+            var ret = [];
+            for (var i = 0; i < this.length; i++) {
+                ret.push(callback(this[i]));
+            }
+            return ret;
+        };
+        if (type === '[object Object]') {
+            var pairs = [];
+            for (var k in obj) {
+                if (!obj.hasOwnProperty(k))
+                    continue;
+                pairs.push([k, stringify(obj[k])]);
+            }
+            pairs.sort(function(a, b) {
+                return a[0] < b[0] ? -1 : 1
+            });
+            pairs = map.call(pairs, function(v) {
+                if (v[0] != "format" && v[0] != "push" && v[0] != "value") {
+                    return '"' + v[0].replace(/"/g, "\\\"") + '":' + v[1];
+                }
+                else {
+                    return '"' + v[0].replace(/"/g, "\\\"") + '":""';
+                }
+            }
+            );
+            return '{' + pairs + '}';
+        }
+        if (type === '[object Array]') {
+            return '[' + map.call(obj, function(v) {
+                return stringify(v)
+            }) + ']';
+        }
+        return JSON.stringify(obj);
+    }
+    ;
+
+
+
+
+
+
     /*
      Data Model class
      */
@@ -141,6 +186,7 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
             this.getAggregator = __bind(this.getAggregator, this);
             this.getRowKeys = __bind(this.getRowKeys, this);
             this.getColKeys = __bind(this.getColKeys, this);
+
             this.sortKeys = __bind(this.sortKeys, this);
             this.arrSort = __bind(this.arrSort, this);
             this.natSort = __bind(this.natSort, this);
@@ -150,6 +196,7 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
             this.rowAttrs = opts.rows;
             this.valAttrs = opts.vals;
             this.tree = {};
+
             this.rowKeys = [];
             this.colKeys = [];
             this.rowTotals = {};
@@ -253,6 +300,8 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
             return this.sorted = true;
         };
 
+
+
         PivotData.prototype.getColKeys = function() {
             this.sortKeys();
             return this.colKeys;
@@ -313,18 +362,22 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
              flatColKey = colKey.join(String.fromCharCode(0));*/
             flatRowKey = rowKey.join("||");
             flatColKey = colKey.join("||");
-            if (rowKey.length === 0 && colKey.length === 0) {
+            if (rowKey.length === 0 && colKey.length === 0)
+            {
                 agg = this.allTotal;
             }
-            else if (rowKey.length === 0) {
+            else if (rowKey.length === 0)
+            {
                 agg = this.colTotals[flatColKey];
             }
-            else if (colKey.length === 0) {
+            else if (colKey.length === 0)
+            {
                 agg = this.rowTotals[flatRowKey];
             }
             else {
                 agg = this.tree[flatRowKey][flatColKey];
             }
+
             return agg != null ? agg : {value: (function() {
                     return null;
                 }), format: function() {
@@ -337,28 +390,32 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
     /*
      Default Renderer for hierarchical table layout
      */
-
     /*
      Pivot Table core: create PivotData object and call Renderer on it
      */
 
+
+
     $.fn.pivot = function(input, opts) {
-        var defaults, e, pivotData, result, x;
+        var defaults, e, pivotData, result, x, internalData;
+        var InternalID = opts.rendererOptions.id;
         defaults = {
             cols: [], rows: [],
             filter: function() {
                 return true;
             },
-//aggregator: aggregatorTemplates.count()(),
-//aggregatorName: "Count",derivedAttributes: {},
+            //aggregator: aggregatorTemplates.count()(),
+            //aggregatorName: "Count",derivedAttributes: {},
             renderer: pivotTableRenderer,
             rendererOptions: null,
             localeStrings: locales.en.localeStrings
         };
-        opts = $.extend(defaults, opts);
+        opts = $.extend({}, defaults, opts);
         result = null;
+        r2 = new PivotData(input, opts);
         /* FAOSTATNEWOLAP.internalData = new PivotData(input, opts);
          result = opts.renderer(FAOSTATNEWOLAP.internalData, opts.rendererOptions);*/
+
         result = opts.renderer(new PivotData(input, opts), opts.rendererOptions);
         x = this[0];
         try {
@@ -370,109 +427,244 @@ define(['jquery','i18n!nls/pivot'], function($,i18n) {
         }
         //$("#pivot1_fx-olap-holder-div").html(result)
 
-        return this.append(result);
+        $("#" + InternalID).data("internalData", r2);
+        $("#" + InternalID + "_fx-olap-ui_fx-olap-holder-div").html(result);
+        //return this.append(result)
+
+        // return {html:this.append(result),internalData:r2};
     };
 
-
-
-    var render = function(ii, input, inputOpts, overwrite, locale) {
-        this.InternalID=ii;
-		
-        document.getElementById(ii).innerHTML = "<div id='" + ii + "_fx-olap-ui'></div>" +
-                "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div'></div>" +
-                "<div id='" + ii + "_fx-olap-ui_myGrid1_div'></div>" +
-                "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div'></div>" +
-                "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>";
-        inputOpts.internalID = ii;
-        ret = $("#" + ii + "_fx-olap-ui").pivotUI(input, inputOpts, overwrite, locale);
-        return ret;
+    var destroy = function() {
+        $("#" + this.myinputOpts.id + " .tooff").off();
     }
-	var destroy=function(){
 
-		$("#"+this.InternalID+" .tooff").off();
-	}
-	
-	$("#"+this.InternalID).empty();
-		/*
+    //$("#"+this.InternalID).empty();
+    /*
      Pivot Table UI: calls Pivot Table core above with options set by user
      */
 
 
 
+
+
+    var changechkTreeview = function() {
+        this.myinputOpts.grouped = !this.myinputOpts.grouped;
+        $("#" + this.myinputOpts.id + "_fx-olap-ui").pivotUI(this.originalData, this.myinputOpts, true);
+    }
+
+    var exportExcel = function(showCodes, showUnits, showFlags) {
+        var FID = $("#" + this.myinputOpts.id).data().internalData;
+        var mycols = [];
+        for (var c = 0; c < FID.rowAttrs.length; c++)
+        {
+            mycols.push(FID.rowAttrs[c] + "Name");
+        }
+        flatColKeyst = [];
+        tt = FID.getColKeys();
+        for (tti in tt) {
+            flatColKeyst.push(tt[tti].join("||"))
+        }
+        document.getElementById("myJson").value = stringify(
+                {data: FID.tree,
+                    header: flatColKeyst, cols: mycols, swUnit: showUnits ? '1' : '0', swFlag: showFlags ? '1' : '0'
+
+                });
+
+        document.getElementById("xlsDataForm").submit();
+
+    }
+
+    var exportCSV = function(showCodes, showUnits, showFlags) {
+
+        var today = new Date();
+        var reg = new RegExp("<span class=\"ordre\">[0-9]+</span>", "g");
+        var reg3 = new RegExp("<span class=\"ordre\"></span>", "g");
+        var reg2 = new RegExp("<table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g");
+        var FID = $("#" + this.myinputOpts.id).data().internalData;
+        var row = FID.tree;
+        //  var col = FAOSTATNEWOLAP.internalData.flatColKeys.sort();
+        flatColKeyst = [];
+        tt = FID.getColKeys();
+        for (tti in tt) {
+            flatColKeyst.push(tt[tti].join("||"))
+        }
+        var col = flatColKeyst.sort();
+        var ret = "";
+        for (var j = 0; j < FID.rowKeys[0].length; j++) {
+            if (showCodes) {
+                ret += "Code,";
+            }
+            ret += '"' + FID.rowAttrs[j].replace("_", "") + "\",";
+        }
+
+        for (var j in col) {
+            ret += '"' + col[j].replace(/,/g, "").replace(/\|\|/g, "-").replace(/&nbsp;/g, "").replace(reg2, "$1").replace(reg, "").replace(reg3, "") + '"';
+            if (showUnits) {
+                ret += ",unit";
+            }
+            if (showFlags) {
+                ret += ",flag";
+            }
+            ret += ",";
+        }
+        ret += "\n";
+        for (var i in row) {
+            var temp = i.split("||");
+            for (var count = 0; count < temp.length; count++)
+            {
+                ret += '"' + temp[count].replace(/,/g, "").replace(reg2, "$1\",\"$2").replace(reg, "").replace(reg3, "") + "\",";
+            }
+            for (j in col) {
+                try {
+                    if (!row[i][col[j]]) {
+                        ret += ",";
+                        if (showUnits) {
+                            ret += ",";
+                        }
+                        if (showFlags) {
+                            ret += ",";
+                        }
+                    }
+                    else {
+                        // ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
+                        ret += '"' + row[i][col[j]].value()[0] + '",';
+
+                        if (showUnits) {
+                            ret += '"' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '",';
+                        }
+                        if (showFlags) {
+                            ret += '"' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '",';
+                        }
+
+                    }
+                } catch (ER) {
+                    console.log('er', ER);
+                }
+            }
+            ret += "\n";
+        }
+        try {
+            var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
+            j = 0;
+            for (i = 0; i < testtd.length; i++) {
+                if (j == 0) {
+                    ret += "\n";
+                    j = 1;
+                }
+                else {
+                    ret += ",";
+                    j = 0;
+                }
+                ret += testtd[i].innerHTML;
+            }
+        } catch (e) {
+            console.log("WS getFlag not available");
+        }
+        ret += "\n\nFAOSTAT " + today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var blob = new Blob(["\ufeff", ret], {type: 'text/csv;charset=UTF-8;'});
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "fileName.csv");
+            link.style = "visibility:hidden";
+        }
+        else if (navigator.msSaveBlob) { // IE 10+
+            link.addEventListener("click", function(event) {
+                var blob = new Blob(["\ufeff", ret], {"type": "text/csv;charset=UTF-8;"});
+                navigator.msSaveBlob(blob, "fileName.csv");
+            }, false);
+        }
+        else {
+            document.getElementById('csvData').value = ret;
+            document.getElementById('csvDataForm').submit();
+        }
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+
+
+
+
+    var render = function(ii, input, inputOpts, overwrite, locale) {
+
+        this.InternalID = ii;
+
+        this.myinputOpts = $.extend({}, this.myinputOpts, inputOpts);
+
+        this.myinputOpts.id = ii;
+        this.originalData = input;
+
+        document.getElementById(ii).innerHTML = "<div id='" + ii + "_fx-olap-ui'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div' ></div>" +
+                "<div id='" + ii + "_fx-olap-ui_myGrid1_div'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>";
+
+        ret = $("#" + ii + "_fx-olap-ui").pivotUI(input, this.myinputOpts, overwrite, locale);
+        return ret;
+    }
+
+
+
+
+
     $.fn.pivotUI = function(input, inputOpts, overwrite, locale) {
-      /*  var FAOSTATNEWOLAP = {};
-        FAOSTATNEWOLAP.pivotlimit = 200000;
-        FAOSTATNEWOLAP.pivotlimitExcel = 200000;
-        FAOSTATNEWOLAP.limitPivotPreview = 5000;//lignes
-        FAOSTATNEWOLAP.excelpayload = {};
-        FAOSTATNEWOLAP.schema = {};
-        FAOSTATNEWOLAP.rendererV = 0;
-        FAOSTATNEWOLAP.nestedby = 0;
-        FAOSTATNEWOLAP.viewVals = 0;
-        FAOSTATNEWOLAP.decimal = 2;
-        FAOSTATNEWOLAP.showUnits = 0;
-        FAOSTATNEWOLAP.showFlags = 1;
-        FAOSTATNEWOLAP.firstCall = 1;
-        FAOSTATNEWOLAP.flags = {};
-        FAOSTATNEWOLAP.internalData = {};
-        FAOSTATNEWOLAP.originalData = [];
-        FAOSTATNEWOLAP.thousandSeparator = " ";
-        FAOSTATNEWOLAP.decimalSeparator = ".";
 
-
-        FAOSTATNEWOLAP.traduction = {
-            init: {E: "", F: "", S: ""},
-            treeview: {E: "Tree view/Flat view ", F: "Vue hierachique / Vue plate", S: "Tree view/Flat view"},
-            perPage: {E: "Per Page", F: "Par Page", S: "Por Pagina"},
-            Page: {E: "Page", F: "Page", S: "Page"}
-        };
-*/
-
-        var a, aggregator, attrLength, axisValues, c, colList, defaults, e, existingOpts, i, initialRender, k, opts, pivotTable, refresh, refreshDelayed, renderer, rendererControl, shownAttributes, tblCols, tr1, tr2, uiTable, unusedAttrsVerticalAutoOverride, x, _fn, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _ref4;
+        var a, aggregator, attrLength, axisValues, c, colList, defaults, e, existingOpts, i, initialRender, k, opts, pivotTable, refresh, refreshDelayed, renderer, rendererControl, shownAttributes, tblCols, tr1, tr2, uiTable, unusedAttrsVerticalAutoOverride, x, _fn, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _ref4, InternalID;
         if (overwrite == null) {
             overwrite = false;
         }
         if (locale == null) {
             locale = "en";
         }
-       InternalID = this.attr('id');
+
+        //this.myinputOpts=inputOpts;
+        //this.myinputOpts.id/*InternalID*/ = this.attr('id');
+        InternalID = inputOpts.id;
+
         defaults = {
-            derivedAttributes: {},
+            derivedAttributes: {}, renderers: {}, aggregators: {},
             //aggregators: locales[locale].aggregators,
             //aggregators: inputOpts.aggregatorDisplay,
-            aggregators: {},
             //renderers: locales[locale].renderers,
             //renderers: inputOpts.rendererDisplay,
-            renderers: {},
+
             hiddenAttributes: [], menuLimit: 500,
-            cols: [], rows: [], vals: [], exclusions: {},
-            unusedAttrsVertical: false, // "auto",
-            autoSortUnusedAttrs: false,
-            rendererOptions: {localeStrings: locales[locale].localeStrings, id: InternalID},
-            onRefresh: null, filter: function() {return true;},
+            cols: [], rows: [], vals: [], exclusions: {}, // "auto",
+            unusedAttrsVertical: false, autoSortUnusedAttrs: false,
+            rendererOptions: {localeStrings: locales[locale].localeStrings, id: inputOpts.id, grouped: inputOpts.grouped/*options.grouped*/},
+            onRefresh: null, filter: function() {
+                return true;
+            },
             localeStrings: locales[locale].localeStrings
         };
 
-if(inputOpts.InstanceRenderers==null){defaults.renderers=inputOpts.rendererDisplay}
-else{
-        for (i = 0; i < inputOpts.InstanceRenderers.length; i++)
-        {
-            defaults.renderers[inputOpts.InstanceRenderers[i].label] = inputOpts.rendererDisplay[inputOpts.InstanceRenderers[i].func];
+        if (inputOpts.InstanceRenderers == null) {
+            defaults.renderers = inputOpts.rendererDisplay
         }
-}     
-
-if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregatorDisplay}
-	else{
-	 for (i = 0; i < inputOpts.InstanceAggregators.length; i++)
-        {
-            defaults.aggregators[inputOpts.InstanceAggregators[i].label] = inputOpts.aggregatorDisplay[inputOpts.InstanceAggregators[i].func];
+        else {
+            for (i = 0; i < inputOpts.InstanceRenderers.length; i++) {
+                defaults.renderers[inputOpts.InstanceRenderers[i].label] = inputOpts.rendererDisplay[inputOpts.InstanceRenderers[i].func];
+            }
         }
-	}
-
+        if (inputOpts.InstanceAggregators == null) {
+            defaults.aggregators = inputOpts.aggregatorDisplay
+        }
+        else {
+            for (i = 0; i < inputOpts.InstanceAggregators.length; i++) {
+                defaults.aggregators[inputOpts.InstanceAggregators[i].label] = inputOpts.aggregatorDisplay[inputOpts.InstanceAggregators[i].func];
+            }
+        }
         existingOpts = this.data("pivotUIOptions");
-        if ((existingOpts == null) || overwrite) {
-            opts = $.extend(defaults, inputOpts);
-        } else {
+        if ((existingOpts == null) || overwrite)
+        {//to check   opts = $.extend(defaults, inputOpts);
+            opts = $.extend({}, defaults, inputOpts);
+        }
+        else {
             opts = existingOpts;
         }
         //try 
@@ -523,18 +715,17 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
             return _results;
         });
         uiTable = $("<table cellpadding='5'>");
-        rendererControl = $("<td id='" + InternalID + "_vals'>");//class='pvtAxisContainer pvtUnused'
-        renderer = $("<select id='" + InternalID + "_renderer' class='pvtRenderer tooff'>").appendTo(rendererControl).on("change", function(){return refresh();});
-
+        rendererControl = $("<td id='" + inputOpts.id + "_vals'>");//class='pvtAxisContainer pvtUnused'
+        renderer = $("<select id='" + inputOpts.id + "_renderer' class='pvtRenderer tooff'>").appendTo(rendererControl).on("change", function() {
+            return refresh();
+        });
         _ref1 = opts.renderers;
-
         for (x in _ref1) {
             if (!__hasProp.call(_ref1, x))
                 continue;
             $("<option>").val(x).html(x).appendTo(renderer);
         }
-
-        colList = $("<td id='" + InternalID + "_unused' class='pvtAxisContainer pvtUnused'>");
+        colList = $("<td id='" + inputOpts.id + "_unused' class='pvtAxisContainer pvtUnused'>");
         shownAttributes = (function() {
             var _j, _len1, _results;
             _results = [];
@@ -553,8 +744,7 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
             }
             unusedAttrsVerticalAutoOverride = attrLength > 120;
         }
-        if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride)
-        {
+        if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
             colList.addClass('pvtVertList');
         }
         else {
@@ -574,16 +764,16 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
             valueList = $("<div>").addClass('pvtFilterBox').hide();
             valueList.append($("<h4>").text("" + c + " (" + keys.length + ")"));
             if (keys.length > opts.menuLimit) {
-                valueList.append($("<p>").html(opts.localeStrings.tooMany));
+                valueList.append($("<p>").html(i18n.tooMany));
             }
             else {
                 btns = $("<p>").appendTo(valueList);
                 btns.append(
-				$("<button class=\"tooff\">").html(opts.localeStrings.selectAll).on("click", function() {
+                        $("<button class=\"tooff\">").html(i18n.selectAll).on("click", function() {
                     return valueList.find("input:visible").prop("checked", true);
                 })
-				);
-                btns.append($("<button  class=\"tooff\">>").html(opts.localeStrings.selectNone).on("click", function() {
+                        );
+                btns.append($("<button  class=\"tooff\">").html(i18n.selectNone).on("click", function() {
                     return valueList.find("input:visible").prop("checked", false);
                 }));
                 btns.append($("<input class=\"tooff\">").addClass("pvtSearch").attr("placeholder", opts.localeStrings.filterResults).on("keyup", function() {
@@ -629,18 +819,17 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
                     return valueList.toggle(0, refresh);
                 }
             };
-            $("<p>").appendTo(valueList).append($("<button class=\"tooff\">").text("OK").on("click", updateFilter));
+            $("<p>").appendTo(valueList).append($("<button class=\"tooff\">").text(i18n.OK).on("click", updateFilter));
             showFilterList = function(e) {
                 valueList.css({
                     left: 300, // e.pageX,
-                    top: 0//e.pageY
+                    top: e.pageY
                 }).toggle();
                 $('.pvtSearch').val('');
                 return $('label').show();
             };
             triangleLink = $("<span class='pvtTriangle tooff'>").html(" &#x25BE;").on("click", showFilterList);
-            if (__indexOf.call(opts.hiddenAttributes, c) < 0)
-            {
+            if (__indexOf.call(opts.hiddenAttributes, c) < 0) {
                 attrElem = $("<li class='axis_" + i + " tooff' id='" + InternalID + "_filtre_" + c + "'>").append($("<span class='pvtAttr'>").html(c).data("attrName", c).append(triangleLink));
             }
             else {
@@ -658,10 +847,10 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
             _fn(c);
         }
         tr1 = $("<tr>").appendTo(uiTable);
-        aggregator = $("<select  id='" + InternalID + "_aggregator' class='pvtAggregator tooff'>").on("change", function()
-        {
+        aggregator = $("<select  id='" + InternalID + "_aggregator' class='pvtAggregator tooff'>").on("change", function() {
             return refresh();
         });
+
         _ref2 = opts.aggregators;
         for (x in _ref2) {
             if (!__hasProp.call(_ref2, x))
@@ -672,18 +861,17 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
         $("<td class='pvtVals'>").appendTo(uiTable).append(aggregator).append($("<br>"));
         tr2 = $("<tr>").appendTo(uiTable);
         // tr2.append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>"));
-        tr2.append($("<td id=" + InternalID + "_pretd1>"));
+        // tr2.append($("<td id=" +InternalID + "_pretd1>"));
         // pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
 
         $("#" + InternalID + "_fx-olap-holder-div").empty();
-
         pivotTable = $("<td valign='top' id='" + InternalID + "_pvtRendererArea' class='pvtRendererArea'>").append("<div  id='" + InternalID + "_pivot_table'>").appendTo($("#" + InternalID + "_fx-olap-holder-div"));
 
         if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
             uiTable.find('tr:nth-child(1)').prepend(colList);
             uiTable.find('tr:nth-child(2)').prepend(rendererControl);
         } else {
-            uiTable.prepend($("<tr>").append($("<td id='" + InternalID + "_rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>")).prepend($("<td id='" + InternalID + "_pretd'>&nbsp;</td>")));
+            uiTable.prepend($("<tr>").append($("<td id='" + InternalID + "_rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>")));
             uiTable.prepend($("<tr>").append(colList));
             uiTable.prepend($("<tr>").append(rendererControl));
         }
@@ -707,6 +895,7 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
             this.find(".pvtRenderer").val(opts.rendererName);
         }
         initialRender = true;
+        test = null;
         refreshDelayed = (function(_this) {
             return function() {
                 var attr, exclusions, natSort, newDropdown, numInputsToProcess, pivotUIOptions, pvtVals, subopts, unusedAttrsContainer, vals, _len4, _m, _n, _ref5;
@@ -718,12 +907,16 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
                 };
                 numInputsToProcess = (_ref5 = opts.aggregators[aggregator.val()]([])().numInputs) != null ? _ref5 : 0;
                 vals = [];
-                _this.find(".pvtRows li span.pvtAttr").each(function() {
+                _this.find(".pvtRows li span.pvtAttr").each(function()
+                {
                     return subopts.rows.push($(this).data("attrName"));
                 });
-                _this.find(".pvtCols li span.pvtAttr").each(function() {
+
+                _this.find(".pvtCols li span.pvtAttr").each(function()
+                {
                     return subopts.cols.push($(this).data("attrName"));
                 });
+
                 _this.find(".pvtVals select.pvtAttrDropdown").each(function() {
                     if (numInputsToProcess === 0) {
                         return $(this).remove();
@@ -785,10 +978,10 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
                     }
                     return true;
                 };
-                var d = new Date();
 
 
-                pivotTable.pivot(input, subopts);
+                pivotTable.pivot(input, subopts)
+
                 pivotUIOptions = $.extend(opts, {
                     cols: subopts.cols,
                     rows: subopts.rows,
@@ -825,16 +1018,15 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
                 }
             },
             connectWith: this.find(".pvtAxisContainer"),
-            items: 'li',
-            placeholder: 'pvtPlaceholder'
+            items: 'li', placeholder: 'pvtPlaceholder'
         });
-
         return this;
+
     };
+
     /*
      Heatmap post-processing
      */
-
 
     $.fn.barchart = function() {
         var barcharter, i, numCols, numRows, _i;
@@ -972,7 +1164,6 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
      Barchart post-processing
      */
 
-
     function addCommas(nStr) {
         var rgx, x, x1, x2;
         nStr += '';
@@ -988,21 +1179,25 @@ if(inputOpts.InstanceAggregators==null){defaults.aggregators=inputOpts.aggregato
         }
         return x1 + x2;
     }
-    ;
 
 
-    return function(){
-		return{
-        render: render,
-		destroy:destroy,
-		InternalID:InternalID
-    }};
+
+    return function() {
+        return{
+            render: render,
+            destroy: destroy,
+            changechkTreeview: changechkTreeview,
+            exportExcel: exportExcel,
+            exportCSV: exportCSV,
+            originalData: originalData,
+            myinputOpts: myinputOpts
+        }
+    };
 
 });
 
 
 /**Others Functions*/
-
 
 
 

@@ -5,10 +5,8 @@ define({
 		"Item"
 	],
 	"cols": ["Year"],
-	"vals": [
-		"Value",
-		"Flag"
-	],
+	"vals": ["Value",
+		"Flag"],
 	"hiddenAttributes":[
 		"AreaCode",
 		"ElementCode",

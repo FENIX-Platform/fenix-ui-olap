@@ -101,14 +101,15 @@ require(['jquery','underscore',
 		dataConfig2 = _.extend(dataConfig2, {rendererDisplay: pivotRenderers});
 		dataConfig2 = _.extend(dataConfig2, {aggregatorDisplay: pivotAggregators});
 		
-		var pp=new pivot();
+		console.log(dataConfig1,dataConfig2)
+		
+		 pp=new pivot();
 		pp.render("pivot1",dataTest1_1, dataConfig1)
 		//var pivot1 = pivot.render("pivot1",dataTest1_1, dataConfig1);
 		
 		
 		pp2=new pivot();
 		pp2.render("pivot2",dataTest1_2, dataConfig2);
-		pp.destroy();
 		console.log(pp,pp2)
 
 });
