@@ -1,4 +1,12 @@
-define(['highcharts','i18n!nls/pivot'], function(highcharts,i18n) {
+
+
+define([
+	'highcharts',
+	'gt_msg_grid',
+	'i18n!fx-pivot/nls/pivot'], function(
+		highcharts,
+		gt_msg_grid,
+		i18n) {
 
     return	{
         HPivot: function(pivotData, id) {

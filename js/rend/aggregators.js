@@ -1,4 +1,5 @@
-define(['pivotAggregatorsFuncs'], function(tpl) {
+
+define(['jquery','pivotAggregatorsFuncs'], function($, tpl) {
 
 
     addSeparators = function(nStr, thousandsSep, decimalSep) {
