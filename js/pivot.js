@@ -18,7 +18,7 @@ define([
     },
             __hasProp = {}.hasOwnProperty,
             originalData, myinputOpts;
-    myinputOpts = {grouped: true}
+    myinputOpts = {grouped: true,originalOpts:{}}
     locales = {
         en2: {
 //aggregators: aggregators,
@@ -399,6 +399,9 @@ define([
 
 
     $.fn.pivot = function(input, opts) {
+		
+		
+		
         var defaults, e, pivotData, result, x, internalData;
         var InternalID = opts.rendererOptions.id;
         defaults = {
@@ -412,6 +415,7 @@ define([
             rendererOptions: null,
             localeStrings: locales.en.localeStrings
         };
+	
         opts = $.extend({}, defaults, opts);
         result = null;
         r2 = new PivotData(input, opts);
@@ -451,6 +455,7 @@ define([
 
     var changechkTreeview = function() {
         this.myinputOpts.grouped = !this.myinputOpts.grouped;
+		
         $("#" + this.myinputOpts.id + "_fx-olap-ui").pivotUI(this.originalData, this.myinputOpts, true);
     }
 
@@ -476,6 +481,16 @@ define([
 
     }
 
+	
+	var showCode=function(){
+		console.log(this)
+		this.myinputOpts.showCode=!this.myinputOpts.showCode;
+			this.myinputOpts.originalOpts.showCode=!this.myinputOpts.originalOpts.showCode;
+		console.log(this.myinputOpts)
+		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
+		}
+		
+		
     var exportCSV = function(showCodes, showUnits, showFlags) {
 
         var today = new Date();
@@ -589,17 +604,67 @@ define([
 
 
 
-
+/*
+function derivedAtt(el,code){;f= function(mp) {return mp[el]+" "+mp[code];}
+return f
+}*/
 
     var render = function(ii, input, inputOpts, overwrite, locale) {
-
+		
         this.InternalID = ii;
-
+this.myinputOpts.originalOpts=inputOpts;
         this.myinputOpts = $.extend({}, this.myinputOpts, inputOpts);
 
         this.myinputOpts.id = ii;
         this.originalData = input;
-
+		var rowtemp=[];
+		var coltemp=[];
+		for(var j=0;j<this.myinputOpts.rows.length;j++)
+		{
+			if(Array.isArray(inputOpts.rows[j]))
+			{
+				
+			if(this.myinputOpts.showCode==true){
+				rowtemp.push(this.myinputOpts.rows[j][0]);
+				
+				rowtemp.push(this.myinputOpts.rows[j][1])
+				//this.myinputOpts.rows[j]=this.myinputOpts.rows[j][0]+"__Code";
+			}
+			else{
+					rowtemp.push(this.myinputOpts.rows[j][0]);
+				this.myinputOpts.hiddenAttributes.push(this.myinputOpts.rows[j][1]);
+				//this.myinputOpts.rows[j]=this.myinputOpts.rows[j][0];
+				}
+			
+			
+			}else{rowtemp.push(this.myinputOpts.rows[j])}
+			
+		}
+		this.myinputOpts.rows=rowtemp;
+		for(var j=0;j<this.myinputOpts.cols.length;j++)
+		{
+			if(Array.isArray(this.myinputOpts.cols[j]))
+			{
+				
+			if(inputOpts.showCode){
+				coltemp.push(this.myinputOpts.cols[j][0]);
+				
+				coltemp.push(this.myinputOpts.cols[j][1])
+				//this.myinputOpts.rows[j]=this.myinputOpts.rows[j][0]+"__Code";
+			}
+			else{
+				coltemp.push(this.myinputOpts.cols[j][0]);
+				this.myinputOpts.hiddenAttributes.push(this.myinputOpts.rows[j][1])
+				//this.myinputOpts.rows[j]=this.myinputOpts.rows[j][0];
+				}
+			
+			
+			}else{coltemp.push(this.myinputOpts.cols[j])}
+			
+		}
+		this.myinputOpts.cols=coltemp;
+		
+		
         document.getElementById(ii).innerHTML = "<div id='" + ii + "_fx-olap-ui'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div' ></div>" +
                 "<div id='" + ii + "_fx-olap-ui_myGrid1_div'></div>" +
@@ -638,7 +703,7 @@ define([
             hiddenAttributes: [], menuLimit: 500,
             cols: [], rows: [], vals: [], exclusions: {}, // "auto",
             unusedAttrsVertical: false, autoSortUnusedAttrs: false,
-            rendererOptions: {localeStrings: locales[locale].localeStrings, id: inputOpts.id, grouped: inputOpts.grouped/*options.grouped*/},
+            rendererOptions: {localeStrings: locales[locale].localeStrings, id: inputOpts.id, grouped: inputOpts.grouped/*options.grouped*/,showFlags:inputOpts.showFlags,showUnit:inputOpts.showUnit,showCode:inputOpts.showCode},
             onRefresh: null, filter: function() {
                 return true;
             },
@@ -1030,7 +1095,38 @@ define([
                 }
             },
             connectWith: this.find(".pvtAxisContainer"),
-            items: 'li', placeholder: 'pvtPlaceholder'
+            items: 'li', placeholder: 'pvtPlaceholder', 
+			receive:function(e){ 
+			
+			var my_id=e.originalEvent.originalEvent.path[1].id.split("_")[2];
+			var rootTemp=e.originalEvent.originalEvent.path[1].id.split("_")[0]+"_"+e.originalEvent.originalEvent.path[1].id.split("_")[1]
+	
+	  if(e.target.id!=InternalID+"_unused")
+	  {
+	
+	  for(k in inputOpts.linkedAttributes)
+	  {
+		  console.log("my_id",my_id)
+	  if(inputOpts.linkedAttributes[k].indexOf(my_id)!=-1)
+	  { console.log('step2',inputOpts.linkedAttributes);
+	   for(kk in inputOpts.linkedAttributes[k])
+	  {
+	  internalTest=$("#"+rootTemp+"_"+inputOpts.linkedAttributes[k][kk]);
+	  //console.log(inputOpts);
+	 
+		  if(  internalTest.parent().get(0).id!=InternalID+"_unused"){
+		   $("#"+e.target.id).append($(internalTest));}
+		
+	   }
+	  break;
+	  }
+	  }
+	  } 
+	  
+	 else{
+	  $("#"+e.target.id).append($("#axis_"+my_id));}
+			
+			}
         });
 		
 		
@@ -1206,6 +1302,7 @@ define([
             changechkTreeview: changechkTreeview,
             exportExcel: exportExcel,
             exportCSV: exportCSV,
+			showCode:showCode,
             originalData: originalData,
             myinputOpts: myinputOpts
         }

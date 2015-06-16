@@ -1,31 +1,16 @@
 define({
     "rows": [
-        "Element",
-        "Area",
+        ["Element","Element Code"],
+        "Country",
         "Item"
     ],
     "cols": ["Year"],
     "vals": [
         "Value",
-        "Flag"
+        "Flag","Unit"
     ],
     "hiddenAttributes": [
-        "AreaCode",
-        "ElementCode",
-        "ItemCode",
-        "Unit",
-        "Value",
-        "Flag",
-        "VarOrder1",
-        "VarOrder2",
-        "VarOrder3",
-        "VarOrder4",
-        "Var1Order",
-        "Var2Order",
-        "Var3Order",
-        "Var4Order",
-        "NoRecords",
-        "RecordOrder"
+        "NoRecords","RecordOrder","Domain Code","Domain","Country Code","Element Code","Item Code","Year Code",,"Unit","Value","Flag","Flag Description","Var1Order","Var2Order","Var3Order","Var4Order"
     ],
     "InstanceRenderers": [
         {label: "Grid", func: "Table"}
@@ -38,3 +23,4 @@ define({
     "showAgg": false,
     "showRender": false
 });		
+//"NoRecords","RecordOrder","Domain Code","Domain","Country Code","Country","Element Code","Element","Item Code","Item","Year Code","Year","Unit","Value","Flag","Flag Description","Var1Order","Var2Order","Var3Order","Var4Order"

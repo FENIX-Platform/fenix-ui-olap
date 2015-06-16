@@ -82,6 +82,9 @@ define([
             }
         },
         pivotTableRenderer: function(pivotData, opts) {
+			
+			
+			
             __hasProp = {}.hasOwnProperty;
 
             var aggregator, c, colAttrs, colKey, colKeys, defaults, i, j, r, result, rowAttrs, rowKey, rowKeys, spanSize, td, th, totalAggregator, tr, txt, val, x;
@@ -447,7 +450,7 @@ define([
                 dsOption.fields.push({name: r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g, "_")});
                var montitle = "";
                 for (var ii = 0; ii < r.colKeys[i].length; ii++) {
-                    if (true || F3DWLD.CONFIG.wdsPayload.showCodes)
+                    if (true || options.showCodes)
                     {
                         montitle += "<br>" + r.colKeys[i][ii].replace(reg2, "$2 ($1)")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;
                     }

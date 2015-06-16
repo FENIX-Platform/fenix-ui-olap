@@ -2,6 +2,7 @@ define(['pivotRenderersFuncs'], function(pivotRenderersFuncs) {
 
     return {
         "Table": function(pvtData, opts) {
+			
 			var InternalID=opts.id+"_fx-olap-ui";
             if (navigator.appName.indexOf("Internet Explorer") != -1) {//yeah, he's using IE
                 var badBrowser = (
