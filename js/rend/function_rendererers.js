@@ -82,11 +82,7 @@ define([
             }
         },
         pivotTableRenderer: function(pivotData, opts) {
-			
-			
-			
             __hasProp = {}.hasOwnProperty;
-
             var aggregator, c, colAttrs, colKey, colKeys, defaults, i, j, r, result, rowAttrs, rowKey, rowKeys, spanSize, td, th, totalAggregator, tr, txt, val, x;
             defaults = {localeStrings: {totals: "Totals"}};
             opts = $.extend(defaults, opts);
@@ -102,25 +98,17 @@ define([
                     noDraw = true;
                     for (x = _i = 0; 0 <= j ? _i <= j : _i >= j; x = 0 <= j ? ++_i : --_i)
                     {
-                        if (arr[i - 1][x] !== arr[i][x]) {
-                            noDraw = false;
-                        }
+                        if (arr[i - 1][x] !== arr[i][x]) {noDraw = false;}
                     }
-                    if (noDraw) {
-                        return -1;
-                    }
+                    if (noDraw) {return -1;}
                 }
                 len = 0;
                 while (i + len < arr.length) {
                     stop = false;
                     for (x = _j = 0; 0 <= j ? _j <= j : _j >= j; x = 0 <= j ? ++_j : --_j) {
-                        if (arr[i][x] !== arr[i + len][x]) {
-                            stop = true;
-                        }
+                        if (arr[i][x] !== arr[i + len][x]) {stop = true;}
                     }
-                    if (stop) {
-                        break;
-                    }
+                    if (stop) {break;}
                     len++;
                 }
                 return len;
@@ -151,9 +139,7 @@ define([
                         //FIG th.textContent = colKey[j];
                         th.innerHTML = colKey[j];
                         th.setAttribute("colspan", x);
-                        if (parseInt(j) === colAttrs.length - 1 && rowAttrs.length !== 0) {
-                            th.setAttribute("rowspan", 2);
-                        }
+                        if (parseInt(j) === colAttrs.length - 1 && rowAttrs.length !== 0) {th.setAttribute("rowspan", 2);}
                         tr.appendChild(th);
                     }
                 }
@@ -200,9 +186,7 @@ define([
                         th.className = "pvtRowLabel";
                         th.innerHTML = txt;
                         th.setAttribute("rowspan", x);
-                        if (parseInt(j) === rowAttrs.length - 1 && colAttrs.length !== 0) {
-                            th.setAttribute("colspan", 2);
-                        }
+                        if (parseInt(j) === rowAttrs.length - 1 && colAttrs.length !== 0) {th.setAttribute("colspan", 2);}
                         tr.appendChild(th);
                     }
                 }
@@ -216,17 +200,12 @@ define([
                     td.className = "pvtVal row" + i + " col" + j;
                     //V1	  
                     //td.innerHTML = aggregator.format(val);
-                    if (val != null && val.length > 1)
-                    {
+                    if (val != null && val.length > 1){
                         var monInnerTemp = "<table width=\"100%\" ><tr><td width=\"34%\">" + val[0] + "</td>";
-                        for (tt = 1; tt < val.length; tt++) {
-                            monInnerTemp += "<td  width=\"33%\">" + val[tt] + "</td>";
-                        }
+                        for (tt = 1; tt < val.length; tt++) {monInnerTemp += "<td  width=\"33%\">" + val[tt] + "</td>";}
                         monInnerTemp += "</tr></table>";
                         td.innerHTML = monInnerTemp;
-                    } else {
-                        td.innerHTML = aggregator.format(val);
-                    }
+                    } else {td.innerHTML = aggregator.format(val);}
                     /*try{
                      var monInnerTemp ="<table width=\"100%\" ><tr><td width=\"34%\">"+val[0]+"</td>";//aggregator.format(val);		
                      if(FAOSTATNEWOLAP.showUnits){monInnerTemp +="<td  width=\"33%\">"+val[1]+"</td>";}		
@@ -244,17 +223,12 @@ define([
                 td = document.createElement("td");
                 td.className = "pvtTotal rowTotal";
                 // td.innerHTML = totalAggregator.format(val);
-                if (val != null && val.length > 1)
-                {
+                if (val != null && val.length > 1){
                     var monInnerTemp = "<table width=\"100%\" ><tr><td width=\"34%\">" + val[0] + "</td>";
-                    for (tt = 1; tt < val.length; tt++) {
-                        monInnerTemp += "<td  width=\"33%\">" + val[tt] + "</td>";
-                    }
+                    for (tt = 1; tt < val.length; tt++) {monInnerTemp += "<td  width=\"33%\">" + val[tt] + "</td>";}
                     monInnerTemp += "</tr></table>";
                     td.innerHTML = monInnerTemp;
-                } else {
-                    td.innerHTML = totalAggregator.format(val);
-                }
+                } else {td.innerHTML = totalAggregator.format(val);}
 
                 td.setAttribute("data-value", val);
                 td.setAttribute("data-for", "row" + i);
@@ -276,17 +250,12 @@ define([
                 td = document.createElement("td");
                 td.className = "pvtTotal colTotal";
                 //td.innerHTML = totalAggregator.format(val);
-                if (val != null && val.length > 1)
-                {
+                if (val != null && val.length > 1){
                     var monInnerTemp = "<table width=\"100%\" ><tr><td width=\"34%\">" + val[0] + "</td>";
-                    for (tt = tt; tt < val.length; tt++) {
-                        monInnerTemp += "<td  width=\"33%\">" + val[tt] + "</td>";
-                    }
+                    for (tt = tt; tt < val.length; tt++) {monInnerTemp += "<td  width=\"33%\">" + val[tt] + "</td>";}
                     monInnerTemp += "</tr></table>";
                     td.innerHTML = monInnerTemp;
-                } else {
-                    td.innerHTML = totalAggregator.format(val);
-                }
+                } else {td.innerHTML = totalAggregator.format(val);}
                 td.setAttribute("data-value", val);
                 td.setAttribute("data-for", "col" + j);
                 tr.appendChild(td);
@@ -296,17 +265,12 @@ define([
             td = document.createElement("td");
             td.className = "pvtGrandTotal";
             // td.innerHTML = totalAggregator.format(val);
-            if (val != null && val.length > 1)
-            {
+            if (val != null && val.length > 1){
                 var monInnerTemp = "<table width=\"100%\" ><tr><td width=\"34%\">" + val[0] + "</td>";
-                for (tt = 1; tt < val.length; tt++) {
-                    monInnerTemp += "<td  width=\"33%\">" + val[tt] + "</td>";
-                }
+                for (tt = 1; tt < val.length; tt++) {monInnerTemp += "<td  width=\"33%\">" + val[tt] + "</td>";}
                 monInnerTemp += "</tr></table>";
                 td.innerHTML = monInnerTemp;
-            } else {
-                td.innerHTML = totalAggregator.format(val);
-            }
+            } else {td.innerHTML = totalAggregator.format(val);}
 
             td.setAttribute("data-value", val);
             tr.appendChild(td);
@@ -426,12 +390,17 @@ define([
                 var temp = ligne.split('||');
                 for (var col in r.colKeys) {
                     var coldInd = r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9]/g,"_")
-                    if (r.tree[ligne][coldInd] != null) {
-                        temp.push(r.tree[ligne][coldInd].value());
-                    }
-                    else {
-                        temp.push("");
-                    }
+                    if (r.tree[ligne][coldInd] != null) 
+					{ 
+				var ret=r.tree[ligne][coldInd].value()[0];
+				if(options.showUnit){ret+=","+r.tree[ligne][coldInd].value()[1]}
+			if(options.showFlags){ret+=","+r.tree[ligne][coldInd].value()[2]}
+
+						//temp.push(r.tree[ligne][coldInd].value().join("><"));
+					temp.push(ret);
+					
+					}
+                    else {temp.push("");}
                 }
                 r2d2.push(temp);
             }
@@ -451,15 +420,11 @@ define([
                var montitle = "";
                 for (var ii = 0; ii < r.colKeys[i].length; ii++) {
                     if (true || options.showCodes)
-                    {
-                        montitle += "<br>" + r.colKeys[i][ii].replace(reg2, "$2 ($1)")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;
-                    }
-                    else {
-                        montitle += "<br>" + r.colKeys[i][ii].replace(reg, "")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;
-                    }
+					{montitle += "<br>" + r.colKeys[i][ii].replace(reg2, "$2 ($1)")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
+                    else {montitle += "<br>" + r.colKeys[i][ii].replace(reg, "")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
                 }
                 colsOption.push({id: r.colKeys[i].join("_").replace(/[^a-zA-Z0-9]/g, "_"),
-                    header: montitle, toolTip: true, toolTipWidth: 150});
+				header: montitle, toolTip: true, toolTipWidth: 150});
             }
 
             var gridOption = {
@@ -467,40 +432,29 @@ define([
                 width: "100%", //"100%", // 700,
                 height: "250", //"100%", // 330,
                 container: grid_demo_id + "_div", //pvtRendererArea",//testinline2",//'',//myGrid1_div',//pivot_table',// 'gridbox',// $(".pvtRendererArea")[0],//
-                replaceContainer: true,
-                dataset: dsOption,
-                resizable: false,
-                columns: colsOption,
-                pageSize: 15,
+                replaceContainer: true,dataset: dsOption,resizable: false,
+                columns: colsOption,pageSize: 15,
                 pageSizeList: [15, 25, 50, 150],
                 SigmaGridPath: 'grid/',
                 toolbarContent: 'nav | goto | pagesize ', /*| mybutton |*/
                 onMouseOver: function(value, record, cell, row, colNo, rowNo, columnObj, grid) {
-                    if (columnObj && columnObj.toolTip) {
-                        grid.showCellToolTip(cell, columnObj.toolTipWidth);
-                    }
-                    else {
-                        grid.hideCellToolTip();
-                    }
+                    if (columnObj && columnObj.toolTip) {grid.showCellToolTip(cell, columnObj.toolTipWidth);}
+                    else {grid.hideCellToolTip();}
                 },
-                onMouseOut: function(value, record, cell, row, colNo, rowNo, columnObj, grid) {
-                    grid.hideCellToolTip();
-                }
+                onMouseOut: function(value, record, cell, row, colNo, rowNo, columnObj, grid) {grid.hideCellToolTip();}
             };
             FAOSTATOLAPV3.mygrid = new Sigma.Grid(gridOption);
-
+			
             Sigma.Grid.render(FAOSTATOLAPV3.mygrid)();
             document.getElementById('page_after').id = id + "_page_after"
             document.getElementById(id + '_page_after').innerHTML = "/" + FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
 
             FAOSTATOLAPV3.mygrid.pageSizeSelect.onchange = function()
-            {
-                document.getElementById(id + '_page_after').innerHTML = "/" + FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;
-            };
+			{document.getElementById(id + '_page_after').innerHTML = "/" + FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;};
 			
 			
-/*
-//Now out of the pivot : connected throug the exposed function
+				/*
+				//Now out of the pivot : connected throug the exposed function
             if (FAOSTATOLAPV3.grouped) {
                 $("#" + id + "_myGrid1_div").prepend($("<br><label for=\""+id+"_chkTreeview\">"+i18n.TreeView+"</label><input checked onchange=\"pp2.changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
             }

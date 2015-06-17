@@ -25,7 +25,7 @@ define({
 	,"InstanceAggregators":[{label:"SOMME",func:"Sum2"},{label:"Sum",func:"Sum"},{label:"Average",func:"Average"}]
 	,"showAgg":true,
 	"showRender":true,
-	"showUnit":true,
-	"showFlags":true,
-	"showCode":true
+	"showUnit":false,
+	"showFlags":false,
+	"showCode":false
 });		

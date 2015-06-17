@@ -455,11 +455,10 @@ define([
 
     var changechkTreeview = function() {
         this.myinputOpts.grouped = !this.myinputOpts.grouped;
-		
         $("#" + this.myinputOpts.id + "_fx-olap-ui").pivotUI(this.originalData, this.myinputOpts, true);
     }
 
-    var exportExcel = function(showCodes, showUnits, showFlags) {
+    var exportExcel = function() {
         var FID = $("#" + this.myinputOpts.id).data().internalData;
         var mycols = [];
         for (var c = 0; c < FID.rowAttrs.length; c++)
@@ -473,7 +472,7 @@ define([
         }
         document.getElementById("myJson").value = stringify(
                 {data: FID.tree,
-                    header: flatColKeyst, cols: mycols, swUnit: showUnits ? '1' : '0', swFlag: showFlags ? '1' : '0'
+                    header: flatColKeyst, cols: mycols, swUnit: this.myinputOpts.showUnit ? '1' : '0', swFlag: this.myinputOpts.showFlags ? '1' : '0'
 
                 });
 
@@ -483,15 +482,25 @@ define([
 
 	
 	var showCode=function(){
-		console.log(this)
 		this.myinputOpts.showCode=!this.myinputOpts.showCode;
 			this.myinputOpts.originalOpts.showCode=!this.myinputOpts.originalOpts.showCode;
-		console.log(this.myinputOpts)
+		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
+		}
+		
+		var showUnit=function(){
+		this.myinputOpts.showUnit=!this.myinputOpts.showUnit;
+		this.myinputOpts.originalOpts.showUnit=!this.myinputOpts.originalOpts.showUnit;
+		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
+		}
+		
+		var showFlags=function(){
+		this.myinputOpts.showFlags=!this.myinputOpts.showFlags;
+		this.myinputOpts.originalOpts.showFlags=!this.myinputOpts.originalOpts.showFlags;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
 		
 		
-    var exportCSV = function(showCodes, showUnits, showFlags) {
+    var exportCSV = function() {
 
         var today = new Date();
         var reg = new RegExp("<span class=\"ordre\">[0-9]+</span>", "g");
@@ -508,18 +517,18 @@ define([
         var col = flatColKeyst.sort();
         var ret = "";
         for (var j = 0; j < FID.rowKeys[0].length; j++) {
-            if (showCodes) {
+          /*  if (showCodes) {
                 ret += "Code,";
-            }
+            }*/
             ret += '"' + FID.rowAttrs[j].replace("_", "") + "\",";
         }
 
         for (var j in col) {
             ret += '"' + col[j].replace(/,/g, "").replace(/\|\|/g, "-").replace(/&nbsp;/g, "").replace(reg2, "$1").replace(reg, "").replace(reg3, "") + '"';
-            if (showUnits) {
+            if (this.myinputOpts.showUnit) {
                 ret += ",unit";
             }
-            if (showFlags) {
+            if (this.myinputOpts.showFlags) {
                 ret += ",flag";
             }
             ret += ",";
@@ -535,10 +544,10 @@ define([
                 try {
                     if (!row[i][col[j]]) {
                         ret += ",";
-                        if (showUnits) {
+                        if (this.myinputOpts.showUnit) {
                             ret += ",";
                         }
-                        if (showFlags) {
+                        if (this.myinputOpts.showFlags) {
                             ret += ",";
                         }
                     }
@@ -546,17 +555,15 @@ define([
                         // ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
                         ret += '"' + row[i][col[j]].value()[0] + '",';
 
-                        if (showUnits) {
+                        if (this.myinputOpts.showUnit) {
                             ret += '"' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '",';
                         }
-                        if (showFlags) {
+                        if (this.myinputOpts.showFlags) {
                             ret += '"' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '",';
                         }
 
                     }
-                } catch (ER) {
-                    console.log('er', ER);
-                }
+                } catch (ER) {console.log('er', ER);}
             }
             ret += "\n";
         }
@@ -564,19 +571,12 @@ define([
             var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
             j = 0;
             for (i = 0; i < testtd.length; i++) {
-                if (j == 0) {
-                    ret += "\n";
-                    j = 1;
-                }
-                else {
-                    ret += ",";
-                    j = 0;
-                }
+                if (j == 0) {ret += "\n";j = 1;}
+                else {ret += ",";j = 0;}
                 ret += testtd[i].innerHTML;
             }
-        } catch (e) {
-            console.log("WS getFlag not available");
-        }
+        } catch (e) {console.log("WS getFlag not available");}
+		
         ret += "\n\nFAOSTAT " + today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
         var link = document.createElement("a");
         if (link.download !== undefined) { // feature detection
@@ -612,7 +612,7 @@ return f
     var render = function(ii, input, inputOpts, overwrite, locale) {
 		
         this.InternalID = ii;
-this.myinputOpts.originalOpts=inputOpts;
+		this.myinputOpts.originalOpts=inputOpts;
         this.myinputOpts = $.extend({}, this.myinputOpts, inputOpts);
 
         this.myinputOpts.id = ii;
@@ -891,11 +891,12 @@ this.myinputOpts.originalOpts=inputOpts;
                     return valueList.toggle(0, refresh);
                 }
             };
-            $("<p>").appendTo(valueList).append($("<button class=\"tooff\">").text(i18n.OK).on("click", updateFilter));
+            $("<p>").appendTo(valueList).append($("<button class=\"tooff\">").text("ok"+i18n.OK).on("click", updateFilter));
             showFilterList = function(e) {
+			
                 valueList.css({
                     left: 300, // e.pageX,
-                    top: e.pageY
+                    top:0// e.screenY
                 }).toggle();
                 $('.pvtSearch').val('');
                 return $('label').show();
@@ -1106,25 +1107,20 @@ this.myinputOpts.originalOpts=inputOpts;
 	
 	  for(k in inputOpts.linkedAttributes)
 	  {
-		  console.log("my_id",my_id)
-	  if(inputOpts.linkedAttributes[k].indexOf(my_id)!=-1)
-	  { console.log('step2',inputOpts.linkedAttributes);
-	   for(kk in inputOpts.linkedAttributes[k])
-	  {
-	  internalTest=$("#"+rootTemp+"_"+inputOpts.linkedAttributes[k][kk]);
-	  //console.log(inputOpts);
-	 
-		  if(  internalTest.parent().get(0).id!=InternalID+"_unused"){
+	  if(inputOpts.linkedAttributes[k].indexOf(my_id)!=-1){
+	   for(kk in inputOpts.linkedAttributes[k]){
+		internalTest=$("#"+rootTemp+"_"+inputOpts.linkedAttributes[k][kk]);
+		//console.log(inputOpts);
+	 if(  internalTest.parent().get(0).id!=InternalID+"_unused"){
 		   $("#"+e.target.id).append($(internalTest));}
 		
 	   }
 	  break;
 	  }
 	  }
-	  } 
+	  }
 	  
-	 else{
-	  $("#"+e.target.id).append($("#axis_"+my_id));}
+	 else{$("#"+e.target.id).append($("#axis_"+my_id));}
 			
 			}
         });
@@ -1303,6 +1299,8 @@ this.myinputOpts.originalOpts=inputOpts;
             exportExcel: exportExcel,
             exportCSV: exportCSV,
 			showCode:showCode,
+			showUnit:showUnit,
+			showFlags:showFlags,
             originalData: originalData,
             myinputOpts: myinputOpts
         }
