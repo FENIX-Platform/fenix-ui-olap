@@ -21,6 +21,8 @@ define({
         {label: "Average", func: "Average"}
     ],
     "showAgg": false,
-    "showRender": false
+    "showRender": false,
+    "showUnit":true,
+    "showFlags":true
 });		
 //"NoRecords","RecordOrder","Domain Code","Domain","Country Code","Country","Element Code","Element","Item Code","Item","Year Code","Year","Unit","Value","Flag","Flag Description","Var1Order","Var2Order","Var3Order","Var4Order"

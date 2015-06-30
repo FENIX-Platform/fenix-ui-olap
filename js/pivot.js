@@ -493,9 +493,9 @@ define([
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
 		
-		var showFlags=function(){
-		this.myinputOpts.showFlags=!this.myinputOpts.showFlags;
-		this.myinputOpts.originalOpts.showFlags=!this.myinputOpts.originalOpts.showFlags;
+		var showFlags=function(param){
+		this.myinputOpts.showFlags=param;
+		this.myinputOpts.originalOpts.showFlags=param;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
 		

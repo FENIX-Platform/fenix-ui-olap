@@ -48,11 +48,11 @@ requirejs(['../js/paths'], function (paths) {
 		pp.render("pivot1",dataTest1_1, dataConfig1)
 		//var pivot1 = pivot.render("pivot1",dataTest1_1, dataConfig1);
 		
-		/*
+
 		pp2=new pivot();
 		pp2.render("pivot2",dataTest1_2, dataConfig2);
 		console.log(pp,pp2)
-*/
+
 	});
 });
 
