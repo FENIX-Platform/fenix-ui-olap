@@ -481,15 +481,15 @@ define([
     }
 
 	
-	var showCode=function(){
-		this.myinputOpts.showCode=!this.myinputOpts.showCode;
-			this.myinputOpts.originalOpts.showCode=!this.myinputOpts.originalOpts.showCode;
+	var showCode=function(param){
+		this.myinputOpts.showCode=param;
+			this.myinputOpts.originalOpts.showCode=param;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
 		
-		var showUnit=function(){
-		this.myinputOpts.showUnit=!this.myinputOpts.showUnit;
-		this.myinputOpts.originalOpts.showUnit=!this.myinputOpts.originalOpts.showUnit;
+		var showUnit=function(param){
+		this.myinputOpts.showUnit=param;
+		this.myinputOpts.originalOpts.showUnit=param;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
 		

@@ -1,8 +1,8 @@
 define({
     "rows": [
         ["Element","Element Code"],
-        "Country",
-        "Item"
+        ["Country", "Country Code"],
+        ["Item", "Item Code"]
     ],
     "cols": ["Year"],
     "vals": [
@@ -10,8 +10,10 @@ define({
         "Flag","Unit"
     ],
     "hiddenAttributes": [
-        "NoRecords","RecordOrder","Domain Code","Domain","Country Code","Element Code","Item Code","Year Code",,"Unit","Value","Flag","Flag Description","Var1Order","Var2Order","Var3Order","Var4Order"
+        "NoRecords","RecordOrder","Domain Code","Domain","Year Code","Unit","Value","Flag","Flag Description","Var1Order","Var2Order","Var3Order","Var4Order"
     ],
+    linkedAttributes:[["Element","Element Code"],["Country","Country Code"],["Item","Item Code"]],
+
     "InstanceRenderers": [
         {label: "Grid", func: "Table"}
     ],
@@ -23,6 +25,7 @@ define({
     "showAgg": false,
     "showRender": false,
     "showUnit":true,
+    "showCode":true,
     "showFlags":true
 });		
 //"NoRecords","RecordOrder","Domain Code","Domain","Country Code","Country","Element Code","Element","Item Code","Item","Year Code","Year","Unit","Value","Flag","Flag Description","Var1Order","Var2Order","Var3Order","Var4Order"
