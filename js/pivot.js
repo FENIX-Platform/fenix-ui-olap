@@ -1101,7 +1101,6 @@ return f
 			
 			var my_id=e.originalEvent.originalEvent.path[1].id.split("_")[2];
 			var rootTemp=e.originalEvent.originalEvent.path[1].id.split("_")[0]+"_"+e.originalEvent.originalEvent.path[1].id.split("_")[1]
-	
 	  if(e.target.id!=InternalID+"_unused")
 	  {
 	
@@ -1109,9 +1108,10 @@ return f
 	  {
 	  if(inputOpts.linkedAttributes[k].indexOf(my_id)!=-1){
 	   for(kk in inputOpts.linkedAttributes[k]){
-		internalTest=$("#"+rootTemp+"_"+inputOpts.linkedAttributes[k][kk]);
+		internalTest=$("[id='"+rootTemp+"_"+inputOpts.linkedAttributes[k][kk]+"']");
 		//console.log(inputOpts);
-	 if(  internalTest.parent().get(0).id!=InternalID+"_unused"){
+
+           if(  internalTest.parent().get(0).id!=InternalID+"_unused"){
 		   $("#"+e.target.id).append($(internalTest));}
 		
 	   }
