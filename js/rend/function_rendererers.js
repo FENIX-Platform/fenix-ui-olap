@@ -349,7 +349,7 @@ define([
                     column: {pointPadding: 0.2, borderWidth: 0},
                     line: {connectNulls: false}
                 },
-                subtitle: {text: 'Source: FAOSTAT'},
+                subtitle: {text: ''},
                 xAxis: {categories: monXaxis, crosshair: true},
                 yAxis: {min: 0/*,  title: {   text: 'Rainfall (mm)'  }*/},
                 tooltip: {
