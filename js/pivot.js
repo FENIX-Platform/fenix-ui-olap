@@ -867,7 +867,7 @@ return f
                 for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
                     k = _ref2[_k];
                     v = axisValues[c][k];
-                    filterItem = $("<label>");
+                    filterItem = $("<label class='pvtFilterLabel'>");
                     filterItemExcluded = opts.exclusions[c] ? (__indexOf.call(opts.exclusions[c], k) >= 0) : false;
                     hasExcludedItem || (hasExcludedItem = filterItemExcluded);
                     $("<input type='checkbox' class='pvtFilter'>").attr("checked", !filterItemExcluded).data("filter", [c, k]).appendTo(filterItem);
@@ -891,7 +891,7 @@ return f
                     return valueList.toggle(0, refresh);
                 }
             };
-            $("<p>").appendTo(valueList).append($("<button class=\"tooff\">").text("ok"+i18n.OK).on("click", updateFilter));
+            $("<p>").appendTo(valueList).append($("<button class=\"tooff\">").text("ok").on("click", updateFilter));
             showFilterList = function(e) {
 			
                 valueList.css({
