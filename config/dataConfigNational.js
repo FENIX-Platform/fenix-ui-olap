@@ -5,12 +5,12 @@ derivedAttributes: {
    return "<span class=ordre>" +matchMonth[ mp["Month2"]] + "</span>"+mp["Month2"];
    },
    "Indicator":function(mp)
-   {return "<span class=\"ordre\">" + mp["FertCode"] + "</span>"+mp["Item"]+" ("+mp["Unit"]+")";}
+   {return "<span class=ordre>" + mp["FertCode"] + "</span>"+mp["Item"]+" ("+mp["Unit"]+")";}
 },
 rows: ["Area", "Indicator", "Month"],
 cols: ["Year"],
 vals: ["Value", "Flag"],
-hiddenAttributes:["Month2","Unit","Item"],
+hiddenAttributes:["Month2","Unit","Item","Value","Flag","FertCode"],
 linkedAttributes:[],
 "InstanceRenderers": [
         {label: "Grid", func: "Table"},
