@@ -21,6 +21,7 @@
 #pivot1_fx-olap-ui > table > tbody > tr {position: relative; }
 
 
+
 .pvtRows{position: relative;padding-left: 65px; }
 .pvtRows:before {
 content: 'ROW';position: relative;
@@ -147,7 +148,7 @@ table.pvtTable tr td {
     /*color: #3D3D3D;*/
     padding: 5px;
     background-color: #FFF;
-    border: 1px solid #CDCDCD;
+    border: 0px solid #CDCDCD;
     vertical-align: top;
     text-align: right;
 }

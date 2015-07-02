@@ -2,11 +2,13 @@
 
 define([
 	'highcharts',
-	'gt_msg_grid',
-	'i18n!fx-pivot/nls/pivot'], function(
+	'gt_msg_grid'//,
+//	'i18n!fx-pivot/nls/pivot'
+	], function(
 		highcharts,
-		gt_msg_grid,
-		i18n) {
+		gt_msg_grid//,
+	//	i18n
+		) {
 
     return	{
         HPivot: function(pivotData, id) {

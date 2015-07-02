@@ -40,33 +40,70 @@ define(['pivotRenderersFuncs'], function(pivotRenderersFuncs) {
             $("#" +  InternalID+"_fx-olap-holder-div").show();
             return pivotRenderersFuncs.pivotTableRenderer(pvtData, opts);
         },
-        /*"Table Barchart": function(pvtData, opts) {
-         $("#"+opts.id+"_myGrid1_div").hide();
+        "Table Barchart": function(pvtData, opts) {
+        /* $("#"+opts.id+"_myGrid1_div").hide();
          $("#"+opts.id+"_fx-olap-graph-div").hide();
          $("#"+opts.id+"_fx-olap-holder-div").show();
-         
+         */
          //TODO barchart move to pivotRenderersFuncs
          
-         return null;//barchart($(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts)));
-         },
+		 var InternalID=opts.id+"_fx-olap-ui";
+            $("#" + InternalID+"_myGrid1_div").hide();
+            $("#" +  InternalID+"_fx-olap-graph-div").hide();
+            $("#" +  InternalID+"_fx-olap-holder-div").show();
+		 
+        // return pivotRenderersFuncs.pivotTableRenderer(pvtData, opts);//.barchart();
+          return $.fn.barchart(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts));//.barchart();
+         
+		 },
          "Heatmap": function(pvtData, opts) {
-         $("#"+opts.id+"_myGrid1_div").hide();
+        /* $("#"+opts.id+"_myGrid1_div").hide();
          $("#"+opts.id+"_fx-olap-graph-div").hide();
          $("#"+opts.id+"_fx-olap-holder-div").show();
-         return $(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts)).heatmap();
-         },
+         return $(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts)).heatmap();*/
+		 		 var InternalID=opts.id+"_fx-olap-ui";
+
+			$("#" + InternalID+"_myGrid1_div").hide();
+            $("#" +  InternalID+"_fx-olap-graph-div").hide();
+            $("#" +  InternalID+"_fx-olap-holder-div").show();
+		 
+        // return pivotRenderersFuncs.pivotTableRenderer(pvtData, opts);//.barchart();
+          return $.fn.heatmap(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts));//.barchart();
+                 
+
+		},
          "Row Heatmap": function(pvtData, opts) {
-         $("#"+opts.id+"_myGrid1_div").hide();
+        /* $("#"+opts.id+"_myGrid1_div").hide();
          $("#"+opts.id+"_fx-olap-graph-div").hide();
          $("#"+opts.id+"_fx-olap-holder-div").show();
          return $(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
-         },
-         "Col Heatmap": function(pvtData, opts) {
+       */ 
+ var InternalID=opts.id+"_fx-olap-ui";
+
+			$("#" + InternalID+"_myGrid1_div").hide();
+            $("#" +  InternalID+"_fx-olap-graph-div").hide();
+            $("#" +  InternalID+"_fx-olap-holder-div").show();
+		 
+        // return pivotRenderersFuncs.pivotTableRenderer(pvtData, opts);//.barchart();
+          return $.fn.heatmap(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts),"rowheatmap");//.barchart();
+            
+	   },
+         "Col Heatmap": function(pvtData, opts) {/*
          $("#"+opts.id+"_myGrid1_div").hide();
          $("#"+opts.id+"_fx-olap-graph-div").hide();
          $("#"+opts.id+"_fx-olap-holder-div").show();
-         return $(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
-         },*/
+         return $(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");*/
+         
+		 var InternalID=opts.id+"_fx-olap-ui";
+
+			$("#" + InternalID+"_myGrid1_div").hide();
+            $("#" +  InternalID+"_fx-olap-graph-div").hide();
+            $("#" +  InternalID+"_fx-olap-holder-div").show();
+		 
+        // return pivotRenderersFuncs.pivotTableRenderer(pvtData, opts);//.barchart();
+          return $.fn.heatmap(pivotRenderersFuncs.pivotTableRenderer(pvtData, opts),"colheatmap");//.barchart();
+       
+		 },
         "barchart": function(pvtData, opts) {
 				var InternalID=opts.id+"_fx-olap-ui";
             $("#" +  InternalID+"_myGrid1_div").hide();

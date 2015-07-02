@@ -1,6 +1,6 @@
 define([
 	'jquery','jquery-ui',
-	'i18n!fx-pivot/nls/pivot'], function($, ui, i18n) {
+	'i18n!submodules/fenix-ui-olap/nls/pivot'], function($, ui, i18n) {
 
     var $, PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, renderers, usFmt, usFmtInt, usFmtPct, zeroPad,
             __indexOf = [].indexOf || function(item) {
@@ -399,11 +399,8 @@ define([
 
 
     $.fn.pivot = function(input, opts) {
-		
-		
-		
-        var defaults, e, pivotData, result, x, internalData;
-        var InternalID = opts.rendererOptions.id;
+	var defaults, e, pivotData, result, x, internalData;
+	var InternalID = opts.rendererOptions.id;
         defaults = {
             cols: [], rows: [],
             filter: function() {
@@ -440,9 +437,7 @@ define([
         // return {html:this.append(result),internalData:r2};
     };
 
-    var destroy = function() {
-        $("#" + this.myinputOpts.id + " .tooff").off();
-    }
+    var destroy = function() {$("#" + this.myinputOpts.id + " .tooff").off();}
 
     //$("#"+this.InternalID).empty();
     /*
@@ -554,14 +549,12 @@ define([
                     else {
                         // ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
                         ret += '"' + row[i][col[j]].value()[0] + '",';
-
                         if (this.myinputOpts.showUnit) {
                             ret += '"' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '",';
                         }
                         if (this.myinputOpts.showFlags) {
                             ret += '"' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '",';
                         }
-
                     }
                 } catch (ER) {console.log('er', ER);}
             }
@@ -666,7 +659,7 @@ return f
 		
 		
         document.getElementById(ii).innerHTML = "<div id='" + ii + "_fx-olap-ui'></div>" +
-                "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div' ></div>" +
+                "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div' style='overflow:auto'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_myGrid1_div'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>";
@@ -674,9 +667,6 @@ return f
         ret = $("#" + ii + "_fx-olap-ui").pivotUI(input, this.myinputOpts, overwrite, locale);
         return ret;
     }
-
-
-
 
 
     $.fn.pivotUI = function(input, inputOpts, overwrite, locale) {
@@ -718,6 +708,22 @@ return f
                 defaults.renderers[inputOpts.InstanceRenderers[i].label] = inputOpts.rendererDisplay[inputOpts.InstanceRenderers[i].func];
             }
         }
+		
+		/**/
+		/* defaults.renderers["Table Barchart"]= function(pvtData, opts) {
+      return $(pivotTableRenderer(pvtData, opts)).barchart();
+    };
+     defaults.renderers["Heatmap"]= function(pvtData, opts) {
+      return $(pivotTableRenderer(pvtData, opts)).heatmap();
+    };
+     defaults.renderers["Row Heatmap"]=function(pvtData, opts) {
+      return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
+    };
+     defaults.renderers["Col Heatmap"]= function(pvtData, opts) {
+      return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
+    }*/
+		/**/
+		
         if (inputOpts.InstanceAggregators == null) {
             defaults.aggregators = inputOpts.aggregatorDisplay
         }
@@ -1137,17 +1143,22 @@ return f
      Heatmap post-processing
      */
 
-    $.fn.barchart = function() {
+    $.fn.barchart = function(monThis) {
         var barcharter, i, numCols, numRows, _i;
-        numRows = this.data("numrows");
+        /*numRows = this.data("numrows");
         numCols = this.data("numcols");
-        barcharter = (function(_this) {
+        */
+		numRows = $(monThis).data("numrows");
+        numCols = $(monThis).data("numcols");
+		barcharter = (function(_this) {
             return function(scope) {
                 var forEachCell, max, scaler, values;
                 forEachCell = function(f) {
                     return _this.find(scope).each(function() {
                         var x;
-                        x = $(this).data("value");
+								
+
+                        x = (""+$(this).data("value")).split(',')[0];
                         if ((x != null) && isFinite(x)) {
                             return f(x, $(this));
                         }
@@ -1185,22 +1196,22 @@ return f
                     }).html(wrapper);
                 });
             };
-        })(this);
+        })($(monThis));
         for (i = _i = 0; 0 <= numRows ? _i < numRows : _i > numRows; i = 0 <= numRows ? ++_i : --_i)
-        {
-            barcharter(".pvtVal.row" + i);
-        }
+        {barcharter(".pvtVal.row" + i);}
         barcharter(".pvtTotal.colTotal");
-        return this;
-    };
+        //return this;
+    return $(monThis);
+    
+	};
 
-    $.fn.heatmap = function(scope) {
+    $.fn.heatmap = function(monThis,scope) {
         var colorGen, heatmapper, i, j, numCols, numRows, _i, _j;
         if (scope == null) {
             scope = "heatmap";
         }
-        numRows = this.data("numrows");
-        numCols = this.data("numcols");
+        numRows = $(monThis).data("numrows");
+        numCols = $(monThis).data("numcols");
         colorGen = function(color, min, max) {
             var hexGen;
             hexGen = (function() {
@@ -1235,7 +1246,8 @@ return f
                 forEachCell = function(f) {
                     return _this.find(scope).each(function() {
                         var x;
-                        x = $(this).data("value");
+                        //x = $(this).data("value");
+						 x = (""+$(this).data("value")).split(',')[0];
                         if ((x != null) && isFinite(x)) {
                             return f(x, $(this));
                         }
@@ -1250,7 +1262,7 @@ return f
                     return elem.css("background-color", "#" + colorFor(x));
                 });
             };
-        })(this);
+        })($(monThis));
         switch (scope) {
             case "heatmap":
                 heatmapper(".pvtVal", "red");
@@ -1267,7 +1279,7 @@ return f
         }
         heatmapper(".pvtTotal.rowTotal", "red");
         heatmapper(".pvtTotal.colTotal", "red");
-        return this;
+        return $(monThis);
     };
     /*
      Barchart post-processing
