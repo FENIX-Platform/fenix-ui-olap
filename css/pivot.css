@@ -20,6 +20,7 @@
 #pivot1_fx-olap-ui > table > tbody {  border: 0; }
 #pivot1_fx-olap-ui > table > tbody > tr {position: relative; }
 
+.pvtFilterLabel input[type="checkbox"]{display:inline-block !important;}
 
 
 .pvtRows{position: relative;padding-left: 65px; }
