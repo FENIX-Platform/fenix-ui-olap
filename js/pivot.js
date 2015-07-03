@@ -1,6 +1,6 @@
 define([
 	'jquery','jquery-ui',
-	'i18n!submodules/fenix-ui-olap/nls/pivot'], function($, ui, i18n) {
+	'i18n!fx-olap/nls/pivot'], function($, ui, i18n) {
 
     var $, PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, renderers, usFmt, usFmtInt, usFmtPct, zeroPad,
             __indexOf = [].indexOf || function(item) {

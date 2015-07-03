@@ -25,6 +25,8 @@ define(function () {
 			//fusioncharts: "grid/flashchart/fusioncharts/FusionCharts",        
 			// configuration: "tests/configuration",
 
+            'fx-olap/nls' : '../nls',
+
 			pivotRenderersFuncs:   'rend/function_rendererers',
 			pivotRenderers:        'rend/rendererers',
 			pivotAggregatorsFuncs: 'rend/function_aggregators',
