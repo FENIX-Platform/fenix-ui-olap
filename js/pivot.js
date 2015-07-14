@@ -570,7 +570,7 @@ define([
             }
         } catch (e) {console.log("WS getFlag not available");}
 		
-        ret += "\n\nFAOSTAT " + today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
+        ret += "\n\n "+this.myinputOpts.csvText +","+ today.getFullYear() + ", Date : " + today.toLocaleDateString() + "\n";
         var link = document.createElement("a");
         if (link.download !== undefined) { // feature detection
             // Browsers that support HTML5 download attribute
