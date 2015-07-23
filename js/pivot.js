@@ -662,7 +662,9 @@ return f
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div' style='overflow:auto'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_myGrid1_div'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div'></div>" +
-                "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>";
+                "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>"
+				
+				;
 
         ret = $("#" + ii + "_fx-olap-ui").pivotUI(input, this.myinputOpts, overwrite, locale);
         return ret;
@@ -917,7 +919,9 @@ return f
             if (hasExcludedItem) {
                 attrElem.addClass('pvtFilteredAttribute');
             }
-            colList.append(attrElem).append(valueList);
+            colList.append(attrElem);
+			attrElem.append(valueList);
+			//console.log(valueList.html())
             //$("body").append(attrElem).append(valueList);
             return attrElem.on("dblclick", showFilterList);
         };
