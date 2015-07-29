@@ -286,13 +286,13 @@ define([
             var monXaxis = [];
             for (entry in r.colKeys)
             {
-                monXaxis.push(r.colKeys[entry].toString().replace(/<span class="ordre">\d+<\/span>/g, "").replace(/\|\|/g, " X "));
+                monXaxis.push(r.colKeys[entry].toString().replace(/<span class=ordre>\d+<\/span>/g, "").replace(/\|\|/g, " X "));
             }
 
             var maSeries = [];
             if (r.colKeys.length > 0) {
                 for (ligne in r.tree) {
-                    var temp = {"name": ligne.replace(/<span class="ordre">\d+<\/span>/g, "").replace(/\|\|/g, " X "), "data": []};
+                    var temp = {"name": ligne.replace(/<span class=ordre>\d+<\/span>/g, "").replace(/\|\|/g, " X "), "data": []};
                     for (col in r.colKeys) {
                         var coldInd = r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9 ]/g,"_");
                         if (r.tree[ligne][coldInd] != null)
@@ -390,6 +390,7 @@ define([
             $("#" + id + "_mesFlags").empty();
             for (var ligne in r.tree) {
                 var temp = ligne.split('||');
+				r.colKeys.sort();
                 for (var col in r.colKeys) {
                     var coldInd = r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9]/g,"_")
                     if (r.tree[ligne][coldInd] != null) 
@@ -414,8 +415,8 @@ define([
                 dsOption.fields.push({name: r.rowAttrs[i]});
                 colsOption.push({id: r.rowAttrs[i], header: r.rowAttrs[i], frozen: true, grouped: grouped});
             }
-            var reg = new RegExp("<span class=\"ordre\">[0-9]*</span>", "g");
-            var reg2 = new RegExp("<span class=\"ordre\">[0-9]*</span><table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g");
+            var reg = new RegExp("<span class=ordre>[0-9]*</span>", "g");
+            var reg2 = new RegExp("<span class=ordre>[0-9]*</span><table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g");
 
             for (var i in r.colKeys) {
                 dsOption.fields.push({name: r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g, "_")});
@@ -426,7 +427,8 @@ define([
                     else {montitle += "<br>" + r.colKeys[i][ii].replace(reg, "")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
                 }
                 colsOption.push({id: r.colKeys[i].join("_").replace(/[^a-zA-Z0-9]/g, "_"),
-				header: montitle, toolTip: true, toolTipWidth: 150});
+				header: montitle,
+				toolTip: true, toolTipWidth: 150});
             }
 
             var gridOption = {

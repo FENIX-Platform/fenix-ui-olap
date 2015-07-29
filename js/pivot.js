@@ -498,8 +498,8 @@ define([
     var exportCSV = function() {
 
         var today = new Date();
-        var reg = new RegExp("<span class=\"ordre\">[0-9]+</span>", "g");
-        var reg3 = new RegExp("<span class=\"ordre\"></span>", "g");
+        var reg = new RegExp("<span class=ordre>[0-9]+</span>", "g");
+        var reg3 = new RegExp("<span class=ordre></span>", "g");
         var reg2 = new RegExp("<table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g");
         var FID = $("#" + this.myinputOpts.id).data().internalData;
         var row = FID.tree;
