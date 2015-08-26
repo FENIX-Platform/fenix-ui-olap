@@ -1,4 +1,70 @@
+.pvtUnused li{display:inline;}
+.pvtUnused {display:block;}
+.pvtUnused:before {
+	content: 'AGG'; position: relative;
+	top: 5px;left: 0;font-size: 12px;
+	font-weight: 700;text-transform: uppercase; 
+}
 
+#pivot1_nested_by{display:none}
+
+#pivot1_filtre_Value{display:none !important}
+
+
+
+#pivot1_fx-olap-ui > table > tbody {  border: 0; }
+#pivot1_fx-olap-ui > table > tbody > tr {position: relative; }
+
+.pvtFilterLabel input[type="checkbox"]{display:inline-block !important;}
+
+
+.pvtRows{position: relative;padding-left: 65px; }
+.pvtRows:before {
+content: 'ROW';position: relative;
+top: 5px;left: 0;font-size: 12px;
+font-weight: 700;text-transform: uppercase; 
+}
+
+.pvtRows:after {
+content: '';position: absolute;
+width: 100%;height: 1px;
+bottom: 0;left: 0;
+background-color: #e4e4e4; 
+}
+
+#pivot1_fx-olap-ui_fx-olap-holder-div { overflow: auto; }
+
+#pivot1_fx-olap-ui #pivot1_fx-olap-ui_finaltable {  overflow: auto;  width: 100%;  height: 400px; }
+
+
+#pivot1_fx-olap-ui_fx-olap-holder-div{  width: 800px; height: 500px;  overflow: auto;}
+
+
+.invi{display:none !important;}
+.pvtCols {position: relative;padding-left: 65px; }
+	  
+.pvtCols:after {
+content: '';position: absolute;width: 100%;
+height: 1px;bottom: 0;left: 0;
+background-color: #e4e4e4;}
+		
+.pvtCols:before {
+content: 'COLUMN';position: relative;
+top: 5px;left: 0;font-size: 12px;
+font-weight: 700;text-transform: uppercase;}
+
+.fx-olap-holder {  overflow: hidden; }
+
+
+
+.pvtVals{display:inline}
+.pvtRenderer{display:block}
+/*.pvtAttrDropdown{display:none}*/
+
+/* Afo Pivot */
+.pvtAxisContainer, .pvtVals {  background: transparent; }
+
+.fx-olap-holder * {  box-sizing: content-box; }
 table.pvtTable {
   /*font-family:arial;*/
     /*font-size: 8pt;*/
@@ -19,18 +85,17 @@ table.pvtTable tr td {
     /*color: #3D3D3D;*/
     padding: 5px;
     background-color: #FFF;
-    border: 1px solid #CDCDCD;
+    border: 0px solid #CDCDCD;
     vertical-align: top;
     text-align: right;
 }
 
 .pvtTotal, .pvtGrandTotal { font-weight: bold; }
-
 .pvtVals { text-align: center;}
 .pvtAggregator { margin-bottom: 5px ;}
 
 .pvtAxisContainer, .pvtVals {
-    background: #EEE;
+
     padding: 5px;
     min-width: 20px;
     min-height: 20px;
@@ -86,8 +151,7 @@ table.pvtTable tr td {
 }
 .pvtCheckContainer p{ margin: 5px; }
 
-
 /**Modif***/
 .ordre{display:none}
-#pretd{display:none}
-#pretd1{display:none}
+
+
