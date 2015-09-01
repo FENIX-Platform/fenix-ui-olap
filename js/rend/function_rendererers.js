@@ -434,7 +434,7 @@ define([
             var gridOption = {
                 id: grid_demo_id,
                 width: "100%", //"100%", // 700,
-                height: "250", //"100%", // 330,
+                height: "400", //"100%", // 330,
                 container: grid_demo_id + "_div", //pvtRendererArea",//testinline2",//'',//myGrid1_div',//pivot_table',// 'gridbox',// $(".pvtRendererArea")[0],//
                 replaceContainer: true,dataset: dsOption,resizable: false,
                 columns: colsOption,pageSize: 15,

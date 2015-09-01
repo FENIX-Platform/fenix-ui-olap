@@ -455,6 +455,7 @@ define([
 
     var exportExcel = function() {
         var FID = $("#" + this.myinputOpts.id).data().internalData;
+		console.log("#" + this.myinputOpts.id)
         var mycols = [];
         for (var c = 0; c < FID.rowAttrs.length; c++)
         {
@@ -496,7 +497,6 @@ define([
 		
 		
     var exportCSV = function() {
-
         var today = new Date();
         var reg = new RegExp("<span class=ordre>[0-9]+</span>", "g");
         var reg3 = new RegExp("<span class=ordre></span>", "g");
