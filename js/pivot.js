@@ -454,8 +454,11 @@ define([
     }
 
     var exportExcel = function() {
+				console.log( this)
+
+				console.log("#" + this.myinputOpts.id)
+
         var FID = $("#" + this.myinputOpts.id).data().internalData;
-		console.log("#" + this.myinputOpts.id)
         var mycols = [];
         for (var c = 0; c < FID.rowAttrs.length; c++)
         {
