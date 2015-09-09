@@ -660,13 +660,14 @@ return f
 		
         document.getElementById(ii).innerHTML = "<div id='" + ii + "_fx-olap-ui'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div' style='overflow:auto'></div>" +
-                "<div id='" + ii + "_fx-olap-ui_myGrid1_div'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_myGrid1_div' ></div>" +
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>"
 				
 				;
 
         ret = $("#" + ii + "_fx-olap-ui").pivotUI(input, this.myinputOpts, overwrite, locale);
+		//$("#" + ii + "_fx-olap-ui").attr("class","fx-olap-holder");
         return ret;
     }
 
