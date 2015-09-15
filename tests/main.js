@@ -33,25 +33,33 @@ requirejs(['../js/paths'], function (paths) {
 
 		 ) {
 		
-		
+		 pp=new pivot();
 	    dataTest1_1 = JSON.parse(dataTest1_1);
 		dataTest1_2 = JSON.parse(dataTest1_2);
 		
-		dataConfig1 = _.extend(dataConfig1, {rendererDisplay: pivotRenderers});
-		dataConfig1 = _.extend(dataConfig1, {aggregatorDisplay: pivotAggregators});
+		dataConfig1 = _.extend(dataConfig1, {
+			rendererDisplay: pivotRenderers,
+			onDataLoaded: function(){
+				console.log('onDataLoaded')
+			}
+		});
+
+		dataConfig1 = _.extend(dataConfig1, {aggregatorDisplay: pivotAggregators });
 		
-		dataConfig2 = _.extend(dataConfig2, {rendererDisplay: pivotRenderers});
-		dataConfig2 = _.extend(dataConfig2, {aggregatorDisplay: pivotAggregators});
+		dataConfig2 = _.extend(dataConfig2, {
+			rendererDisplay: pivotRenderers, 
+			aggregatorDisplay: pivotAggregators
+		});
 		
 		
-		 pp=new pivot();
+		
 		pp.render("pivot1",dataTest1_1, dataConfig1)
 		//var pivot1 = pivot.render("pivot1",dataTest1_1, dataConfig1);
 		
 
 		pp2=new pivot();
 		pp2.render("pivot2",dataTest1_2, dataConfig2);
-		console.log(pp,pp2)
+		
 
 	});
 });

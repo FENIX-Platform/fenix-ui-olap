@@ -416,18 +416,22 @@ define([
         opts = $.extend({}, defaults, opts);
         result = null;
         r2 = new PivotData(input, opts);
+
+
+       
+
         /* FAOSTATNEWOLAP.internalData = new PivotData(input, opts);
          result = opts.renderer(FAOSTATNEWOLAP.internalData, opts.rendererOptions);*/
 
         result = opts.renderer(new PivotData(input, opts), opts.rendererOptions);
+
         x = this[0];
         try {
             while (x.hasChildNodes()) {
                 x.removeChild(x.lastChild);
             }
         }
-        catch (er) {
-        }
+        catch (er) {        }
         //$("#pivot1_fx-olap-holder-div").html(result)
 
         $("#" + InternalID).data("internalData", r2);
@@ -435,6 +439,12 @@ define([
         //return this.append(result)
 
         // return {html:this.append(result),internalData:r2};
+
+         if($.isFunction(opts.onDataLoaded) && typeof this.onDataLoadedExecuted === 'undefined')
+            {
+                opts.onDataLoaded();
+                this.onDataLoadedExecuted = true;
+            }
     };
 
     var destroy = function() {$("#" + this.myinputOpts.id + " .tooff").off();}
@@ -988,8 +998,12 @@ return f
                     derivedAttributes: opts.derivedAttributes,
                     localeStrings: opts.localeStrings,
                     rendererOptions: opts.rendererOptions,
-                    cols: [], rows: []
+                    cols: [], rows: [],
+                   onDataLoaded:opts.onDataLoaded
                 };
+
+//myOnDataLoaded
+                console.log(opts,subopts);
                 numInputsToProcess = (_ref5 = opts.aggregators[aggregator.val()]([])().numInputs) != null ? _ref5 : 0;
                 vals = [];
                 _this.find(".pvtRows li span.pvtAttr").each(function()
