@@ -392,16 +392,14 @@ define([
                 var temp = ligne.split('||');
 				r.colKeys.sort();
                 for (var col in r.colKeys) {
-                    var coldInd = r.colKeys[col].join("||");//.replace(/[^a-zA-Z0-9]/g,"_")
-                    if (r.tree[ligne][coldInd] != null) 
-					{ 
-				var ret=r.tree[ligne][coldInd].value()[0];
-				if(options.showUnit){ret+=","+r.tree[ligne][coldInd].value()[1]}
-			if(options.showFlags){ret+=","+r.tree[ligne][coldInd].value()[2]}
-
+                    var coldInd = r.colKeys[col].join("||");
+					//.replace(/[^a-zA-Z0-9]/g,"_")
+                    if (r.tree[ligne][coldInd] != null){
+					var ret=r.tree[ligne][coldInd].value()[0];
+						if(options.showUnit){ret+=","+r.tree[ligne][coldInd].value()[1]}
+						if(options.showFlags){ret+=","+r.tree[ligne][coldInd].value()[2]}
 						//temp.push(r.tree[ligne][coldInd].value().join("><"));
-					temp.push(ret);
-					
+						temp.push(ret);
 					}
                     else {temp.push("");}
                 }

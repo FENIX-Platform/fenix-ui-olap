@@ -421,7 +421,8 @@ define([
        
 
         /* FAOSTATNEWOLAP.internalData = new PivotData(input, opts);
-         result = opts.renderer(FAOSTATNEWOLAP.internalData, opts.rendererOptions);*/
+         result = opts.renderer(FAOSTATNEWOLAP.internalData, opts.rendererOptions);
+		 */
 
         result = opts.renderer(new PivotData(input, opts), opts.rendererOptions);
 
@@ -432,14 +433,10 @@ define([
             }
         }
         catch (er) {        }
-        //$("#pivot1_fx-olap-holder-div").html(result)
-
+     
         $("#" + InternalID).data("internalData", r2);
         $("#" + InternalID + "_fx-olap-ui_fx-olap-holder-div").html(result);
-        //return this.append(result)
-
-        // return {html:this.append(result),internalData:r2};
-
+        
          if($.isFunction(opts.onDataLoaded) && typeof this.onDataLoadedExecuted === 'undefined')
             {
                 opts.onDataLoaded();
@@ -449,10 +446,7 @@ define([
 
     var destroy = function() {$("#" + this.myinputOpts.id + " .tooff").off();}
 
-    //$("#"+this.InternalID).empty();
-    /*
-     Pivot Table UI: calls Pivot Table core above with options set by user
-     */
+  
 
 
 
@@ -467,15 +461,10 @@ define([
 				
         var FID = $("#" + this.myinputOpts.id).data().internalData;
         var mycols = [];
-        for (var c = 0; c < FID.rowAttrs.length; c++)
-        {
-            mycols.push(FID.rowAttrs[c] + "Name");
-        }
+        for (var c = 0; c < FID.rowAttrs.length; c++){mycols.push(FID.rowAttrs[c] + "Name");}
         flatColKeyst = [];
         tt = FID.getColKeys();
-        for (tti in tt) {
-            flatColKeyst.push(tt[tti].join("||"))
-        }
+        for (tti in tt) {flatColKeyst.push(tt[tti].join("||"));}
         document.getElementById("myJson").value = stringify(
                 {data: FID.tree,
                     header: flatColKeyst, cols: mycols, swUnit: this.myinputOpts.showUnit ? '1' : '0', swFlag: this.myinputOpts.showFlags ? '1' : '0'
@@ -1003,7 +992,7 @@ return f
                 };
 
 //myOnDataLoaded
-                console.log(opts,subopts);
+               
                 numInputsToProcess = (_ref5 = opts.aggregators[aggregator.val()]([])().numInputs) != null ? _ref5 : 0;
                 vals = [];
                 _this.find(".pvtRows li span.pvtAttr").each(function()
@@ -1134,7 +1123,6 @@ return f
 	  if(inputOpts.linkedAttributes[k].indexOf(my_id)!=-1){
 	   for(kk in inputOpts.linkedAttributes[k]){
 		internalTest=$("[id='"+rootTemp+"_"+inputOpts.linkedAttributes[k][kk]+"']");
-		//console.log(inputOpts);
 
            if(  internalTest.parent().get(0).id!=InternalID+"_unused"){
 		   $("#"+e.target.id).append($(internalTest));}
