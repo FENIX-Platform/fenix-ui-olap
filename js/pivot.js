@@ -802,6 +802,7 @@ return f
             $("<option>").val(x).html(x).appendTo(renderer);
         }
         colList = $("<td id='" + inputOpts.id + "_unused' class='pvtAxisContainer '>");
+       
 		if (inputOpts.showAgg==true){colList.addClass("pvtUnused");}
 		else{colList.addClass("pvtUnusedInvi");}
 		//pvtUnused

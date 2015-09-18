@@ -394,12 +394,19 @@ define([
                 for (var col in r.colKeys) {
                     var coldInd = r.colKeys[col].join("||");
 					//.replace(/[^a-zA-Z0-9]/g,"_")
-                    if (r.tree[ligne][coldInd] != null){
+                     if (r.tree[ligne][coldInd] != null && r.tree[ligne][coldInd].value()!=null){
+                        try{
+
+                              if(r.tree[ligne][coldInd].value().length>1){
 					var ret=r.tree[ligne][coldInd].value()[0];
 						if(options.showUnit){ret+=","+r.tree[ligne][coldInd].value()[1]}
 						if(options.showFlags){ret+=","+r.tree[ligne][coldInd].value()[2]}
 						//temp.push(r.tree[ligne][coldInd].value().join("><"));
-						temp.push(ret);
+                }
+                else{var ret=r.tree[ligne][coldInd].value();}
+				temp.push(ret);
+                }
+                catch(ER){console.log(ER,r.tree[ligne][coldInd])}
 					}
                     else {temp.push("");}
                 }

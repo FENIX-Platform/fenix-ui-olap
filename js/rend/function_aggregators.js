@@ -1,6 +1,12 @@
 define(function() {
 
-
+ var __indexOf = [].indexOf || function(item) {
+        for (var i = 0, l = this.length; i < l; i++) {
+            if (i in this && this[i] === item)
+                return i;
+        }
+        return -1;
+    };
 
     return {
         count: function(formatter) {
@@ -56,9 +62,14 @@ define(function() {
                         uniq: [],
                         push: function(record) {
                             var _ref;
+                            if(record[attr]!=null)
+                          {
+
                             if (_ref = record[attr], __indexOf.call(this.uniq, _ref) < 0) {
+                                console.log(record[attr])
                                 return this.uniq.push(record[attr]);
                             }
+                        }
                         },
                         value: function() {
                             return this.uniq.join(sep);
@@ -104,11 +115,14 @@ define(function() {
                 attr = _arg[0];
                 return function(data, rowKey, colKey) {
                     return {
-                        sum: [null, "_", "_"],
+                        sum: [0, "_", "_"],
                         push: function(record) {
-                            if (!isNaN(parseFloat(record[attr]))) {
-                                this.sum[0] += parseFloat(record[attr]);
-                                if (this.sum[2] == "_") {
+
+                            if (!isNaN(parseFloat(record[attr])) && parseFloat(record[attr])>0 ) {0
+                              
+                               this.sum[0] = parseFloat( (this.sum[0]+parseFloat(record[attr])).toFixed(12) );
+                            
+                               if (this.sum[2] == "_") {
                                     this.sum[2] = record["Flag"];
                                     /*FAOSTATNEWOLAP.flags[record["Flag"]]=1;*/
                                 }
