@@ -394,19 +394,26 @@ define([
                 for (var col in r.colKeys) {
                     var coldInd = r.colKeys[col].join("||");
 					//.replace(/[^a-zA-Z0-9]/g,"_")
-                     if (r.tree[ligne][coldInd] != null && r.tree[ligne][coldInd].value()!=null){
-                        try{
+						 if (r.tree[ligne][coldInd] != null && r.tree[ligne][coldInd].value()!=null){
+							try{
 
-                              if(r.tree[ligne][coldInd].value().length>1){
-					var ret=r.tree[ligne][coldInd].value()[0];
-						if(options.showUnit){ret+=","+r.tree[ligne][coldInd].value()[1]}
-						if(options.showFlags){ret+=","+r.tree[ligne][coldInd].value()[2]}
-						//temp.push(r.tree[ligne][coldInd].value().join("><"));
-                }
-                else{var ret=r.tree[ligne][coldInd].value();}
-				temp.push(ret);
-                }
-                catch(ER){console.log(ER,r.tree[ligne][coldInd])}
+										if(r.tree[ligne][coldInd].value().length>1){
+											var ret="";
+											console.log(r.tree[ligne][coldInd].value().length);
+											if(options.showUnit || options.showFlags)
+											{ret+="<table class=tVal><tr><td>";}
+											
+											 ret+=r.tree[ligne][coldInd].value()[0];
+											if(options.showUnit || options.showFlags){ret+="</td>";}
+											if(options.showUnit){ret+="<td>"+r.tree[ligne][coldInd].value()[1]+"</td>";}
+											if(options.showFlags){ret+="<td>"+r.tree[ligne][coldInd].value()[2]+"</td>";}
+											if(options.showUnit || options.showFlags){ret+="</tr></table>";}
+											//temp.push(r.tree[ligne][coldInd].value().join("><"));
+										}
+									else{var ret=r.tree[ligne][coldInd].value();}
+									temp.push(ret);
+							}
+							catch(ER){console.log(ER,r.tree[ligne][coldInd])}
 					}
                     else {temp.push("");}
                 }
