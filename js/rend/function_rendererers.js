@@ -448,7 +448,7 @@ define([
                 width: "100%", //"100%", // 700,
                 height: "400", //"100%", // 330,
                 container: grid_demo_id + "_div", //pvtRendererArea",//testinline2",//'',//myGrid1_div',//pivot_table',// 'gridbox',// $(".pvtRendererArea")[0],//
-                replaceContainer: true,dataset: dsOption,resizable: false,
+                replaceContainer: true,dataset: dsOption,resizable: true,
                 columns: colsOption,pageSize: 15,
                 pageSizeList: [15, 25, 50, 150],
                 SigmaGridPath: 'grid/',
