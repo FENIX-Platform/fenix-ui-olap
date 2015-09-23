@@ -399,7 +399,7 @@ define([
 
 										if(r.tree[ligne][coldInd].value().length>1){
 											var ret="";
-											console.log(r.tree[ligne][coldInd].value().length);
+											
 											if(options.showUnit || options.showFlags)
 											{ret+="<table class=tVal><tr><td>";}
 											
