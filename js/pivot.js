@@ -519,13 +519,9 @@ define([
 
         for (var j in col) {
             ret += '"' + col[j].replace(/,/g, "").replace(/\|\|/g, "-").replace(/&nbsp;/g, "").replace(reg2, "$1").replace(reg, "").replace(reg3, "") + '"';
-            if (this.myinputOpts.showUnit) {
-                ret += ",unit";
-            }
-            if (this.myinputOpts.showFlags) {
-                ret += ",flag";
-            }
-            ret += ",";
+            if (this.myinputOpts.showUnit) {ret += ",unit";}
+            if (this.myinputOpts.showFlags) {ret += ",flag";}
+            if(j<col.length-1){ret += ",";}
         }
         ret += "\n";
         for (var i in row) {
@@ -547,13 +543,14 @@ define([
                     }
                     else {
                         // ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
-                        ret += '"' + row[i][col[j]].value()[0] + '",';
+                        ret += '"' + row[i][col[j]].value()[0] + '"';
                         if (this.myinputOpts.showUnit) {
-                            ret += '"' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '",';
+                            ret += '",' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '"';
                         }
                         if (this.myinputOpts.showFlags) {
-                            ret += '"' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '",';
+                            ret += '",' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '"';
                         }
+						if(j<col.length-1){ret += ",";}
                     }
                 } catch (ER) {console.log('er', ER);}
             }
