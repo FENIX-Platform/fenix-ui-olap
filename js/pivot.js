@@ -545,10 +545,10 @@ define([
                         // ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
                         ret += '"' + row[i][col[j]].value()[0] + '"';
                         if (this.myinputOpts.showUnit) {
-                            ret += '",' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '"';
+                            ret += ',"' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '"';
                         }
                         if (this.myinputOpts.showFlags) {
-                            ret += '",' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '"';
+                            ret += ',"' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '"';
                         }
 						if(j<col.length-1){ret += ",";}
                     }
