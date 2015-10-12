@@ -457,14 +457,15 @@ define([
         $("#" + this.myinputOpts.id + "_fx-olap-ui").pivotUI(this.originalData, this.myinputOpts, true);
     }
 
-    var exportExcel = function() {
-				
+    var exportExcel = function(title) {
+		if(typeof title !== "undefined"){document.getElementById("excelTitle").value=title;}
         var FID = $("#" + this.myinputOpts.id).data().internalData;
         var mycols = [];
         for (var c = 0; c < FID.rowAttrs.length; c++){mycols.push(FID.rowAttrs[c] + "Name");}
         flatColKeyst = [];
         tt = FID.getColKeys();
         for (tti in tt) {flatColKeyst.push(tt[tti].join("||"));}
+		
         document.getElementById("myJson").value = stringify(
                 {data: FID.tree,
                     header: flatColKeyst, cols: mycols, swUnit: this.myinputOpts.showUnit ? '1' : '0', swFlag: this.myinputOpts.showFlags ? '1' : '0'
@@ -495,7 +496,9 @@ define([
 		}
 		
 		
-    var exportCSV = function() {
+    var exportCSV = function(title) {
+		var titlecsv="fileName";
+		if(typeof title !== "undefined"){titlecsv=title;}
         var today = new Date();
         var reg = new RegExp("<span class=ordre>[0-9]+</span>", "g");
         var reg3 = new RegExp("<span class=ordre></span>", "g");
@@ -573,13 +576,13 @@ define([
             var blob = new Blob(["\ufeff", ret], {type: 'text/csv;charset=UTF-8;'});
             var url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
-            link.setAttribute("download", "fileName.csv");
+            link.setAttribute("download", titlecsv+".csv");
             link.style = "visibility:hidden";
         }
         else if (navigator.msSaveBlob) { // IE 10+
             link.addEventListener("click", function(event) {
                 var blob = new Blob(["\ufeff", ret], {"type": "text/csv;charset=UTF-8;"});
-                navigator.msSaveBlob(blob, "fileName.csv");
+                navigator.msSaveBlob(blob, titlecsv+".csv");
             }, false);
         }
         else {
