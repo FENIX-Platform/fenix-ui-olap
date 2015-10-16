@@ -406,7 +406,7 @@ define([
 											 ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");
 											if(options.showUnit || options.showFlags){ret+="</td>";}
 											if(options.showUnit){ret+="<td>"+r.tree[ligne][coldInd].value()[1]+"</td>";}
-											if(options.showFlags){ret+="<td>"+r.tree[ligne][coldInd].value()[2]+"</td>";}
+											if(options.showFlags){ret+="<td>("+r.tree[ligne][coldInd].value()[2]+")</td>";}
 											if(options.showUnit || options.showFlags){ret+="</tr></table>";}
 											//temp.push(r.tree[ligne][coldInd].value().join("><"));
 										}
