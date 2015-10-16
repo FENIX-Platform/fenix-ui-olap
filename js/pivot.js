@@ -1,5 +1,5 @@
 define([
-	'jquery','jquery-ui',
+	'jquery','jqueryui',
 	'i18n!fx-olap/nls/pivot'], function($, ui, i18n) {
 
     var $, PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, renderers, usFmt, usFmtInt, usFmtPct, zeroPad,
