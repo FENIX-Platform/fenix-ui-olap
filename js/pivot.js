@@ -602,7 +602,6 @@ return f
 }*/
 
     var render = function(ii, input, inputOpts, overwrite, locale) {
-		
         this.InternalID = ii;
 		this.myinputOpts.originalOpts=inputOpts;
         this.myinputOpts = $.extend({}, this.myinputOpts, inputOpts);
@@ -695,7 +694,7 @@ return f
             hiddenAttributes: [], menuLimit: 500,
             cols: [], rows: [], vals: [], exclusions: {}, // "auto",
             unusedAttrsVertical: false, autoSortUnusedAttrs: false,
-            rendererOptions: {localeStrings: locales[locale].localeStrings, id: inputOpts.id, grouped: inputOpts.grouped/*options.grouped*/,showFlags:inputOpts.showFlags,showUnit:inputOpts.showUnit,showCode:inputOpts.showCode},
+            rendererOptions: {localeStrings: locales[locale].localeStrings, id: inputOpts.id, grouped: inputOpts.grouped/*options.grouped*/,showFlags:inputOpts.showFlags,showUnit:inputOpts.showUnit,showCode:inputOpts.showCode,cellrnderfonction:inputOpts.cellrnderfonction},
             onRefresh: null, filter: function() {
                 return true;
             },

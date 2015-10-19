@@ -401,14 +401,21 @@ define([
 											var ret="";
 											
 											if(options.showUnit || options.showFlags)
-											{ret+="<table class=tVal><tr><td>";}
+											{
+												console.log(options)
+												 ret=options.cellrnderfonction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
+												
+												
+												//ret+="<table class=tVal><tr><td>";
+												}
+												else{ ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");}
 											
-											 ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");
+											/* ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");
 											if(options.showUnit || options.showFlags){ret+="</td>";}
 											if(options.showUnit){ret+="<td>"+r.tree[ligne][coldInd].value()[1]+"</td>";}
 											if(options.showFlags){ret+="<td>("+r.tree[ligne][coldInd].value()[2]+")</td>";}
 											if(options.showUnit || options.showFlags){ret+="</tr></table>";}
-											//temp.push(r.tree[ligne][coldInd].value().join("><"));
+										*/	//temp.push(r.tree[ligne][coldInd].value().join("><"));
 										}
 									else{var ret=r.tree[ligne][coldInd].value();}
 									temp.push(ret);
