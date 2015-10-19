@@ -404,7 +404,8 @@ define([
 		 
 	 };
 			
-			if(!options.cellrnderfonction){options.cellrnderfonction=frenddefault;}
+			if(!options.cellRenderFunction){
+				options.cellRenderFunction=frenddefault;}
             for (var ligne in r.tree) {
                 var temp = ligne.split('||');
 				r.colKeys.sort();
@@ -419,7 +420,7 @@ define([
 											
 											if(options.showUnit || options.showFlags)
 											{
-												 ret=options.cellrnderfonction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
+												 ret=options.cellRenderFunction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
 												
 												
 												//ret+="<table class=tVal><tr><td>";
