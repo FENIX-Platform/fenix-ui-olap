@@ -388,6 +388,23 @@ define([
 			var grouped = options.grouped;
             var r2d2 = [];
             $("#" + id + "_mesFlags").empty();
+			
+			
+		var frenddefault=	function(v1,v2,v3,su,sf){
+		 
+		// ret=inputOpts.cellrnderfonction(addSeparators(r.tree[ligne][coldInd].value()[0],r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
+												ret="<table class=tVal><tr><td>";
+											
+											 ret+=v1;
+											ret+="</td>";
+											if(su){ret+="<td>"+v2+"</td>";}
+											if(sf){ret+="<td>"+v3+"</td>";}
+											ret+="</tr></table>";
+		 return ret
+		 
+	 };
+			
+			if(!options.cellrnderfonction){options.cellrnderfonction=frenddefault;}
             for (var ligne in r.tree) {
                 var temp = ligne.split('||');
 				r.colKeys.sort();
@@ -402,7 +419,6 @@ define([
 											
 											if(options.showUnit || options.showFlags)
 											{
-												console.log(options)
 												 ret=options.cellrnderfonction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
 												
 												
