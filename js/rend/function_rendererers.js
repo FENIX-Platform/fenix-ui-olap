@@ -382,7 +382,6 @@ define([
             $(id).highcharts(commonJson);
         },
         newGrid: function(r, options) {
-			console.log(r.tree)
             var FAOSTATOLAPV3 = {};
 			var id=options.id+ "_fx-olap-ui"
 			var grouped = options.grouped;
@@ -402,7 +401,6 @@ define([
 		 
 	 };
 	 if(!options.cellRenderFunction){options.cellRenderFunction=frenddefault;}
-console.log(r.tree)	 
 var ttt=[]
 	 for (var ligne in r.tree) {ttt.push(ligne)}
 	 //console.log(ttt,ttt.sort())	
