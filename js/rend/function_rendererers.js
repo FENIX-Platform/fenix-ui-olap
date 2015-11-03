@@ -382,7 +382,7 @@ define([
             $(id).highcharts(commonJson);
         },
         newGrid: function(r, options) {
-			
+			console.log(r.tree)
             var FAOSTATOLAPV3 = {};
 			var id=options.id+ "_fx-olap-ui"
 			var grouped = options.grouped;
@@ -391,53 +391,42 @@ define([
 			
 			
 		var frenddefault=	function(v1,v2,v3,su,sf){
-		 
-		// ret=inputOpts.cellrnderfonction(addSeparators(r.tree[ligne][coldInd].value()[0],r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
-												ret="<table class=tVal><tr><td>";
-											
-											 ret+=v1;
-											ret+="</td>";
-											if(su){ret+="<td>"+v2+"</td>";}
-											if(sf){ret+="<td>"+v3+"</td>";}
-											ret+="</tr></table>";
-		 return ret
+		
+		ret="<table class=tVal><tr><td>";
+		ret+=v1;
+		ret+="</td>";
+		if(su){ret+="<td>"+v2+"</td>";}
+		if(sf){ret+="<td>"+v3+"</td>";}
+		ret+="</tr></table>";
+		return ret
 		 
 	 };
-			
-			if(!options.cellRenderFunction){
-				options.cellRenderFunction=frenddefault;}
-            for (var ligne in r.tree) {
+	 if(!options.cellRenderFunction){options.cellRenderFunction=frenddefault;}
+console.log(r.tree)	 
+var ttt=[]
+	 for (var ligne in r.tree) {ttt.push(ligne)}
+	 //console.log(ttt,ttt.sort())	
+	  //for (var ligne in ttt.sort()) {console.log(ligne)}
+	 ttt.sort();
+	 for (var ligne2 in ttt) {
+	 ligne=ttt[ligne2];
+	 
                 var temp = ligne.split('||');
 				r.colKeys.sort();
                 for (var col in r.colKeys) {
                     var coldInd = r.colKeys[col].join("||");
-					//.replace(/[^a-zA-Z0-9]/g,"_")
-						 if (r.tree[ligne][coldInd] != null && r.tree[ligne][coldInd].value()!=null){
-							try{
-
-										if(r.tree[ligne][coldInd].value().length>1){
-											var ret="";
-											
-											if(options.showUnit || options.showFlags)
-											{
-												 ret=options.cellRenderFunction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
-												
-												
-												//ret+="<table class=tVal><tr><td>";
-												}
-												else{ ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");}
-											
-											/* ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");
-											if(options.showUnit || options.showFlags){ret+="</td>";}
-											if(options.showUnit){ret+="<td>"+r.tree[ligne][coldInd].value()[1]+"</td>";}
-											if(options.showFlags){ret+="<td>("+r.tree[ligne][coldInd].value()[2]+")</td>";}
-											if(options.showUnit || options.showFlags){ret+="</tr></table>";}
-										*/	//temp.push(r.tree[ligne][coldInd].value().join("><"));
-										}
-									else{var ret=r.tree[ligne][coldInd].value();}
-									temp.push(ret);
-							}
-							catch(ER){console.log(ER,r.tree[ligne][coldInd])}
+					if (r.tree[ligne][coldInd] != null && r.tree[ligne][coldInd].value()!=null){
+						try{
+						if(r.tree[ligne][coldInd].value().length>1){
+						var ret="";
+						if(options.showUnit || options.showFlags){
+						ret=options.cellRenderFunction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
+						}
+						else{ ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");}
+						}
+						else{var ret=r.tree[ligne][coldInd].value();}
+						temp.push(ret);
+						}catch(ER){console.log(ER,r.tree[ligne][coldInd])}
 					}
                     else {temp.push("");}
                 }
@@ -492,22 +481,7 @@ define([
             FAOSTATOLAPV3.mygrid.pageSizeSelect.onchange = function()
 			{document.getElementById(id + '_page_after').innerHTML = "/" + FAOSTATOLAPV3.mygrid.getPageInfo().totalPageNum;};
 			
-			
-				/*
-				//Now out of the pivot : connected throug the exposed function
-            if (FAOSTATOLAPV3.grouped) {
-                $("#" + id + "_myGrid1_div").prepend($("<br><label for=\""+id+"_chkTreeview\">"+i18n.TreeView+"</label><input checked onchange=\"pp2.changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
-            }
-            else {
-                 $("#" + id + "_myGrid1_div").prepend($("<br><label for=\"chkTreeview\">"+i18n.TreeView+"</label><input  onchange=\"changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
-            }*/
-			  /*if (FAOSTATOLAPV3.grouped) {
-                $("#" + id + "_mesFlags").html($("<br><label for=\""+id+"_chkTreeview\">Treeview/sorting columns</label><input checked onchange=\"changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
-            }
-            else {
-                $("#" + id + "mesFlags").html($("<br><label for=\"chkTreeview\">Treeview/Sorting columns</label><input  onchange=\"changechkTreeview('"+id+"')\" type=\"checkbox\" id=\""+id+"_chkTreeview\">"));
-            }*/
-            $("#nested_by").hide();
+			$("#nested_by").hide();
         }
     };
 });
