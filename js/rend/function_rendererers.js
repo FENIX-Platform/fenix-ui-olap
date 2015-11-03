@@ -455,7 +455,7 @@ var ttt=[]
 				header: montitle,
 				toolTip: true, toolTipWidth: 150});
             }
-
+ 
             var gridOption = {
                 id: grid_demo_id,
                 width: "100%", //"100%", // 700,
