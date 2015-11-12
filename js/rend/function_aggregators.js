@@ -117,8 +117,7 @@ define(function() {
                     return {
                         sum: [0, "_", "_"],
                         push: function(record) {
-
-                            if (!isNaN(parseFloat(record[attr])) && parseFloat(record[attr])>0 ) {0
+                            if (!isNaN(parseFloat(record[attr])) /*&& parseFloat(record[attr])>0 */) {
                               
                                this.sum[0] = parseFloat( (this.sum[0]+parseFloat(record[attr])).toFixed(12) );
                             

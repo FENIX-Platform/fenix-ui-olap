@@ -418,6 +418,7 @@ var ttt=[]
 						if(r.tree[ligne][coldInd].value().length>1){
 						var ret="";
 						if(options.showUnit || options.showFlags){
+							console.log(r.tree[ligne][coldInd].value())
 						ret=options.cellRenderFunction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
 						}
 						else{ ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");}
@@ -460,7 +461,7 @@ var ttt=[]
                 height: "400", //"100%", // 330,
                 container: grid_demo_id + "_div", //pvtRendererArea",//testinline2",//'',//myGrid1_div',//pivot_table',// 'gridbox',// $(".pvtRendererArea")[0],//
                 replaceContainer: true,dataset: dsOption,resizable: true,
-                columns: colsOption,pageSize: 15,
+                columns: colsOption,pageSize: 150,
                 pageSizeList: [15, 25, 50, 150],
                 SigmaGridPath: 'grid/',
                 toolbarContent: 'nav | goto | pagesize ', /*| mybutton |*/
