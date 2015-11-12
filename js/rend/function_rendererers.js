@@ -418,7 +418,6 @@ var ttt=[]
 						if(r.tree[ligne][coldInd].value().length>1){
 						var ret="";
 						if(options.showUnit || options.showFlags){
-							console.log(r.tree[ligne][coldInd].value())
 						ret=options.cellRenderFunction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
 						}
 						else{ ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");}
