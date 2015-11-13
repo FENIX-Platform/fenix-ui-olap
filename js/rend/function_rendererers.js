@@ -2,12 +2,14 @@
 
 define([
 	'highcharts',
-	'gt_msg_grid'//,
-//	'i18n!fx-pivot/nls/pivot'
+	'gt_msg_grid',
+//	'i18n!fx-pivot/nls/pivot',
+'config/submodules/fx-olap/gridoption'
 	], function(
 		highcharts,
-		gt_msg_grid//,
+		gt_msg_grid,
 	//	i18n
+	gridOption
 		) {
 
     return	{
@@ -454,22 +456,34 @@ var ttt=[]
 				toolTip: true, toolTipWidth: 150});
             }
  
-            var gridOption = {
+           /*var gridOption = {
                 id: grid_demo_id,
                 width: "100%", //"100%", // 700,
                 height: "400", //"100%", // 330,
                 container: grid_demo_id + "_div", //pvtRendererArea",//testinline2",//'',//myGrid1_div',//pivot_table',// 'gridbox',// $(".pvtRendererArea")[0],//
-                replaceContainer: true,dataset: dsOption,resizable: true,
+                replaceContainer: true,dataset: dsOption,resizable: false,
                 columns: colsOption,pageSize: 150,
                 pageSizeList: [15, 25, 50, 150],
                 SigmaGridPath: 'grid/',
-                toolbarContent: 'nav | goto | pagesize ', /*| mybutton |*/
+                toolbarContent: 'nav | goto | pagesize ', /*| mybutton |*//*
                 onMouseOver: function(value, record, cell, row, colNo, rowNo, columnObj, grid) {
                     if (columnObj && columnObj.toolTip) {grid.showCellToolTip(cell, columnObj.toolTipWidth);}
                     else {grid.hideCellToolTip();}
                 },
                 onMouseOut: function(value, record, cell, row, colNo, rowNo, columnObj, grid) {grid.hideCellToolTip();}
-            };
+            };*/
+			gridOption.container=grid_demo_id + "_div";
+			gridOption.id=grid_demo_id;
+			 gridOption.columns=colsOption;
+			  gridOption.dataset= dsOption;
+			  
+			   gridOption.onMouseOver= function(value, record, cell, row, colNo, rowNo, columnObj, grid) {
+                    if (columnObj && columnObj.toolTip) {grid.showCellToolTip(cell, columnObj.toolTipWidth);}
+                    else {grid.hideCellToolTip();}
+                };
+                 gridOption.onMouseOut= function(value, record, cell, row, colNo, rowNo, columnObj, grid) {grid.hideCellToolTip();}
+			  
+			  
             FAOSTATOLAPV3.mygrid = new Sigma.Grid(gridOption);
 			
             Sigma.Grid.render(FAOSTATOLAPV3.mygrid)();
