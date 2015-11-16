@@ -95,7 +95,7 @@
 	height:25px;
         text-align: center;
         overflow: hidden;
-	white-space:nowrap;
+	white-space:pre-wrap;
 	word-break:keep-all;
 	word-wrap:normal;
 	text-overflow: ellipsis;
