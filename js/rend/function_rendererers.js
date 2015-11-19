@@ -1,19 +1,24 @@
 
 
 define([
+    'jquery',
 	'highcharts',
 	'gt_msg_grid',
 //	'i18n!fx-pivot/nls/pivot',
-'config/submodules/fx-olap/gridoption'
+'fx-olap/config/gridoption-default',
+'fx-olap/config/gridoption'
 	], function(
+    $,
 		highcharts,
 		gt_msg_grid,
 	//	i18n
+	gridOptionDefault,
 	gridOption
 		) {
 
     return	{
         HPivot: function(pivotData, id) {
+
             var mydata = [];
             var myfield =
                     {
@@ -384,6 +389,9 @@ define([
             $(id).highcharts(commonJson);
         },
         newGrid: function(r, options) {
+
+            console.log(gridOption)
+
             var FAOSTATOLAPV3 = {};
 			var id=options.id+ "_fx-olap-ui"
 			var grouped = options.grouped;
@@ -472,19 +480,22 @@ var ttt=[]
                 },
                 onMouseOut: function(value, record, cell, row, colNo, rowNo, columnObj, grid) {grid.hideCellToolTip();}
             };*/
-			gridOption.container=grid_demo_id + "_div";
-			gridOption.id=grid_demo_id;
-			 gridOption.columns=colsOption;
-			  gridOption.dataset= dsOption;
-			  
-			   gridOption.onMouseOver= function(value, record, cell, row, colNo, rowNo, columnObj, grid) {
+
+            var sigmaConfig = $.extend(true, {}, gridOptionDefault, gridOption);
+
+            sigmaConfig.container=grid_demo_id + "_div";
+            sigmaConfig.id=grid_demo_id;
+            sigmaConfig.columns=colsOption;
+            sigmaConfig.dataset= dsOption;
+
+            sigmaConfig.onMouseOver= function(value, record, cell, row, colNo, rowNo, columnObj, grid) {
                     if (columnObj && columnObj.toolTip) {grid.showCellToolTip(cell, columnObj.toolTipWidth);}
                     else {grid.hideCellToolTip();}
                 };
-                 gridOption.onMouseOut= function(value, record, cell, row, colNo, rowNo, columnObj, grid) {grid.hideCellToolTip();}
+            sigmaConfig.onMouseOut= function(value, record, cell, row, colNo, rowNo, columnObj, grid) {grid.hideCellToolTip();}
 			  
 			  
-            FAOSTATOLAPV3.mygrid = new Sigma.Grid(gridOption);
+            FAOSTATOLAPV3.mygrid = new Sigma.Grid(sigmaConfig);
 			
             Sigma.Grid.render(FAOSTATOLAPV3.mygrid)();
             document.getElementById('page_after').id = id + "_page_after"

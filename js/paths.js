@@ -25,11 +25,12 @@ define(function () {
 			// configuration: "tests/configuration",
 
             'fx-olap/nls' : '../nls',
+            'fx-olap/config' : '../config',
 
 			pivotRenderersFuncs:   'rend/function_rendererers',
 			pivotRenderers:        'rend/rendererers',
 			pivotAggregatorsFuncs: 'rend/function_aggregators',
-			pivotAggregators:      'rend/aggregators',
+			pivotAggregators:      'rend/aggregators'
 	      
         },
 
