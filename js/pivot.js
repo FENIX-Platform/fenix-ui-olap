@@ -659,7 +659,7 @@ return f
         document.getElementById(ii).innerHTML = "<div id='" + ii + "_fx-olap-ui'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div' style='overflow:auto'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_myGrid1_div' ></div>" +
-                "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div'></div>" +
+                "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div' style='overflow:auto' class='jbPivot'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>"
 				
 				;
