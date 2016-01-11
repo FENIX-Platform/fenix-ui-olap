@@ -1,0 +1,3154 @@
+{
+  "metadata" : {
+    "creationDate" : 1418166000000,
+    "language" : {
+      "version" : "1998",
+      "codes" : [ {
+        "code" : "eng",
+        "label" : {
+          "EN" : "English"
+        }
+      } ],
+      "idCodeList" : "ISO639-2",
+      "extendedName" : {
+        "EN" : "International Standard Organization - Language"
+      }
+    },
+    "title" : {
+      "EN" : "Production capacities"
+    },
+    "dsd" : {
+      "datasources" : [ "D3S" ],
+      "contextSystem" : "AFO",
+      "rid" : "63_80",
+      "columns" : [ {
+        "key" : true,
+        "id" : "Item",
+        "title" : {
+          "EN" : "Item"
+        },
+        "values" : {
+          "codes" : [ {
+            "codes" : [ {
+              "code" : "2814",
+              "label" : {
+                "EN" : "Ammonia, anhydrous"
+              }
+            }, {
+              "code" : "310210",
+              "label" : {
+                "EN" : "Urea"
+              }
+            }, {
+              "code" : "310230",
+              "label" : {
+                "EN" : "Ammonium nitrate"
+              }
+            }, {
+              "code" : "310280",
+              "label" : {
+                "EN" : "Urea and ammonium nitrate solutions"
+              }
+            }, {
+              "code" : "310310",
+              "label" : {
+                "EN" : "Superphosphate"
+              }
+            }, {
+              "code" : "28092000",
+              "label" : {
+                "EN" : "Phosphoric Acid"
+              }
+            }, {
+              "code" : "310221",
+              "label" : {
+                "EN" : "Ammonium sulphate"
+              }
+            }, {
+              "code" : "31031010",
+              "label" : {
+                "EN" : "Superphosphate above 35%"
+              }
+            }, {
+              "code" : "310530",
+              "label" : {
+                "EN" : "Diammonium phosphate (DAP)"
+              }
+            }, {
+              "code" : "310540",
+              "label" : {
+                "EN" : "Monoammonium phosphate (MAP)"
+              }
+            }, {
+              "code" : "310430",
+              "label" : {
+                "EN" : "Potassium sulphate"
+              }
+            } ],
+            "idCodeList" : "FAOSTAT_Fertilizers",
+            "extendedName" : {
+              "EN" : "FAO codelist for fertilizers"
+            }
+          } ]
+        },
+        "domain" : {
+          "codes" : [ {
+            "idCodeList" : "FAOSTAT_Fertilizers",
+            "extendedName" : {
+              "EN" : "FAO codelist for fertilizers"
+            }
+          } ]
+        },
+        "subject" : "item",
+        "dataType" : "code"
+      }, {
+        "key" : true,
+        "id" : "Region",
+        "title" : {
+          "EN" : "Region"
+        },
+        "values" : {
+          "codes" : [ {
+            "codes" : [ {
+              "code" : "NA",
+              "label" : {
+                "EN" : "NORTHERN AFRICA"
+              }
+            }, {
+              "code" : "CA",
+              "label" : {
+                "EN" : "CENTRAL AFRICA"
+              }
+            }, {
+              "code" : "SA",
+              "label" : {
+                "EN" : "SOUTHERN AFRICA"
+              }
+            }, {
+              "code" : "WA",
+              "label" : {
+                "EN" : "WESTERN AFRICA"
+              }
+            } ],
+            "idCodeList" : "AFO_AfricaRegions",
+            "extendedName" : {
+              "EN" : "AFRICA regions codes"
+            }
+          } ]
+        },
+        "domain" : {
+          "codes" : [ {
+            "idCodeList" : "AFO_AfricaRegions",
+            "extendedName" : {
+              "EN" : "AFRICA regions codes"
+            }
+          } ]
+        },
+        "dataType" : "code"
+      }, {
+        "key" : true,
+        "id" : "Country",
+        "title" : {
+          "EN" : "Country"
+        },
+        "values" : {
+          "codes" : [ {
+            "codes" : [ {
+              "code" : "ALG",
+              "label" : {
+                "EN" : "ALGERIA"
+              }
+            }, {
+              "code" : "EGY",
+              "label" : {
+                "EN" : "EGYPT"
+              }
+            }, {
+              "code" : "GAB",
+              "label" : {
+                "EN" : "GABON"
+              }
+            }, {
+              "code" : "LYA",
+              "label" : {
+                "EN" : "LIBYA"
+              }
+            }, {
+              "code" : "MAD",
+              "label" : {
+                "EN" : "MADAGASCAR"
+              }
+            }, {
+              "code" : "MOR",
+              "label" : {
+                "EN" : "MOROCCO"
+              }
+            }, {
+              "code" : "NGR",
+              "label" : {
+                "EN" : "NIGERIA"
+              }
+            }, {
+              "code" : "SEN",
+              "label" : {
+                "EN" : "SENEGAL"
+              }
+            }, {
+              "code" : "SAF",
+              "label" : {
+                "EN" : "SOUTH AFRICA"
+              }
+            }, {
+              "code" : "TUN",
+              "label" : {
+                "EN" : "TUNISIA"
+              }
+            }, {
+              "code" : "ZAM",
+              "label" : {
+                "EN" : "ZAMBIA"
+              }
+            }, {
+              "code" : "ZIM",
+              "label" : {
+                "EN" : "ZIMBABWE"
+              }
+            }, {
+              "code" : "AFR"
+            } ],
+            "idCodeList" : "AFO_Countrycode",
+            "extendedName" : {
+              "EN" : "AFRICA FERTILIZER country codes"
+            }
+          } ]
+        },
+        "domain" : {
+          "codes" : [ {
+            "idCodeList" : "AFO_Countrycode",
+            "extendedName" : {
+              "EN" : "AFRICA FERTILIZER country codes"
+            }
+          } ]
+        },
+        "subject" : "geo",
+        "dataType" : "code"
+      }, {
+        "key" : true,
+        "id" : "Year",
+        "title" : {
+          "EN" : "Year"
+        },
+        "values" : {
+          "timeList" : [ 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 ]
+        },
+        "domain" : {
+          "period" : {
+            "from" : 2000,
+            "to" : 2014
+          }
+        },
+        "subject" : "time",
+        "dataType" : "year"
+      }, {
+        "id" : "Value",
+        "title" : {
+          "EN" : "Value"
+        },
+        "subject" : "value",
+        "dataType" : "number"
+      } ]
+    },
+    "rid" : "9_399",
+    "meContent" : {
+      "resourceRepresentationType" : "dataset",
+      "resourceRepresentationTypeLabel" : {
+        "EN" : "Dataset"
+      },
+      "seCoverage" : {
+        "coverageSectors" : {
+          "codes" : [ {
+            "code" : "311",
+            "label" : {
+              "EN" : "AGRICULTURE"
+            }
+          } ],
+          "idCodeList" : "CRS_purpose_codes",
+          "extendedName" : {
+            "EN" : "Purpose Codes: sector classification"
+          }
+        },
+        "coverageSectorsDetails" : {
+          "EN" : ""
+        },
+        "coverageTime" : {
+          "from" : 946681200000,
+          "to" : 1419980400000
+        },
+        "coverageGeographic" : {
+          "version" : "2014",
+          "codes" : [ {
+            "code" : "102",
+            "label" : {
+              "EN" : "Abyei"
+            }
+          }, {
+            "code" : "1",
+            "label" : {
+              "PT" : "Afeganistão",
+              "FR" : "Afghanistan",
+              "AR" : "?????????",
+              "EN" : "Afghanistan",
+              "RU" : "??????????",
+              "ES" : "Afganistán",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "2",
+            "label" : {
+              "EN" : "Aksai Chin"
+            }
+          }, {
+            "code" : "3",
+            "label" : {
+              "PT" : "Albânia",
+              "FR" : "Albanie",
+              "AR" : "???????",
+              "EN" : "Albania",
+              "RU" : "???????",
+              "ES" : "Albania",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "4",
+            "label" : {
+              "PT" : "Argélia",
+              "FR" : "Algérie",
+              "AR" : "???????",
+              "EN" : "Algeria",
+              "RU" : "?????",
+              "ES" : "Argelia",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "5",
+            "label" : {
+              "PT" : "Samoa Americana",
+              "FR" : "Samoa américaines",
+              "AR" : "????? ?????????",
+              "EN" : "American Samoa",
+              "RU" : "???????????? ?????",
+              "ES" : "Samoa Americana",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "7",
+            "label" : {
+              "PT" : "Andorra",
+              "FR" : "Andorre",
+              "AR" : "??????",
+              "EN" : "Andorra",
+              "RU" : "???????",
+              "ES" : "Andorra",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "8",
+            "label" : {
+              "PT" : "Angola",
+              "FR" : "Angola",
+              "AR" : "??????",
+              "EN" : "Angola",
+              "RU" : "??????",
+              "ES" : "Angola",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "9",
+            "label" : {
+              "PT" : "Anguilla",
+              "FR" : "Anguilla",
+              "AR" : "???????",
+              "EN" : "Anguilla",
+              "RU" : "???????",
+              "ES" : "Anguila",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "10",
+            "label" : {
+              "PT" : "Antártida",
+              "FR" : "Antarctique",
+              "AR" : "?????????",
+              "EN" : "Antarctica",
+              "RU" : "??????????",
+              "ES" : "Antártida",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "11",
+            "label" : {
+              "PT" : "Antígua e Barbuda",
+              "FR" : "Antigua-et-Barbuda",
+              "AR" : "??????? ????????",
+              "EN" : "Antigua and Barbuda",
+              "RU" : "??????? ? ???????",
+              "ES" : "Antigua y Barbuda",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "12",
+            "label" : {
+              "PT" : "Argentina",
+              "FR" : "Argentine",
+              "AR" : "?????????",
+              "EN" : "Argentina",
+              "RU" : "?????????",
+              "ES" : "Argentina",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "13",
+            "label" : {
+              "PT" : "Arménia",
+              "FR" : "Arménie",
+              "AR" : "???????",
+              "EN" : "Armenia",
+              "RU" : "???????",
+              "ES" : "Armenia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "14",
+            "label" : {
+              "PT" : "Aruba",
+              "FR" : "Aruba",
+              "AR" : "?????",
+              "EN" : "Aruba",
+              "RU" : "?????",
+              "ES" : "Aruba",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "15",
+            "label" : {
+              "EN" : "Arunachal Pradesh"
+            }
+          }, {
+            "code" : "16",
+            "label" : {
+              "EN" : "Ashmore and Cartier Islands"
+            }
+          }, {
+            "code" : "17",
+            "label" : {
+              "PT" : "Austrália",
+              "FR" : "Australie",
+              "AR" : "????????",
+              "EN" : "Australia",
+              "RU" : "?????????",
+              "ES" : "Australia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "18",
+            "label" : {
+              "PT" : "Áustria",
+              "FR" : "Autriche",
+              "AR" : "??????",
+              "EN" : "Austria",
+              "RU" : "???????",
+              "ES" : "Austria",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "19",
+            "label" : {
+              "PT" : "Azerbaijão",
+              "FR" : "Azerbaïdjan",
+              "AR" : "????????",
+              "EN" : "Azerbaijan",
+              "RU" : "???????????",
+              "ES" : "Azerbaiyán",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "74578",
+            "label" : {
+              "EN" : "Azores Islands"
+            }
+          }, {
+            "code" : "20",
+            "label" : {
+              "PT" : "Bahamas",
+              "FR" : "Bahamas",
+              "AR" : "??? ???????",
+              "EN" : "Bahamas",
+              "RU" : "????????? ???????",
+              "ES" : "Bahamas",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "21",
+            "label" : {
+              "PT" : "Bahrein",
+              "FR" : "Bahreïn",
+              "AR" : "???????",
+              "EN" : "Bahrain",
+              "RU" : "???????",
+              "ES" : "Bahrein",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "22",
+            "label" : {
+              "EN" : "Baker Island"
+            }
+          }, {
+            "code" : "23",
+            "label" : {
+              "PT" : "Bangladesh",
+              "FR" : "Bangladesh",
+              "AR" : "????????",
+              "EN" : "Bangladesh",
+              "RU" : "?????????",
+              "ES" : "Bangladesh",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "24",
+            "label" : {
+              "PT" : "Barbados",
+              "FR" : "Barbade",
+              "AR" : "???????",
+              "EN" : "Barbados",
+              "RU" : "????????",
+              "ES" : "Barbados",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "25",
+            "label" : {
+              "EN" : "Bassas da India"
+            }
+          }, {
+            "code" : "26",
+            "label" : {
+              "PT" : "Bielorréssia",
+              "FR" : "Bélarus",
+              "AR" : "???????",
+              "EN" : "Belarus",
+              "RU" : "????????",
+              "ES" : "Belarés",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "27",
+            "label" : {
+              "PT" : "Bélgica",
+              "FR" : "Belgique",
+              "AR" : "??????",
+              "EN" : "Belgium",
+              "RU" : "???????",
+              "ES" : "Bélgica",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "28",
+            "label" : {
+              "PT" : "Belize",
+              "FR" : "Belize",
+              "AR" : "????",
+              "EN" : "Belize",
+              "RU" : "?????",
+              "ES" : "Belice",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "29",
+            "label" : {
+              "PT" : "Benim",
+              "FR" : "Bénin",
+              "AR" : "???",
+              "EN" : "Benin",
+              "RU" : "?????",
+              "ES" : "Benin",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "30",
+            "label" : {
+              "PT" : "Bermudas",
+              "FR" : "Bermudes",
+              "AR" : "??????",
+              "EN" : "Bermuda",
+              "RU" : "???????",
+              "ES" : "Bermudas",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "31",
+            "label" : {
+              "PT" : "Butão",
+              "FR" : "Bhoutan",
+              "AR" : "?????",
+              "EN" : "Bhutan",
+              "RU" : "?????",
+              "ES" : "Bhután",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "32",
+            "label" : {
+              "EN" : "Bird Island"
+            }
+          }, {
+            "code" : "33",
+            "label" : {
+              "PT" : "Bolívia",
+              "FR" : "Bolivie (État plurinational de)",
+              "AR" : "??????? (???? - ???????? ????????)",
+              "EN" : "Bolivia",
+              "RU" : "??????? (?????????????????? ???????????)",
+              "ES" : "Bolivia (Estado Plurinacional de)",
+              "ZH" : "????????"
+            }
+          }, {
+            "code" : "34",
+            "label" : {
+              "PT" : "Bósnia e Herzegovina",
+              "FR" : "Bosnie-Herzégovine",
+              "AR" : "??????? ???????",
+              "EN" : "Bosnia and Herzegovina",
+              "RU" : "?????? ? ???????????",
+              "ES" : "Bosnia y Herzegovina",
+              "ZH" : "????-?????"
+            }
+          }, {
+            "code" : "35",
+            "label" : {
+              "PT" : "Botswana",
+              "FR" : "Botswana",
+              "AR" : "????????",
+              "EN" : "Botswana",
+              "RU" : "????????",
+              "ES" : "Botswana",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "36",
+            "label" : {
+              "EN" : "Bouvet Island"
+            }
+          }, {
+            "code" : "37",
+            "label" : {
+              "PT" : "Brasil",
+              "FR" : "Brésil",
+              "AR" : "????????",
+              "EN" : "Brazil",
+              "RU" : "????????",
+              "ES" : "Brasil",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "38",
+            "label" : {
+              "PT" : "Território Britânico do Oceano Índico",
+              "FR" : "Territoire britanique de l'Océan Indien",
+              "AR" : "??????? ?????????? ?? ?????? ??????",
+              "EN" : "British Indian Ocean Territory",
+              "RU" : "?????????? ?????????? ? ????????? ??????",
+              "ES" : "Territorio Británico del Océano Indico",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "39",
+            "label" : {
+              "PT" : "Ilhas Virgens Britânicas",
+              "FR" : "Îles Vierges britanniques",
+              "AR" : "??? ?????? ??????????",
+              "EN" : "British Virgin Islands",
+              "RU" : "?????????? ?????????? ???????",
+              "ES" : "Islas Vírgenes Británicas",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "40",
+            "label" : {
+              "PT" : "Brunei",
+              "FR" : "Brunéi Darussalam",
+              "AR" : "????? ??? ??????",
+              "EN" : "Brunei Darussalam",
+              "RU" : "??????-??????????",
+              "ES" : "Brunei Darussalam",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "41",
+            "label" : {
+              "PT" : "Bulgária",
+              "FR" : "Bulgarie",
+              "AR" : "???????",
+              "EN" : "Bulgaria",
+              "RU" : "????????",
+              "ES" : "Bulgaria",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "42",
+            "label" : {
+              "PT" : "Burkina Faso",
+              "FR" : "Burkina Faso",
+              "AR" : "??????? ????",
+              "EN" : "Burkina Faso",
+              "RU" : "???????-????",
+              "ES" : "Burkina Faso",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "43",
+            "label" : {
+              "PT" : "Burundi",
+              "FR" : "Burundi",
+              "AR" : "???????",
+              "EN" : "Burundi",
+              "RU" : "???????",
+              "ES" : "Burundi",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "44",
+            "label" : {
+              "PT" : "Camboja",
+              "FR" : "Cambodge",
+              "AR" : "???????",
+              "EN" : "Cambodia",
+              "RU" : "????????",
+              "ES" : "Camboya",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "45",
+            "label" : {
+              "PT" : "Camarões",
+              "FR" : "Cameroun",
+              "AR" : "?????????",
+              "EN" : "Cameroon",
+              "RU" : "???????",
+              "ES" : "Camerén",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "46",
+            "label" : {
+              "PT" : "Canadá",
+              "FR" : "Canada",
+              "AR" : "????",
+              "EN" : "Canada",
+              "RU" : "??????",
+              "ES" : "Canadá",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "47",
+            "label" : {
+              "PT" : "Cabo Verde",
+              "FR" : "Cap-Vert",
+              "AR" : "????? ??????",
+              "EN" : "Cape Verde",
+              "RU" : "????-?????",
+              "ES" : "Cabo Verde",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "48",
+            "label" : {
+              "PT" : "Ilhas Cayman",
+              "FR" : "Îles Caïmanes",
+              "AR" : "??? ??????",
+              "EN" : "Cayman Islands",
+              "RU" : "????????? ???????",
+              "ES" : "Islas Caimán",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "49",
+            "label" : {
+              "PT" : "Repéblica Centro-Africana",
+              "FR" : "République centrafricaine",
+              "AR" : "??????? ??????? ??????",
+              "EN" : "Central African Republic",
+              "RU" : "????????????????????? ??????????",
+              "ES" : "Repéblica Centroafricana",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "50",
+            "label" : {
+              "PT" : "Chade",
+              "FR" : "Tchad",
+              "AR" : "????",
+              "EN" : "Chad",
+              "RU" : "???",
+              "ES" : "Chad",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "51",
+            "label" : {
+              "PT" : "Chile",
+              "FR" : "Chili",
+              "AR" : "????",
+              "EN" : "Chile",
+              "RU" : "????",
+              "ES" : "Chile",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "147295",
+            "label" : {
+              "PT" : "China",
+              "FR" : "Chine",
+              "AR" : "?????",
+              "EN" : "China",
+              "RU" : "?????",
+              "ES" : "China",
+              "ZH" : "??"
+            }
+          }, {
+            "code" : "52",
+            "label" : {
+              "EN" : "China/India"
+            }
+          }, {
+            "code" : "54",
+            "label" : {
+              "PT" : "Ilha do Natal",
+              "FR" : "Île Christmas",
+              "AR" : "??? ???????",
+              "EN" : "Christmas Island",
+              "RU" : "?????? ?????????",
+              "ES" : "Isla Christmas",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "55",
+            "label" : {
+              "EN" : "Clipperton Island"
+            }
+          }, {
+            "code" : "56",
+            "label" : {
+              "PT" : "Ilhas Cocos (Keeling)",
+              "FR" : "Îles des Cocos (Keeling)",
+              "AR" : "??? ????? (?????)",
+              "EN" : "Cocos (Keeling) Islands",
+              "RU" : "????????? ??????? (??????)",
+              "ES" : "Islas Cocos (Keeling)",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "57",
+            "label" : {
+              "PT" : "Colômbia",
+              "FR" : "Colombie",
+              "AR" : "????????",
+              "EN" : "Colombia",
+              "RU" : "????????",
+              "ES" : "Colombia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "58",
+            "label" : {
+              "PT" : "Comores",
+              "FR" : "Comores",
+              "AR" : "??? ?????",
+              "EN" : "Comoros",
+              "RU" : "????????? ???????",
+              "ES" : "Comoras",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "59",
+            "label" : {
+              "PT" : "Repéblica do Congo",
+              "FR" : "Congo",
+              "AR" : "???????",
+              "EN" : "Congo",
+              "RU" : "?????",
+              "ES" : "Congo",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "60",
+            "label" : {
+              "PT" : "Ilhas Cook",
+              "FR" : "Îles Cook",
+              "AR" : "??? ???",
+              "EN" : "Cook Islands",
+              "RU" : "??????? ????",
+              "ES" : "Islas Cook",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "61",
+            "label" : {
+              "PT" : "Costa Rica",
+              "FR" : "Costa Rica",
+              "AR" : "?????????",
+              "EN" : "Costa Rica",
+              "RU" : "?????-????",
+              "ES" : "Costa Rica",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "62",
+            "label" : {
+              "PT" : "Croácia",
+              "FR" : "Croatie",
+              "AR" : "???????",
+              "EN" : "Croatia",
+              "RU" : "????????",
+              "ES" : "Croacia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "63",
+            "label" : {
+              "PT" : "Cuba",
+              "FR" : "Cuba",
+              "AR" : "????",
+              "EN" : "Cuba",
+              "RU" : "????",
+              "ES" : "Cuba",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "64",
+            "label" : {
+              "PT" : "Chipre",
+              "FR" : "Chypre",
+              "AR" : "????",
+              "EN" : "Cyprus",
+              "RU" : "????",
+              "ES" : "Chipre",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "65",
+            "label" : {
+              "PT" : "Repéblica Checa",
+              "FR" : "République tchèque",
+              "AR" : "????????? ????????",
+              "EN" : "Czech Republic",
+              "RU" : "??????? ??????????",
+              "ES" : "Repéblica Checa",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "66",
+            "label" : {
+              "PT" : "Costa do Marfim",
+              "FR" : "Côte d'Ivoire",
+              "AR" : "??? ??????",
+              "EN" : "Côte d'Ivoire",
+              "RU" : "???-?`?????",
+              "ES" : "Côte d'Ivoire",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "67",
+            "label" : {
+              "PT" : "Coreia do Norte",
+              "FR" : "République populaire démocratique de Corée",
+              "AR" : "??????? ????? ??????????? ???????",
+              "EN" : "Dem People's Rep of Korea",
+              "RU" : "????????? ???????-??????????????? ??????????",
+              "ES" : "Repéblica Popular Democrática de Corea",
+              "ZH" : "???????????"
+            }
+          }, {
+            "code" : "68",
+            "label" : {
+              "PT" : "Repéblica Democrática do Congo",
+              "FR" : "République démocratique du Congo",
+              "AR" : "??????? ??????? ???????????",
+              "EN" : "Democratic Republic of the Congo",
+              "RU" : "??????????????? ?????????? ?????",
+              "ES" : "Repéblica Democrática del Congo",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "69",
+            "label" : {
+              "PT" : "Dinamarca",
+              "FR" : "Danemark",
+              "AR" : "????????",
+              "EN" : "Denmark",
+              "RU" : "?????",
+              "ES" : "Dinamarca",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "70",
+            "label" : {
+              "PT" : "Djibouti",
+              "FR" : "Djibouti",
+              "AR" : "??????",
+              "EN" : "Djibouti",
+              "RU" : "???????",
+              "ES" : "Djibouti",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "71",
+            "label" : {
+              "PT" : "Dominica",
+              "FR" : "Dominique",
+              "AR" : "????????",
+              "EN" : "Dominica",
+              "RU" : "????????",
+              "ES" : "Dominica",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "72",
+            "label" : {
+              "PT" : "Repéblica Dominicana",
+              "FR" : "République dominicaine",
+              "AR" : "????????? ???????????",
+              "EN" : "Dominican Republic",
+              "RU" : "????????????? ??????????",
+              "ES" : "Repéblica Dominicana",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "73",
+            "label" : {
+              "PT" : "Equador",
+              "FR" : "Équateur",
+              "AR" : "???????",
+              "EN" : "Ecuador",
+              "RU" : "???????",
+              "ES" : "Ecuador",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "40765",
+            "label" : {
+              "PT" : "Egito",
+              "FR" : "Égypte",
+              "AR" : "???",
+              "EN" : "Egypt",
+              "RU" : "??????",
+              "ES" : "Egipto",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "75",
+            "label" : {
+              "PT" : "El Salvador",
+              "FR" : "El Salvador",
+              "AR" : "?????????",
+              "EN" : "El Salvador",
+              "RU" : "?????????",
+              "ES" : "El Salvador",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "76",
+            "label" : {
+              "PT" : "Guiné Equatorial",
+              "FR" : "Guinée équatoriale",
+              "AR" : "????? ??????????",
+              "EN" : "Equatorial Guinea",
+              "RU" : "?????????????? ??????",
+              "ES" : "Guinea Ecuatorial",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "77",
+            "label" : {
+              "PT" : "Eritreia",
+              "FR" : "Érythrée",
+              "AR" : "???????",
+              "EN" : "Eritrea",
+              "RU" : "???????",
+              "ES" : "Eritrea",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "78",
+            "label" : {
+              "PT" : "Estónia",
+              "FR" : "Estonie",
+              "AR" : "???????",
+              "EN" : "Estonia",
+              "RU" : "???????",
+              "ES" : "Estonia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "79",
+            "label" : {
+              "PT" : "Etiópia",
+              "FR" : "Éthiopie",
+              "AR" : "???????",
+              "EN" : "Ethiopia",
+              "RU" : "???????",
+              "ES" : "Etiopía",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "80",
+            "label" : {
+              "EN" : "Europa Island"
+            }
+          }, {
+            "code" : "81",
+            "label" : {
+              "PT" : "Ilhas Malvinas",
+              "FR" : "Îles Falkland",
+              "AR" : "??? ??????? (????????)",
+              "EN" : "Falkland Islands (Malvinas)",
+              "RU" : "???????????? ???????",
+              "ES" : "Islas Malvinas",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "82",
+            "label" : {
+              "PT" : "Ilhas Feroé",
+              "FR" : "Îles Féroé",
+              "AR" : "??? ??????",
+              "EN" : "Faroe Islands",
+              "RU" : "????????? ???????",
+              "ES" : "Islas Feroe",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "83",
+            "label" : {
+              "PT" : "Fiji",
+              "FR" : "Fidji",
+              "AR" : "????",
+              "EN" : "Fiji",
+              "RU" : "?????",
+              "ES" : "Fiji",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "84",
+            "label" : {
+              "PT" : "Finlândia",
+              "FR" : "Finlande",
+              "AR" : "??????",
+              "EN" : "Finland",
+              "RU" : "?????????",
+              "ES" : "Finlandia",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "85",
+            "label" : {
+              "PT" : "França",
+              "FR" : "France",
+              "AR" : "?????",
+              "EN" : "France",
+              "RU" : "???????",
+              "ES" : "Francia",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "86",
+            "label" : {
+              "PT" : "Guiana Francesa",
+              "FR" : "Guyane française",
+              "AR" : "??????? ????????",
+              "EN" : "French Guiana",
+              "RU" : "??????????? ??????",
+              "ES" : "Guayana francesa",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "87",
+            "label" : {
+              "PT" : "Polinésia Francesa",
+              "FR" : "Polynésie française",
+              "AR" : "????????? ????????",
+              "EN" : "French Polynesia",
+              "RU" : "??????????? ?????????",
+              "ES" : "Polinesia Francesa",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "88",
+            "label" : {
+              "PT" : "Terras Austrais e Antárticas Francesas",
+              "FR" : "Terres australes et antarctiques françaises",
+              "AR" : "????? ????? ?????",
+              "EN" : "French Southern and Antarctic Territories",
+              "RU" : "??????????? ????? ? ?????????????? ??????????",
+              "ES" : "Tierras Australes y Antárticas Francesas",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "89",
+            "label" : {
+              "PT" : "Gabão",
+              "FR" : "Gabon",
+              "AR" : "?????",
+              "EN" : "Gabon",
+              "RU" : "?????",
+              "ES" : "Gabón",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "90",
+            "label" : {
+              "PT" : "Gâmbia",
+              "FR" : "Gambie",
+              "AR" : "??????",
+              "EN" : "Gambia",
+              "RU" : "??????",
+              "ES" : "Gambia",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "91",
+            "label" : {
+              "EN" : "Gaza Strip"
+            }
+          }, {
+            "code" : "92",
+            "label" : {
+              "PT" : "Geórgia",
+              "FR" : "Géorgie",
+              "AR" : "??????",
+              "EN" : "Georgia",
+              "RU" : "??????",
+              "ES" : "Georgia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "93",
+            "label" : {
+              "PT" : "Alemanha",
+              "FR" : "Allemagne",
+              "AR" : "???????",
+              "EN" : "Germany",
+              "RU" : "????????",
+              "ES" : "Alemania",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "94",
+            "label" : {
+              "PT" : "Gana",
+              "FR" : "Ghana",
+              "AR" : "????",
+              "EN" : "Ghana",
+              "RU" : "????",
+              "ES" : "Ghana",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "95",
+            "label" : {
+              "PT" : "Gibraltar",
+              "FR" : "Gibraltar",
+              "AR" : "??? ????",
+              "EN" : "Gibraltar",
+              "RU" : "?????????",
+              "ES" : "Gibraltar",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "96",
+            "label" : {
+              "EN" : "Glorioso Island"
+            }
+          }, {
+            "code" : "97",
+            "label" : {
+              "PT" : "Grécia",
+              "FR" : "Grèce",
+              "AR" : "???????",
+              "EN" : "Greece",
+              "RU" : "??????",
+              "ES" : "Grecia",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "98",
+            "label" : {
+              "PT" : "Gronelândia",
+              "FR" : "Groenland",
+              "AR" : "????????",
+              "EN" : "Greenland",
+              "RU" : "??????????",
+              "ES" : "Groenlandia",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "99",
+            "label" : {
+              "PT" : "Granada",
+              "FR" : "Grenade",
+              "AR" : "???????",
+              "EN" : "Grenada",
+              "RU" : "???????",
+              "ES" : "Granada",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "100",
+            "label" : {
+              "PT" : "Guadalupe",
+              "FR" : "Guadeloupe",
+              "AR" : "????????",
+              "EN" : "Guadeloupe",
+              "RU" : "?????????",
+              "ES" : "Guadalupe",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "101",
+            "label" : {
+              "PT" : "Guam",
+              "FR" : "Guam",
+              "AR" : "????",
+              "EN" : "Guam",
+              "RU" : "????",
+              "ES" : "Guam",
+              "ZH" : "??"
+            }
+          }, {
+            "code" : "103",
+            "label" : {
+              "PT" : "Guatemala",
+              "FR" : "Guatemala",
+              "AR" : "?????????",
+              "EN" : "Guatemala",
+              "RU" : "?????????",
+              "ES" : "Guatemala",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "104",
+            "label" : {
+              "EN" : "Guernsey"
+            }
+          }, {
+            "code" : "106",
+            "label" : {
+              "PT" : "Guiné",
+              "FR" : "Guinée",
+              "AR" : "?????",
+              "EN" : "Guinea",
+              "RU" : "??????",
+              "ES" : "Guinea",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "105",
+            "label" : {
+              "PT" : "Guiné-Bissau",
+              "FR" : "Guinée-Bissau",
+              "AR" : "????? - ?????",
+              "EN" : "Guinea-Bissau",
+              "RU" : "??????-?????",
+              "ES" : "Guinea-Bissau",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "107",
+            "label" : {
+              "PT" : "Guiana",
+              "FR" : "Guyana",
+              "AR" : "?????",
+              "EN" : "Guyana",
+              "RU" : "??????",
+              "ES" : "Guyana",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "108",
+            "label" : {
+              "PT" : "Haiti",
+              "FR" : "Haïti",
+              "AR" : "?????",
+              "EN" : "Haiti",
+              "RU" : "?????",
+              "ES" : "Haití",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "40760",
+            "label" : {
+              "EN" : "Hala'ib triangle"
+            }
+          }, {
+            "code" : "109",
+            "label" : {
+              "EN" : "Heard Island and McDonald Islands"
+            }
+          }, {
+            "code" : "110",
+            "label" : {
+              "PT" : "Vaticano",
+              "FR" : "Saint-Siège",
+              "AR" : "?????? ???????",
+              "EN" : "Holy See",
+              "RU" : "?????? ???????",
+              "ES" : "Santa Sede",
+              "ZH" : "??"
+            }
+          }, {
+            "code" : "111",
+            "label" : {
+              "PT" : "Honduras",
+              "FR" : "Honduras",
+              "AR" : "???????",
+              "EN" : "Honduras",
+              "RU" : "????????",
+              "ES" : "Honduras",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "33364",
+            "label" : {
+              "EN" : "Hong Kong"
+            }
+          }, {
+            "code" : "112",
+            "label" : {
+              "EN" : "Howland Island"
+            }
+          }, {
+            "code" : "113",
+            "label" : {
+              "PT" : "Hungria",
+              "FR" : "Hongrie",
+              "AR" : "???????",
+              "EN" : "Hungary",
+              "RU" : "???????",
+              "ES" : "Hungría",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "114",
+            "label" : {
+              "PT" : "Islândia",
+              "FR" : "Islande",
+              "AR" : "???????",
+              "EN" : "Iceland",
+              "RU" : "????????",
+              "ES" : "Islandia",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "61013",
+            "label" : {
+              "EN" : "Ilemi triangle"
+            }
+          }, {
+            "code" : "115",
+            "label" : {
+              "PT" : "Índia",
+              "FR" : "Inde",
+              "AR" : "?????",
+              "EN" : "India",
+              "RU" : "?????",
+              "ES" : "India",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "116",
+            "label" : {
+              "PT" : "Indonésia",
+              "FR" : "Indonésie",
+              "AR" : "?????????",
+              "EN" : "Indonesia",
+              "RU" : "?????????",
+              "ES" : "Indonesia",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "117",
+            "label" : {
+              "PT" : "Irã",
+              "FR" : "Iran (République islamique d')",
+              "AR" : "?????",
+              "EN" : "Iran  (Islamic Republic of)",
+              "RU" : "???? (????????? ??????????)",
+              "ES" : "Irán (Repéblica Islámica del)",
+              "ZH" : "? ?(??????)"
+            }
+          }, {
+            "code" : "118",
+            "label" : {
+              "PT" : "Iraque",
+              "FR" : "Iraq",
+              "AR" : "??????",
+              "EN" : "Iraq",
+              "RU" : "????",
+              "ES" : "Iraq",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "119",
+            "label" : {
+              "PT" : "Irlanda",
+              "FR" : "Irlande",
+              "AR" : "???????",
+              "EN" : "Ireland",
+              "RU" : "????????",
+              "ES" : "Irlanda",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "120",
+            "label" : {
+              "PT" : "Ilha de Man",
+              "FR" : "Île de Man",
+              "AR" : "????? ???",
+              "EN" : "Isle of Man",
+              "RU" : "?????? ???",
+              "ES" : "Isla de Man",
+              "ZH" : "Isle of Man"
+            }
+          }, {
+            "code" : "121",
+            "label" : {
+              "PT" : "Israel",
+              "FR" : "Israël",
+              "AR" : "???????",
+              "EN" : "Israel",
+              "RU" : "???????",
+              "ES" : "Israel",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "122",
+            "label" : {
+              "PT" : "Itália",
+              "FR" : "Italie",
+              "AR" : "???????",
+              "EN" : "Italy",
+              "RU" : "??????",
+              "ES" : "Italia",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "123",
+            "label" : {
+              "PT" : "Jamaica",
+              "FR" : "Jamaïque",
+              "AR" : "???????",
+              "EN" : "Jamaica",
+              "RU" : "??????",
+              "ES" : "Jamaica",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "40781",
+            "label" : {
+              "EN" : "Jammu and Kashmir"
+            }
+          }, {
+            "code" : "126",
+            "label" : {
+              "PT" : "Japão",
+              "FR" : "Japon",
+              "AR" : "???????",
+              "EN" : "Japan",
+              "RU" : "??????",
+              "ES" : "Japón",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "127",
+            "label" : {
+              "EN" : "Jarvis Island"
+            }
+          }, {
+            "code" : "128",
+            "label" : {
+              "EN" : "Jersey"
+            }
+          }, {
+            "code" : "129",
+            "label" : {
+              "EN" : "Johnston Atoll"
+            }
+          }, {
+            "code" : "130",
+            "label" : {
+              "PT" : "Jordânia",
+              "FR" : "Jordanie",
+              "AR" : "??????",
+              "EN" : "Jordan",
+              "RU" : "????????",
+              "ES" : "Jordania",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "131",
+            "label" : {
+              "EN" : "Juan de Nova Island"
+            }
+          }, {
+            "code" : "132",
+            "label" : {
+              "PT" : "Cazaquistão",
+              "FR" : "Kazakhstan",
+              "AR" : "?????????",
+              "EN" : "Kazakhstan",
+              "RU" : "?????????",
+              "ES" : "Kazajstán",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "133",
+            "label" : {
+              "PT" : "Quênia",
+              "FR" : "Kenya",
+              "AR" : "?????",
+              "EN" : "Kenya",
+              "RU" : "?????",
+              "ES" : "Kenya",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "134",
+            "label" : {
+              "EN" : "Kingman Reef"
+            }
+          }, {
+            "code" : "135",
+            "label" : {
+              "PT" : "Kiribati",
+              "FR" : "Kiribati",
+              "AR" : "???????",
+              "EN" : "Kiribati",
+              "RU" : "????????",
+              "ES" : "Kiribati",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "136",
+            "label" : {
+              "EN" : "Kuril islands"
+            }
+          }, {
+            "code" : "137",
+            "label" : {
+              "PT" : "Kuwait",
+              "FR" : "Koweït",
+              "AR" : "??????",
+              "EN" : "Kuwait",
+              "RU" : "??????",
+              "ES" : "Kuwait",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "138",
+            "label" : {
+              "PT" : "Quirguistão",
+              "FR" : "Kirghizistan",
+              "AR" : "??????????",
+              "EN" : "Kyrgyzstan",
+              "RU" : "??????????",
+              "ES" : "Kirguistán",
+              "ZH" : "??????"
+            }
+          }, {
+            "code" : "139",
+            "label" : {
+              "PT" : "Laos",
+              "FR" : "République démocratique populaire lao",
+              "AR" : "??????? ??? ??????????? ???????",
+              "EN" : "Lao People's Democratic Republic",
+              "RU" : "???????? ???????-??????????????? ??????????",
+              "ES" : "Repéblica Democrática Popular Lao",
+              "ZH" : "?????????"
+            }
+          }, {
+            "code" : "140",
+            "label" : {
+              "PT" : "Letônia",
+              "FR" : "Lettonie",
+              "AR" : "??????",
+              "EN" : "Latvia",
+              "RU" : "??????",
+              "ES" : "Letonia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "141",
+            "label" : {
+              "PT" : "Líbano",
+              "FR" : "Liban",
+              "AR" : "?????",
+              "EN" : "Lebanon",
+              "RU" : "?????",
+              "ES" : "Líbano",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "142",
+            "label" : {
+              "PT" : "Lesoto",
+              "FR" : "Lesotho",
+              "AR" : "??????",
+              "EN" : "Lesotho",
+              "RU" : "??????",
+              "ES" : "Lesotho",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "144",
+            "label" : {
+              "PT" : "Libéria",
+              "FR" : "Libéria",
+              "AR" : "??????",
+              "EN" : "Liberia",
+              "RU" : "???????",
+              "ES" : "Liberia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "145",
+            "label" : {
+              "PT" : "Líbia",
+              "FR" : "Libye",
+              "AR" : "?????????? ??????? ???????",
+              "EN" : "Libya",
+              "RU" : "?????",
+              "ES" : "Libia",
+              "ZH" : "?????????"
+            }
+          }, {
+            "code" : "146",
+            "label" : {
+              "PT" : "Liechtenstein",
+              "FR" : "Liechtenstein",
+              "AR" : "?????????",
+              "EN" : "Liechtenstein",
+              "RU" : "???????????",
+              "ES" : "Liechtenstein",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "147",
+            "label" : {
+              "PT" : "Lituânia",
+              "FR" : "Lituanie",
+              "AR" : "????????",
+              "EN" : "Lithuania",
+              "RU" : "?????",
+              "ES" : "Lituania",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "148",
+            "label" : {
+              "PT" : "Luxemburgo",
+              "FR" : "Luxembourg",
+              "AR" : "???????",
+              "EN" : "Luxembourg",
+              "RU" : "??????????",
+              "ES" : "Luxemburgo",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "40762",
+            "label" : {
+              "EN" : "Ma'tan al-Sarra"
+            }
+          }, {
+            "code" : "149",
+            "label" : {
+              "EN" : "Macau"
+            }
+          }, {
+            "code" : "150",
+            "label" : {
+              "PT" : "Madagáscar",
+              "FR" : "Madagascar",
+              "AR" : "??????",
+              "EN" : "Madagascar",
+              "RU" : "??????????",
+              "ES" : "Madagascar",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "151",
+            "label" : {
+              "EN" : "Madeira Islands"
+            }
+          }, {
+            "code" : "152",
+            "label" : {
+              "PT" : "Malawi",
+              "FR" : "Malawi",
+              "AR" : "?????",
+              "EN" : "Malawi",
+              "RU" : "??????",
+              "ES" : "Malawi",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "153",
+            "label" : {
+              "PT" : "Malásia",
+              "FR" : "Malaisie",
+              "AR" : "???????",
+              "EN" : "Malaysia",
+              "RU" : "????????",
+              "ES" : "Malasia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "154",
+            "label" : {
+              "PT" : "Maldivas",
+              "FR" : "Maldives",
+              "AR" : "?????",
+              "EN" : "Maldives",
+              "RU" : "????????",
+              "ES" : "Maldivas",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "155",
+            "label" : {
+              "PT" : "Mali",
+              "FR" : "Mali",
+              "AR" : "????",
+              "EN" : "Mali",
+              "RU" : "????",
+              "ES" : "Malí",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "156",
+            "label" : {
+              "PT" : "Malta",
+              "FR" : "Malte",
+              "AR" : "?????",
+              "EN" : "Malta",
+              "RU" : "??????",
+              "ES" : "Malta",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "157",
+            "label" : {
+              "PT" : "Ilhas Marshall",
+              "FR" : "Îles Marshall",
+              "AR" : "??? ??????",
+              "EN" : "Marshall Islands",
+              "RU" : "?????????? ???????",
+              "ES" : "Islas Marshall",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "158",
+            "label" : {
+              "PT" : "Martinica",
+              "FR" : "Martinique",
+              "AR" : "????????",
+              "EN" : "Martinique",
+              "RU" : "?????????",
+              "ES" : "Martinica",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "159",
+            "label" : {
+              "PT" : "Mauritânia",
+              "FR" : "Mauritanie",
+              "AR" : "?????????",
+              "EN" : "Mauritania",
+              "RU" : "??????????",
+              "ES" : "Mauritania",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "160",
+            "label" : {
+              "PT" : "Maurícia",
+              "FR" : "Maurice",
+              "AR" : "????????",
+              "EN" : "Mauritius",
+              "RU" : "????????",
+              "ES" : "Mauricio",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "161",
+            "label" : {
+              "PT" : "Mayotte",
+              "FR" : "Mayotte",
+              "AR" : "?????",
+              "EN" : "Mayotte",
+              "RU" : "???????",
+              "ES" : "Mayotte",
+              "ZH" : "Mayotte"
+            }
+          }, {
+            "code" : "162",
+            "label" : {
+              "PT" : "México",
+              "FR" : "Mexique",
+              "AR" : "???????",
+              "EN" : "Mexico",
+              "RU" : "???????",
+              "ES" : "México",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "163",
+            "label" : {
+              "PT" : "Estados Federados da Micronésia",
+              "FR" : "Micronésie (États fédérés de)",
+              "AR" : "??????????",
+              "EN" : "Micronesia (Federated States of)",
+              "RU" : "?????????? (???????????? ?????)",
+              "ES" : "Micronesia (Estados Federados de)",
+              "ZH" : "??????(??)"
+            }
+          }, {
+            "code" : "164",
+            "label" : {
+              "EN" : "Midway Island"
+            }
+          }, {
+            "code" : "165",
+            "label" : {
+              "PT" : "Moldávia",
+              "FR" : "République de Moldova",
+              "AR" : "??????? ???????",
+              "EN" : "Moldova, Republic of",
+              "RU" : "?????????? ???????",
+              "ES" : "Repéblica de Moldova",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "166",
+            "label" : {
+              "PT" : "Mónaco",
+              "FR" : "Monaco",
+              "AR" : "??????",
+              "EN" : "Monaco",
+              "RU" : "??????",
+              "ES" : "Mónaco",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "167",
+            "label" : {
+              "PT" : "Mongólia",
+              "FR" : "Mongolie",
+              "AR" : "???????",
+              "EN" : "Mongolia",
+              "RU" : "????????",
+              "ES" : "Mongolia",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "2647",
+            "label" : {
+              "PT" : "Montenegro",
+              "FR" : "Monténégro",
+              "AR" : "????? ??????",
+              "EN" : "Montenegro",
+              "RU" : "??????????",
+              "ES" : "Montenegro",
+              "ZH" : "??"
+            }
+          }, {
+            "code" : "168",
+            "label" : {
+              "PT" : "Montserrat",
+              "FR" : "Montserrat",
+              "AR" : "???????",
+              "EN" : "Montserrat",
+              "RU" : "??????????",
+              "ES" : "Montserrat",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "169",
+            "label" : {
+              "PT" : "Marrocos",
+              "FR" : "Maroc",
+              "AR" : "??????",
+              "EN" : "Morocco",
+              "RU" : "???????",
+              "ES" : "Marruecos",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "170",
+            "label" : {
+              "PT" : "Moçambique",
+              "FR" : "Mozambique",
+              "AR" : "????????",
+              "EN" : "Mozambique",
+              "RU" : "????????",
+              "ES" : "Mozambique",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "171",
+            "label" : {
+              "PT" : "Myanmar",
+              "FR" : "Myanmar",
+              "AR" : "???????",
+              "EN" : "Myanmar",
+              "RU" : "??????",
+              "ES" : "Myanmar",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "172",
+            "label" : {
+              "PT" : "Namíbia",
+              "FR" : "Namibie",
+              "AR" : "???????",
+              "EN" : "Namibia",
+              "RU" : "???????",
+              "ES" : "Namibia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "173",
+            "label" : {
+              "PT" : "Nauru",
+              "FR" : "Nauru",
+              "AR" : "?????",
+              "EN" : "Nauru",
+              "RU" : "?????",
+              "ES" : "Nauru",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "174",
+            "label" : {
+              "EN" : "Navassa Island"
+            }
+          }, {
+            "code" : "175",
+            "label" : {
+              "PT" : "Nepal",
+              "FR" : "Népal",
+              "AR" : "?????",
+              "EN" : "Nepal",
+              "RU" : "?????",
+              "ES" : "Nepal",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "177",
+            "label" : {
+              "PT" : "Países Baixos",
+              "FR" : "Pays-Bas",
+              "AR" : "??????",
+              "EN" : "Netherlands",
+              "RU" : "??????????",
+              "ES" : "Países Bajos",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "176",
+            "label" : {
+              "PT" : "Antilhas Holandesas",
+              "FR" : "Antilles néerlandaises",
+              "AR" : "??? ??????? ?????????",
+              "EN" : "Netherlands Antilles",
+              "RU" : "??????????? ???????",
+              "ES" : "Antillas Neerlandesas",
+              "ZH" : "??????"
+            }
+          }, {
+            "code" : "178",
+            "label" : {
+              "PT" : "Nova Caledônia",
+              "FR" : "Nouvelle-Calédonie",
+              "AR" : "????????? ???????",
+              "EN" : "New Caledonia",
+              "RU" : "????? ?????????",
+              "ES" : "Nueva Caledonia",
+              "ZH" : "??????"
+            }
+          }, {
+            "code" : "179",
+            "label" : {
+              "PT" : "Nova Zelândia",
+              "FR" : "Nouvelle-Zélande",
+              "AR" : "?????????",
+              "EN" : "New Zealand",
+              "RU" : "????? ????????",
+              "ES" : "Nueva Zelandia",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "180",
+            "label" : {
+              "PT" : "Nicarágua",
+              "FR" : "Nicaragua",
+              "AR" : "?????????",
+              "EN" : "Nicaragua",
+              "RU" : "?????????",
+              "ES" : "Nicaragua",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "181",
+            "label" : {
+              "PT" : "Níger",
+              "FR" : "Niger",
+              "AR" : "??????",
+              "EN" : "Niger",
+              "RU" : "?????",
+              "ES" : "Níger",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "182",
+            "label" : {
+              "PT" : "Nigéria",
+              "FR" : "Nigéria",
+              "AR" : "???????",
+              "EN" : "Nigeria",
+              "RU" : "???????",
+              "ES" : "Nigeria",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "183",
+            "label" : {
+              "PT" : "Niue",
+              "FR" : "Nioué",
+              "AR" : "????",
+              "EN" : "Niue",
+              "RU" : "????",
+              "ES" : "Niue",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "184",
+            "label" : {
+              "PT" : "Ilha Norfolk",
+              "FR" : "Île Norfolk",
+              "AR" : "????? ???????? ????? ????? ?????? ????????",
+              "EN" : "Norfolk Island",
+              "RU" : "?????? ???????",
+              "ES" : "Isla Norfolk",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "185",
+            "label" : {
+              "PT" : "Marianas Setentrionais",
+              "FR" : "Îles Mariannes du Nord",
+              "AR" : "??? ??????? ????????",
+              "EN" : "Northern Mariana Islands",
+              "RU" : "??????????? ???????? ?????????? ????????",
+              "ES" : "Islas Marianas septentrionales",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "186",
+            "label" : {
+              "PT" : "Noruega",
+              "FR" : "Norvège",
+              "AR" : "???????",
+              "EN" : "Norway",
+              "RU" : "????????",
+              "ES" : "Noruega",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "187",
+            "label" : {
+              "PT" : "Omã",
+              "FR" : "Oman",
+              "AR" : "????",
+              "EN" : "Oman",
+              "RU" : "????",
+              "ES" : "Omán",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "188",
+            "label" : {
+              "PT" : "Paquistão",
+              "FR" : "Pakistan",
+              "AR" : "???????",
+              "EN" : "Pakistan",
+              "RU" : "????????",
+              "ES" : "Pakistán",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "189",
+            "label" : {
+              "PT" : "Palau",
+              "FR" : "Palaos",
+              "AR" : "?????",
+              "EN" : "Palau",
+              "RU" : "?????",
+              "ES" : "Palau",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "190",
+            "label" : {
+              "EN" : "Palmyra Atoll"
+            }
+          }, {
+            "code" : "191",
+            "label" : {
+              "PT" : "Panamá",
+              "FR" : "Panama",
+              "AR" : "????",
+              "EN" : "Panama",
+              "RU" : "??????",
+              "ES" : "Panamá",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "192",
+            "label" : {
+              "PT" : "Papua-Nova Guiné",
+              "FR" : "Papouasie-Nouvelle-Guinée",
+              "AR" : "????? ????? ???????",
+              "EN" : "Papua New Guinea",
+              "RU" : "?????-????? ??????",
+              "ES" : "Papua Nueva Guinea",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "193",
+            "label" : {
+              "EN" : "Paracel Islands"
+            }
+          }, {
+            "code" : "194",
+            "label" : {
+              "PT" : "Paraguai",
+              "FR" : "Paraguay",
+              "AR" : "????????",
+              "EN" : "Paraguay",
+              "RU" : "????????",
+              "ES" : "Paraguay",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "195",
+            "label" : {
+              "PT" : "Peru",
+              "FR" : "Pérou",
+              "AR" : "????",
+              "EN" : "Peru",
+              "RU" : "????",
+              "ES" : "Peré",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "196",
+            "label" : {
+              "PT" : "Filipinas",
+              "FR" : "Philippines",
+              "AR" : "???????",
+              "EN" : "Philippines",
+              "RU" : "?????????",
+              "ES" : "Filipinas",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "197",
+            "label" : {
+              "PT" : "Pitcairn",
+              "FR" : "Îles Pitcairn",
+              "AR" : "??? ???????",
+              "EN" : "Pitcairn",
+              "RU" : "??????? ???????",
+              "ES" : "Islas Pitcairn",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "198",
+            "label" : {
+              "PT" : "Polónia",
+              "FR" : "Pologne",
+              "AR" : "??????",
+              "EN" : "Poland",
+              "RU" : "??????",
+              "ES" : "Polonia",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "199",
+            "label" : {
+              "PT" : "Portugal",
+              "FR" : "Portugal",
+              "AR" : "????????",
+              "EN" : "Portugal",
+              "RU" : "??????????",
+              "ES" : "Portugal",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "200",
+            "label" : {
+              "PT" : "Porto Rico",
+              "FR" : "Porto Rico",
+              "AR" : "?????????",
+              "EN" : "Puerto Rico",
+              "RU" : "??????-????",
+              "ES" : "Puerto Rico",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "201",
+            "label" : {
+              "PT" : "Catar",
+              "FR" : "Qatar",
+              "AR" : "???",
+              "EN" : "Qatar",
+              "RU" : "?????",
+              "ES" : "Qatar",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "202",
+            "label" : {
+              "PT" : "Coreia do Sul",
+              "FR" : "République de Corée",
+              "AR" : "??????? ?????",
+              "EN" : "Republic of Korea",
+              "RU" : "?????????? ?????",
+              "ES" : "Repéblica de Corea",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "203",
+            "label" : {
+              "PT" : "Roménia",
+              "FR" : "Roumanie",
+              "AR" : "???????",
+              "EN" : "Romania",
+              "RU" : "???????",
+              "ES" : "Rumania",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "204",
+            "label" : {
+              "PT" : "Réssia",
+              "FR" : "Fédération de Russie",
+              "AR" : "??????? ??????",
+              "EN" : "Russian Federation",
+              "RU" : "?????????? ?????????",
+              "ES" : "Federación de Rusia",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "205",
+            "label" : {
+              "PT" : "Ruanda",
+              "FR" : "Rwanda",
+              "AR" : "??????",
+              "EN" : "Rwanda",
+              "RU" : "??????",
+              "ES" : "Rwanda",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "206",
+            "label" : {
+              "PT" : "Reunião",
+              "FR" : "Réunion",
+              "AR" : "????????",
+              "EN" : "Réunion",
+              "RU" : "???????",
+              "ES" : "Reunión",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "207",
+            "label" : {
+              "PT" : "Santa Helena, Ascensão e Tristão da Cunha",
+              "FR" : "Sainte-Hélène, Ascension et Tristan de Cunha",
+              "AR" : "???? ??????",
+              "EN" : "Saint Helena",
+              "RU" : "??????? ?????? ????? ?????????? ? ???????-??-?????",
+              "ES" : "Santa Elena, Ascension y Tristan da Cunha",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "208",
+            "label" : {
+              "PT" : "São Cristóvão e Nevis",
+              "FR" : "Saint-Kitts-et-Nevis",
+              "AR" : "???? ???? ??????",
+              "EN" : "Saint Kitts and Nevis",
+              "RU" : "????-???? ? ?????",
+              "ES" : "Saint Kitts y Nevis",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "209",
+            "label" : {
+              "PT" : "Santa Lécia",
+              "FR" : "Sainte-Lucie",
+              "AR" : "???? ?????",
+              "EN" : "Saint Lucia",
+              "RU" : "????-?????",
+              "ES" : "Santa Lucía",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "210",
+            "label" : {
+              "PT" : "Saint-Pierre e Miquelon",
+              "FR" : "Saint-Pierre-et-Miquelon",
+              "AR" : "??? ???? ????????",
+              "EN" : "Saint Pierre et Miquelon",
+              "RU" : "???-???? ? ???????",
+              "ES" : "Saint-Pierre y Miquelon",
+              "ZH" : "????????"
+            }
+          }, {
+            "code" : "211",
+            "label" : {
+              "PT" : "São Vicente e Granadinas",
+              "FR" : "Saint-Vincent-et-les Grenadines",
+              "AR" : "???? ????? ???? ????????",
+              "EN" : "Saint Vincent and the Grenadines",
+              "RU" : "????-??????? ? ?????????",
+              "ES" : "San Vicente y las Granadinas",
+              "ZH" : "??????????"
+            }
+          }, {
+            "code" : "212",
+            "label" : {
+              "PT" : "Samoa",
+              "FR" : "Samoa",
+              "AR" : "?????",
+              "EN" : "Samoa",
+              "RU" : "?????",
+              "ES" : "Samoa",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "213",
+            "label" : {
+              "PT" : "São Marino",
+              "FR" : "Saint-Marin",
+              "AR" : "??? ??????",
+              "EN" : "San Marino",
+              "RU" : "???-??????",
+              "ES" : "San Marino",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "214",
+            "label" : {
+              "PT" : "São Tomé e Príncipe",
+              "FR" : "Sao Tomé-et-Principe",
+              "AR" : "??? ???? ????????",
+              "EN" : "Sao Tome and Principe",
+              "RU" : "???-???? ? ????????",
+              "ES" : "Santo Tomé y Príncipe",
+              "ZH" : "????????"
+            }
+          }, {
+            "code" : "215",
+            "label" : {
+              "PT" : "Arábia Saudita",
+              "FR" : "Arabie saoudite",
+              "AR" : "??????? ??????? ????????",
+              "EN" : "Saudi Arabia",
+              "RU" : "?????????? ??????",
+              "ES" : "Arabia Saudita",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "216",
+            "label" : {
+              "EN" : "Scarborough Reef"
+            }
+          }, {
+            "code" : "217",
+            "label" : {
+              "PT" : "Senegal",
+              "FR" : "Sénégal",
+              "AR" : "???????",
+              "EN" : "Senegal",
+              "RU" : "???????",
+              "ES" : "Senegal",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "218",
+            "label" : {
+              "EN" : "Senkaku Islands"
+            }
+          }, {
+            "code" : "2648",
+            "label" : {
+              "PT" : "Sérvia",
+              "FR" : "Serbie ",
+              "AR" : "?????",
+              "EN" : "Serbia",
+              "RU" : "??????",
+              "ES" : "Serbia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "219",
+            "label" : {
+              "PT" : "Sérvia e Montenegro",
+              "FR" : "Serbie-et-Monténégro",
+              "AR" : "????? ?????? ??????",
+              "EN" : "Serbia and Montenegro",
+              "RU" : "?????? ??????????",
+              "ES" : "Serbia y Montenegro",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "220",
+            "label" : {
+              "PT" : "Seychelles",
+              "FR" : "Seychelles",
+              "AR" : "?????",
+              "EN" : "Seychelles",
+              "RU" : "??????????? ???????",
+              "ES" : "Seychelles",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "221",
+            "label" : {
+              "PT" : "Serra Leoa",
+              "FR" : "Sierra Leone",
+              "AR" : "????????",
+              "EN" : "Sierra Leone",
+              "RU" : "??????-?????",
+              "ES" : "Sierra Leona",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "222",
+            "label" : {
+              "PT" : "Singapura",
+              "FR" : "Singapour",
+              "AR" : "????????",
+              "EN" : "Singapore",
+              "RU" : "????????",
+              "ES" : "Singapur",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "223",
+            "label" : {
+              "PT" : "Eslováquia",
+              "FR" : "Slovaquie",
+              "AR" : "????????",
+              "EN" : "Slovakia",
+              "RU" : "????????",
+              "ES" : "Eslovaquia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "224",
+            "label" : {
+              "PT" : "Eslovênia",
+              "FR" : "Slovénie",
+              "AR" : "????????",
+              "EN" : "Slovenia",
+              "RU" : "????????",
+              "ES" : "Eslovenia",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "225",
+            "label" : {
+              "PT" : "Ilhas Salomão",
+              "FR" : "Îles Salomon",
+              "AR" : "??? ??????",
+              "EN" : "Solomon Islands",
+              "RU" : "?????????? ???????",
+              "ES" : "Islas Salomón",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "226",
+            "label" : {
+              "PT" : "Somália",
+              "FR" : "Somalie",
+              "AR" : "???????",
+              "EN" : "Somalia",
+              "RU" : "??????",
+              "ES" : "Somalia",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "227",
+            "label" : {
+              "PT" : "África do Sul",
+              "FR" : "Afrique du Sud",
+              "AR" : "???? ???????",
+              "EN" : "South Africa",
+              "RU" : "????? ??????",
+              "ES" : "Sudáfrica",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "228",
+            "label" : {
+              "EN" : "South Georgia and the South Sandwich Islands"
+            }
+          }, {
+            "code" : "74",
+            "label" : {
+              "PT" : "Sudão do Sul",
+              "FR" : "Soudan du Sud",
+              "EN" : "South Sudan",
+              "RU" : "????? ?????",
+              "ES" : "Sudán del Sur"
+            }
+          }, {
+            "code" : "229",
+            "label" : {
+              "PT" : "Espanha",
+              "FR" : "Espagne",
+              "AR" : "???????",
+              "EN" : "Spain",
+              "RU" : "???????",
+              "ES" : "España",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "230",
+            "label" : {
+              "EN" : "Spratly Islands"
+            }
+          }, {
+            "code" : "231",
+            "label" : {
+              "PT" : "Sri Lanka",
+              "FR" : "Sri Lanka",
+              "AR" : "??? ?????",
+              "EN" : "Sri Lanka",
+              "RU" : "???-?????",
+              "ES" : "Sri Lanka",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "40764",
+            "label" : {
+              "PT" : "Sudão",
+              "FR" : "Soudan (ex)",
+              "AR" : "???????",
+              "EN" : "Sudan",
+              "RU" : "?????",
+              "ES" : "Sudán (ex)",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "6",
+            "label" : {
+              "PT" : "Sudão",
+              "FR" : "Soudan",
+              "AR" : "???????",
+              "EN" : "Sudan",
+              "RU" : "?????",
+              "ES" : "Sudán",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "233",
+            "label" : {
+              "PT" : "Suriname",
+              "FR" : "Suriname",
+              "AR" : "???????",
+              "EN" : "Suriname",
+              "RU" : "???????",
+              "ES" : "Suriname",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "234",
+            "label" : {
+              "PT" : "Svalbard e Jan Mayen",
+              "FR" : "Îles Svalbard et Jan Mayen",
+              "AR" : "??? ???????? ???? ?????",
+              "EN" : "Svalbard and Jan Mayen Islands",
+              "RU" : "??????? ????????? ? ??-?????",
+              "ES" : "Islas Svalbard y Jan Mayen",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "235",
+            "label" : {
+              "PT" : "Suazilândia",
+              "FR" : "Swaziland",
+              "AR" : "????????",
+              "EN" : "Swaziland",
+              "RU" : "?????????",
+              "ES" : "Swazilandia",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "236",
+            "label" : {
+              "PT" : "Suécia",
+              "FR" : "Suède",
+              "AR" : "??????",
+              "EN" : "Sweden",
+              "RU" : "??????",
+              "ES" : "Suecia",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "237",
+            "label" : {
+              "PT" : "Suíça",
+              "FR" : "Suisse",
+              "AR" : "??????",
+              "EN" : "Switzerland",
+              "RU" : "?????????",
+              "ES" : "Suiza",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "238",
+            "label" : {
+              "PT" : "Síria",
+              "FR" : "République arabe syrienne",
+              "AR" : "????????? ??????? ???????",
+              "EN" : "Syrian Arab Republic",
+              "RU" : "????????? ???????? ??????????",
+              "ES" : "Repéblica Árabe Siria",
+              "ZH" : "?????????"
+            }
+          }, {
+            "code" : "147296",
+            "label" : {
+              "EN" : "Taiwan"
+            }
+          }, {
+            "code" : "239",
+            "label" : {
+              "PT" : "Tajiquistão",
+              "FR" : "Tadjikistan",
+              "AR" : "?????????",
+              "EN" : "Tajikistan",
+              "RU" : "???????????",
+              "ES" : "Tayikistán",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "240",
+            "label" : {
+              "PT" : "Tailândia",
+              "FR" : "Thaïlande",
+              "AR" : "??????",
+              "EN" : "Thailand",
+              "RU" : "???????",
+              "ES" : "Tailandia",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "241",
+            "label" : {
+              "PT" : "Macedónia",
+              "FR" : "l'ex-République yougoslave de Macédoine",
+              "AR" : "??????? ??????? ???????????? ???????",
+              "EN" : "The former Yugoslav Republic of Macedonia",
+              "RU" : "?????? ??????????? ?????????? ?????????",
+              "ES" : "la ex Repéblica Yugoslava de Macedonia",
+              "ZH" : "????????????"
+            }
+          }, {
+            "code" : "242",
+            "label" : {
+              "PT" : "Timor-Leste",
+              "FR" : "Timor-Leste",
+              "AR" : "?????- ?????",
+              "EN" : "Timor-Leste",
+              "RU" : "?????-?????",
+              "ES" : "Timor-Leste",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "243",
+            "label" : {
+              "PT" : "Togo",
+              "FR" : "Togo",
+              "AR" : "????",
+              "EN" : "Togo",
+              "RU" : "????",
+              "ES" : "Togo",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "244",
+            "label" : {
+              "PT" : "Toquelau",
+              "FR" : "Tokélaou",
+              "AR" : "??? ???????",
+              "EN" : "Tokelau",
+              "RU" : "???????",
+              "ES" : "Tokelau",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "245",
+            "label" : {
+              "PT" : "Tonga",
+              "FR" : "Tonga",
+              "AR" : "?????",
+              "EN" : "Tonga",
+              "RU" : "?????",
+              "ES" : "Tonga",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "246",
+            "label" : {
+              "PT" : "Trinidad e Tobago",
+              "FR" : "Trinité-et-Tobago",
+              "AR" : "???????? ???????",
+              "EN" : "Trinidad and Tobago",
+              "RU" : "???????? ? ??????",
+              "ES" : "Trinidad y Tabago",
+              "ZH" : "????????"
+            }
+          }, {
+            "code" : "247",
+            "label" : {
+              "EN" : "Tromelin Island"
+            }
+          }, {
+            "code" : "248",
+            "label" : {
+              "PT" : "Tunísia",
+              "FR" : "Tunisie",
+              "AR" : "????",
+              "EN" : "Tunisia",
+              "RU" : "?????",
+              "ES" : "Ténez",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "249",
+            "label" : {
+              "PT" : "Turquia",
+              "FR" : "Turquie",
+              "AR" : "?????",
+              "EN" : "Turkey",
+              "RU" : "??????",
+              "ES" : "Turquía",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "250",
+            "label" : {
+              "PT" : "Turquemenistão",
+              "FR" : "Turkménistan",
+              "AR" : "??????????",
+              "EN" : "Turkmenistan",
+              "RU" : "????????????",
+              "ES" : "Turkmenistán",
+              "ZH" : "?????"
+            }
+          }, {
+            "code" : "251",
+            "label" : {
+              "PT" : "Turcas e Caicos",
+              "FR" : "Îles Turques et Caïques",
+              "AR" : "??? ???? ???????",
+              "EN" : "Turks and Caicos islands",
+              "RU" : "??????? ????? ? ??????",
+              "ES" : "Islas Turcas y Caicos",
+              "ZH" : "?????????"
+            }
+          }, {
+            "code" : "252",
+            "label" : {
+              "PT" : "Tuvalu",
+              "FR" : "Tuvalu",
+              "AR" : "??????",
+              "EN" : "Tuvalu",
+              "RU" : "??????",
+              "ES" : "Tuvalu",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "256",
+            "label" : {
+              "PT" : "Reino Unido",
+              "FR" : "Royaume-Uni",
+              "AR" : "??????? ???????",
+              "EN" : "U.K. of Great Britain and Northern Ireland",
+              "RU" : "??????????? ???????????",
+              "ES" : "Reino Unido",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "253",
+            "label" : {
+              "PT" : "Uganda",
+              "FR" : "Ouganda",
+              "AR" : "??????",
+              "EN" : "Uganda",
+              "RU" : "??????",
+              "ES" : "Uganda",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "254",
+            "label" : {
+              "PT" : "Ucrânia",
+              "FR" : "Ukraine",
+              "AR" : "????????",
+              "EN" : "Ukraine",
+              "RU" : "???????",
+              "ES" : "Ucrania",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "255",
+            "label" : {
+              "PT" : "Emirados Árabes Unidos",
+              "FR" : "Émirats arabes unis",
+              "AR" : "???????? ??????? ???????",
+              "EN" : "United Arab Emirates",
+              "RU" : "???????????? ???????? ???????",
+              "ES" : "Emiratos Árabes Unidos",
+              "ZH" : "????????"
+            }
+          }, {
+            "code" : "257",
+            "label" : {
+              "PT" : "Tanzânia",
+              "FR" : "République-Unie de Tanzanie",
+              "AR" : "??????? ??????? ???????",
+              "EN" : "United Republic of Tanzania",
+              "RU" : "???????????? ?????????? ????????",
+              "ES" : "Repéblica Unida de Tanzanía",
+              "ZH" : "?????????"
+            }
+          }, {
+            "code" : "258",
+            "label" : {
+              "PT" : "Ilhas Virgens Americanas",
+              "FR" : "Îles Vierges américaines",
+              "AR" : "??? ?????? ??????? ???????? ???????",
+              "EN" : "United States Virgin Islands",
+              "RU" : "?????????? ??????? ???",
+              "ES" : "Islas Vírgenes (EE.UU.)",
+              "ZH" : "???????"
+            }
+          }, {
+            "code" : "259",
+            "label" : {
+              "PT" : "Estados Unidos",
+              "FR" : "États-Unis d'Amérique",
+              "AR" : "???????? ??????? ?????????",
+              "EN" : "United States of America",
+              "RU" : "??????????? ????? ???????",
+              "ES" : "Estados Unidos de América",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "260",
+            "label" : {
+              "PT" : "Uruguai",
+              "FR" : "Uruguay",
+              "AR" : "????????",
+              "EN" : "Uruguay",
+              "RU" : "???????",
+              "ES" : "Uruguay",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "261",
+            "label" : {
+              "PT" : "Uzbequistão",
+              "FR" : "Ouzbékistan",
+              "AR" : "?????????",
+              "EN" : "Uzbekistan",
+              "RU" : "??????????",
+              "ES" : "Uzbekistán",
+              "ZH" : "??????"
+            }
+          }, {
+            "code" : "262",
+            "label" : {
+              "PT" : "Vanuatu",
+              "FR" : "Vanuatu",
+              "AR" : "???????",
+              "EN" : "Vanuatu",
+              "RU" : "???????",
+              "ES" : "Vanuatu",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "263",
+            "label" : {
+              "PT" : "Venezuela",
+              "FR" : "Venezuela (République bolivarienne du)",
+              "AR" : "??????? (??????? .. ???????????)",
+              "EN" : "Venezuela (Bolivarian Republic of)",
+              "RU" : "????????? (?????????????? ??????????)",
+              "ES" : "Venezuela (Repéblica Bolivariana de)",
+              "ZH" : "???? (???????)"
+            }
+          }, {
+            "code" : "264",
+            "label" : {
+              "PT" : "Vietname",
+              "FR" : "Viet Nam",
+              "AR" : "???? ???",
+              "EN" : "Viet Nam",
+              "RU" : "???????",
+              "ES" : "Viet Nam",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "265",
+            "label" : {
+              "PT" : "Ilha Wake",
+              "FR" : "Îles Wake",
+              "AR" : "????? ???",
+              "EN" : "Wake Island",
+              "RU" : "?????? ????",
+              "ES" : "Isla Wake",
+              "ZH" : "???(??)"
+            }
+          }, {
+            "code" : "266",
+            "label" : {
+              "PT" : "Wallis e Futuna",
+              "FR" : "Îles Wallis et Futuna",
+              "AR" : "??? ????? ???????",
+              "EN" : "Wallis and Futuna",
+              "RU" : "??????? ?????? ? ??????",
+              "ES" : "Islas Wallis y Futuna",
+              "ZH" : "?????????"
+            }
+          }, {
+            "code" : "267",
+            "label" : {
+              "EN" : "West Bank"
+            }
+          }, {
+            "code" : "268",
+            "label" : {
+              "PT" : "Saara Ocidental",
+              "FR" : "Sahara occidental",
+              "AR" : "??????? ???????",
+              "EN" : "Western Sahara",
+              "RU" : "???????? ??????",
+              "ES" : "Sáhara occidental",
+              "ZH" : "????"
+            }
+          }, {
+            "code" : "269",
+            "label" : {
+              "PT" : "Iémen/Iêmen",
+              "FR" : "Yémen",
+              "AR" : "?????",
+              "EN" : "Yemen",
+              "RU" : "?????",
+              "ES" : "Yemen",
+              "ZH" : "? ?"
+            }
+          }, {
+            "code" : "270",
+            "label" : {
+              "PT" : "Zâmbia",
+              "FR" : "Zambie",
+              "AR" : "??????",
+              "EN" : "Zambia",
+              "RU" : "??????",
+              "ES" : "Zambia",
+              "ZH" : "???"
+            }
+          }, {
+            "code" : "271",
+            "label" : {
+              "PT" : "Zimbabwe",
+              "FR" : "Zimbabwe",
+              "AR" : "???????",
+              "EN" : "Zimbabwe",
+              "RU" : "????????",
+              "ES" : "Zimbabwe",
+              "ZH" : "????"
+            }
+          } ],
+          "idCodeList" : "GAUL0",
+          "extendedName" : {
+            "EN" : "Global administrative unit layer country level"
+          }
+        }
+      }
+    },
+    "uid" : "AFO_ProductionCapacities",
+    "contacts" : [ {
+      "organization" : {
+        "EN" : "Africa Fertilizer"
+      },
+      "role" : "distributor",
+      "contactInfo" : {
+        "phone" : "0000",
+        "emailAddress" : "test@test.org"
+      },
+      "roleLabel" : {
+        "EN" : "Distributor"
+      }
+    } ],
+    "languageDetails" : {
+      "EN" : ""
+    },
+    "characterSet" : {
+      "codes" : [ {
+        "code" : "106",
+        "label" : {
+          "EN" : "UTF-8"
+        }
+      } ],
+      "idCodeList" : "IANAcharacterSet",
+      "extendedName" : {
+        "EN" : "Internet Assigned Numbers Authority codelist"
+      }
+    },
+    "metadataStandardName" : "FENIX",
+    "metadataStandardVersion" : "1.0",
+    "metadataLanguage" : {
+      "version" : "1998",
+      "codes" : [ {
+        "code" : "eng",
+        "label" : {
+          "EN" : "English"
+        }
+      } ],
+      "idCodeList" : "ISO639-2",
+      "extendedName" : {
+        "EN" : "International Standard Organization - Language"
+      }
+    }
+  },
+  "data" : [ [ "2814", "NA", "ALG", 2005, null ], [ "310210", "NA", "ALG", 2005, null ], [ "310230", "NA", "ALG", 2005, null ], [ "310280", "NA", "ALG", 2005, null ], [ "310310", "NA", "ALG", 2005, null ], [ "28092000", "NA", "EGY", 2005, null ], [ "2814", "NA", "EGY", 2005, null ], [ "310210", "NA", "EGY", 2005, null ], [ "310221", "NA", "EGY", 2005, 24.0 ], [ "310230", "NA", "EGY", 2005, null ], [ "310280", "NA", "EGY", 2005, null ], [ "310310", "NA", "EGY", 2005, null ], [ "31031010", "NA", "EGY", 2005, null ], [ "2814", "CA", "GAB", 2005, null ], [ "310210", "CA", "GAB", 2005, null ], [ "2814", "NA", "LYA", 2005, null ], [ "310210", "NA", "LYA", 2005, null ], [ "310221", "SA", "MAD", 2005, null ], [ "28092000", "NA", "MOR", 2005, null ], [ "31031010", "NA", "MOR", 2005, null ], [ "310530", "NA", "MOR", 2005, null ], [ "310540", "NA", "MOR", 2005, null ], [ "2814", "WA", "NGR", 2005, null ], [ "310210", "WA", "NGR", 2005, null ], [ "310310", "WA", "NGR", 2005, null ], [ "28092000", "WA", "SEN", 2005, null ], [ "28092000", "SA", "SAF", 2005, null ], [ "2814", "SA", "SAF", 2005, null ], [ "310221", "SA", "SAF", 2005, 2.0 ], [ "310230", "SA", "SAF", 2005, null ], [ "310280", "SA", "SAF", 2005, null ], [ "310310", "SA", "SAF", 2005, null ], [ "310530", "SA", "SAF", 2005, null ], [ "28092000", "NA", "TUN", 2005, null ], [ "310230", "NA", "TUN", 2005, null ], [ "310310", "NA", "TUN", 2005, null ], [ "31031010", "NA", "TUN", 2005, null ], [ "310530", "NA", "TUN", 2005, null ], [ "310230", "SA", "ZAM", 2005, null ], [ "28092000", "SA", "ZIM", 2005, null ], [ "2814", "SA", "ZIM", 2005, null ], [ "310230", "SA", "ZIM", 2005, null ], [ "310310", "SA", "ZIM", 2005, null ], [ "31031010", "SA", "ZIM", 2005, null ], [ "310430", "", "AFR", 2005, null ], [ "2814", "NA", "ALG", 2006, null ], [ "310210", "NA", "ALG", 2006, null ], [ "310230", "NA", "ALG", 2006, null ], [ "310280", "NA", "ALG", 2006, 180.0 ], [ "310310", "NA", "ALG", 2006, null ], [ "28092000", "NA", "EGY", 2006, null ], [ "2814", "NA", "EGY", 2006, null ], [ "310210", "NA", "EGY", 2006, null ], [ "310221", "NA", "EGY", 2006, 55.0 ], [ "310230", "NA", "EGY", 2006, null ], [ "310280", "NA", "EGY", 2006, 144.0 ], [ "310310", "NA", "EGY", 2006, null ], [ "31031010", "NA", "EGY", 2006, null ], [ "2814", "CA", "GAB", 2006, null ], [ "310210", "CA", "GAB", 2006, null ], [ "2814", "NA", "LYA", 2006, null ], [ "310210", "NA", "LYA", 2006, null ], [ "310221", "SA", "MAD", 2006, null ], [ "28092000", "NA", "MOR", 2006, null ], [ "31031010", "NA", "MOR", 2006, null ], [ "310530", "NA", "MOR", 2006, null ], [ "310540", "NA", "MOR", 2006, null ], [ "2814", "WA", "NGR", 2006, null ], [ "310210", "WA", "NGR", 2006, null ], [ "310310", "WA", "NGR", 2006, null ], [ "28092000", "WA", "SEN", 2006, null ], [ "28092000", "SA", "SAF", 2006, null ], [ "2814", "SA", "SAF", 2006, null ], [ "310221", "SA", "SAF", 2006, 2.0 ], [ "310230", "SA", "SAF", 2006, null ], [ "310280", "SA", "SAF", 2006, 168.0 ], [ "310310", "SA", "SAF", 2006, null ], [ "310530", "SA", "SAF", 2006, null ], [ "28092000", "NA", "TUN", 2006, null ], [ "310230", "NA", "TUN", 2006, null ], [ "310310", "NA", "TUN", 2006, null ], [ "31031010", "NA", "TUN", 2006, null ], [ "310530", "NA", "TUN", 2006, null ], [ "310230", "SA", "ZAM", 2006, null ], [ "28092000", "SA", "ZIM", 2006, null ], [ "2814", "SA", "ZIM", 2006, null ], [ "310230", "SA", "ZIM", 2006, null ], [ "310310", "SA", "ZIM", 2006, null ], [ "31031010", "SA", "ZIM", 2006, null ], [ "310430", "", "AFR", 2006, null ], [ "2814", "NA", "ALG", 2007, null ], [ "310210", "NA", "ALG", 2007, null ], [ "310230", "NA", "ALG", 2007, null ], [ "310280", "NA", "ALG", 2007, 95.0 ], [ "310310", "NA", "ALG", 2007, null ], [ "28092000", "NA", "EGY", 2007, null ], [ "2814", "NA", "EGY", 2007, null ], [ "310210", "NA", "EGY", 2007, null ], [ "310221", "NA", "EGY", 2007, 55.0 ], [ "310230", "NA", "EGY", 2007, null ], [ "310280", "NA", "EGY", 2007, 192.0 ], [ "310310", "NA", "EGY", 2007, null ], [ "31031010", "NA", "EGY", 2007, null ], [ "2814", "CA", "GAB", 2007, null ], [ "310210", "CA", "GAB", 2007, null ], [ "2814", "NA", "LYA", 2007, null ], [ "310210", "NA", "LYA", 2007, null ], [ "310221", "SA", "MAD", 2007, null ], [ "28092000", "NA", "MOR", 2007, null ], [ "31031010", "NA", "MOR", 2007, null ], [ "310530", "NA", "MOR", 2007, null ], [ "310540", "NA", "MOR", 2007, null ], [ "2814", "WA", "NGR", 2007, null ], [ "310210", "WA", "NGR", 2007, null ], [ "310310", "WA", "NGR", 2007, null ], [ "28092000", "WA", "SEN", 2007, null ], [ "28092000", "SA", "SAF", 2007, null ], [ "2814", "SA", "SAF", 2007, null ], [ "310221", "SA", "SAF", 2007, 2.0 ], [ "310230", "SA", "SAF", 2007, null ], [ "310280", "SA", "SAF", 2007, 168.0 ], [ "310310", "SA", "SAF", 2007, null ], [ "310530", "SA", "SAF", 2007, null ], [ "28092000", "NA", "TUN", 2007, null ], [ "310230", "NA", "TUN", 2007, null ], [ "310310", "NA", "TUN", 2007, null ], [ "31031010", "NA", "TUN", 2007, null ], [ "310530", "NA", "TUN", 2007, null ], [ "310230", "SA", "ZAM", 2007, null ], [ "28092000", "SA", "ZIM", 2007, null ], [ "2814", "SA", "ZIM", 2007, null ], [ "310230", "SA", "ZIM", 2007, null ], [ "310310", "SA", "ZIM", 2007, null ], [ "31031010", "SA", "ZIM", 2007, null ], [ "310430", "", "AFR", 2007, 26.0 ], [ "2814", "NA", "ALG", 2008, null ], [ "310210", "NA", "ALG", 2008, null ], [ "310230", "NA", "ALG", 2008, null ], [ "310280", "NA", "ALG", 2008, 95.0 ], [ "310310", "NA", "ALG", 2008, 48.0 ], [ "28092000", "NA", "EGY", 2008, null ], [ "2814", "NA", "EGY", 2008, null ], [ "310210", "NA", "EGY", 2008, null ], [ "310221", "NA", "EGY", 2008, 53.0 ], [ "310230", "NA", "EGY", 2008, null ], [ "310280", "NA", "EGY", 2008, 192.0 ], [ "310310", "NA", "EGY", 2008, 274.0 ], [ "31031010", "NA", "EGY", 2008, null ], [ "2814", "CA", "GAB", 2008, null ], [ "310210", "CA", "GAB", 2008, null ], [ "2814", "NA", "LYA", 2008, null ], [ "310210", "NA", "LYA", 2008, null ], [ "310221", "SA", "MAD", 2008, null ], [ "28092000", "NA", "MOR", 2008, null ], [ "31031010", "NA", "MOR", 2008, null ], [ "310530", "NA", "MOR", 2008, null ], [ "310540", "NA", "MOR", 2008, null ], [ "2814", "WA", "NGR", 2008, null ], [ "310210", "WA", "NGR", 2008, null ], [ "310310", "WA", "NGR", 2008, 14.0 ], [ "28092000", "WA", "SEN", 2008, null ], [ "28092000", "SA", "SAF", 2008, null ], [ "2814", "SA", "SAF", 2008, null ], [ "310221", "SA", "SAF", 2008, 3.0 ], [ "310230", "SA", "SAF", 2008, null ], [ "310280", "SA", "SAF", 2008, 168.0 ], [ "310310", "SA", "SAF", 2008, 24.0 ], [ "310530", "SA", "SAF", 2008, null ], [ "28092000", "NA", "TUN", 2008, null ], [ "310230", "NA", "TUN", 2008, null ], [ "310310", "NA", "TUN", 2008, null ], [ "31031010", "NA", "TUN", 2008, null ], [ "310530", "NA", "TUN", 2008, null ], [ "310230", "SA", "ZAM", 2008, null ], [ "28092000", "SA", "ZIM", 2008, null ], [ "2814", "SA", "ZIM", 2008, null ], [ "310230", "SA", "ZIM", 2008, null ], [ "310310", "SA", "ZIM", 2008, 30.0 ], [ "31031010", "SA", "ZIM", 2008, null ], [ "310430", "", "AFR", 2008, 26.0 ], [ "2814", "NA", "ALG", 2009, 816.0 ], [ "310210", "NA", "ALG", 2009, null ], [ "310230", "NA", "ALG", 2009, 334.0 ], [ "310280", "NA", "ALG", 2009, 95.0 ], [ "310310", "NA", "ALG", 2009, 48.0 ], [ "28092000", "NA", "EGY", 2009, 95.0 ], [ "2814", "NA", "EGY", 2009, 3613.0 ], [ "310210", "NA", "EGY", 2009, 2330.0 ], [ "310221", "NA", "EGY", 2009, 53.0 ], [ "310230", "NA", "EGY", 2009, 594.0 ], [ "310280", "NA", "EGY", 2009, 192.0 ], [ "310310", "NA", "EGY", 2009, 274.0 ], [ "31031010", "NA", "EGY", 2009, 41.0 ], [ "2814", "CA", "GAB", 2009, null ], [ "310210", "CA", "GAB", 2009, null ], [ "2814", "NA", "LYA", 2009, 599.0 ], [ "310210", "NA", "LYA", 2009, 418.0 ], [ "310221", "SA", "MAD", 2009, null ], [ "28092000", "NA", "MOR", 2009, 4440.0 ], [ "31031010", "NA", "MOR", 2009, 350.0 ], [ "310530", "NA", "MOR", 2009, 1400.0 ], [ "310540", "NA", "MOR", 2009, null ], [ "2814", "WA", "NGR", 2009, 271.0 ], [ "310210", "WA", "NGR", 2009, 228.0 ], [ "310310", "WA", "NGR", 2009, 14.0 ], [ "28092000", "WA", "SEN", 2009, 660.0 ], [ "28092000", "SA", "SAF", 2009, 1005.0 ], [ "2814", "SA", "SAF", 2009, 548.0 ], [ "310221", "SA", "SAF", 2009, 24.0 ], [ "310230", "SA", "SAF", 2009, 417.0 ], [ "310280", "SA", "SAF", 2009, 168.0 ], [ "310310", "SA", "SAF", 2009, 24.0 ], [ "310530", "SA", "SAF", 2009, 172.0 ], [ "28092000", "NA", "TUN", 2009, 1653.0 ], [ "310230", "NA", "TUN", 2009, 111.0 ], [ "310310", "NA", "TUN", 2009, null ], [ "31031010", "NA", "TUN", 2009, 410.0 ], [ "310530", "NA", "TUN", 2009, 501.0 ], [ "310230", "SA", "ZAM", 2009, null ], [ "28092000", "SA", "ZIM", 2009, 40.0 ], [ "2814", "SA", "ZIM", 2009, 37.0 ], [ "310230", "SA", "ZIM", 2009, 81.0 ], [ "310310", "SA", "ZIM", 2009, 30.0 ], [ "31031010", "SA", "ZIM", 2009, 16.0 ], [ "310430", "", "AFR", 2009, 26.0 ], [ "2814", "NA", "ALG", 2010, 816.0 ], [ "310210", "NA", "ALG", 2010, null ], [ "310230", "NA", "ALG", 2010, 334.0 ], [ "310280", "NA", "ALG", 2010, 95.0 ], [ "310310", "NA", "ALG", 2010, 48.0 ], [ "28092000", "NA", "EGY", 2010, 95.0 ], [ "2814", "NA", "EGY", 2010, 3613.0 ], [ "310210", "NA", "EGY", 2010, 2334.0 ], [ "310221", "NA", "EGY", 2010, 84.0 ], [ "310230", "NA", "EGY", 2010, 623.0 ], [ "310280", "NA", "EGY", 2010, 244.0 ], [ "310310", "NA", "EGY", 2010, 357.0 ], [ "31031010", "NA", "EGY", 2010, 128.0 ], [ "2814", "CA", "GAB", 2010, null ], [ "310210", "CA", "GAB", 2010, null ], [ "2814", "NA", "LYA", 2010, 599.0 ], [ "310210", "NA", "LYA", 2010, 418.0 ], [ "310221", "SA", "MAD", 2010, null ], [ "28092000", "NA", "MOR", 2010, 4440.0 ], [ "31031010", "NA", "MOR", 2010, 350.0 ], [ "310530", "NA", "MOR", 2010, 1400.0 ], [ "310540", "NA", "MOR", 2010, null ], [ "2814", "WA", "NGR", 2010, 271.0 ], [ "310210", "WA", "NGR", 2010, 228.0 ], [ "310310", "WA", "NGR", 2010, 14.0 ], [ "28092000", "WA", "SEN", 2010, 660.0 ], [ "28092000", "SA", "SAF", 2010, 805.0 ], [ "2814", "SA", "SAF", 2010, 548.0 ], [ "310221", "SA", "SAF", 2010, 24.0 ], [ "310230", "SA", "SAF", 2010, 417.0 ], [ "310280", "SA", "SAF", 2010, 168.0 ], [ "310310", "SA", "SAF", 2010, 24.0 ], [ "310530", "SA", "SAF", 2010, 172.0 ], [ "28092000", "NA", "TUN", 2010, 1653.0 ], [ "310230", "NA", "TUN", 2010, 111.0 ], [ "310310", "NA", "TUN", 2010, null ], [ "31031010", "NA", "TUN", 2010, 410.0 ], [ "310530", "NA", "TUN", 2010, 501.0 ], [ "310230", "SA", "ZAM", 2010, null ], [ "28092000", "SA", "ZIM", 2010, 40.0 ], [ "2814", "SA", "ZIM", 2010, 37.0 ], [ "310230", "SA", "ZIM", 2010, 81.0 ], [ "310310", "SA", "ZIM", 2010, 30.0 ], [ "31031010", "SA", "ZIM", 2010, 16.0 ], [ "310430", "", "AFR", 2010, 26.0 ], [ "2814", "NA", "ALG", 2011, 816.0 ], [ "310210", "NA", "ALG", 2011, null ], [ "310230", "NA", "ALG", 2011, 334.0 ], [ "310280", "NA", "ALG", 2011, 95.0 ], [ "310310", "NA", "ALG", 2011, 48.0 ], [ "28092000", "NA", "EGY", 2011, 95.0 ], [ "2814", "NA", "EGY", 2011, 3613.0 ], [ "310210", "NA", "EGY", 2011, 2334.0 ], [ "310221", "NA", "EGY", 2011, 84.0 ], [ "310230", "NA", "EGY", 2011, 623.0 ], [ "310280", "NA", "EGY", 2011, 296.0 ], [ "310310", "NA", "EGY", 2011, 427.0 ], [ "31031010", "NA", "EGY", 2011, 128.0 ], [ "2814", "CA", "GAB", 2011, null ], [ "310210", "CA", "GAB", 2011, null ], [ "2814", "NA", "LYA", 2011, 599.0 ], [ "310210", "NA", "LYA", 2011, 418.0 ], [ "310221", "SA", "MAD", 2011, null ], [ "28092000", "NA", "MOR", 2011, 4440.0 ], [ "31031010", "NA", "MOR", 2011, 475.0 ], [ "310530", "NA", "MOR", 2011, 1600.0 ], [ "310540", "NA", "MOR", 2011, 200.0 ], [ "2814", "WA", "NGR", 2011, 271.0 ], [ "310210", "WA", "NGR", 2011, 228.0 ], [ "310310", "WA", "NGR", 2011, 14.0 ], [ "28092000", "WA", "SEN", 2011, 660.0 ], [ "28092000", "SA", "SAF", 2011, 750.0 ], [ "2814", "SA", "SAF", 2011, 548.0 ], [ "310221", "SA", "SAF", 2011, 24.0 ], [ "310230", "SA", "SAF", 2011, 417.0 ], [ "310280", "SA", "SAF", 2011, 168.0 ], [ "310310", "SA", "SAF", 2011, 24.0 ], [ "310530", "SA", "SAF", 2011, 172.0 ], [ "28092000", "NA", "TUN", 2011, 1653.0 ], [ "310230", "NA", "TUN", 2011, 111.0 ], [ "310310", "NA", "TUN", 2011, null ], [ "31031010", "NA", "TUN", 2011, 410.0 ], [ "310530", "NA", "TUN", 2011, 501.0 ], [ "310230", "SA", "ZAM", 2011, null ], [ "28092000", "SA", "ZIM", 2011, 40.0 ], [ "2814", "SA", "ZIM", 2011, 37.0 ], [ "310230", "SA", "ZIM", 2011, 81.0 ], [ "310310", "SA", "ZIM", 2011, 30.0 ], [ "31031010", "SA", "ZIM", 2011, 16.0 ], [ "310430", "", "AFR", 2011, 31.0 ], [ "2814", "NA", "ALG", 2012, 816.0 ], [ "310210", "NA", "ALG", 2012, null ], [ "310230", "NA", "ALG", 2012, 334.0 ], [ "310280", "NA", "ALG", 2012, 95.0 ], [ "310310", "NA", "ALG", 2012, 48.0 ], [ "28092000", "NA", "EGY", 2012, 95.0 ], [ "2814", "NA", "EGY", 2012, 3732.0 ], [ "310210", "NA", "EGY", 2012, 2439.0 ], [ "310221", "NA", "EGY", 2012, 84.0 ], [ "310230", "NA", "EGY", 2012, 623.0 ], [ "310280", "NA", "EGY", 2012, 296.0 ], [ "310310", "NA", "EGY", 2012, 530.0 ], [ "31031010", "NA", "EGY", 2012, 128.0 ], [ "2814", "CA", "GAB", 2012, null ], [ "310210", "CA", "GAB", 2012, null ], [ "2814", "NA", "LYA", 2012, 599.0 ], [ "310210", "NA", "LYA", 2012, 418.0 ], [ "310221", "SA", "MAD", 2012, 40.0 ], [ "28092000", "NA", "MOR", 2012, 4440.0 ], [ "31031010", "NA", "MOR", 2012, 475.0 ], [ "310530", "NA", "MOR", 2012, 1600.0 ], [ "310540", "NA", "MOR", 2012, 200.0 ], [ "2814", "WA", "NGR", 2012, 271.0 ], [ "310210", "WA", "NGR", 2012, 228.0 ], [ "310310", "WA", "NGR", 2012, 14.0 ], [ "28092000", "WA", "SEN", 2012, 660.0 ], [ "28092000", "SA", "SAF", 2012, 750.0 ], [ "2814", "SA", "SAF", 2012, 548.0 ], [ "310221", "SA", "SAF", 2012, 24.0 ], [ "310230", "SA", "SAF", 2012, 541.0 ], [ "310280", "SA", "SAF", 2012, 168.0 ], [ "310310", "SA", "SAF", 2012, 24.0 ], [ "310530", "SA", "SAF", 2012, 172.0 ], [ "28092000", "NA", "TUN", 2012, 1653.0 ], [ "310230", "NA", "TUN", 2012, 111.0 ], [ "310310", "NA", "TUN", 2012, null ], [ "31031010", "NA", "TUN", 2012, 410.0 ], [ "310530", "NA", "TUN", 2012, 501.0 ], [ "310230", "SA", "ZAM", 2012, null ], [ "28092000", "SA", "ZIM", 2012, 40.0 ], [ "2814", "SA", "ZIM", 2012, 27.0 ], [ "310230", "SA", "ZIM", 2012, 81.0 ], [ "310310", "SA", "ZIM", 2012, 30.0 ], [ "31031010", "SA", "ZIM", 2012, 16.0 ], [ "310430", "", "AFR", 2012, 31.0 ], [ "2814", "NA", "ALG", 2013, 2010.0 ], [ "310210", "NA", "ALG", 2013, 552.0 ], [ "310230", "NA", "ALG", 2013, 334.0 ], [ "310280", "NA", "ALG", 2013, 95.0 ], [ "310310", "NA", "ALG", 2013, 48.0 ], [ "28092000", "NA", "EGY", 2013, 95.0 ], [ "2814", "NA", "EGY", 2013, 3732.0 ], [ "310210", "NA", "EGY", 2013, 2439.0 ], [ "310221", "NA", "EGY", 2013, 84.0 ], [ "310230", "NA", "EGY", 2013, 623.0 ], [ "310280", "NA", "EGY", 2013, 296.0 ], [ "310310", "NA", "EGY", 2013, 638.0 ], [ "31031010", "NA", "EGY", 2013, 128.0 ], [ "2814", "CA", "GAB", 2013, null ], [ "310210", "CA", "GAB", 2013, null ], [ "2814", "NA", "LYA", 2013, 599.0 ], [ "310210", "NA", "LYA", 2013, 418.0 ], [ "310221", "SA", "MAD", 2013, 40.0 ], [ "28092000", "NA", "MOR", 2013, 4890.0 ], [ "31031010", "NA", "MOR", 2013, 475.0 ], [ "310530", "NA", "MOR", 2013, 2400.0 ], [ "310540", "NA", "MOR", 2013, 200.0 ], [ "2814", "WA", "NGR", 2013, 271.0 ], [ "310210", "WA", "NGR", 2013, 228.0 ], [ "310310", "WA", "NGR", 2013, 14.0 ], [ "28092000", "WA", "SEN", 2013, 660.0 ], [ "28092000", "SA", "SAF", 2013, 750.0 ], [ "2814", "SA", "SAF", 2013, 548.0 ], [ "310221", "SA", "SAF", 2013, 24.0 ], [ "310230", "SA", "SAF", 2013, 541.0 ], [ "310280", "SA", "SAF", 2013, 168.0 ], [ "310310", "SA", "SAF", 2013, 24.0 ], [ "310530", "SA", "SAF", 2013, 192.0 ], [ "28092000", "NA", "TUN", 2013, 2013.0 ], [ "310230", "NA", "TUN", 2013, 111.0 ], [ "310310", "NA", "TUN", 2013, null ], [ "31031010", "NA", "TUN", 2013, 410.0 ], [ "310530", "NA", "TUN", 2013, 501.0 ], [ "310230", "SA", "ZAM", 2013, 40.0 ], [ "28092000", "SA", "ZIM", 2013, 40.0 ], [ "2814", "SA", "ZIM", 2013, 27.0 ], [ "310230", "SA", "ZIM", 2013, 81.0 ], [ "310310", "SA", "ZIM", 2013, 30.0 ], [ "31031010", "SA", "ZIM", 2013, 16.0 ], [ "310430", "", "AFR", 2013, 31.0 ], [ "2814", "NA", "ALG", 2014, 3095.0 ], [ "310210", "NA", "ALG", 2014, 1615.0 ], [ "310230", "NA", "ALG", 2014, 334.0 ], [ "310280", "NA", "ALG", 2014, 95.0 ], [ "310310", "NA", "ALG", 2014, 48.0 ], [ "28092000", "NA", "EGY", 2014, 95.0 ], [ "2814", "NA", "EGY", 2014, 3732.0 ], [ "310210", "NA", "EGY", 2014, 2439.0 ], [ "310221", "NA", "EGY", 2014, 84.0 ], [ "310230", "NA", "EGY", 2014, 774.0 ], [ "310280", "NA", "EGY", 2014, 296.0 ], [ "310310", "NA", "EGY", 2014, 638.0 ], [ "31031010", "NA", "EGY", 2014, 128.0 ], [ "2814", "CA", "GAB", 2014, null ], [ "310210", "CA", "GAB", 2014, null ], [ "2814", "NA", "LYA", 2014, 599.0 ], [ "310210", "NA", "LYA", 2014, 418.0 ], [ "310221", "SA", "MAD", 2014, 40.0 ], [ "28092000", "NA", "MOR", 2014, 5340.0 ], [ "31031010", "NA", "MOR", 2014, 475.0 ], [ "310530", "NA", "MOR", 2014, 2850.0 ], [ "310540", "NA", "MOR", 2014, 200.0 ], [ "2814", "WA", "NGR", 2014, 271.0 ], [ "310210", "WA", "NGR", 2014, 228.0 ], [ "310310", "WA", "NGR", 2014, 14.0 ], [ "28092000", "WA", "SEN", 2014, 660.0 ], [ "28092000", "SA", "SAF", 2014, 750.0 ], [ "2814", "SA", "SAF", 2014, 548.0 ], [ "310221", "SA", "SAF", 2014, 24.0 ], [ "310230", "SA", "SAF", 2014, 545.0 ], [ "310280", "SA", "SAF", 2014, 168.0 ], [ "310310", "SA", "SAF", 2014, 24.0 ], [ "310530", "SA", "SAF", 2014, 208.0 ], [ "28092000", "NA", "TUN", 2014, 2013.0 ], [ "310230", "NA", "TUN", 2014, 111.0 ], [ "310310", "NA", "TUN", 2014, null ], [ "31031010", "NA", "TUN", 2014, 410.0 ], [ "310530", "NA", "TUN", 2014, 501.0 ], [ "310230", "SA", "ZAM", 2014, 40.0 ], [ "28092000", "SA", "ZIM", 2014, null ], [ "2814", "SA", "ZIM", 2014, 36.0 ], [ "310230", "SA", "ZIM", 2014, 81.0 ], [ "310310", "SA", "ZIM", 2014, 30.0 ], [ "31031010", "SA", "ZIM", 2014, null ], [ "310430", "", "AFR", 2014, 31.0 ], [ "2814", "NA", "ALG", 2015, 3095.0 ], [ "310210", "NA", "ALG", 2015, 1615.0 ], [ "310230", "NA", "ALG", 2015, 334.0 ], [ "310280", "NA", "ALG", 2015, 95.0 ], [ "310310", "NA", "ALG", 2015, 48.0 ], [ "28092000", "NA", "EGY", 2015, 95.0 ], [ "2814", "NA", "EGY", 2015, 4926.0 ], [ "310210", "NA", "EGY", 2015, 3037.0 ], [ "310221", "NA", "EGY", 2015, null ], [ "310230", "NA", "EGY", 2015, 774.0 ], [ "310280", "NA", "EGY", 2015, 296.0 ], [ "310310", "NA", "EGY", 2015, 638.0 ], [ "31031010", "NA", "EGY", 2015, 128.0 ], [ "2814", "CA", "GAB", 2015, null ], [ "310210", "CA", "GAB", 2015, null ], [ "2814", "NA", "LYA", 2015, 599.0 ], [ "310210", "NA", "LYA", 2015, 418.0 ], [ "310221", "SA", "MAD", 2015, null ], [ "28092000", "NA", "MOR", 2015, 6240.0 ], [ "31031010", "NA", "MOR", 2015, 475.0 ], [ "310530", "NA", "MOR", 2015, 3750.0 ], [ "310540", "NA", "MOR", 2015, 200.0 ], [ "2814", "WA", "NGR", 2015, 271.0 ], [ "310210", "WA", "NGR", 2015, 228.0 ], [ "310310", "WA", "NGR", 2015, 14.0 ], [ "28092000", "WA", "SEN", 2015, 660.0 ], [ "28092000", "SA", "SAF", 2015, 750.0 ], [ "2814", "SA", "SAF", 2015, 548.0 ], [ "310221", "SA", "SAF", 2015, null ], [ "310230", "SA", "SAF", 2015, 549.0 ], [ "310280", "SA", "SAF", 2015, 168.0 ], [ "310310", "SA", "SAF", 2015, 24.0 ], [ "310530", "SA", "SAF", 2015, 208.0 ], [ "28092000", "NA", "TUN", 2015, 2073.0 ], [ "310230", "NA", "TUN", 2015, 111.0 ], [ "310310", "NA", "TUN", 2015, null ], [ "31031010", "NA", "TUN", 2015, 460.0 ], [ "310530", "NA", "TUN", 2015, 501.0 ], [ "310230", "SA", "ZAM", 2015, 40.0 ], [ "28092000", "SA", "ZIM", 2015, null ], [ "2814", "SA", "ZIM", 2015, 40.0 ], [ "310230", "SA", "ZIM", 2015, 81.0 ], [ "310310", "SA", "ZIM", 2015, 30.0 ], [ "31031010", "SA", "ZIM", 2015, null ], [ "310430", "", "AFR", 2015, 31.0 ], [ "2814", "NA", "ALG", 2016, 3095.0 ], [ "310210", "NA", "ALG", 2016, 1615.0 ], [ "310230", "NA", "ALG", 2016, 334.0 ], [ "310280", "NA", "ALG", 2016, null ], [ "310310", "NA", "ALG", 2016, 48.0 ], [ "28092000", "NA", "EGY", 2016, 95.0 ], [ "2814", "NA", "EGY", 2016, 5251.0 ], [ "310210", "NA", "EGY", 2016, 3037.0 ], [ "310221", "NA", "EGY", 2016, null ], [ "310230", "NA", "EGY", 2016, 865.0 ], [ "310280", "NA", "EGY", 2016, null ], [ "310310", "NA", "EGY", 2016, 638.0 ], [ "31031010", "NA", "EGY", 2016, 128.0 ], [ "2814", "CA", "GAB", 2016, null ], [ "310210", "CA", "GAB", 2016, null ], [ "2814", "NA", "LYA", 2016, 599.0 ], [ "310210", "NA", "LYA", 2016, 418.0 ], [ "310221", "SA", "MAD", 2016, null ], [ "28092000", "NA", "MOR", 2016, 6690.0 ], [ "31031010", "NA", "MOR", 2016, 475.0 ], [ "310530", "NA", "MOR", 2016, 4200.0 ], [ "310540", "NA", "MOR", 2016, 200.0 ], [ "2814", "WA", "NGR", 2016, 895.0 ], [ "310210", "WA", "NGR", 2016, 835.0 ], [ "310310", "WA", "NGR", 2016, 14.0 ], [ "28092000", "WA", "SEN", 2016, 660.0 ], [ "28092000", "SA", "SAF", 2016, 750.0 ], [ "2814", "SA", "SAF", 2016, 548.0 ], [ "310221", "SA", "SAF", 2016, null ], [ "310230", "SA", "SAF", 2016, 549.0 ], [ "310280", "SA", "SAF", 2016, null ], [ "310310", "SA", "SAF", 2016, 24.0 ], [ "310530", "SA", "SAF", 2016, 208.0 ], [ "28092000", "NA", "TUN", 2016, 2073.0 ], [ "310230", "NA", "TUN", 2016, 111.0 ], [ "310310", "NA", "TUN", 2016, null ], [ "31031010", "NA", "TUN", 2016, 460.0 ], [ "310530", "NA", "TUN", 2016, 501.0 ], [ "310230", "SA", "ZAM", 2016, 40.0 ], [ "28092000", "SA", "ZIM", 2016, null ], [ "2814", "SA", "ZIM", 2016, 40.0 ], [ "310230", "SA", "ZIM", 2016, 81.0 ], [ "310310", "SA", "ZIM", 2016, 30.0 ], [ "31031010", "SA", "ZIM", 2016, null ], [ "310430", "", "AFR", 2016, 31.0 ], [ "2814", "NA", "ALG", 2017, 3365.0 ], [ "310210", "NA", "ALG", 2017, 1615.0 ], [ "310230", "NA", "ALG", 2017, 334.0 ], [ "310280", "NA", "ALG", 2017, null ], [ "310310", "NA", "ALG", 2017, null ], [ "28092000", "NA", "EGY", 2017, 95.0 ], [ "2814", "NA", "EGY", 2017, 5468.0 ], [ "310210", "NA", "EGY", 2017, 3280.0 ], [ "310221", "NA", "EGY", 2017, null ], [ "310230", "NA", "EGY", 2017, 908.0 ], [ "310280", "NA", "EGY", 2017, null ], [ "310310", "NA", "EGY", 2017, null ], [ "31031010", "NA", "EGY", 2017, 128.0 ], [ "2814", "CA", "GAB", 2017, 597.0 ], [ "310210", "CA", "GAB", 2017, 584.0 ], [ "2814", "NA", "LYA", 2017, 599.0 ], [ "310210", "NA", "LYA", 2017, 418.0 ], [ "310221", "SA", "MAD", 2017, null ], [ "28092000", "NA", "MOR", 2017, 6690.0 ], [ "31031010", "NA", "MOR", 2017, 475.0 ], [ "310530", "NA", "MOR", 2017, 4200.0 ], [ "310540", "NA", "MOR", 2017, 200.0 ], [ "2814", "WA", "NGR", 2017, 2089.0 ], [ "310210", "WA", "NGR", 2017, 2004.0 ], [ "310310", "WA", "NGR", 2017, null ], [ "28092000", "WA", "SEN", 2017, 660.0 ], [ "28092000", "SA", "SAF", 2017, 750.0 ], [ "2814", "SA", "SAF", 2017, 548.0 ], [ "310221", "SA", "SAF", 2017, null ], [ "310230", "SA", "SAF", 2017, 549.0 ], [ "310280", "SA", "SAF", 2017, null ], [ "310310", "SA", "SAF", 2017, null ], [ "310530", "SA", "SAF", 2017, 208.0 ], [ "28092000", "NA", "TUN", 2017, 2073.0 ], [ "310230", "NA", "TUN", 2017, 111.0 ], [ "310310", "NA", "TUN", 2017, null ], [ "31031010", "NA", "TUN", 2017, 460.0 ], [ "310530", "NA", "TUN", 2017, 501.0 ], [ "310230", "SA", "ZAM", 2017, 40.0 ], [ "28092000", "SA", "ZIM", 2017, null ], [ "2814", "SA", "ZIM", 2017, 40.0 ], [ "310230", "SA", "ZIM", 2017, 81.0 ], [ "310310", "SA", "ZIM", 2017, null ], [ "31031010", "SA", "ZIM", 2017, null ], [ "310430", "", "AFR", 2017, null ], [ "2814", "NA", "ALG", 2018, 3365.0 ], [ "310210", "NA", "ALG", 2018, 1615.0 ], [ "310230", "NA", "ALG", 2018, 334.0 ], [ "310280", "NA", "ALG", 2018, null ], [ "310310", "NA", "ALG", 2018, null ], [ "28092000", "NA", "EGY", 2018, 95.0 ], [ "2814", "NA", "EGY", 2018, 5468.0 ], [ "310210", "NA", "EGY", 2018, 3280.0 ], [ "310221", "NA", "EGY", 2018, null ], [ "310230", "NA", "EGY", 2018, 908.0 ], [ "310280", "NA", "EGY", 2018, null ], [ "310310", "NA", "EGY", 2018, null ], [ "31031010", "NA", "EGY", 2018, 128.0 ], [ "2814", "CA", "GAB", 2018, 597.0 ], [ "310210", "CA", "GAB", 2018, 584.0 ], [ "2814", "NA", "LYA", 2018, 599.0 ], [ "310210", "NA", "LYA", 2018, 418.0 ], [ "310221", "SA", "MAD", 2018, null ], [ "28092000", "NA", "MOR", 2018, 6690.0 ], [ "31031010", "NA", "MOR", 2018, 475.0 ], [ "310530", "NA", "MOR", 2018, 4200.0 ], [ "310540", "NA", "MOR", 2018, 200.0 ], [ "2814", "WA", "NGR", 2018, 2089.0 ], [ "310210", "WA", "NGR", 2018, 2004.0 ], [ "310310", "WA", "NGR", 2018, null ], [ "28092000", "WA", "SEN", 2018, 660.0 ], [ "28092000", "SA", "SAF", 2018, 750.0 ], [ "2814", "SA", "SAF", 2018, 548.0 ], [ "310221", "SA", "SAF", 2018, null ], [ "310230", "SA", "SAF", 2018, 549.0 ], [ "310280", "SA", "SAF", 2018, null ], [ "310310", "SA", "SAF", 2018, null ], [ "310530", "SA", "SAF", 2018, 208.0 ], [ "28092000", "NA", "TUN", 2018, 2073.0 ], [ "310230", "NA", "TUN", 2018, 111.0 ], [ "310310", "NA", "TUN", 2018, null ], [ "31031010", "NA", "TUN", 2018, 460.0 ], [ "310530", "NA", "TUN", 2018, 501.0 ], [ "310230", "SA", "ZAM", 2018, 40.0 ], [ "28092000", "SA", "ZIM", 2018, null ], [ "2814", "SA", "ZIM", 2018, 40.0 ], [ "310230", "SA", "ZIM", 2018, 81.0 ], [ "310310", "SA", "ZIM", 2018, null ], [ "31031010", "SA", "ZIM", 2018, null ], [ "310430", "", "AFR", 2018, null ] ],
+  "size" : 630
+}
