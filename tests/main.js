@@ -57,10 +57,10 @@ requirejs(['../js/paths'], function (paths) {
 		//var pivot1 = pivot.render("pivot1",dataTest1_1, dataConfig1);
 		
 
-		pp2=new pivot();
+		/*pp2=new pivot();
 		pp2.render("pivot2",dataTest1_2, dataConfig2);
 		
-
+*/
 	});
 });
 

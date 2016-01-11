@@ -17,10 +17,10 @@ requirejs.config({
        // configuration: "tests/configuration",
         pivot: "js/pivot",
 		'highcharts': "//fenixapps.fao.org/repository/js/highcharts/4.0.4/js/highcharts",
-		'HPivot' :'//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min',
+	//	'HPivot' :'//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min',
 		/*PROD*/
-				/*
-DEV
+				
+//DEV
 				'HPivot' :'lib/HierachicalRender/pivot',
 
 		'HPivot1':'lib/HierachicalRender/agregate_average',
@@ -28,7 +28,7 @@ DEV
 		'HPivot3':'lib/HierachicalRender/agregate_distinct',
 		'HPivot4':'lib/HierachicalRender/agregate_sum',
 		'HPivot5':'lib/HierachicalRender/formatter_default',
-		'HPivot6':'lib/HierachicalRender/group_distinct'*/
+		'HPivot6':'lib/HierachicalRender/group_distinct'
     },
     shim: {jqueryui:{deps: ['jquery']},
         /*i18n : {deps: ['jquery']},
