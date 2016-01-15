@@ -390,7 +390,7 @@ define([
         },
         newGrid: function(r, options) {
 
-            console.log(gridOption)
+       
 
             var FAOSTATOLAPV3 = {};
 			var id=options.id+ "_fx-olap-ui"
@@ -411,16 +411,20 @@ define([
 		 
 	 };
 	 if(!options.cellRenderFunction){options.cellRenderFunction=frenddefault;}
-var ttt=[]
+	var ttt=[];
+	
+		if( r.colKeys.length>0) {
 	 for (var ligne in r.tree) {ttt.push(ligne)}
 	 //console.log(ttt,ttt.sort())	
 	  //for (var ligne in ttt.sort()) {console.log(ligne)}
-	 ttt.sort();
+	 ttt.sort();		
 	 for (var ligne2 in ttt) {
 	 ligne=ttt[ligne2];
 	 
                 var temp = ligne.split('||');
 				r.colKeys.sort();
+			
+			
                 for (var col in r.colKeys) {
                     var coldInd = r.colKeys[col].join("||");
 					if (r.tree[ligne][coldInd] != null && r.tree[ligne][coldInd].value()!=null){
@@ -438,9 +442,40 @@ var ttt=[]
 					}
                     else {temp.push("");}
                 }
+	 
+
                 r2d2.push(temp);
-            }
-            var grid_demo_id = id + "_myGrid1";
+		}
+		}
+		else{ for(ligne in r.rowTotals){
+          var temp=ligne.split('||');
+          if( r.rowTotals[ligne]!=null){
+			  
+            try{
+						if(r.rowTotals[ligne].value().length>1){
+						var ret="";
+						if(options.showUnit || options.showFlags){
+						ret=options.cellRenderFunction(addSeparators(r.rowTotals[ligne].value()[0]," ","."),r.rowTotals[ligne].value()[1],r.rowTotals[ligne].value()[2],options.showUnit, options.showFlags);
+						}
+						else{ ret+=addSeparators(r.rowTotals[ligne].value()[0]," ",".");}
+						}
+						else{var ret=r.rowTotals[ligne].value();}
+						temp.push(ret);
+						}catch(ER){console.log(ER,r.tree[ligne][coldInd])}
+
+
+			// temp.push(r.rowTotals[ligne].value());
+			  
+			  }
+            else{temp.push( "");}
+      r2d2.push(temp);
+		
+		
+		}}
+          
+
+
+		  var grid_demo_id = id + "_myGrid1";
             var dsOption = {fields: [], recordType: 'array', data: r2d2};
 
             var colsOption = [];
@@ -450,19 +485,31 @@ var ttt=[]
             }
             var reg = new RegExp("<span class=ordre>[0-9]*</span>", "g");
             var reg2 = new RegExp("<span class=ordre>[0-9]*</span><table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g");
-
+if(r.colKeys.length>0){
             for (var i in r.colKeys) {
                 dsOption.fields.push({name: r.colKeys[i].toString().replace(/[^a-zA-Z0-9]/g, "_")});
                var montitle = "";
                 for (var ii = 0; ii < r.colKeys[i].length; ii++) {
                     if (true || options.showCodes)
-					{montitle += "<br>" + r.colKeys[i][ii].replace(reg2, "$2 ($1)")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
-                    else {montitle += "<br>" + r.colKeys[i][ii].replace(reg, "")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
+					{
+						try{
+						
+						montitle += "<br>" + r.colKeys[i][ii].toString().replace(reg2, "$2 ($1)")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;
+						}
+						catch(ex){console.log("ERREUR",options.showCodes,r.colKeys,i,ii);}
+						}
+                    else {montitle += "<br>" + r.colKeys[i][ii].toString().replace(reg, "")/*.replace(/[^a-zA-Z0-9]/g,"_")*/;}
                 }
                 colsOption.push({id: r.colKeys[i].join("_").replace(/[^a-zA-Z0-9]/g, "_"),
 				header: montitle,
 				toolTip: true, toolTipWidth: 150});
             }
+}
+else{ dsOption.fields.push({name : "Value"  } );
+     colsOption.push({id: "Value" ,
+       header: "Value", toolTip : true ,toolTipWidth : 150,
+       /*renderer:my_renderer*/});
+    }
  
            /*var gridOption = {
                 id: grid_demo_id,

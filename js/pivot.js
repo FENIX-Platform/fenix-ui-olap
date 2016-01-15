@@ -537,7 +537,7 @@ define([
                 try {
                     if (!row[i][col[j]]) {
                         ret += ",";
-                        if (this.myinputOpts.showUnit) {
+                        if (this.myinputOpts.showUnit) { 
                             ret += ",";
                         }
                         if (this.myinputOpts.showFlags) {
@@ -600,6 +600,44 @@ define([
 function derivedAtt(el,code){;f= function(mp) {return mp[el]+" "+mp[code];}
 return f
 }*/
+var renderD3S =// function(ii, inputDSD, inputOpts, overwrite, locale) {
+	function(param) {
+	/*{
+model: model,
+format: "fenix",
+container: obj.$el.find(s.TABLE_CONTAINER),inputOpts:{},overwrite:true,locale:"en"
+}*/
+	// console.log(inputDSD,inputOpts,!locale);
+	 var lang="EN";
+	 var inputOpts=param.inputOpts;
+	 if(param.locale){alert("not yest implemented");}
+	 var input=[];
+	 var header=[];
+	 var colMyTemp={};
+	 console.log(param);
+	 for (var col in param.model.metadata.dsd.columns)
+	 {
+		if(param.model.metadata.dsd.columns[col].subject!="value"){
+			if(!colMyTemp[param.model.metadata.dsd.columns[col].title[lang]]){colMyTemp[param.model.metadata.dsd.columns[col].title[lang]]=[];}
+			colMyTemp[param.model.metadata.dsd.columns[col].title[lang]].push(param.model.metadata.dsd.columns[col].id);
+		/* header.push(inputDSD.metadata.dsd.columns[col].title[lang]);
+		inputOpts.rows.push(inputDSD.metadata.dsd.columns[col].title[lang])
+		*/
+		 header.push(param.model.metadata.dsd.columns[col].id);
+	//	inputOpts.rows.push(inputDSD.metadata.dsd.columns[col].id)
+		
+		}else{ header.push("Value");}
+		}
+		for(var ht in colMyTemp){colMyTemp[ht].sort().reverse();
+		inputOpts.rows.push(colMyTemp[ht])	;
+		}
+		console.log("colMyTemp",colMyTemp);
+ input.push(header);
+input= input.concat(param.model.data);
+ 
+ console.log(input,inputOpts)
+      return this.render(param.container, input, inputOpts, param.overwrite, param.locale);
+    }
 
     var render = function(ii, input, inputOpts, overwrite, locale) {
         this.InternalID = ii;
@@ -1313,6 +1351,7 @@ return f
     return function() {
         return{
             render: render,
+			renderD3S:renderD3S,
             destroy: destroy,
             changechkTreeview: changechkTreeview,
             exportExcel: exportExcel,
