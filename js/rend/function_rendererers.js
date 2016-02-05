@@ -6,7 +6,8 @@ define([
 	'gt_msg_grid',
 //	'i18n!fx-pivot/nls/pivot',
 'fx-olap/config/gridoption-default',
-'fx-olap/config/gridoption'
+'fx-olap/config/gridoption',
+'HPivot'
 	], function(
     $,
 		highcharts,

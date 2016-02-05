@@ -614,7 +614,6 @@ container: obj.$el.find(s.TABLE_CONTAINER),inputOpts:{},overwrite:true,locale:"e
 	 var input=[];
 	 var header=[];
 	 var colMyTemp={};
-	 console.log(param);
 	 for (var col in param.model.metadata.dsd.columns)
 	 {
 		if(param.model.metadata.dsd.columns[col].subject!="value"){
@@ -631,11 +630,9 @@ container: obj.$el.find(s.TABLE_CONTAINER),inputOpts:{},overwrite:true,locale:"e
 		for(var ht in colMyTemp){colMyTemp[ht].sort().reverse();
 		inputOpts.rows.push(colMyTemp[ht])	;
 		}
-		console.log("colMyTemp",colMyTemp);
  input.push(header);
 input= input.concat(param.model.data);
  
- console.log(input,inputOpts)
       return this.render(param.container, input, inputOpts, param.overwrite, param.locale);
     }
 
@@ -959,8 +956,7 @@ input= input.concat(param.model.data);
             }
             colList.append(attrElem);
 			attrElem.append(valueList);
-			//console.log(valueList.html())
-            //$("body").append(attrElem).append(valueList);
+			
             return attrElem.on("dblclick", showFilterList);
         };
         for (i in shownAttributes) {
