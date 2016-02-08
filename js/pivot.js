@@ -457,27 +457,8 @@ define([
         $("#" + this.myinputOpts.id + "_fx-olap-ui").pivotUI(this.originalData, this.myinputOpts, true);
     }
 
-    var exportExcel = function(title) {
-		if(typeof title !== "undefined"){document.getElementById("excelTitle").value=title;}
-        var FID = $("#" + this.myinputOpts.id).data().internalData;
-        var mycols = [];
-        for (var c = 0; c < FID.rowAttrs.length; c++){mycols.push(FID.rowAttrs[c] + "Name");}
-        flatColKeyst = [];
-        tt = FID.getColKeys();
-        for (tti in tt) {flatColKeyst.push(tt[tti].join("||"));}
-		
-        document.getElementById("myJson").value = stringify(
-                {data: FID.tree,
-                    header: flatColKeyst, cols: mycols, swUnit: this.myinputOpts.showUnit ? '1' : '0', swFlag: this.myinputOpts.showFlags ? '1' : '0'
-
-                });
-
-        document.getElementById("xlsDataForm").submit();
-
-    }
-
 	
-	var showCode=function(param){
+		var showCode=function(param){
 		this.myinputOpts.showCode=param;
 			this.myinputOpts.originalOpts.showCode=param;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
@@ -494,6 +475,45 @@ define([
 		this.myinputOpts.originalOpts.showFlags=param;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
+	
+	
+    var exportExcel = function(title) {
+		if(typeof title !== "undefined"){document.getElementById("excelTitle").value=title;}
+        var FID = $("#" + this.myinputOpts.id).data().internalData;
+		if(FID.colKeys.length>0){ 
+			var mycols = [];
+			for (var c = 0; c < FID.rowAttrs.length; c++){mycols.push(FID.rowAttrs[c] + "Name");}
+			flatColKeyst = [];
+			tt = FID.getColKeys();
+			for (tti in tt) {flatColKeyst.push(tt[tti].join("||"));}
+		
+			document.getElementById("myJson").value = stringify(
+                {data: FID.tree,
+                    header: flatColKeyst, cols: mycols, swUnit: this.myinputOpts.showUnit ? '1' : '0', swFlag: this.myinputOpts.showFlags ? '1' : '0'
+
+                });			
+		}
+		else
+		{
+			var mycols = [];
+			for (var c = 0; c < FID.rowAttrs.length; c++){mycols.push(FID.rowAttrs[c] + "Name");}
+			flatColKeyst = [];
+			flatColKeyst.push("Value")
+		var dataTot={};
+		for(dt in FID.rowTotals){dataTot[dt]={"Value":FID.rowTotals[dt]};}
+			document.getElementById("myJson").value = stringify(
+                {data: dataTot,
+                    header: flatColKeyst, cols: mycols, swUnit: this.myinputOpts.showUnit ? '1' : '0', swFlag: this.myinputOpts.showFlags ? '1' : '0'
+
+                });
+			
+		}
+        document.getElementById("xlsDataForm").submit();
+
+    }
+
+	
+
 		
 		
     var exportCSV = function(title) {
@@ -504,13 +524,13 @@ define([
         var reg3 = new RegExp("<span class=ordre></span>", "g");
         var reg2 = new RegExp("<table class=\"innerCol\"><th>([0-9]+)</th><th>([^>]*)</th></table>", "g");
         var FID = $("#" + this.myinputOpts.id).data().internalData;
+		if(FID.colKeys.length>0){
         var row = FID.tree;
         //  var col = FAOSTATNEWOLAP.internalData.flatColKeys.sort();
         flatColKeyst = [];
         tt = FID.getColKeys();
-        for (tti in tt) {
-            flatColKeyst.push(tt[tti].join("||"))
-        }
+        for (tti in tt) {flatColKeyst.push(tt[tti].join("||"))}
+		
         var col = flatColKeyst.sort();
         var ret = "";
         for (var j = 0; j < FID.rowKeys[0].length; j++) {
@@ -537,28 +557,61 @@ define([
                 try {
                     if (!row[i][col[j]]) {
                         ret += ",";
-                        if (this.myinputOpts.showUnit) { 
-                            ret += ",";
-                        }
-                        if (this.myinputOpts.showFlags) {
-                            ret += ",";
-                        }
+                        if (this.myinputOpts.showUnit) {ret += ",";}
+                        if (this.myinputOpts.showFlags) {ret += ",";}
                     }
                     else {
                         // ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
                         ret += '"' + row[i][col[j]].value()[0] + '"';
-                        if (this.myinputOpts.showUnit) {
-                            ret += ',"' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '"';
-                        }
-                        if (this.myinputOpts.showFlags) {
-                            ret += ',"' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '"';
-                        }
+                        if (this.myinputOpts.showUnit) {ret += ',"' + /*addCommas(*/row[i][col[j]].value()[1]/*)*/ + '"';}
+                        if (this.myinputOpts.showFlags) {ret += ',"' + /*addCommas(*/row[i][col[j]].value()[2]/*)*/ + '"';}
 						if(j<col.length-1){ret += ",";}
                     }
                 } catch (ER) {console.log('er', ER);}
             }
             ret += "\n";
         }
+	}
+else{
+		var row=FID.rowTotals; 
+		 var ret = "";
+        for (var j = 0; j < FID.rowKeys[0].length; j++) {
+          /*  if (showCodes) {
+                ret += "Code,";
+            }*/
+            ret += '"' + FID.rowAttrs[j].replace("_", "") + "\",";
+        }
+		ret+="value"; 
+		if (this.myinputOpts.showUnit) {ret += ",unit";}
+		if (this.myinputOpts.showFlags) {ret += ",flag";}
+		
+		   ret += "\n";
+        for (var i in row) {
+            var temp = i.split("||");
+            for (var count = 0; count < temp.length; count++)
+            {
+                ret += '"' + temp[count].replace(/,/g, "").replace(reg2, "$1\",\"$2").replace(reg, "").replace(reg3, "") + "\",";
+            }
+			
+			
+			 if (!row[i]) {
+                        ret += ",";
+                        if (this.myinputOpts.showUnit) {ret += ",";}
+                        if (this.myinputOpts.showFlags) {ret += ",";}
+                    }
+                    else {
+                        // ret += '"' + addCommas(row[i][col[j]].value()[0]) + '",';
+                        ret += '"' + row[i].value()[0] + '"';
+                        if (this.myinputOpts.showUnit) {ret += ',"' + /*addCommas(*/row[i].value()[1]/*)*/ + '"';}
+                        if (this.myinputOpts.showFlags) {ret += ',"' + /*addCommas(*/row[i].value()[2]/*)*/ + '"';}
+                    }
+			
+			 ret += "\n";
+			
+		}
+	
+	}
+	
         try {
             var testtd = document.getElementById("hor-minimalist-b").getElementsByTagName('td');
             j = 0;
