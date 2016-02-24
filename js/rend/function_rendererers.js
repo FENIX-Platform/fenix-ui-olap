@@ -392,7 +392,7 @@ define([
         newGrid: function(r, options) {
 
        
-
+//console.log(r,options)
             var FAOSTATOLAPV3 = {};
 			var id=options.id+ "_fx-olap-ui"
 			var grouped = options.grouped;
@@ -428,6 +428,7 @@ define([
 			
                 for (var col in r.colKeys) {
                     var coldInd = r.colKeys[col].join("||");
+
 					if (r.tree[ligne][coldInd] != null && r.tree[ligne][coldInd].value()!=null){
 						try{
 						if(r.tree[ligne][coldInd].value().length>1){
@@ -435,7 +436,7 @@ define([
 						if(options.showUnit || options.showFlags){
 						ret=options.cellRenderFunction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."),r.tree[ligne][coldInd].value()[1],r.tree[ligne][coldInd].value()[2],options.showUnit, options.showFlags);
 						}
-						else{ ret+=addSeparators(r.tree[ligne][coldInd].value()[0]," ",".");}
+						else{ ret+=options.cellRenderFunction(addSeparators(r.tree[ligne][coldInd].value()[0]," ","."));}
 						}
 						else{var ret=r.tree[ligne][coldInd].value();}
 						temp.push(ret);
@@ -458,7 +459,7 @@ define([
 						if(options.showUnit || options.showFlags){
 						ret=options.cellRenderFunction(addSeparators(r.rowTotals[ligne].value()[0]," ","."),r.rowTotals[ligne].value()[1],r.rowTotals[ligne].value()[2],options.showUnit, options.showFlags);
 						}
-						else{ ret+=addSeparators(r.rowTotals[ligne].value()[0]," ",".");}
+						else{ ret+=options.cellRenderFunction(addSeparators(r.rowTotals[ligne].value()[0]," ","."));}
 						}
 						else{var ret=r.rowTotals[ligne].value();}
 						temp.push(ret);

@@ -32,7 +32,8 @@ define(function () {
 			pivotRenderersFuncs:   'rend/function_rendererers',
 			pivotRenderers:        'rend/rendererers',
 			pivotAggregatorsFuncs: 'rend/function_aggregators',
-			pivotAggregators:      'rend/aggregators'
+			pivotAggregators:      'rend/aggregators',
+			PivotData:'PivotData'
 	      
         },
 
