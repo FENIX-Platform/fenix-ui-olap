@@ -3,6 +3,7 @@
 /*td {vertical-align: middle;	}*/
 /*table td[class*="col-"], table th[class*="col-"]{vertical-align: middle;}*/
 /* ========================= */
+.gt-grid  *{box-sizing: content-box !important;}
 .gt-grid {position: relative;	width:100%;}
 .gt-b-ie {/* overflow-y : hidden; */}
 .gt-b-opera  {/* overflow : hidden; */}

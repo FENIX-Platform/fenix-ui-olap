@@ -30,7 +30,6 @@ define(
 		if(opts.aggregator){this.aggregator = opts.aggregator;
 		}
 			else{ this.aggregator = opts.aggregatorDisplay["Sum2"](["Value"]);}
-         		console.log("opts.aggregator",this.aggregator);
 
 
 		 this.aggregatorName = opts.aggregatorName;
@@ -46,9 +45,7 @@ define(
             this.allTotal = this.aggregator(this, [], []);
             this.sorted = false;
             PivotData.forEachRecord(input, opts.derivedAttributes, (function(_this) {
-                return function(record) {if (opts.filter(record)) {
-				
-				return _this.processRecord(record);}};
+                return function(record) {if (opts.filter(record)) {return _this.processRecord(record);}};
             })(this));
         }
 
@@ -98,55 +95,34 @@ define(
                 }
             } else if (input instanceof jQuery) {
                 tblCols = [];
-                $("thead > tr > th", input).each(function(i) {
-                    return tblCols.push($(this).text());
-                });
+                $("thead > tr > th", input).each(function(i) {return tblCols.push($(this).text());});
                 return $("tbody > tr", input).each(function(i) {
                     record = {};
-                    $("td", this).each(function(j) {
-                        return record[tblCols[j]] = $(this).text();
-                    });
+                    $("td", this).each(function(j) {return record[tblCols[j]] = $(this).text();});
                     return addRecord(record);
                 });
-            } else {
-                throw new Error("unknown input format");
-            }
+            } else {throw new Error("unknown input format");}
         };
 
         PivotData.convertToArray = function(input) {
             var result;
             result = [];
-            PivotData.forEachRecord(input, {}, function(record) {
-                return result.push(record);
-            });
+            PivotData.forEachRecord(input, {}, function(record) {return result.push(record);});
             return result;
         };
 
-        PivotData.prototype.natSort = function(as, bs) {
-            return naturalSort(as, bs);
-        };
+        PivotData.prototype.natSort = function(as, bs) {return naturalSort(as, bs);};
 
-        PivotData.prototype.arrSort = function(a, b) {
-            return this.natSort(a.join(), b.join());
-        };
+        PivotData.prototype.arrSort = function(a, b) {return this.natSort(a.join(), b.join());};
 
         PivotData.prototype.sortKeys = function() {
-            if (!this.sorted) {
-                this.rowKeys.sort(this.arrSort);
-                this.colKeys.sort(this.arrSort);
-            }
+            if (!this.sorted) {this.rowKeys.sort(this.arrSort);this.colKeys.sort(this.arrSort);}
             return this.sorted = true;
         };
 
-        PivotData.prototype.getColKeys = function() {
-            this.sortKeys();
-            return this.colKeys;
-        };
+        PivotData.prototype.getColKeys = function() {this.sortKeys();return this.colKeys;};
 
-        PivotData.prototype.getRowKeys = function() {
-            this.sortKeys();
-            return this.rowKeys;
-        };
+        PivotData.prototype.getRowKeys = function() {this.sortKeys();return this.rowKeys;};
 
         PivotData.prototype.processRecord = function(record) {
             var colKey, flatColKey, flatRowKey, rowKey, x, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3;
@@ -188,7 +164,7 @@ define(
                 if (!this.tree[flatRowKey][flatColKey]) {
                     this.tree[flatRowKey][flatColKey] = this.aggregator(this, rowKey, colKey);
                 }
-				console.log("esport",record,this.aggregator(this, rowKey, colKey))
+				//console.log("esport",record,this.aggregator(this, rowKey, colKey))
                 return this.tree[flatRowKey][flatColKey].push(record);
             }
         };

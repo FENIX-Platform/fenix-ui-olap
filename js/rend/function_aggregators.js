@@ -2,8 +2,7 @@ define(function() {
 
  var __indexOf = [].indexOf || function(item) {
         for (var i = 0, l = this.length; i < l; i++) {
-            if (i in this && this[i] === item)
-                return i;
+            if (i in this && this[i] === item){ return i;}
         }
         return -1;
     };
@@ -117,18 +116,12 @@ define(function() {
                     return {
                         sum: [0, "_", "_"],
                         push: function(record) {
-						console.log("JE PUSH",attr,record)
                             if (!isNaN(parseFloat(record[attr])) /*&& parseFloat(record[attr])>0 */) {
                               
                                this.sum[0] = parseFloat( (this.sum[0]+parseFloat(record[attr])).toFixed(12) );
                             
-                               if (this.sum[2] == "_") {
-                                    this.sum[2] = record["Flag"];
-                                    /*FAOSTATNEWOLAP.flags[record["Flag"]]=1;*/
-                                }
-                                if (this.sum[1] == "_") {
-                                    this.sum[1] = record["Unit"];
-                                }
+                               if (this.sum[2] == "_") {this.sum[2] = record["Flag"];}
+                                if (this.sum[1] == "_") {this.sum[1] = record["Unit"];}
                                 return this.sum;
                             }
                         },
@@ -167,9 +160,7 @@ define(function() {
             };
         },
         sumOverSum: function(formatter) {
-            if (formatter == null) {
-                formatter = usFmt;
-            }
+            if (formatter == null) {formatter = usFmt;}
             return function(_arg) {
                 var denom, num;
                 num = _arg[0], denom = _arg[1];
@@ -178,16 +169,10 @@ define(function() {
                         sumNum: 0,
                         sumDenom: 0,
                         push: function(record) {
-                            if (!isNaN(parseFloat(record[num]))) {
-                                this.sumNum += parseFloat(record[num]);
-                            }
-                            if (!isNaN(parseFloat(record[denom]))) {
-                                return this.sumDenom += parseFloat(record[denom]);
-                            }
+                            if (!isNaN(parseFloat(record[num]))) {this.sumNum += parseFloat(record[num]);}
+                            if (!isNaN(parseFloat(record[denom]))) {return this.sumDenom += parseFloat(record[denom]);}
                         },
-                        value: function() {
-                            return this.sumNum / this.sumDenom;
-                        },
+                        value: function() {return this.sumNum / this.sumDenom;},
                         format: formatter,
                         numInputs: (num != null) && (denom != null) ? 0 : 2
                     };
@@ -195,12 +180,8 @@ define(function() {
             };
         },
         sumOverSumBound80: function(upper, formatter) {
-            if (upper == null) {
-                upper = true;
-            }
-            if (formatter == null) {
-                formatter = usFmt;
-            }
+            if (upper == null) {upper = true;}
+            if (formatter == null) {formatter = usFmt;}
             return function(_arg) {
                 var denom, num;
                 num = _arg[0], denom = _arg[1];
@@ -208,12 +189,8 @@ define(function() {
                     return {
                         sumNum: 0, sumDenom: 0,
                         push: function(record) {
-                            if (!isNaN(parseFloat(record[num]))) {
-                                this.sumNum += parseFloat(record[num]);
-                            }
-                            if (!isNaN(parseFloat(record[denom]))) {
-                                return this.sumDenom += parseFloat(record[denom]);
-                            }
+                            if (!isNaN(parseFloat(record[num]))) {this.sumNum += parseFloat(record[num]);}
+                            if (!isNaN(parseFloat(record[denom]))) {return this.sumDenom += parseFloat(record[denom]);}
                         },
                         value: function() {
                             var sign;
@@ -227,12 +204,8 @@ define(function() {
             };
         },
         fractionOf: function(wrapped, type, formatter) {
-            if (type == null) {
-                type = "total";
-            }
-            if (formatter == null) {
-                formatter = usFmtPct;
-            }
+            if (type == null) {type = "total";}
+            if (formatter == null) {formatter = usFmtPct;}
             return function() {
                 var x;
                 x = 1 <= arguments.length ? __slice.call(arguments, 0) : [];

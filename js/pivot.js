@@ -144,6 +144,13 @@ define([
     $.fn.pivot = function(input, opts) {
 	var defaults, e, result, x, internalData;
 	var InternalID = opts.rendererOptions.id;
+	
+	
+	     
+
+	
+	
+	
         defaults = {
             cols: [], rows: [],
             filter: function() {return true;},
@@ -151,16 +158,20 @@ define([
             rendererOptions: null,
             localeStrings: locales.en.localeStrings
         };
-	
         opts = $.extend({}, defaults, opts);
         result = null;
         r2 = new PivotDataClass(input, opts);
-		console.log("R2 :",input,r2)
+		
+		
+		console.log("R2 ",r2);
+		
+		
+		
+		
 		if(!opts.renderer){opts.renderer=opts.rendererDisplay["Table"]}
 		result = opts.renderer(r2, opts.rendererOptions);
 		x = this[0];
-        try {while (x.hasChildNodes()) {x.removeChild(x.lastChild);}}
-        catch (er) {}
+        try {while (x.hasChildNodes()) {x.removeChild(x.lastChild);}}catch (er) {}
      
         $("#" + InternalID).data("internalData", r2);
         $("#" + InternalID + "_fx-olap-ui_fx-olap-holder-div").html(result);
@@ -173,38 +184,27 @@ define([
 
     var destroy = function() {$("#" + this.myinputOpts.id + " .tooff").off();}
 
-  
-
-
-
-
-
     var changechkTreeview = function() {
         this.myinputOpts.grouped = !this.myinputOpts.grouped;
         $("#" + this.myinputOpts.id + "_fx-olap-ui").pivotUI(this.originalData, this.myinputOpts, true);
-    }
+		}
 
-	
-		var showCode=function(param){
+	var showCode=function(param){
 		this.myinputOpts.showCode=param;
 			this.myinputOpts.originalOpts.showCode=param;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
-		
-		var showUnit=function(param){
+	var showUnit=function(param){
 		this.myinputOpts.showUnit=param;
 		this.myinputOpts.originalOpts.showUnit=param;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
-		
-		var showFlags=function(param){
+	var showFlags=function(param){
 		this.myinputOpts.showFlags=param;
 		this.myinputOpts.originalOpts.showFlags=param;
 		this.render(this.InternalID, this.originalData,  this.myinputOpts.originalOpts,true)
 		}
-	
-	
-    var exportExcel = function(title) {
+	var exportExcel = function(title) {
 		if(typeof title !== "undefined"){document.getElementById("excelTitle").value=title;}
         var FID = $("#" + this.myinputOpts.id).data().internalData;
 		if(FID.colKeys.length>0){ 
@@ -213,25 +213,21 @@ define([
 			flatColKeyst = [];
 			tt = FID.getColKeys();
 			for (tti in tt) {flatColKeyst.push(tt[tti].join("||"));}
-		
 			document.getElementById("myJson").value = stringify({data: FID.tree,header: flatColKeyst, cols: mycols, swUnit: this.myinputOpts.showUnit ? '1' : '0', swFlag: this.myinputOpts.showFlags ? '1' : '0'});			
 		}
-		else
-		{
+		else{
 			var mycols = [];
 			for (var c = 0; c < FID.rowAttrs.length; c++){mycols.push(FID.rowAttrs[c] + "Name");}
 			flatColKeyst = [];
 			flatColKeyst.push("Value");
-		var dataTot={};
-		for(dt in FID.rowTotals){dataTot[dt]={"Value":FID.rowTotals[dt]};}
+			var dataTot={};
+			for(dt in FID.rowTotals){dataTot[dt]={"Value":FID.rowTotals[dt]};}
 			document.getElementById("myJson").value = stringify(
                 {data: dataTot,header: flatColKeyst, cols: mycols, swUnit: this.myinputOpts.showUnit ? '1' : '0', swFlag: this.myinputOpts.showFlags ? '1' : '0'
                 });
 		}
         document.getElementById("xlsDataForm").submit();
-    }
-
-	
+    }	
     var exportCSV = function(title) {
 		var titlecsv="fileName";
 		if(typeof title !== "undefined"){titlecsv=title;}
@@ -369,33 +365,8 @@ else{
 function derivedAtt(el,code){;f= function(mp) {return mp[el]+" "+mp[code];}
 return f
 }*/
+/*
 var renderD3SNEW =	function(param) {
-/*	var rows=[["recipientcode","recipientcode_EN"]];
-	var cols=["year"];
-	var vals=["value"];
-	//
-	var rows=[[1,3]];
-	var cols=[0];
-	var vals=[2];
-	
-	
-	var conf={
-	rows:[1,3],
-	cols:[0],
-	vals:[2],
-	linkedAttribut:[[1,3]]};
-	//CONF will become a parameter
-	
-	var rows=conf.rows;
-	var cols=conf.cols;
-	var vals=conf.vals;
-	var linkedAttribut=conf.linkedAttribut;
-	
-	var myMetaData=param.model.metadata;
-	var myData=param.model.data;
-	var myTree={};//returned structure
-	
-	*/
 	 var lang="EN";
 	 var inputOpts=param.inputOpts;
 	 if(param.locale){alert("not yest implemented");}
@@ -408,38 +379,28 @@ var renderD3SNEW =	function(param) {
 		if(param.model.metadata.dsd.columns[col].subject!="value"){
 			if(!colMyTemp[param.model.metadata.dsd.columns[col].id]){colMyTemp[param.model.metadata.dsd.columns[col].id]=[];}
 			colMyTemp[param.model.metadata.dsd.columns[col].id].push(param.model.metadata.dsd.columns[col].id);
-			//colMyTemp[param.model.metadata.dsd.columns[col].id].push(param.model.metadata.dsd.columns[col].title[lang]);
 			
 			traduction.data[param.model.metadata.dsd.columns[col].id]=param.model.metadata.dsd.columns[col].title[lang];
-			/* header.push(inputDSD.metadata.dsd.columns[col].title[lang]);
-			inputOpts.rows.push(inputDSD.metadata.dsd.columns[col].title[lang])
-			*/
-//		 header.push(param.model.metadata.dsd.columns[col].title[lang]);
+		
 		header.push(param.model.metadata.dsd.columns[col].id);
 		
-		//	inputOpts.rows.push(inputDSD.metadata.dsd.columns[col].id)
 		}else{ header.push("Value");}
 		}
 		
-		if(inputOpts.rows.length==0)
-		for(var ht in colMyTemp){colMyTemp[ht].sort().reverse();
+		if(inputOpts.rows.length==0){
+		for(var ht in colMyTemp){colMyTemp[ht].sort().reverse();}
 		inputOpts.rows.push(colMyTemp[ht])	;
 		}
 		input.push(header);
 		input= input.concat(param.model.data);
-		// inputOpts["onDataLoaded2"]=function(){	/*console.log($("#"+param.id));*/};
 		return this.render2(param.container, input, inputOpts, param.overwrite, param.locale);
-  }
+  }*/
 
 	
 	
 	
 	var renderD3S =	function(param) {
-	/*{
-model: model,
-format: "fenix",
-container: obj.$el.find(s.TABLE_CONTAINER),inputOpts:{},overwrite:true,locale:"en"
-}*/
+	console.log(param);
 	 var lang="EN";
 	 var inputOpts=param.inputOpts;
 	 if(param.locale){alert("not yest implemented");}
@@ -464,21 +425,26 @@ container: obj.$el.find(s.TABLE_CONTAINER),inputOpts:{},overwrite:true,locale:"e
 		//	inputOpts.rows.push(inputDSD.metadata.dsd.columns[col].id)
 		}else{ header.push("Value");}
 		}
+		
+		/*
 		for(var ht in colMyTemp){colMyTemp[ht].sort().reverse();
 		inputOpts.rows.push(colMyTemp[ht])	;
+		}*/
+		if(inputOpts.rows.length==0){
+		for(var ht in colMyTemp){colMyTemp[ht].sort().reverse();}
+		inputOpts.rows.push(colMyTemp[ht])	;
 		}
-		console.log(header);
  input.push(header);
 input= input.concat(param.model.data);
  
- inputOpts["onDataLoaded2"]=function(){	/*console.log($("#"+param.id));*/};
+ inputOpts["onDataLoaded2"]=function(){	};
+ 
+if(param.inputOpts.userInterface){return this.render(param.container, input, inputOpts, param.overwrite, param.locale);}
+	else{return this.render2(param.container, input, inputOpts, param.overwrite, param.locale);}
+	}
 
-      return this.render(param.container, input, inputOpts, param.overwrite, param.locale);
-    }
 
-	
-	
-	 var render2 = function(ii, input, inputOpts, overwrite, locale) {
+	var render2 = function(ii, input, inputOpts, overwrite, locale) {
         this.InternalID = ii;
 		this.myinputOpts.originalOpts=inputOpts;
         this.myinputOpts = $.extend({}, this.myinputOpts, inputOpts);
@@ -493,12 +459,10 @@ input= input.concat(param.model.data);
 				if(this.myinputOpts.showCode==true){
 					rowtemp.push(this.myinputOpts.rows[j][0]);
 					rowtemp.push(this.myinputOpts.rows[j][1])
-					//this.myinputOpts.rows[j]=this.myinputOpts.rows[j][0]+"__Code";
 					}
 				else{
 					rowtemp.push(this.myinputOpts.rows[j][0]);
 					this.myinputOpts.hiddenAttributes.push(this.myinputOpts.rows[j][1]);
-					//this.myinputOpts.rows[j]=this.myinputOpts.rows[j][0];
 					}
 			}
 			else{rowtemp.push(this.myinputOpts.rows[j])}
@@ -520,26 +484,22 @@ input= input.concat(param.model.data);
 			
 		}
 		this.myinputOpts.cols=coltemp;
-		
         document.getElementById(ii).innerHTML = "<div id='" + ii + "_fx-olap-ui'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-holder-div' style='overflow:auto'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_myGrid1_div' ></div>" +
                 "<div id='" + ii + "_fx-olap-ui_fx-olap-graph-div' style='overflow:auto' class='jbPivot'></div>" +
                 "<div id='" + ii + "_fx-olap-ui_mesFlags' style='clear:both'></div>";
 				
-				this.myinputOpts["rendererOptions"]={id:this.myinputOpts.id};
-				//this.myinputOpts["aggregator"]=function(a){return [a];}
-							
-
+				//this.myinputOpts["rendererOptions"]={id:this.myinputOpts.id};
+				//this.myinputOpts["cellRenderFunction"]=inputOpts.cellRenderFunction;
+	
+       this.myinputOpts["rendererOptions"]= { id: this.myinputOpts.id, grouped: this.myinputOpts.grouped,showFlags:this.myinputOpts.showFlags,showUnit:this.myinputOpts.showUnit,showCode:this.myinputOpts.showCode,cellRenderFunction:this.myinputOpts.cellRenderFunction};
        var ret = $("#" + ii + "_fx-olap-ui").pivot(input, this.myinputOpts);//, overwrite, locale);
-		//$("#" + ii + "_fx-olap-ui").attr("class","fx-olap-holder");
-		//this.myinputOpts.onDataLoaded2();
+		
         return ret;
     }
 
 
-	
-	
     var render = function(ii, input, inputOpts, overwrite, locale) {
         this.InternalID = ii;
 		this.myinputOpts.originalOpts=inputOpts;
@@ -596,28 +556,22 @@ input= input.concat(param.model.data);
         return ret;
     }
 
-
-  $.fn.pivotUI2 = function(input, inputOpts, overwrite, locale) {
+	/*$.fn.pivotUI2 = function(input, inputOpts, overwrite, locale) {
 
         var a, aggregator, attrLength, axisValues, c, colList, defaults, e, existingOpts, i, initialRender, k, opts, pivotTable, refresh, refreshDelayed, renderer, rendererControl, shownAttributes, tblCols, tr1, tr2, uiTable, unusedAttrsVerticalAutoOverride, x, _fn, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _ref4, InternalID;
         if (overwrite == null) {overwrite = false;}
         if (locale == null) {locale = "en";}
 
-        //this.myinputOpts=inputOpts;
-        //this.myinputOpts.id/*InternalID*/ = this.attr('id');
         InternalID = inputOpts.id;
 
         defaults = {
             derivedAttributes: {}, renderers: {}, aggregators: {},
-            //aggregators: locales[locale].aggregators,
-            //aggregators: inputOpts.aggregatorDisplay,
-            //renderers: locales[locale].renderers,
-            //renderers: inputOpts.rendererDisplay,
+           
 
             hiddenAttributes: [], menuLimit: 500,
             cols: [], rows: [], vals: [], exclusions: {}, // "auto",
             unusedAttrsVertical: false, autoSortUnusedAttrs: false,
-            rendererOptions: {localeStrings: locales[locale].localeStrings, id: inputOpts.id, grouped: inputOpts.grouped/*options.grouped*/,showFlags:inputOpts.showFlags,showUnit:inputOpts.showUnit,showCode:inputOpts.showCode,cellRenderFunction:inputOpts.cellRenderFunction},
+            rendererOptions: {localeStrings: locales[locale].localeStrings, id: inputOpts.id, grouped: inputOpts.grouped,showFlags:inputOpts.showFlags,showUnit:inputOpts.showUnit,showCode:inputOpts.showCode,cellRenderFunction:inputOpts.cellRenderFunction},
             onRefresh: null, filter: function() {return true;},
             localeStrings: locales[locale].localeStrings
         };
@@ -629,34 +583,16 @@ input= input.concat(param.model.data);
             }
         }
 		
-		/**/
-		/* defaults.renderers["Table Barchart"]= function(pvtData, opts) {
-      return $(pivotTableRenderer(pvtData, opts)).barchart();
-    };
-     defaults.renderers["Heatmap"]= function(pvtData, opts) {
-      return $(pivotTableRenderer(pvtData, opts)).heatmap();
-    };
-     defaults.renderers["Row Heatmap"]=function(pvtData, opts) {
-      return $(pivotTableRenderer(pvtData, opts)).heatmap("rowheatmap");
-    };
-     defaults.renderers["Col Heatmap"]= function(pvtData, opts) {
-      return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
-    }*/
-		/**/
-		
         if (inputOpts.InstanceAggregators == null) {defaults.aggregators = inputOpts.aggregatorDisplay;}
         else {
             for (i = 0; i < inputOpts.InstanceAggregators.length; i++) {
-                defaults.aggregators[inputOpts.InstanceAggregators[i].label] = inputOpts.aggregatorDisplay[inputOpts.InstanceAggregators[i].func];
-            }
-        }
+                defaults.aggregators[inputOpts.InstanceAggregators[i].label] = inputOpts.aggregatorDisplay[inputOpts.		InstanceAggregators[i].func];
+				}
+			}
         existingOpts = this.data("pivotUIOptions");
-        if ((existingOpts == null) || overwrite)
-        {//to check   opts = $.extend(defaults, inputOpts);
-            opts = $.extend({}, defaults, inputOpts);
-        }
+        if ((existingOpts == null) || overwrite){opts = $.extend({}, defaults, inputOpts);}
         else {opts = existingOpts;}
-        //try 
+        
 
         input = PivotDataClass.convertToArray(input);
         tblCols = (function() {
@@ -664,89 +600,63 @@ input= input.concat(param.model.data);
             _ref = input[0];
             _results = [];
             for (k in _ref) {
-                if (!__hasProp.call(_ref, k))
-                    continue;
+                if (!__hasProp.call(_ref, k)){continue;}
                 _results.push(k);
             }
             return _results;
         })();
         _ref = opts.derivedAttributes;
         for (c in _ref) {
-            if (!__hasProp.call(_ref, c))
-                continue;
-            if ((__indexOf.call(tblCols, c) < 0)) {
-                tblCols.push(c);
-            }
+            if (!__hasProp.call(_ref, c)){ continue;}
+               
+            if ((__indexOf.call(tblCols, c) < 0)) {tblCols.push(c);}
         }
         axisValues = {};
-        for (_i = 0, _len = tblCols.length; _i < _len; _i++) {
-            x = tblCols[_i];
-            axisValues[x] = {};
-        }
+        for (_i = 0, _len = tblCols.length; _i < _len; _i++) {x = tblCols[_i];axisValues[x] = {};}
 		
 		//console.log("input",input);
         PivotDataClass.forEachRecord(input, opts.derivedAttributes, function(record) {
             var v, _base, _results;
             _results = [];
             for (k in record) {
-                if (!__hasProp.call(record, k))
-                    continue;
+                if (!__hasProp.call(record, k)){ continue;}
+                   
                 v = record[k];
-                if (!(opts.filter(record))) {
-                    continue;
-                }
-                if (v == null) {
-                    v = "null";
-                }
-                if ((_base = axisValues[k])[v] == null) {
-                    _base[v] = 0;
-                }
+                if (!(opts.filter(record))) {continue;}
+                if (v == null) {v = "null";}
+                if ((_base = axisValues[k])[v] == null) {_base[v] = 0;}
                 _results.push(axisValues[k][v]++);
             }
             return _results;
         });
         uiTable = $("<table cellpadding='5'>");
         rendererControl = $("<td id='" + inputOpts.id + "_vals'>");//class='pvtAxisContainer pvtUnused'
-        renderer = $("<select id='" + inputOpts.id + "_renderer' class='pvtRenderer tooff'>").appendTo(rendererControl).on("change", function() {
-            return refresh();
-        });
+        renderer = $("<select id='" + inputOpts.id + "_renderer' class='pvtRenderer tooff'>").appendTo(rendererControl).on("change", function() {return refresh();});
 		if (inputOpts.showRender!=true){renderer.addClass("invi");}
         _ref1 = opts.renderers;
         for (x in _ref1) {
-            if (!__hasProp.call(_ref1, x))
-                continue;
+            if (!__hasProp.call(_ref1, x)){ continue;}
             $("<option>").val(x).html(x).appendTo(renderer);
         }
         colList = $("<td id='" + inputOpts.id + "_unused' class='pvtAxisContainer '>");
        
 		if (inputOpts.showAgg==true){colList.addClass("pvtUnused");}
 		else{colList.addClass("pvtUnusedInvi");}
-		//pvtUnused
-	//if (inputOpts.showAgg==false){$()}		
+			
         shownAttributes = (function() {
             var _j, _len1, _results;
             _results = [];
-            for (_j = 0, _len1 = tblCols.length; _j < _len1; _j++) {
-                c = tblCols[_j];
-                _results.push(c);
-            }
+            for (_j = 0, _len1 = tblCols.length; _j < _len1; _j++) {c = tblCols[_j];_results.push(c);}
             return _results;
         })();
         unusedAttrsVerticalAutoOverride = false;
         if (opts.unusedAttrsVertical === "auto") {
             attrLength = 0;
-            for (_j = 0, _len1 = shownAttributes.length; _j < _len1; _j++) {
-                a = shownAttributes[_j];
-                attrLength += a.length;
-            }
+            for (_j = 0, _len1 = shownAttributes.length; _j < _len1; _j++) {a = shownAttributes[_j];attrLength += a.length;}
             unusedAttrsVerticalAutoOverride = attrLength > 120;
         }
-        if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {
-            colList.addClass('pvtVertList');
-        }
-        else {
-            colList.addClass('pvtHorizList');
-        }
+        if (opts.unusedAttrsVertical === true || unusedAttrsVerticalAutoOverride) {colList.addClass('pvtVertList');}
+        else {colList.addClass('pvtHorizList');}
         _fn = function(c) {
             var attrElem, btns, checkContainer, filterItem, filterItemExcluded, hasExcludedItem, keys, showFilterList, triangleLink, updateFilter, v, valueList, _k, _len2, _ref2;
             keys = (function() {
@@ -860,9 +770,7 @@ input= input.concat(param.model.data);
         $("<td id='" + InternalID + "_cols' class='pvtAxisContainer pvtHorizList pvtCols'>").appendTo(tr1);
         $("<td class='pvtVals'>").appendTo(uiTable).append(aggregator).append($("<br>"));
         tr2 = $("<tr>").appendTo(uiTable);
-        // tr2.append($("<td id='rows' valign='top' class='pvtAxisContainer pvtRows pvtHorizList'>"));
-        // tr2.append($("<td id=" +InternalID + "_pretd1>"));
-        // pivotTable = $("<td valign='top' id='pvtRendererArea' class='pvtRendererArea'>").append("<div  id='pivot_table'>").appendTo(tr2);
+     
 
         $("#" + InternalID + "_fx-olap-holder-div").empty();
         pivotTable = $("<td valign='top' id='" + InternalID + "_pvtRendererArea' class='pvtRendererArea'>").append("<div  id='" + InternalID + "_pivot_table'>").appendTo($("#" + InternalID + "_fx-olap-holder-div"));
@@ -876,7 +784,6 @@ input= input.concat(param.model.data);
             uiTable.prepend($("<tr>").append(rendererControl));
         }
 
-        //$("#fx-olap-holder-div").html(uiTable);
         this.html(uiTable);
         _ref3 = opts.cols;
         for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
@@ -1050,11 +957,9 @@ input= input.concat(param.model.data);
 		
         return this;
 
-    };
+    };*/
 
-	
-	
-    $.fn.pivotUI = function(input, inputOpts, overwrite, locale) {
+	$.fn.pivotUI = function(input, inputOpts, overwrite, locale) {
 
         var a, aggregator, attrLength, axisValues, c, colList, defaults, e, existingOpts, i, initialRender, k, opts, pivotTable, refresh, refreshDelayed, renderer, rendererControl, shownAttributes, tblCols, tr1, tr2, uiTable, unusedAttrsVerticalAutoOverride, x, _fn, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _ref4, InternalID;
         if (overwrite == null) {overwrite = false;}
@@ -1660,7 +1565,6 @@ input= input.concat(param.model.data);
         return{
             render: render, render2: render2,
 			renderD3S:renderD3S,
-			renderD3SNEW:renderD3SNEW,
             destroy: destroy,
             changechkTreeview: changechkTreeview,
             exportExcel: exportExcel,

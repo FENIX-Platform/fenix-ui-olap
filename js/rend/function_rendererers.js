@@ -391,8 +391,7 @@ define([
         },
         newGrid: function(r, options) {
 
-       
-//console.log(r,options)
+       console.log("options",options);
             var FAOSTATOLAPV3 = {};
 			var id=options.id+ "_fx-olap-ui"
 			var grouped = options.grouped;
