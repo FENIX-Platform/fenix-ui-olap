@@ -77,7 +77,7 @@ var Aggregator={sum:function(cell,format,nbDec){var a= jStat(cell);return format
 				median:function(cell,format,nbDec){var a= jStat(cell);return format(a.median(),nbDec)},
 				stdev:function(cell,format,nbDec){var a= jStat(cell);return format(a.stdev(),nbDec)}
 				}
-var GetValue={classic:function(rec){return rec.value}};
+var GetValue={classic:function(rec){return rec.Value}};
 
 var Formater={localstring:function(e,nbdecimal){return (Math.floor(e*Math.pow(10,nbdecimal))/Math.pow(10,nbdecimal)).toLocaleString()}};
 
