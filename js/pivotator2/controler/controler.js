@@ -1,5 +1,5 @@
 /*global requirejs*/
-define(["toolbar",'renderer','data/dataClean'], function(	toolbar,	renderer,	myData) {
+define(["toolbar",'renderer','data/data'], function(	toolbar,	renderer,	myData) {
 	console.log(myData);
 	function init(){
 	

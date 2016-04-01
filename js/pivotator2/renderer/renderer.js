@@ -157,8 +157,8 @@ for(var i in result.metadata.dsd.columns)
 };
 console.log("gridOption",gridOption)
 
-  Sigma.destroyGrids();
-
+  //Sigma.destroyGrids();
+$("#"+id).empty()
  mygrid=new Sigma.Grid( gridOption );
 
 
