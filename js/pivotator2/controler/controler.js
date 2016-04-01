@@ -19,9 +19,10 @@ define(["toolbar",'renderer','data/dataClean'], function(	toolbar,	renderer,	myD
 					
 				
 		myToolbar.display();
-	
+	addCSS("lib/grid/gt_grid_height.css")
 		//var fonctions=myToolbar.getFunctions();
 		optGr=myToolbar.getConfigCOLROW();
+		console.log(optGr)
 		myRenderer.rendererGridFX(myData,"result",optGr);
 
 	};

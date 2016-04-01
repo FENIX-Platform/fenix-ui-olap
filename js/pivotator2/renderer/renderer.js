@@ -83,8 +83,8 @@ var gridOption={
 	id :id,
 	width: "100%",  //"100%", // 700,
 	height: "350",  //"100%", // 330,
-	container : 'gridbox', 
-	replaceContainer : true, 
+	container : id, 
+	replaceContainer : false, 
 	dataset : dsOption ,
 	columns : colsOption,
 	pageSize: 15,
@@ -94,7 +94,7 @@ var gridOption={
 };
 
 
-  Sigma.destroyGrids();
+  //Sigma.destroyGrids();
 //if(mygrid==null){
  mygrid=new Sigma.Grid( gridOption );
 
@@ -112,7 +112,6 @@ var gridOption={
 
 
 function rendererGridFX(FX,id,optGr){
-	addCSS("../../fenix-ui-olap/lib/grid/gt_grid_height.css")
 	//addCSS("lib/grid/gt_grid_height.css")
 
 	var myPivotator=new pivotator();
@@ -131,12 +130,12 @@ var colsOption = [];
 for(var i in result.metadata.dsd.columns)
 {
 	if(!result.metadata.dsd.columns[i].subject || result.metadata.dsd.columns[i].subject!="value"){
-		console.log("dimension",result.metadata.dsd.columns[i].id)
+		//console.log("dimension",result.metadata.dsd.columns[i].id)
 		colsOption.push({id :  result.metadata.dsd.columns[i].id, header: result.metadata.dsd.columns[i].title["EN"] , frozen: true, grouped: true  });
 		dsOption.fields.push({name : result.metadata.dsd.columns[i].id
 		});}
 	else{
-		console.log('value',result.metadata.dsd.columns[i].id);
+		//console.log('value',result.metadata.dsd.columns[i].id);
 		colsOption.push({id : result.metadata.dsd.columns[i].id, header: result.metadata.dsd.columns[i].title["EN"]  });
 		dsOption.fields.push({name : result.metadata.dsd.columns[i].id });
 	}
@@ -148,7 +147,7 @@ for(var i in result.metadata.dsd.columns)
 	width: "100%", 
 	height: "350",  
 	container :id, 
-	replaceContainer : true, 
+	replaceContainer : false, 
 	dataset : dsOption ,
 	columns : colsOption,
 	pageSize: 15,
