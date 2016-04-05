@@ -1,0 +1,28 @@
+.olapToolbar {
+    width: 500px
+}
+
+.olapToolbar .title {
+    color: #fff;
+    padding: 3px 10px;
+    display: inline-block;
+    position: relative;
+    background-color: #FF7373;
+    z-index: 1000;
+}
+
+.olapToolbar ul {
+    min-height: 100px;
+    background-color: grey
+}
+
+.olapToolbar li {
+    color: #fff;
+    float: left;
+    margin: 8px 20px 10px 0;
+    padding: 5px 10px;
+    min-width: 10px;
+    background-color: #5F9EDF;
+    text-align: center;
+    cursor: move;
+}
