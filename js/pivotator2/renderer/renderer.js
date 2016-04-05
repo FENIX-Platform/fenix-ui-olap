@@ -117,7 +117,6 @@ function rendererGridFX(FX,id,optGr){
 	var myPivotator=new pivotator();
 	
 	var result; 
-	console.log("optGr",optGr)
 	if(optGr.COLS.length>0){
 	result = myPivotator.pivot(FX,optGr.ROWS, optGr.COLS, {myfunction:optGr.GetValue,cumulative:false,aggregator:optGr.Aggregator,formater:optGr.Formater,nbDecimal:optGr.nbDecimal});//,'subsubject'
 	}
@@ -162,10 +161,15 @@ $("#"+id).empty()
  mygrid=new Sigma.Grid( gridOption );
 
 
-
  Sigma.Grid.render(mygrid)();
 	
 	
+	
+	
+	
+	
+	
+	return result;
 }
  
 

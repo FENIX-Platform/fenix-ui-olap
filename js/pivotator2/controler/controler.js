@@ -1,6 +1,7 @@
 /*global requirejs*/
 define(["toolbar",'renderer','data/data'], function(	toolbar,	renderer,	myData) {
-	console.log(myData);
+var MYFINALRESULT;
+
 	function init(){
 	
 	
@@ -15,22 +16,22 @@ define(["toolbar",'renderer','data/data'], function(	toolbar,	renderer,	myData) 
 				//console.log("rowcol",rowcol);
 				myRenderer.rendererGridFX(myData,"result",rowcol);
 				}
-				,lang:"EN",nbDecimal:5});
+				,lang:"EN",nbDecimal:2});
 					
 				
 		myToolbar.display();
-	addCSS("lib/grid/gt_grid_height.css")
+		addCSS("lib/grid/gt_grid_height.css")
 		//var fonctions=myToolbar.getFunctions();
 		optGr=myToolbar.getConfigCOLROW();
-		console.log(optGr)
-		myRenderer.rendererGridFX(myData,"result",optGr);
+		MYFINALRESULT=myRenderer.rendererGridFX(myData,"result",optGr);
 
 	};
 
-	
+	function getResult(){return MYFINALRESULT}
  return  function() {
         return{
-       init:init
+       init:init,
+	   getResult:getResult
 		}
     };
 });

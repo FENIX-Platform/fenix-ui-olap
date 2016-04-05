@@ -10,7 +10,18 @@ requirejs(['paths'], function (paths) {
 	function(controler) {
 		var myControler=new controler();
 		myControler.init();
-
+		
+		/*
+		MYFINALRESULT={data:[],rows:[],cols:[]}
+		tamp=myControler.getResult();
+		MYFINALRESULT.rows=jStat(tamp.data).col(0).transpose()[0];
+		MYFINALRESULT.data=jStat(jStat(tamp.data).transpose().slice(1)).transpose();
+		console.log(jStat.corrcoeff(MYFINALRESULT.data[1],MYFINALRESULT.data[1],MYFINALRESULT.data[1]))*/
+		/*test part */
+		
+		
+		
+		
 /*
 		<!-- toolbar -->
 
