@@ -185,11 +185,110 @@ define([
     }
 
 
+	
+	function rendererGridFXJSON(FX, id, optGr) {
+
+        var myPivotator = new pivotator();
+
+        var result;
+        if (optGr.COLS.length > 0) {
+            result = myPivotator.pivot(FX, optGr.ROWS, optGr.COLS, {
+                myfunction: optGr.GetValue,
+                cumulative: false,
+                aggregator: optGr.Aggregator,
+                formater: optGr.Formater,
+                nbDecimal: optGr.nbDecimal,
+				fulldataformat:true
+            });
+        }
+        else {
+            result = myPivotator.toFXJson(FX);
+        }
+
+        console.log("result", result,optGr);
+		
+	
+        var dsOption = {fields: [], recordType: 'array', data: result.data}
+        var colsOption = [];
+		
+		for(var i in result.rowname){
+			colsOption.push(
+					{
+						id: result.rowname[i].id,
+						header: result.rowname[i].title["EN"],
+						frozen: true,
+						grouped: true
+					});
+			dsOption.fields.push({name: result.rowname[i].id});
+		}
+		for(var i in result.cols)
+			{
+			  colsOption.push({
+                    id: result.cols[i].id,
+                    header: result.cols[i].title["EN"]
+                });
+                dsOption.fields.push({name: result.cols[i].id});
+			}
+		
+		
+		
+        /*for (var i in result.cols) {
+            if (!result.metadata.dsd.columns[i].subject || result.metadata.dsd.columns[i].subject != "value") {
+                colsOption.push({
+                    id: result.metadata.dsd.columns[i].id,
+                    header: result.metadata.dsd.columns[i].title["EN"],
+                    frozen: true,
+                    grouped: true
+                });
+                dsOption.fields.push({
+                    name: result.metadata.dsd.columns[i].id
+                });
+            }
+            else {
+                //console.log('value',result.metadata.dsd.columns[i].id);
+                colsOption.push({
+                    id: result.metadata.dsd.columns[i].id,
+                    header: result.metadata.dsd.columns[i].title["EN"]
+                });
+                dsOption.fields.push({name: result.metadata.dsd.columns[i].id});
+            }
+
+        }
+*/
+        var gridOption = {
+            id: id,
+            width: "100%",
+            height: "350",
+            container: id,
+            replaceContainer: false,
+            dataset: dsOption,
+            columns: colsOption,
+            pageSize: 15,
+            pageSizeList: [15, 25, 50, 150],
+            SigmaGridPath: 'grid/',
+            toolbarContent: 'nav | goto | pagesize '
+        };
+       // console.log("gridOption", gridOption)
+
+        //Sigma.destroyGrids();
+        $("#" + id).empty()
+        mygrid = new Sigma.Grid(gridOption);
+
+
+        Sigma.Grid.render(mygrid)();
+
+
+        return result;
+    }
+
+	
+	
+	
     return function () {
         return {
             rendererTable: rendererTable,
             rendererGrid: rendererGrid,
-            rendererGridFX: rendererGridFX
+            rendererGridFX: rendererGridFXJSON
 
         }
     };

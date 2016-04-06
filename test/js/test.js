@@ -36,8 +36,8 @@ define([
         var optGr = myToolbar.getConfigCOLROW();
         var MYFINALRESULT = myRenderer.rendererGridFX(Model, "result", optGr);
 
-        log.info(myRenderer);
-        log.info(Model);
+    //    log.info(myRenderer);
+      //  log.info(Model);
     };
 
     return new Test();

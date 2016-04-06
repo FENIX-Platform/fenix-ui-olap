@@ -30,7 +30,6 @@ init=function(id,FX,opt)
 	_onChange=opt.onchange;
 	for(var i in FX.columns)
 		{
-		console.log(FX.columns[i]);
 			if(FX.columns[i].dataType=="number"){HIDDEN.push({value:FX.columns[i].id,label:FX.columns[i].title[lang]})}
 			else if (FX.columns[i].subject!="time" && FX.columns[i].key==true ){ROWS.push({value:FX.columns[i].id,label:FX.columns[i].title[lang]});}
 			else if(FX.columns[i].subject=="time"){COLS.push({value:FX.columns[i].id,label:FX.columns[i].title[lang]})}
