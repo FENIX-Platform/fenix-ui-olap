@@ -25,16 +25,20 @@ define([
 
         myToolbar.init("toolbar", Model.metadata.dsd, {
             onchange: function () {
-                var rowcol = myToolbar.getConfigCOLROW();
+                var optGr = myToolbar.getConfigCOLROW();
                 //console.log("rowcol",rowcol);
-                myRenderer.rendererGridFX(Model, "result", rowcol);
+				optGr["fulldataformat"]=true;
+                //myRenderer.rendererGridFX(Model, "result", optGr);
+				myRenderer.render(Model, "result", optGr)
             }
             , lang: "EN", nbDecimal: 2
         });
         myToolbar.display();
 
         var optGr = myToolbar.getConfigCOLROW();
-        var MYFINALRESULT = myRenderer.rendererGridFX(Model, "result", optGr);
+		optGr["fulldataformat"]=true;
+        var MYFINALRESULT = myRenderer.render(Model, "result", optGr);
+            
 
     //    log.info(myRenderer);
       //  log.info(Model);
