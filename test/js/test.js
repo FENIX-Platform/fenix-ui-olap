@@ -45,7 +45,6 @@ define([
 
           var MYFINALRESULT = myRenderer.render({
               model : Model,
-              type : "type1",
               el : "#result",
               config: optGr
           });

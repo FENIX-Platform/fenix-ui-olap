@@ -505,11 +505,7 @@ define([
 
         return function () {
             return {
-                render: function ( obj ) {
-                    switch (obj.type.toLocaleLowerCase()){
-                        case "type1" : return renderJDataGrid;
-                    }
-                },
+                render: renderJDataGrid,
                 rendererTable: rendererTable,
                 rendererGrid: rendererGrid,
                 rendererGridFX: rendererGridFXJSON,
