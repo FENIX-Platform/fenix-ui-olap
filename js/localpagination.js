@@ -57,6 +57,7 @@
             var loadDataMethod = $.fn.treegrid.methods.loadData;
             $.extend($.fn.treegrid.methods, {
                 clientPaging: function(jq){
+				
                     return jq.each(function(){
                         var tg = $(this);
                         var state = tg.data('treegrid');
@@ -79,6 +80,7 @@
                                 tg.treegrid('loadData',state.allRows);
                             }
                         });
+						
                         tg.treegrid('loadData', state.data);
                         if (opts.url){
                             tg.treegrid('reload');
@@ -89,6 +91,7 @@
                     jq.each(function(){
                         $(this).data('treegrid').allRows = null;
                     });
+					console.log("loadDataMethod", jq, data);
                     return loadDataMethod.call($.fn.treegrid.methods, jq, data);
                 },
                 append: function(jq, param){

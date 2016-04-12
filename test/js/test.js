@@ -37,7 +37,8 @@ define([
 
         var optGr = myToolbar.getConfigCOLROW();
 		optGr["fulldataformat"]=true;
-        var MYFINALRESULT = myRenderer.render(Model, "result", optGr);
+      //  var MYFINALRESULT = myRenderer.renderJDataGrid(Model, "result", optGr);
+          var MYFINALRESULT = myRenderer.render(Model, "result", optGr);
             
 
     //    log.info(myRenderer);

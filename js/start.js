@@ -216,7 +216,7 @@ console.log("rendererGridFXJSON",FX,id,optGr)
 					{
 						id: result.rowname[i].id,
 						header: result.rowname[i].title["EN"],
-						frozen: false,
+						frozen: true,
 						grouped: true
 					});
 			tableHeader+="	<td rowspan='"+rowSpan+"' columnId='"+result.rowname[i].id+"' resizable='false'>"+result.rowname[i].title["EN"]+"</td>";
@@ -288,7 +288,7 @@ $("body").append(  tableHeader);
             container: id,
             replaceContainer: false,
             dataset: dsOption,
-			customHead : 'myHead1',
+			//customHead : 'myHead1',
 
             columns: colsOption,
             pageSize: 15,
@@ -313,92 +313,179 @@ $("body").append(  tableHeader);
 	
 	
 	
-	
+	var jDataGridObject={currentPage:0,pageMax:150};
 	
 	function renderJDataGrid(FX, id, optGr)
 	{
 	var myPivotator = new pivotator();
 	optGr["fulldataformat"]=false;
 	result = myPivotator.pivot(FX, optGr);
-console.log(result);
+//console.log("result",result);
 
-var mydata={"total":result.rows.length,"rows":[],
-
-"footer":[]
+var mydata={"total":result.rows.length,"rows":[],"footer":[]
 };
 
 
 
-
+/*
+var root={"ID":"root",id:0,"iconCls":"icon-ok",1990:"test"};
+for(var j in result.rowname){root[result.rowname[j]=result.rowname[j]]}
+*/
 
 	var data=[];
-	for(var i in result.data)
-		{
+	//var data=[];
+	
+	var keyParentOld=[];
+	
+		//for(var i=jDataGridObject.currentPage;i<jDataGridObject.currentPage+ jDataGridObject.pageMax;i++)
+
+	for(var i in result.data)	{
 	if(i>100){break;}
 		var temp={};
+		var keyParent=result.rows[i].slice(0,result.rows[i].length-1).join("_");
+		var mykey;
+		if(keyParentOld!=keyParent)
+		{
+			mykey={ID:keyParent,id:keyParent,children:[]};
+			data.push(mykey	);
+		keyParentOld=keyParent;
+		}
 		for(var j in result.rowname)
 			{
-			
+			var myID=result.rows[i].join(" ");
+			temp["ID"]=myID;
+			//temp["ID_Name"]=result.rows[i].join(" - ");
+			temp["id"]=parseInt(i)+2;
 			temp[result.rowname[j].id]=result.rows[i][j]}
 		for(var j in result.cols)
 			{temp[result.cols[j].id]=result.data[i][j]}
-			data.push(temp);
+				temp["parentId"]=keyParent;
+			mykey.children.push(temp);
 		}
 	
-	//console.log(data)
+//	console.log(JSON.stringify(data))
 	mydata.rows=data;
 	var mycolumns=[];
-	for(var i in result.cols){mycolumns.push({field:result.cols[i].id,title:result.cols[i].title["EN"],width:80,align:'right'})}
-	/*[
-	[
-        {field:'listprice',title:'List Price',width:80,align:'right',colspan:4},
-       
-    ],
-	[
-        {field:'listprice',title:'List Price',width:80,align:'right'},
-        {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
-        {field:'attr1',title:'Attribute',width:100},
-        {field:'status',title:'Status',width:60}
-    ]];*/
-	var myfrozzencolumn=[];
-	for(var i in result.rowname){myfrozzencolumn.push({field:result.rowname[i].id,title:result.rowname[i].title["EN"],width:80})}
+	var treeColumn={};
+	console.log(result)
+	for (var i in result.cols)
+	{
+	console.log(result.cols[i])
+	/*var tabTemp=	result.cols[i].split("_")
+	for(var j in tabTemp)
+		{
+			
+			
+		}*/
+	}
+	for(var i in result.cols)
+	{mycolumns.push({field:result.cols[i].id,title:result.cols[i].title["EN"],width:80,align:'right'})}
+	mycolumns=[[{title:"Value",colspan:6}],mycolumns];
+	var myfrozzencolumn=[
+	{field:"ID",title:"ID",width:80}];
+	for(var i in result.rowname)
+	{if(i>result.rowname.length-2)
+		myfrozzencolumn.push({field:result.rowname[i].id,title:result.rowname[i].title["EN"],width:80})
+	}
 	
-	/*[[
-        {field:'itemid',title:'Item ID',width:80},
-        {field:'productid',title:'Product ID',width:80},
-    ]];*/
 	//console.log(id,data,myfrozzencolumn,mycolumns,$('#'+id))
 	
-$('#'+id).empty();
+	
+$('#'+id+" .datagrid").remove();
+$('#'+id+" .datagrid").empty();
+$('#'+id).append("<div id='"+id+"_"+id+"' />");
+
+
+
+
+function getData1(){
+			return [{id: "root",
+				ID: 'parent 1',
+				state: 'closed',
+				parentId: 0,
+			children:mydata.rows/*{id: 11,
+			ID: 'child 1',
+			parentId: "root"},
+			{id: 12,
+			ID: 'child 2',
+			parentId: "root"}]*/
+				}
+			];
+		}
+		function getData2(id){
+			//console.log("test",$("#"+id+"_"+id).treegrid().pagination('options').page)
+			/*var myPage=$("#"+id+"_"+id).treegrid().pagination('options').page;
+			var myRoms=$("#"+id+"_"+id).treegrid().pagination('options').rows
+			*/
+			return mydata.rows;
+			return mydata.rows.slice((myPage-1)*myRows,myRows);
+			/*return [
+			{id: "root",
+			ID: 'root',
+			parentId:0},
+			{id: 11,
+			ID: 'child 1',
+			parentId: "root"},
+			{id: 12,
+			ID: 'child 2',
+			parentId: "root"},
+			{id: 13,
+			ID: 'child 23',
+			parentId: "root2"}
+			]*/
+		}
 
 var renderConfig={
-	      
-	 //treeField:	  result.rowname[0].id,
-		  pagination:true,
-		   pageSize: 4,
-		   pageList: [4,5,10],
-		   rownumbers: true,
-	title:'NEW GRID',
-	pagination:true,
-	                
-
-    //iconCls:'icon-save',
-    width:500,
-    height:250,
-    //url:'data/datagrid_data.json',
-	//data:data,
+	      id:id,
+				iconCls: 'icon-ok',
+				rownumbers: true,
+				animate: true,
+				collapsible: true,
+				fitColumns: false,
+				clientPaging:true,
+				//url: 'treegrid_data4.json',
+				//method: 'get',
+				//data:mydata.rows,
+					loader:function(param,success,error){
+						console.log("PARAM",param,id)
+						
+						success(getData2(id));
+						/*
+					if (!param.id){console.log("PARAM1",param)
+						success(getData1());
+					} else {console.log("PARAM2",param)
+						success(getData2());
+					}*/
+				},
+				idField: 'id',
+				treeField: 'ID',
+				pagination: true,
+				pageSize: 2,
+				pageList: [2,5,10],
     frozenColumns:[myfrozzencolumn],
-    columns:[mycolumns]
+    columns:mycolumns
 }
 
-console.log("BEFORE RENDERISATION",renderConfig,mydata)
-	$('#'+id).treegrid(renderConfig).treegrid('clientPaging');
-$('#'+id).treegrid("loadData",mydata)
+console.log("BEFORE RENDERISATION",renderConfig,mydata,'#'+id,mydata);
+//console.log(document.getElementById('result'))
+
+$(function(){
+		$('#'+id+"_"+id).treegrid(renderConfig)//.treegrid('clientPaging');
+//$('#'+id+"_"+id).treegrid("loadData",mydata.rows)//.treegrid('clientPaging');
+	/*$('#'+id+"_"+id).treegrid('append',{id:0,1990:"test"})
+	
+	$('#'+id+"_"+id).treegrid('append',{
+	parent: 0,  // the node has a 'id' value that defined through 'idField' property
+	data: mydata.rows
+});*/
+//$('#'+id+"_"+id).treegrid("reload").treegrid('clientPaging');//.treegrid('clientPaging');
+	})
+	
 	}
 	
     return function () {
         return {
-		render:rendererGridFXJSON,
+		render:renderJDataGrid,
             rendererTable: rendererTable,
             rendererGrid: rendererGrid,
             rendererGridFX: rendererGridFXJSON,
