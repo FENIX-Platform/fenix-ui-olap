@@ -29,7 +29,11 @@ define([
                 //console.log("rowcol",rowcol);
 				optGr["fulldataformat"]=true;
                 //myRenderer.rendererGridFX(Model, "result", optGr);
-				myRenderer.render(Model, "result", optGr)
+				myRenderer.render({
+                    model : Model,
+                    el : "#result",
+                    config: optGr
+                })
             }
             , lang: "EN", nbDecimal: 2
         });
@@ -38,7 +42,13 @@ define([
         var optGr = myToolbar.getConfigCOLROW();
 		optGr["fulldataformat"]=true;
       //  var MYFINALRESULT = myRenderer.renderJDataGrid(Model, "result", optGr);
-          var MYFINALRESULT = myRenderer.render(Model, "result", optGr);
+
+          var MYFINALRESULT = myRenderer.render({
+              model : Model,
+              type : "type1",
+              el : "#result",
+              config: optGr
+          });
             
 
     //    log.info(myRenderer);
