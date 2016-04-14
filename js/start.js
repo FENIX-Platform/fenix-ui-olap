@@ -2,7 +2,7 @@ define([
         "fx-common/pivotator/start",
         "gt_msg_grid",
         'jdatagrid',
-       // 'localpagination'
+        'localpagination'
     ], function (pivotator) {
 
         function rendererTable(result, id, fonctions) {
@@ -498,7 +498,7 @@ console.log("data",data)
                 /*var myPage=$("#"+id+"_"+id).treegrid().pagination('options').page;
                  var myRoms=$("#"+id+"_"+id).treegrid().pagination('options').rows
                  */
-                return mydata;
+                return mydata.rows;
              //   return mydata.rows.slice((myPage - 1) * myRows, myRows);
                 /*return [
                  {id: "root",
@@ -557,19 +557,19 @@ function myLoadFilter(data,parentId){
             var renderConfig = {
                 id: id,
                 iconCls: 'icon-ok',
-                rownumbers: true,
+                rownumbers: false,
                 animate: false,
                 collapsible: false,
                 fitColumns: false,
                 clientPaging: true,
                 //url: 'treegrid_data4.json',
                 //method: 'get',
-                data:mydata.rows,
-                //  loader: function (param, success, error) {success(getData2(id));           },
-               // loadFilter:myLoadFilter,
+               // data:mydata.rows,
+                  loader: function (param, success, error) {success(getData2(id));           },
+                loadFilter:myLoadFilter,
                 idField: 'id',
                 treeField: 'ID',
-                pagination: false,
+                pagination: true,
                 pageSize: 2,
                 pageList: [2, 5, 10],
                 frozenColumns: [myfrozzencolumn],
@@ -581,7 +581,7 @@ function myLoadFilter(data,parentId){
 
             $(function () {
 
-               $el.find('#' + id + "_" + id).treegrid(renderConfig);//.treegrid('clientPaging');
+               $el.find('#' + id + "_" + id).treegrid(renderConfig).treegrid('clientPaging');
 
             })
 
@@ -589,7 +589,7 @@ function myLoadFilter(data,parentId){
 
         return function () {
             return {
-                render: rendererGridFXJSON,
+                render: renderJDataGrid,
                 rendererTable: rendererTable,
                 rendererGrid: rendererGrid,
                 rendererGridFX: rendererGridFXJSON,
