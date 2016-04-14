@@ -2,7 +2,7 @@ define([
         "fx-common/pivotator/start",
         "gt_msg_grid",
         'jdatagrid',
-        'localpagination'
+       // 'localpagination'
     ], function (pivotator) {
 
         function rendererTable(result, id, fonctions) {
@@ -183,10 +183,19 @@ define([
             return result;
         }
 
-        function rendererGridFXJSON(FX, id, optGr) {
+        function rendererGridFXJSON(obj) {
             console.log("rendererGridFXJSON", FX, id, optGr)
             var myPivotator = new pivotator();
+			var FX= obj.model;
+                var optGr = obj.config;
+                var id;
+                var $el = $(obj.el);
 
+                //Check if box has a valid id
+                if (!obj.id) {
+					window.fx_olap_id >= 0 ? window.fx_olap_id++ : window.fx_olap_id = 0;
+                    id = "fx_olap_" + window.fx_olap_id;
+                } else {      id = obj.id;                }
             /*default OptGr={
              myfunction: optGr.GetValue,
              cumulative: false,
@@ -217,22 +226,59 @@ define([
                     {
                         id: result.rowname[i].id,
                         header: result.rowname[i].title["EN"],
-                        frozen: true,
+                        frozen: false,
                         grouped: true
                     });
                 tableHeader += "	<td rowspan='" + rowSpan + "' columnId='" + result.rowname[i].id + "' resizable='false'>" + result.rowname[i].title["EN"] + "</td>";
                 dsOption.fields.push({name: result.rowname[i].id});
             }
             //tableHeader+="</tr><tr>";
-            for (var i in result.cols) {
-                tableHeader += "	<td rowspan='" + rowSpan + "' columnId='" + result.cols[i].id + "' resizable='false'>" + result.cols[i].title["EN"] + "</td>";
+			var colstemp=myPivotator.toTree(result.cols2,'colspan');
+			console.log("colstemp",colstemp)
+            
+			for(var i in colstemp)
+			{
+				if(i==0){
+					for(var j in colstemp[i])
+						{
+							
+							 tableHeader += "	<td  colspan='"+colstemp[i][j].span+"'>"+colstemp[i][j].id.split("_")[colstemp[i][j].id.split("_").length-1]+ "</td>";
+							
+						}
+						 tableHeader += "</tr>";
+				}
+				else{
+					 tableHeader += "<tr>";
+					 for(var j in colstemp[i])
+						{ tableHeader += "	<td  colspan='"+colstemp[i][j].span+"'>"+colstemp[i][j].id.split("_")[colstemp[i][j].id.split("_").length-1]+ "</td>";
+						}
+					  tableHeader += "</tr>";
+					  console.log(j)
+				
+				}
+					if(i==colstemp.length-1){
+						 for(var j in colstemp[i])
+						{ 
+						 colsOption.push({
+                    id: colstemp[i][j].id,
+                    header: colstemp[i][j].id
+                });
+                dsOption.fields.push({name: colstemp[i][j].id});
+						
+					}
+					}
+				
+				
+			}
+			/*for (var i in result.cols) {
+                tableHeader += "	<td rowspan='" + rowSpan + "' columnId='" + result.cols[i].id + "' resizable='false'>TESTON" + result.cols[i].title["EN"] + "</td>";
 
                 colsOption.push({
                     id: result.cols[i].id,
                     header: result.cols[i].title["EN"]
                 });
                 dsOption.fields.push({name: result.cols[i].id});
-            }
+            }*/
             tableHeader += "</tr></table>";
             console.log("TABLE HEADER", tableHeader);
             $("#myHead1").remove();
@@ -282,13 +328,13 @@ define([
             $("body").append(tableHeader);
 
             var gridOption = {
-                id: id,
+                id:  id + "_" + id,
                 width: "100%",
                 height: "350",
-                container: id,
+                container: id+"_"+id,
                 replaceContainer: false,
                 dataset: dsOption,
-                //customHead : 'myHead1',
+                customHead : 'myHead1',
 
                 columns: colsOption,
                 pageSize: 15,
@@ -299,7 +345,10 @@ define([
             console.log("gridOption", gridOption)
 
             //Sigma.destroyGrids();
-            $("#" + id).empty();
+			console.log($el,id)
+			 $el.find(".datagrid").remove(); $el.find(".datagrid").empty();
+            $el.append("<div id='" + id + "_" + id + "' class='datagrid' />");
+            $("#" + id+"_"+id).empty();
             var mygrid = new Sigma.Grid(gridOption);
 
             //	Sigma.Util.onLoad(
@@ -323,27 +372,21 @@ define([
 
                 //Check if box has a valid id
                 if (!obj.id) {
-
-                    window.fx_olap_id >= 0 ? window.fx_olap_id++ : window.fx_olap_id = 0;
-
+					window.fx_olap_id >= 0 ? window.fx_olap_id++ : window.fx_olap_id = 0;
                     id = "fx_olap_" + window.fx_olap_id;
-                } else {
-                    id = obj.id;
-                }
+                } else {      id = obj.id;                }
 
-                console.log("model", FX)
+              /*  console.log("model", FX)
                 console.log("id", id)
                 console.log("optGr", optGr)
                 console.log("$el", $el)
 
-
+*/
             optGr["fulldataformat"] = false;
             var result = myPivotator.pivot(FX, optGr);
 //console.log("result",result);
 
-            var mydata = {
-                "total": result.rows.length, "rows": [], "footer": []
-            };
+            var mydata = { "total": result.rows.length, "rows": [], "footer": [] };
 
 
             /*
@@ -359,9 +402,7 @@ define([
             //for(var i=jDataGridObject.currentPage;i<jDataGridObject.currentPage+ jDataGridObject.pageMax;i++)
 
             for (var i in result.data) {
-                if (i > 100) {
-                    break;
-                }
+                if (i > 10) {     break;           }
                 var temp = {};
                 var keyParent = result.rows[i].slice(0, result.rows[i].length - 1).join("_");
                 var mykey;
@@ -381,31 +422,52 @@ define([
                     temp[result.cols[j].id] = result.data[i][j]
                 }
                 temp["parentId"] = keyParent;
-                mykey.children.push(temp);
+               mykey.children.push(temp);
             }
 
 //	console.log(JSON.stringify(data))
+console.log("data",data)
             mydata.rows = data;
             var mycolumns = [];
-            var treeColumn = {};
-            console.log(result)
-            for (var i in result.cols) {
-                console.log(result.cols[i])
-                /*var tabTemp=	result.cols[i].split("_")
-                 for(var j in tabTemp)
-                 {
-
-
-                 }*/
-            }
+          
+          var colstemp=myPivotator.toTree(result.cols2,"colspan");
+          console.log("toTree finnished",colstemp)
+           for(var i in colstemp)
+		   {
+		   mycolumns.push([]);
+		   for (var j in colstemp[i]){
+				if(i==colstemp.length-1){
+				mycolumns[i].push({title:colstemp[i][j].id,field:colstemp[i][j].id})
+				}
+				else{				mycolumns[i].push({title:colstemp[i][j].id,colspan:colstemp[i][j].span})
+}
+				
+			}
+		   }
+		   
+		   /*
             for (var i in result.cols) {
                 mycolumns.push({field: result.cols[i].id, title: result.cols[i].title["EN"], width: 80, align: 'right'})
             }
             mycolumns = [[{title: "Value", colspan: 6}], mycolumns];
-            var myfrozzencolumn = [
-                {field: "ID", title: "ID", width: 80}];
+            
+            
+            
+            */
+		   
+		   
+			 console.log("mycolumns finnished",mycolumns);
+			
+			   var rowstemp=myPivotator.toTree(result.rows,"rowspan");
+			 
+			  console.log("rowstemp",rowstemp);
+			  
+			  
+			
+			
+            var myfrozzencolumn = [{field: "ID", title: "ID", width: 80}];
             for (var i in result.rowname) {
-                if (i > result.rowname.length - 2)
+               // if (i > result.rowname.length - 2)
                     myfrozzencolumn.push({field: result.rowname[i].id, title: result.rowname[i].title["EN"], width: 80})
             }
 
@@ -436,8 +498,8 @@ define([
                 /*var myPage=$("#"+id+"_"+id).treegrid().pagination('options').page;
                  var myRoms=$("#"+id+"_"+id).treegrid().pagination('options').rows
                  */
-                return mydata.rows;
-                return mydata.rows.slice((myPage - 1) * myRows, myRows);
+                return mydata;
+             //   return mydata.rows.slice((myPage - 1) * myRows, myRows);
                 /*return [
                  {id: "root",
                  ID: 'root',
@@ -454,31 +516,60 @@ define([
                  ]*/
             }
 
+
+
+function myLoadFilter(data,parentId){
+    function setData(data){
+        var todo = [];
+        for(var i=0; i<data.length; i++){
+            todo.push(data[i]);
+        }
+        while(todo.length){
+            var node = todo.shift();
+            if (node.children && node.children.length){
+                node.state = 'closed';
+                node.children1 = node.children;
+                node.children = undefined;
+                todo = todo.concat(node.children1);
+            }
+        }
+    }
+    
+    setData(data);
+    var tg = $(this);
+    var opts = tg.treegrid('options');
+    opts.onBeforeExpand = function(row){
+        if (row.children1){
+            tg.treegrid('append',{
+                parent: row[opts.idField],
+                data: row.children1
+            });
+            row.children1 = undefined;
+            tg.treegrid('expand', row[opts.idField]);
+        }
+        return row.children1 == undefined;
+    };
+    return data;
+}
+
+
+
             var renderConfig = {
                 id: id,
                 iconCls: 'icon-ok',
                 rownumbers: true,
-                animate: true,
-                collapsible: true,
+                animate: false,
+                collapsible: false,
                 fitColumns: false,
                 clientPaging: true,
                 //url: 'treegrid_data4.json',
                 //method: 'get',
-                //data:mydata.rows,
-                loader: function (param, success, error) {
-                    console.log("PARAM", param, id)
-
-                    success(getData2(id));
-                    /*
-                     if (!param.id){console.log("PARAM1",param)
-                     success(getData1());
-                     } else {console.log("PARAM2",param)
-                     success(getData2());
-                     }*/
-                },
+                data:mydata.rows,
+                //  loader: function (param, success, error) {success(getData2(id));           },
+               // loadFilter:myLoadFilter,
                 idField: 'id',
                 treeField: 'ID',
-                pagination: true,
+                pagination: false,
                 pageSize: 2,
                 pageList: [2, 5, 10],
                 frozenColumns: [myfrozzencolumn],
@@ -490,15 +581,8 @@ define([
 
             $(function () {
 
-                $el.find('#' + id + "_" + id).treegrid(renderConfig)//.treegrid('clientPaging');
-//$('#'+id+"_"+id).treegrid("loadData",mydata.rows)//.treegrid('clientPaging');
-                /*$('#'+id+"_"+id).treegrid('append',{id:0,1990:"test"})
+               $el.find('#' + id + "_" + id).treegrid(renderConfig);//.treegrid('clientPaging');
 
-                 $('#'+id+"_"+id).treegrid('append',{
-                 parent: 0,  // the node has a 'id' value that defined through 'idField' property
-                 data: mydata.rows
-                 });*/
-//$('#'+id+"_"+id).treegrid("reload").treegrid('clientPaging');//.treegrid('clientPaging');
             })
 
         }

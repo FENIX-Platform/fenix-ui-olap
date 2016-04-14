@@ -16,8 +16,10 @@ define(function () {
             'amplify': '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',
             gt_msg: "{FENIX_CDN}/js/sigma.grid/2.4/gt_msg_en",
             gt_msg_grid: "{FENIX_CDN}/js/sigma.grid/2.4/gt_grid_all",
-			jdatagrid:"http://www.jeasyui.com/easyui/jquery.easyui.min",
-            sortable : '{FENIX_CDN}/js/sortable/1.4.2/Sortable.min',
+			//jdatagrid:"http://www.jeasyui.com/easyui/jquery.easyui.min",
+            jdatagrid:"./dist/easyui",
+            
+			sortable : '{FENIX_CDN}/js/sortable/1.4.2/Sortable.min',
 			localpagination:'localpagination'
 
         },
