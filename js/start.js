@@ -226,7 +226,7 @@ define([
                     {
                         id: result.rowname[i].id,
                         header: result.rowname[i].title["EN"],
-                        frozen: false,
+                        frozen: true,
                         grouped: true
                     });
                 tableHeader += "	<td rowspan='" + rowSpan + "' columnId='" + result.rowname[i].id + "' resizable='false'>" + result.rowname[i].title["EN"] + "</td>";
@@ -589,7 +589,7 @@ function myLoadFilter(data,parentId){
 
         return function () {
             return {
-                render: renderJDataGrid,
+                render: rendererGridFXJSON,
                 rendererTable: rendererTable,
                 rendererGrid: rendererGrid,
                 rendererGridFX: rendererGridFXJSON,

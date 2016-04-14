@@ -15,8 +15,10 @@ define(function () {
             'i18n': '{FENIX_CDN}/js/requirejs/plugins/i18n/2.0.4/i18n',
             'amplify': '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',
             gt_msg: "{FENIX_CDN}/js/sigma.grid/2.4/gt_msg_en",
-            gt_msg_grid: "{FENIX_CDN}/js/sigma.grid/2.4/gt_grid_all",
-			//jdatagrid:"http://www.jeasyui.com/easyui/jquery.easyui.min",
+          //  gt_msg_grid: "{FENIX_CDN}/js/sigma.grid/2.4/gt_grid_all",
+  gt_msg_grid: "./dist/gt_all",
+				
+		//jdatagrid:"http://www.jeasyui.com/easyui/jquery.easyui.min",
             jdatagrid:"./dist/easyui",
             
 			sortable : '{FENIX_CDN}/js/sortable/1.4.2/Sortable.min',
