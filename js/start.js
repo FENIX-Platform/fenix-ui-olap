@@ -206,7 +206,7 @@ define([
              }*/
 
             var result;
-            var tableHeader = "<table id='myHead1' style='display:none'>";
+            var tableHeader = "<table id='myHead1' style='display:block'>";
             var rowSpan = optGr.COLS.length;
             if (optGr.COLS.length > 0) {
                 result = myPivotator.pivot(FX, optGr);
@@ -226,10 +226,10 @@ define([
                     {
                         id: result.rowname[i].id,
                         header: result.rowname[i].title["EN"],
-                        frozen: true,
+                       // frozen: false,
                         grouped: true
                     });
-                tableHeader += "	<td rowspan='" + rowSpan + "' columnId='" + result.rowname[i].id + "' resizable='false'>" + result.rowname[i].title["EN"] + "</td>";
+                tableHeader += "<td rowspan='" + rowSpan + "' columnId='" + result.rowname[i].id + "' resizable='false'>" + result.rowname[i].title["EN"] + "</td>";
                 dsOption.fields.push({name: result.rowname[i].id});
             }
             //tableHeader+="</tr><tr>";
