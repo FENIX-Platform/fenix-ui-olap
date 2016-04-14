@@ -589,7 +589,7 @@ function myLoadFilter(data,parentId){
 
         return function () {
             return {
-                render: renderJDataGrid,
+                render: rendererGridFXJSON,
                 rendererTable: rendererTable,
                 rendererGrid: rendererGrid,
                 rendererGridFX: rendererGridFXJSON,
