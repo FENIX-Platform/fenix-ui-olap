@@ -20,7 +20,7 @@ define(function () {
 				
 		//jdatagrid:"http://www.jeasyui.com/easyui/jquery.easyui.min",
             jdatagrid:"./dist/easyui",
-            
+            pivotgrid:"./dist/easyui/pivotgrid",
 			sortable : '{FENIX_CDN}/js/sortable/1.4.2/Sortable.min',
 			localpagination:'localpagination'
 
@@ -43,6 +43,7 @@ define(function () {
             },
 
             "gt_msg_grid": ['jquery', 'gt_msg'],
+			pivotgrid:['jquery',"jdatagrid"],
 			jdatagrid:['jquery'],
 			localpagination:['jdatagrid']
 

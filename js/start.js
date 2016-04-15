@@ -1,7 +1,7 @@
 define([
         "fx-common/pivotator/start",
         "gt_msg_grid",
-        'jdatagrid',
+        'pivotgrid',
         'localpagination'
     ], function (pivotator) {
 
@@ -226,7 +226,7 @@ define([
                     {
                         id: result.rowname[i].id,
                         header: result.rowname[i].title["EN"],
-                       // frozen: false,
+                        frozen: true,
                         grouped: true
                     });
                 tableHeader += "<td rowspan='" + rowSpan + "' columnId='" + result.rowname[i].id + "' resizable='false'>" + result.rowname[i].title["EN"] + "</td>";
@@ -360,6 +360,41 @@ define([
         }
 
         var jDataGridObject = {currentPage: 0, pageMax: 150};
+
+function myLoadFilter(data,parentId){
+    function setData(data){
+        var todo = [];
+        for(var i=0; i<data.length; i++){
+            todo.push(data[i]);
+        }
+        while(todo.length){
+            var node = todo.shift();
+            if (node.children && node.children.length){
+                node.state = 'closed';
+                node.children1 = node.children;
+                node.children = undefined;
+                todo = todo.concat(node.children1);
+            }
+        }
+    }
+    
+    setData(data);
+    var tg = $(this);
+    var opts = tg.treegrid('options');
+    opts.onBeforeExpand = function(row){
+        if (row.children1){
+            tg.treegrid('append',{
+                parent: row[opts.idField],
+                data: row.children1
+            });
+            row.children1 = undefined;
+            tg.treegrid('expand', row[opts.idField]);
+        }
+        return row.children1 == undefined;
+    };
+    return data;
+}
+
 
         //function renderJDataGrid(FX, id, optGr) {
         function renderJDataGrid(obj)  {
@@ -517,7 +552,7 @@ console.log("data",data)
             }
 
 
-
+/*
 function myLoadFilter(data,parentId){
     function setData(data){
         var todo = [];
@@ -552,7 +587,7 @@ function myLoadFilter(data,parentId){
     return data;
 }
 
-
+*/
 
             var renderConfig = {
                 id: id,
@@ -587,14 +622,107 @@ function myLoadFilter(data,parentId){
 
         }
 
-        return function () {
+       function jDatagridPivot(obj)
+	   {
+		    var myPivotator = new pivotator();
+                var FX= obj.model;
+                var optGr = obj.config;
+                var id;
+                var $el = $(obj.el);
+
+                //Check if box has a valid id
+                if (!obj.id) {
+					window.fx_olap_id >= 0 ? window.fx_olap_id++ : window.fx_olap_id = 0;
+                    id = "fx_olap_" + window.fx_olap_id;
+                } else {      id = obj.id;                }
+
+              /*  console.log("model", FX)
+                console.log("id", id)
+                console.log("optGr", optGr)
+                console.log("$el", $el)
+
+*/
+            optGr["fulldataformat"] = false;
+            var result = myPivotator.pivot(FX, optGr);
+			
+			
+			 
+			
+			
+			
+			
+			
+			
+			
+console.log(result)	
+var myDataR=[];
+for(var i in result.data)
+{
+	if(i>100){break}
+	var temp={value:"VALUES"};
+	for(var j in result.rowname){temp[result.rowname[j].id]=result.rows[i][j]}
+	for(var j in result.cols)
+		{
+			temp[result.cols[j].id]=result.data[i][j]
+			
+		}
+		myDataR.push(temp)
+	
+}
+	   var rowNameR=[];
+	   for(var i in result.rowname)
+	   {rowNameR.push(result.rowname[i].id)}
+   //['form','name']
+var colNameR=['value'];
+//for(var i in result.colname)  {colNameR.push(result.colname[i].id)}
+//['year'],
+   var valNameR=[];
+for(var i in result.cols)  {valNameR.push({field:result.cols[i].id})}/*:[
+                        {field:'gdp'},
+                        {field:'oil'},
+                        {field:'balance'}
+                    ]*/
+   //result
+     
+            $el.find(".datagrid").remove();
+            $el.append("<div id='" + id + "_" + id + "' />");
+			
+			
+			console.log("before render",rowNameR,myDataR)
+			
+      $el.find('#' + id + "_" + id).pivotgrid({
+pagination:true,
+	 /* url:'pivotgrid_data2.json',
+                method:'get',
+                */
+				data:myDataR,
+				 loadFilter:myLoadFilter,
+				pivot:{
+                    rows:rowNameR,
+                    columns:colNameR,
+                    values:valNameR
+                },
+                valuePrecision:3,
+               // valueStyler:function(value,row,index){if (/balance$/.test(this.field) && value<0){return 'background:pink'}}
+            })
+
+
+
+		
+		   
+	   }
+
+
+
+
+	   return function () {
             return {
                 render: rendererGridFXJSON,
                 rendererTable: rendererTable,
                 rendererGrid: rendererGrid,
                 rendererGridFX: rendererGridFXJSON,
-                renderJDataGrid: renderJDataGrid
-
+                renderJDataGrid: renderJDataGrid,
+renderjDatagridPivot:jDatagridPivot
             }
         };
     });
