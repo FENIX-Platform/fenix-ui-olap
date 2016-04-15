@@ -1,7 +1,7 @@
 define([
         "fx-common/pivotator/start",
         "gt_msg_grid",
-        'pivotgrid',
+       // 'pivotgrid',
      //   'localpagination'
     ], function (pivotator) {
 
@@ -679,9 +679,11 @@ for(var i in result.cols)  {valNameR.push({field:result.cols[i].id})}/*:[
                         {field:'balance'}
                     ]*/
    //result
-     
-            $el.find(".datagrid").remove();  $el.find(".datagrid").empty();
-            $el.append("<div id='" + id + "_" + id + "' />");
+    
+    /*        $el.find(".datagrid").remove(); 
+			$el.find(".datagrid").empty();
+      */  
+	   $el.append("<div id='" + id + "_" + id + "' />");
 			
 			
 			console.log("before render",rowNameR,myDataR)
@@ -749,7 +751,7 @@ pagination:true,
 
 	   return function () {
             return {
-                render: jDatagridPivot,
+                render: rendererGridFXJSON,
                 rendererTable: rendererTable,
                 rendererGrid: rendererGrid,
                 rendererGridFX: rendererGridFXJSON,
