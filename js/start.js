@@ -658,7 +658,7 @@ console.log(result)
 var myDataR=[];
 for(var i in result.data)
 {
-	if(i>100){break}
+	if(i>5){break}
 	var temp={value:"VALUES"};
 	for(var j in result.rowname){temp[result.rowname[j].id]=result.rows[i][j]}
 	for(var j in result.cols)
@@ -684,7 +684,7 @@ for(var i in result.cols)  {valNameR.push({field:result.cols[i].id})}/*:[
                     ]*/
    //result
      
-            $el.find(".datagrid").remove();
+            $el.find(".datagrid").remove();  $el.find(".datagrid").empty();
             $el.append("<div id='" + id + "_" + id + "' />");
 			
 			
@@ -698,15 +698,20 @@ for(var i in result.cols)  {valNameR.push({field:result.cols[i].id})}/*:[
 		   mycolumns.push([]);
 		   for (var j in colstemp[i]){
 				if(i==colstemp.length-1){
-				mycolumns[i].push({title:colstemp[i][j].id,field:colstemp[i][j].id})
+				mycolumns[i].push({title:colstemp[i][j].id,field:colstemp[i][j].id,tt:colstemp[i][j].id.split("_")})
 				}
-				else{				mycolumns[i].push({title:colstemp[i][j].id,colspan:colstemp[i][j].span})
+				else{				mycolumns[i].push({title:colstemp[i][j].id,colspan:colstemp[i][j].span,tt:colstemp[i][j].id.split("_")})
 }
 				
 			}
 		   }
 			
 			
+			/*
+			for(var i in result.cols)
+			{
+					mycolumns[i].push({title:colstemp[i][j].id,colspan:colstemp[i][j].span,tt=}
+			}*/
 			
 			
 			console.log('#' + id + "_" + id,mycolumns)
@@ -723,7 +728,7 @@ pagination:true,
                     values:valNameR
                 },
                 valuePrecision:3,
-				//columns:mycolumns
+				columns:mycolumns
                // valueStyler:function(value,row,index){if (/balance$/.test(this.field) && value<0){return 'background:pink'}}
             })//.treegrid({columns:mycolumns})
 

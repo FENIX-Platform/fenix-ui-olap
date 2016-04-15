@@ -244,7 +244,7 @@
 
 			function _sum(field){
 				var col = $(target).datagrid('getColumnOption', field);
-				console.log("danger 2",col)
+				
 				var rr = $.map(rows, function(row){
 					for(var i=0; i<opts.pivot.columns.length; i++){
 						if (row[opts.pivot.columns[i]] != col.tt[i]){
@@ -334,8 +334,8 @@
 			});
 		});
 		columns.push(cc);
-		
-		return opts.columns || columns;
+		console.log('danger2',columns,"original",opts.columns);
+		return opts.columns;// || columns;
 		
 		// function getV1(field, pfield, pvalue){
 		// 	var tmp = {};
