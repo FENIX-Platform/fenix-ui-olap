@@ -2,7 +2,7 @@ define([
         "fx-common/pivotator/start",
         "gt_msg_grid",
         'pivotgrid',
-        'localpagination'
+     //   'localpagination'
     ], function (pivotator) {
 
         function rendererTable(result, id, fonctions) {
@@ -206,7 +206,7 @@ define([
              }*/
 
             var result;
-            var tableHeader = "<table id='myHead1' style='display:block'>";
+            var tableHeader = "<table id='myHead1' style='display:none'>";
             var rowSpan = optGr.COLS.length;
             if (optGr.COLS.length > 0) {
                 result = myPivotator.pivot(FX, optGr);
@@ -334,7 +334,7 @@ define([
                 container: id+"_"+id,
                 replaceContainer: false,
                 dataset: dsOption,
-                customHead : 'myHead1',
+                //customHead : 'myHead1',
 
                 columns: colsOption,
                 pageSize: 15,
@@ -626,7 +626,7 @@ console.log("MyCol",mycolumns)
 	   {
 		    var myPivotator = new pivotator();
                 var FX= obj.model;
-                var optGr = obj.config;
+                var optGr = $.extend({},obj.config);
                 var id;
                 var $el = $(obj.el);
 
@@ -642,7 +642,7 @@ console.log("MyCol",mycolumns)
                 console.log("$el", $el)
 
 */
-//            optGr["fulldataformat"] = false;
+            optGr["fulldataformat"] = false;
             var result = myPivotator.pivot(FX, optGr);
 			
 			
@@ -654,18 +654,14 @@ console.log("MyCol",mycolumns)
 			
 			
 			
-console.log(result)	
+console.log("APRES PIVOTATOR",FX,result)	
 var myDataR=[];
 for(var i in result.data)
 {
-	if(i>5){break}
-	var temp={value:"VALUES"};
+	if(i>50){break}
+	var temp={value:"VALUES"};//value:"VALUES"};
 	for(var j in result.rowname){temp[result.rowname[j].id]=result.rows[i][j]}
-	for(var j in result.cols)
-		{
-			temp[result.cols[j].id]=result.data[i][j]
-			
-		}
+	for(var j in result.cols){temp[result.cols[j].id]=result.data[i][j]	}
 		myDataR.push(temp)
 	
 }
@@ -698,9 +694,9 @@ for(var i in result.cols)  {valNameR.push({field:result.cols[i].id})}/*:[
 		   mycolumns.push([]);
 		   for (var j in colstemp[i]){
 				if(i==colstemp.length-1){
-				mycolumns[i].push({title:colstemp[i][j].id,field:colstemp[i][j].id,tt:colstemp[i][j].id.split("_")})
+				mycolumns[i].push({title:colstemp[i][j].id.split("_")[i],field:"VALUES_"+colstemp[i][j].id,tt:["VALUES"].concat([colstemp[i][j].id])})
 				}
-				else{				mycolumns[i].push({title:colstemp[i][j].id,colspan:colstemp[i][j].span,tt:colstemp[i][j].id.split("_")})
+				else{				mycolumns[i].push({title:colstemp[i][j].id.split("_")[i],colspan:colstemp[i][j].span,tt:["VALUES"].concat([colstemp[i][j].id])})
 }
 				
 			}
@@ -714,8 +710,12 @@ for(var i in result.cols)  {valNameR.push({field:result.cols[i].id})}/*:[
 			}*/
 			
 			
-			console.log('#' + id + "_" + id,mycolumns)
-      $el.find('#' + id + "_" + id).pivotgrid({
+			console.log('#' + id + "_" + id,JSON.stringify(mycolumns))
+			
+			
+		
+			
+			var finalOptr={
 pagination:true,
 	 /* url:'pivotgrid_data2.json',
                 method:'get',
@@ -728,9 +728,15 @@ pagination:true,
                     values:valNameR
                 },
                 valuePrecision:3,
-				columns:mycolumns
+				//columns:mycolumns
                // valueStyler:function(value,row,index){if (/balance$/.test(this.field) && value<0){return 'background:pink'}}
-            })//.treegrid({columns:mycolumns})
+            }
+			
+			console.log	("finalOptr"	,finalOptr	)
+			
+			
+			
+      $el.find('#' + id + "_" + id).pivotgrid(finalOptr)//.treegrid({columns:mycolumns})
 
 
 
