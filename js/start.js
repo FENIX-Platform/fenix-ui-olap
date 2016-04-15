@@ -717,7 +717,7 @@ pagination:true,
 
 	   return function () {
             return {
-                render: rendererGridFXJSON,
+                render: jDatagridPivot,
                 rendererTable: rendererTable,
                 rendererGrid: rendererGrid,
                 rendererGridFX: rendererGridFXJSON,
