@@ -52,7 +52,7 @@
 							title: opts.forzenColumnTitle
 						})
 					]],
-					columns: getColumns(this, filteredData)
+					columns:getColumns(this, filteredData)
 				});
 				buildFilterBar(this, data);
 				setTimeout(function(){
@@ -244,6 +244,7 @@
 
 			function _sum(field){
 				var col = $(target).datagrid('getColumnOption', field);
+				console.log("danger 2",col)
 				var rr = $.map(rows, function(row){
 					for(var i=0; i<opts.pivot.columns.length; i++){
 						if (row[opts.pivot.columns[i]] != col.tt[i]){
@@ -279,6 +280,7 @@
 	function getColumns(target, data){
 		if (!data){return null;}
 		var opts = $.data(target, 'pivotgrid').options;
+		
 		var columns = [];
 		$.map(opts.pivot.columns, function(field, index){
 			var pcolumns = columns[index-1];
@@ -333,7 +335,7 @@
 		});
 		columns.push(cc);
 		
-		return columns;
+		return opts.columns || columns;
 		
 		// function getV1(field, pfield, pvalue){
 		// 	var tmp = {};

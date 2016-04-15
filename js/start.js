@@ -184,7 +184,7 @@ define([
         }
 
         function rendererGridFXJSON(obj) {
-            console.log("rendererGridFXJSON", FX, id, optGr)
+            console.log("rendererGridFXJSON",obj)
             var myPivotator = new pivotator();
 			var FX= obj.model;
                 var optGr = obj.config;
@@ -610,7 +610,7 @@ function myLoadFilter(data,parentId){
                 frozenColumns: [myfrozzencolumn],
                 columns: mycolumns
             }
-
+console.log("MyCol",mycolumns)
             console.log("BEFORE RENDERISATION", renderConfig, mydata, '#' + id, mydata);
 //console.log(document.getElementById('result'))
 
@@ -642,7 +642,7 @@ function myLoadFilter(data,parentId){
                 console.log("$el", $el)
 
 */
-            optGr["fulldataformat"] = false;
+//            optGr["fulldataformat"] = false;
             var result = myPivotator.pivot(FX, optGr);
 			
 			
@@ -689,22 +689,43 @@ for(var i in result.cols)  {valNameR.push({field:result.cols[i].id})}/*:[
 			
 			
 			console.log("before render",rowNameR,myDataR)
+			   var mycolumns = [];
+          
+          var colstemp=myPivotator.toTree(result.cols2,"colspan");
+          console.log("toTree finnished",colstemp)
+           for(var i in colstemp)
+		   {
+		   mycolumns.push([]);
+		   for (var j in colstemp[i]){
+				if(i==colstemp.length-1){
+				mycolumns[i].push({title:colstemp[i][j].id,field:colstemp[i][j].id})
+				}
+				else{				mycolumns[i].push({title:colstemp[i][j].id,colspan:colstemp[i][j].span})
+}
+				
+			}
+		   }
 			
+			
+			
+			
+			console.log('#' + id + "_" + id,mycolumns)
       $el.find('#' + id + "_" + id).pivotgrid({
 pagination:true,
 	 /* url:'pivotgrid_data2.json',
                 method:'get',
                 */
 				data:myDataR,
-				 loadFilter:myLoadFilter,
+				// loadFilter:myLoadFilter,
 				pivot:{
                     rows:rowNameR,
                     columns:colNameR,
                     values:valNameR
                 },
                 valuePrecision:3,
+				//columns:mycolumns
                // valueStyler:function(value,row,index){if (/balance$/.test(this.field) && value<0){return 'background:pink'}}
-            })
+            })//.treegrid({columns:mycolumns})
 
 
 
