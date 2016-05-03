@@ -110,8 +110,8 @@ require([
 		'domReady!'
 	], function (log, Test) {
 
-		//trace, debug, info, warn, error
-		log.setLevel('trace');
+		//trace, debug, info, warn, error, silent
+		log.setLevel('silent');
 
 		log.warn("~~~~~ FENIX Visualization Box: test");
 		log.info("===== Start testing:...");

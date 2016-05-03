@@ -1,9 +1,8 @@
 define(["fx-common/pivotator/start",
-        "gt_msg_grid",],function(pivotator)
-{
+        "gt_msg_grid",], function (pivotator) {
 
 
-function rendererGrid(result, id, fonctions) {
+        function rendererGrid(result, id, fonctions) {
 
 
 //document.getElementById(id).innerHTML="";
@@ -96,7 +95,7 @@ function rendererGrid(result, id, fonctions) {
                 result = FX;
             }
 
-          //console.log("result", result);
+            //console.log("result", result);
 
             var dsOption = {fields: [], recordType: 'array', data: result.data}
             var colsOption = [];
@@ -151,27 +150,49 @@ function rendererGrid(result, id, fonctions) {
         }
 
         function rendererGridFXJSON(obj) {
-           console.log("rendererGridFXJSON",obj)
-            var myPivotator = new pivotator();
-			var FX= obj.model;
-                var optGr = obj.config;
-                var id;
-                var $el = $(obj.el);
 
-                //Check if box has a valid id
-                if (!obj.id) {
-					window.fx_olap_id >= 0 ? window.fx_olap_id++ : window.fx_olap_id = 0;
-                    id = "fx_olap_" + window.fx_olap_id;
-                } else {id = obj.id;}
-           
+            //Input parsing
+            
+            var optGr = {};
+            optGr.AGG = obj.aggregations;
+            optGr.COLS = obj.columns;
+            optGr.VALS = obj.values;
+            optGr.ROWS = obj.rows;
+            optGr.HIDDEN = obj.hidden;
+            optGr.Aggregator = obj.aggregationFn;
+            optGr.Formater = obj.formatter;
+            optGr.GetValue = obj.valueOutputType;
+            optGr.fulldataformat = obj.showRowHeaders;
+            optGr.nbDecimal = obj.decimals;
+            optGr.showCode = obj.showCode;
+            optGr.showFlag = obj.showFlag;
+            optGr.showUnit = obj.showUnit;
+
+            //end Input parsing
+
+            // console.log("rendererGridFXJSON",obj)
+            var myPivotator = new pivotator();
+            var FX = obj.model;
+
+            var id;
+            var $el = $(obj.el);
+
+            //Check if box has a valid id
+            if (!obj.id) {
+                window.fx_olap_id >= 0 ? window.fx_olap_id++ : window.fx_olap_id = 0;
+                id = "fx_olap_" + window.fx_olap_id;
+            } else {
+                id = obj.id;
+            }
+
 
             var result;
             var tableHeader = "<table id='myHead1' style='display:none'>";
             var rowSpan = optGr.COLS.length;
-           
-                result = myPivotator.pivot(FX, optGr);
-           
-console.log("RESULT FIN",result)
+
+            result = myPivotator.pivot(FX, optGr);
+
+//console.log("RESULT FIN",result)
             var dsOption = {fields: [], recordType: 'array', data: result.data}
             var colsOption = [];
             tableHeader += "<tr>";
@@ -187,75 +208,76 @@ console.log("RESULT FIN",result)
                 dsOption.fields.push({name: result.rowname[i].id});
             }
             //tableHeader+="</tr><tr>";
-			var colstemp=myPivotator.toTree(result.cols2,'colspan');
-			var colstempL=myPivotator.toTree(result.cols2label,'colspan');
-            console.log("COLSTEMP",colstemp,colstempL)
-			for(var i in colstemp){
-				if(i==0){
-					for(var j in colstemp[i])	{
-						tableHeader += "	<td  colspan='"+colstemp[i][j].span+"'>"+colstemp[i][j].id.split("_")[colstemp[i][j].id.split("_").length-1]+ "</td>";
-						}
-						tableHeader += "</tr>";
-				}
-				else{
-					 tableHeader += "<tr>";
-					 for(var j in colstemp[i])
-						{ tableHeader += "	<td  colspan='"+colstemp[i][j].span+"'>"+colstemp[i][j].id.split("_")[colstemp[i][j].id.split("_").length-1]+ "</td>";}
-					  tableHeader += "</tr>";
-					//  console.log(j)
-				}
-			
-				if(optGr.VALS.length>1){
-				
-					console.log()
-					//for(var v in optGr.VALS){
-						if(i==colstemp.length-1){
-							 for(var j in colstemp[i]){
-						//console.log("test",optGr.VALS)
-							 	for(var v in optGr.VALS){
-								
-							 colsOption.push({
-							id: colstemp[i][j].id.replace(" ","_")+"_"+
-							optGr.VALS[v].replace(/\|\*/g,"_"),
-							header: colstempL[i][j].id.replace(/_/g,"\n")+"\n"+optGr.VALS[v].replace(/.*\|\*/g,"").replace(" ","_")
-							
-							});
-							dsOption.fields.push({name: colstemp[i][j].id+"_"+optGr.VALS[v]});
-							}
-							}
-						}
-					//}
-				}
-				else{
-					if(i==colstemp.length-1){
-						 for(var j in colstemp[i]){ 
-						 colsOption.push({
-						id: colstemp[i][j].id.replace(" ","_"),
-						header: colstempL[i][j].id.replace(/_/g,"\n").replace(/ /g,"_"),
-						
-						});
-						dsOption.fields.push({name: colstemp[i][j].id.replace(" ","_")});
-						
-						}
-					}
-				}
-				
-			}
-			
+            var colstemp = myPivotator.toTree(result.cols2, 'colspan');
+            var colstempL = myPivotator.toTree(result.cols2label, 'colspan');
+            //  console.log("COLSTEMP",colstemp,colstempL)
+            for (var i in colstemp) {
+                if (i == 0) {
+                    for (var j in colstemp[i]) {
+                        tableHeader += "	<td  colspan='" + colstemp[i][j].span + "'>" + colstemp[i][j].id.split("_")[colstemp[i][j].id.split("_").length - 1] + "</td>";
+                    }
+                    tableHeader += "</tr>";
+                }
+                else {
+                    tableHeader += "<tr>";
+                    for (var j in colstemp[i]) {
+                        tableHeader += "	<td  colspan='" + colstemp[i][j].span + "'>" + colstemp[i][j].id.split("_")[colstemp[i][j].id.split("_").length - 1] + "</td>";
+                    }
+                    tableHeader += "</tr>";
+                    //  console.log(j)
+                }
+
+                if (optGr.VALS.length > 1) {
+
+
+                    //for(var v in optGr.VALS){
+                    if (i == colstemp.length - 1) {
+                        for (var j in colstemp[i]) {
+                            //console.log("test",optGr.VALS)
+                            for (var v in optGr.VALS) {
+
+                                colsOption.push({
+                                    id: colstemp[i][j].id.replace(" ", "_") + "_" +
+                                    optGr.VALS[v].replace(/\|\*/g, "_"),
+                                    header: colstempL[i][j].id.replace(/_/g, "\n") + "\n" + optGr.VALS[v].replace(/.*\|\*/g, "").replace(" ", "_")
+
+                                });
+                                dsOption.fields.push({name: colstemp[i][j].id + "_" + optGr.VALS[v]});
+                            }
+                        }
+                    }
+                    //}
+                }
+                else {
+                    if (i == colstemp.length - 1) {
+                        for (var j in colstemp[i]) {
+                            colsOption.push({
+                                id: colstemp[i][j].id.replace(" ", "_"),
+                                header: colstempL[i][j].id.replace(/_/g, "\n").replace(/ /g, "_"),
+
+                            });
+                            dsOption.fields.push({name: colstemp[i][j].id.replace(" ", "_")});
+
+                        }
+                    }
+                }
+
+            }
+
             tableHeader += "</tr></table>";
 
             $("#myHead1").remove();
-         
+
             $("body").append(tableHeader);
 
             var gridOption = {
-                id:  id + "_" + id,
+                id: id + "_" + id,
                 width: "100%",
                 height: "350",
-                container: id+"_"+id,
+                container: id + "_" + id,
                 replaceContainer: false,
                 dataset: dsOption,
-             //  customHead : 'myHead1',
+                //  customHead : 'myHead1',
 
                 columns: colsOption,
                 pageSize: 15,
@@ -263,23 +285,22 @@ console.log("RESULT FIN",result)
                 SigmaGridPath: 'grid/',
                 toolbarContent: 'nav | goto | pagesize '
             };
-            console.log("gridOption", gridOption)
+            //   console.log("gridOption", gridOption)
 
             //Sigma.destroyGrids();
-		//	console.log($el,id)
-			 $el.find(".datagrid").remove(); $el.find(".datagrid").empty();
+            //	console.log($el,id)
+            $el.find(".datagrid").remove();
+            $el.find(".datagrid").empty();
             $el.append("<div id='" + id + "_" + id + "' class='datagrid' />");
-            $("#" + id+"_"+id).empty();
+            $("#" + id + "_" + id).empty();
             var mygrid = new Sigma.Grid(gridOption);
 
             //	Sigma.Util.onLoad(
             Sigma.Grid.render(mygrid)();
 //		);
-  return result;
+            return result;
         }
 
-		
-		return rendererGridFXJSON
-		}
-		
-		);
+        return rendererGridFXJSON
+    }
+);
