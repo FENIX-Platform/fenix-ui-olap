@@ -16,7 +16,7 @@ define(function () {
             'amplify': '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',
             gt_msg: "{FENIX_CDN}/js/sigma.grid/2.4/gt_msg_en",
           //  gt_msg_grid: "{FENIX_CDN}/js/sigma.grid/2.4/gt_grid_all",
-  gt_msg_grid: "./dist/gt_all",
+			gt_msg_grid: "./dist/gt_all",
 				
 		//jdatagrid:"http://www.jeasyui.com/easyui/jquery.easyui.min",
             jdatagrid:"./dist/easyui",

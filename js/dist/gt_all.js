@@ -646,7 +646,7 @@ Sigma.Utils={
 	},
 
 	nextElement : function(n){
-		console.log(n);
+//		console.log(n);
 			if(n)
 			while((n = n.nextSibling) && n.nodeType != 1){}
 			return n;
