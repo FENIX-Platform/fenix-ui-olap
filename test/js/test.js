@@ -32,10 +32,10 @@ define([
                 //console.log("rowcol",rowcol);
                 optGr["fulldataformat"] = true;
 
-                config = self._harmonizeInput($.extend(true, {}, {
+                config = $.extend(true, {}, {
                     model: Model,
                     el: "#result"
-                }, optGr));
+                }, optGr);
 
                 //myRenderer.rendererGridFX(Model, "result", config);
                 myRenderer.render(config)
@@ -48,13 +48,15 @@ define([
         var optGr = myToolbar.getConfigCOLROW(Model.metadata.dsd);
         optGr["fulldataformat"] = true;
 
-        //console.log("optGr", optGr)
+        console.log("optGr", optGr)
 
-        var config = this._harmonizeInput($.extend(true, {}, {
-            model: Model,
-            el: "#result"
-        }, optGr));
+    
 
+		 var config = 	$.extend(true, {}, {model: Model,el: "#result"}, optGr)
+	
+		
+		
+		
         console.log("---------------------- NEW CONFIG")
         console.log(config)
 
@@ -64,7 +66,7 @@ define([
         //  log.info(Model);
     };
 
-    Test.prototype._harmonizeInput = function (config) {
+    /*Test.prototype._harmonizeInput = function (config) {
 
         var model = {};
 
@@ -91,6 +93,6 @@ define([
         return model;
 
     };
-
+*/
     return new Test();
 });

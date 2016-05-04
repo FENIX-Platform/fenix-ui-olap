@@ -154,7 +154,7 @@ function rendererGrid(result, id, fonctions) {
            console.log("rendererGridFXJSON",obj)
             var myPivotator = new pivotator();
 			var FX= obj.model;
-                var optGr = obj.config;
+               // var optGr = obj.config;
                 var id;
                 var $el = $(obj.el);
 
@@ -167,9 +167,9 @@ function rendererGrid(result, id, fonctions) {
 
             var result;
             var tableHeader = "<table id='myHead1' style='display:none'>";
-            var rowSpan = optGr.COLS.length;
+            var rowSpan = obj.columns.length;
            
-                result = myPivotator.pivot(FX, optGr);
+                result = myPivotator.pivot(FX, obj);
            
 console.log("RESULT FIN",result)
             var dsOption = {fields: [], recordType: 'array', data: result.data}
@@ -205,22 +205,22 @@ console.log("RESULT FIN",result)
 					//  console.log(j)
 				}
 			
-				if(optGr.VALS.length>1){
+				if(obj.values.length>1){
 				
 					console.log()
 					//for(var v in optGr.VALS){
 						if(i==colstemp.length-1){
 							 for(var j in colstemp[i]){
 						//console.log("test",optGr.VALS)
-							 	for(var v in optGr.VALS){
+							 	for(var v in obj.values){
 								
 							 colsOption.push({
 							id: colstemp[i][j].id.replace(" ","_")+"_"+
-							optGr.VALS[v].replace(/\|\*/g,"_"),
-							header: colstempL[i][j].id.replace(/_/g,"\n")+"\n"+optGr.VALS[v].replace(/.*\|\*/g,"").replace(" ","_")
+							obj.values[v].replace(/\|\*/g,"_"),
+							header: colstempL[i][j].id.replace(/_/g,"\n")+"\n"+obj.values[v].replace(/.*\|\*/g,"").replace(" ","_")
 							
 							});
-							dsOption.fields.push({name: colstemp[i][j].id+"_"+optGr.VALS[v]});
+							dsOption.fields.push({name: colstemp[i][j].id+"_"+obj.values[v]});
 							}
 							}
 						}

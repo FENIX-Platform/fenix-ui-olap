@@ -7,14 +7,14 @@ define([
 
 
         id_container = "";
-        COLS = [];
-        ROWS = [];
-        AGG = [];
-        HIDDEN = [];
-        VALS = [];
+        columns = [];
+        rows = [];
+        aggregations = [];
+        hidden = [];
+        values = [];
         chGetValue = "classicToNumber";
-        chAggregator = "sum";
-        chFormater = "value";
+        chAggregator = {value:"sum",v1:"default"};
+        chFormater = "localstring";
         chNbDecimal = 2;
         chshowUnit = false;
         chshowFlag = false;
@@ -29,11 +29,11 @@ define([
             if (opt.lang) {
                 lang = opt.lang;
             }
-            if (opt.nbDecimal) {
-                chNbDecimal = opt.nbDecimal;
+            if (opt.decimals) {
+                chNbDecimal = opt.decimals;
             }
             if (opt.showUnit) {
-                chshowUnit = opt.chshowUnit;
+                chshowUnit = opt.showUnit;
             }
             if (opt.showFlag) {
                 chshowFlag = opt.showFlag;
@@ -55,37 +55,36 @@ define([
              }*/
             var retObj = myfenixTool.initFXT(FX, opt)
             //console.log("convertFX",FX,retObj)
-            HIDDEN = retObj.HIDDEN;
-            ROWS = retObj.ROWS;
-            COLS = retObj.COLS;
-            AGG = retObj.AGG;
-            VALS = retObj.VALS;
+            hidden = retObj.hidden;
+            rows = retObj.rows;
+            columns = retObj.columns;
+            aggregations = retObj.aggregations;
+            values = retObj.values;
 
         }
 
 
         getConfigCOLROW = function (FX) {
-            var ret = {AGG: {}, COLS: {}, ROWS: {}, HIDDEN: {}, VALS: {}};
+            var ret = {aggregations: {}, columns: {}, rows: {}, hidden: {}, values: {}};
             $.each($("#" + id_container + "_AGG >li"), function (e, a) {
-                ret.AGG[a.getAttribute('value')] = true
+                ret.aggregations[a.getAttribute('value')] = true
             });
             $.each($("#" + id_container + "_ROWS >li"), function (e, a) {
-                ret.ROWS[a.getAttribute('value')] = true
+                ret.rows[a.getAttribute('value')] = true
             });
             $.each($("#" + id_container + "_COLS >li"), function (e, a) {
-                ret.COLS[a.getAttribute('value')] = true
+                ret.columns[a.getAttribute('value')] = true
             });
             $.each($("#" + id_container + "_HIDDEN >li"), function (e, a) {
-                ret.HIDDEN[a.getAttribute('value')] = true
+                ret.hidden[a.getAttribute('value')] = true
             });
             $.each($("#" + id_container + "_VALS >li"), function (e, a) {
-                ret.VALS[a.getAttribute('value')] = true
+                ret.values[a.getAttribute('value')] = true
             });
-
-            ret.Aggregator = chAggregator;
-            ret.GetValue = chGetValue;
-            ret.Formater = chFormater;
-            ret.nbDecimal = chNbDecimal;
+            ret.aggregationFn = chAggregator;
+            ret.valueOutputType = chGetValue;
+            ret.formatter = chFormater;
+            ret.decimals = chNbDecimal;
             ret.showUnit = chshowUnit;
             ret.showFlag = chshowFlag;
             ret.showCode = chshowCode;
@@ -120,23 +119,23 @@ define([
                 "<fieldset class=\"myFieldset\"><div class=\"title\">HIDDEN</div><ul id=\"" + id_container + "_HIDDEN\"></ul></fieldset>" +
                 "<fieldset class=\"myFieldset\"><div class=\"title\">AGG</div><ul id=\"" + id_container + "_AGG\"></ul></fieldset>" +
                 "<fieldset class=\"myFieldset\"><div class=\"title\">ROWS</div><ul id=\"" + id_container + "_ROWS\"></ul></fieldset>" +
-                "<fieldset class=\"myFieldset\">><div class=\"title\">COLS</div><ul id=\"" + id_container + "_COLS\"</ul></fieldset>" +
+                "<fieldset class=\"myFieldset\"><div class=\"title\">COLS</div><ul id=\"" + id_container + "_COLS\"></ul></fieldset>" +
                 "<fieldset class=\"myFieldset\"><div class=\"title\">VALS</div><ul id=\"" + id_container + "_VALS\"></ul></fieldset>"
             );
-            for (var i in ROWS) {
-                $("#" + id_container + "_ROWS").append("<li value=\"" + ROWS[i].value + "\">" + ROWS[i].label + "</li>");
+            for (var i in rows) {
+                $("#" + id_container + "_ROWS").append("<li value=\"" + rows[i].value + "\">" + rows[i].label + "</li>");
             }
-            for (var i in COLS) {
-                $("#" + id_container + "_COLS").append("<li value=\"" + COLS[i].value + "\">" + COLS[i].label + "</li>");
+            for (var i in columns) {
+                $("#" + id_container + "_COLS").append("<li value=\"" + columns[i].value + "\">" + columns[i].label + "</li>");
             }
-            for (var i in AGG) {
-                $("#" + id_container + "_AGG").append("<li value=\"" + AGG[i].value + "\">" + AGG[i].label + "</li>");
+            for (var i in aggregations) {
+                $("#" + id_container + "_AGG").append("<li value=\"" + aggregations[i].value + "\">" + aggregations[i].label + "</li>");
             }
-            for (var i in HIDDEN) {
-                $("#" + id_container + "_HIDDEN").append("<li value=\"" + HIDDEN[i].value + "\">" + HIDDEN[i].label + "</li>");
+            for (var i in hidden) {
+                $("#" + id_container + "_HIDDEN").append("<li value=\"" + hidden[i].value + "\">" + hidden[i].label + "</li>");
             }
-            for (var i in VALS) {
-                $("#" + id_container + "_VALS").append("<li value=\"" + VALS[i].value + "\">" + VALS[i].label + "</li>");
+            for (var i in values) {
+                $("#" + id_container + "_VALS").append("<li value=\"" + values[i].value + "\">" + values[i].label + "</li>");
             }
 
             /* Sortable */
@@ -167,15 +166,27 @@ define([
             /*options*/
 // Aggregation functions
 
-            $("#" + id_container).append("<fieldset class=\"options\"><label>functions</label><select id=\"" + id_container + "_AGGREGATION\"></select></fieldset>");
+        
+            /*options*/
+// Aggregation functions
+var mesFunc="<fieldset class=\"options\"><label>functions</label>";
             var liste = myFunc.getListAggregator();
-            for (i in liste) {
-                document.getElementById(id_container + "_AGGREGATION").options[document.getElementById(id_container + "_AGGREGATION").options.length] = new Option(liste[i], liste[i])
+            for (var i in liste) {
+			mesFunc+=i+"<select id=\"" + id_container + "_AGGREGATION_"+i+"\" onchange='chAggregator[\""+i+"\"]=this.value;_onChange()'>";
+			for(var j in liste[i]){mesFunc+="<option>"+j+"</option>"}
+			mesFunc+="</select>"
+                //document.getElementById(id_container + "_AGGREGATION").options[document.getElementById(id_container + "_AGGREGATION").options.length] = new Option(liste[i], liste[i])
             }
+			
+			mesFunc+="</fieldset>"
+			console.log("mesFunc",mesFunc)
+			  $("#" + id_container).append(mesFunc);
+          
+			/*
             $("#" + id_container + "_AGGREGATION").on("change", function () {
-                chAggregator = document.getElementById(id_container + "_AGGREGATION").value;
+                chAggregator["value"] = document.getElementById(id_container + "_AGGREGATION").value;
                 _onChange()
-            })
+            })*/
 
         }
         /*
