@@ -1,0 +1,44 @@
+<div>
+
+    <table data-role="header">
+<tbody>
+
+        <tr>
+
+            {{#each rowname}}
+                <td rowspan='{{ rowSpan }}' columnId="{{ this.id }}" resizable='false'
+                onmouseover="console.log({{this}})"
+                >
+
+                    {{ i18n this.title }}</td>
+            {{/each}}
+
+            {{#each columnHead}}
+                <td colspan='{{ colSpan }}'>{{ i18n this.title }}</td>
+            {{/each}}
+
+        </tr>
+
+        {{#each columnTail}}
+
+            <tr>
+                {{#each columns}}
+                    <td colspan='{{ colSpan }}'> {{ i18n this.title}}</td>
+                {{/each}}
+            </tr>
+
+        {{/each}}
+</tbody>
+    </table>
+
+
+   <!-- <div data-role="header">
+
+        {{#each rowname}}
+            <div columnId="{{this.id}}"> CIa </div>
+            <div> {{ i18n this.title }}</div>
+            <td rowspan='{{ rowSpan }}' columnId="{{ this.id }}" resizable='false' style="{{this.id}}">{{ i18n this.title }}{{ this.id}}</td>
+        {{/each}}
+
+    </div>-->
+</div>
