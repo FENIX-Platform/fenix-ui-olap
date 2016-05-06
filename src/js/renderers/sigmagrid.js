@@ -117,7 +117,6 @@ define([
 
     Sigmagrid.prototype._renderSigmagrid = function (obj) {
 
-
         var model = this.pivotator.pivot(this.model, obj),
             dsOption = {fields: [], recordType: 'array', data: model.data},
             colsOption = [],
@@ -137,9 +136,11 @@ define([
             }
         }
 
+		console.log("OBJ",obj,colstemp)
+
         for (var i in colstemp) {
 
-            if (obj.values.length > 1) {
+            if (obj.values.length > 1  || obj.columns.length ==0) {
                 //for(var v in optGr.VALS){
                 if (i == colstemp.length - 1) {
                     for (var j in colstemp[i]) {
@@ -221,8 +222,7 @@ define([
     };
 
     Sigmagrid.prototype._populateData = function (type, model, config) {
-
-        switch (type.toLowerCase()) {
+        /*switch (type.toLowerCase()) {
             //add type process
             case "heatmap":
                 break;
@@ -243,15 +243,7 @@ define([
                 }
 
                 config.series.push({data: tempData});
-                /* config.xAxis.categories= ['1', '2', '3', '4', '5'];
-                 config.series.push({data:[
-                 [760, 801, 848, 895, 965],
-                 [733, 853, 939, 980, 1080],
-                 [714, 762, 817, 870, 918],
-                 [724, 802, 806, 871, 950],
-                 [834, 836, 864, 882, 910]
-                 ]})
-                 */
+              
                 break;
             default:
 
@@ -278,8 +270,7 @@ define([
 
                 }
                 ;
-        }
-        console.log("config", config)
+        }*/
         return config;
     };
 

@@ -29,6 +29,7 @@ define([
                 var optGr = myToolbar.getConfigCOLROW(Model.metadata.dsd);
 
                 optGr["showRowHeaders"] = true;
+document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
 
                 //myRenderer.rendererGridFX(Model, "result", config);
                 olap.update(optGr)
