@@ -11,7 +11,7 @@
 
 .olapToolbar ul {
   min-height: 100px;
-  background-color: gray; }
+  background-color: grey; }
 
 .olapToolbar li {
   color: #fff;
@@ -22,3 +22,5 @@
   background-color: #5F9EDF;
   text-align: center;
   cursor: move; }
+
+/*# sourceMappingURL=test.css.map */
