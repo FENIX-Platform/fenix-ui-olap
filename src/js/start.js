@@ -8,9 +8,11 @@ define([
     'fx-olap/config/events',
     'fx-olap/config/config',
     'fx-olap/config/config-default',
+    'fx-common/pivotator/start',
+    'fx-common/pivotator/fenixtool',
     'handlebars',
     'amplify'
-], function ($, require, _, log, ERR, EVT, C, CD, Handlebars) {
+], function ($, require, _, log, ERR, EVT, C, CD, Pivotator, FenixTool, Handlebars) {
 
     'use strict';
 
@@ -46,6 +48,7 @@ define([
     // API
 
     Olap.prototype.update = function (config) {
+
         this.olap.update(config);
     };
 
@@ -150,6 +153,8 @@ define([
         //pub/sub
         this.channels = {};
 
+        this.pivotator = new Pivotator();
+
     };
 
     // Preload scripts
@@ -198,12 +203,13 @@ define([
 
     Olap.prototype._renderOlap = function () {
 
-        var Renderer = this._getRenderer(this.renderer);
+        var Renderer = this._getRenderer(this.renderer),
+            model = this.pivotator.pivot(this.model, this.pivotatorConfig);
 
         var config = $.extend(true, {}, {
             pivotatorConfig : this.pivotatorConfig,
+            model : model,
             el : this.$el,
-            model : this.model,
             lang : this.lang
         });
 

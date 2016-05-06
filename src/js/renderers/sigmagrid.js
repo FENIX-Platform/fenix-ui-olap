@@ -117,7 +117,7 @@ define([
 
     Sigmagrid.prototype._renderSigmagrid = function (obj) {
 
-        var model = this.pivotator.pivot(this.model, obj),
+        var model = this.model,
             dsOption = {fields: [], recordType: 'array', data: model.data},
             colsOption = [],
             colstemp = this.pivotator.toTree(model.cols2, 'colspan'),
