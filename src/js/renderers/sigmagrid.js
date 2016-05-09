@@ -67,9 +67,7 @@ define([
 
     Sigmagrid.prototype._trigger = function (channel) {
 
-        if (!this.channels[channel]) {
-            return false;
-        }
+        if (!this.channels[channel]) {return false;        }
         var args = Array.prototype.slice.call(arguments, 1);
         for (var i = 0, l = this.channels[channel].length; i < l; i++) {
             var subscription = this.channels[channel][i];
@@ -116,7 +114,7 @@ define([
     };
 
     Sigmagrid.prototype._renderSigmagrid = function (obj) {
-
+console.log("THIS",this)
         var model = this.model,
             dsOption = {fields: [], recordType: 'array', data: model.data},
             colsOption = [],
