@@ -114,7 +114,7 @@ define([
     };
 
     Sigmagrid.prototype._renderSigmagrid = function (obj) {
-console.log("THIS",this)
+
         var model = this.model,
             dsOption = {fields: [], recordType: 'array', data: model.data},
             colsOption = [],
@@ -134,7 +134,7 @@ console.log("THIS",this)
             }
         }
 
-		console.log("OBJ",obj,colstemp)
+		//console.log("OBJ",obj,colstemp)
 
         for (var i in colstemp) {
 
