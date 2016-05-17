@@ -5,9 +5,9 @@ define([
     'fx-olap/start',
     'test/js/toolbar',
     //'test/models/datashort',
-    'test/models/dataFAOSTAT',
+    //'test/models/dataFAOSTAT',
 
-    //'test/models/uneca_population',
+    'test/models/uneca_population',
     //'test/models/dataFAOSTAT'
 ], function (log, $, Olap, Toolbar, Model/*, ModelUncea, ModelFaostat*/) {
 
