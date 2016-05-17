@@ -168,8 +168,8 @@ define([
 
         
             /*options*/
-// Aggregation functions
-var mesFunc="<fieldset class=\"options\"><label>functions</label>";
+			// Aggregation functions
+			var mesFunc="<fieldset class=\"options\"><label>functions</label>";
             var liste = myFunc.getListAggregator();
             for (var i in liste) {
 			mesFunc+=i+"<select id=\"" + id_container + "_AGGREGATION_"+i+"\" onchange='chAggregator[\""+i+"\"]=this.value;_onChange()'>";

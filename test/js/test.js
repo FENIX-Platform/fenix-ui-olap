@@ -29,10 +29,11 @@ define([
                 var optGr = myToolbar.getConfigCOLROW(Model.metadata.dsd);
 
                 optGr["showRowHeaders"] = true;
-document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
+				document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
 
                 //myRenderer.rendererGridFX(Model, "result", config);
-                olap.update(optGr)
+                olap.update(optGr);
+				console.log("after update",olap)
 
             }, lang: "EN", nbDecimal: 2, showCode: false
         });
@@ -44,9 +45,9 @@ document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
         optGr["showRowHeaders"] = true;
 
         var config = $.extend(true, {}, {model: Model, el: "#result"}, optGr);
-document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
+		document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
         var olap = new Olap(config);
-
+		console.log("olap",olap)
     };
 
 

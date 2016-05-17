@@ -13,7 +13,6 @@ define([
     'handlebars',
     'amplify'
 ], function ($, require, _, log, ERR, EVT, C, CD, Pivotator, FenixTool, Handlebars) {
-
     'use strict';
 
     function Olap(o) {
@@ -87,7 +86,7 @@ define([
         this.model = this.initial.model;
 
         var pc = {};
-
+		pc.inputFormat= this.initial.inputFormat || "raw";
         pc.aggregationFn = this.initial.aggregationFn;
 
         pc.aggregations = this.initial.aggregations;
@@ -154,7 +153,7 @@ define([
         this.channels = {};
 
         this.pivotator = new Pivotator();
-
+		this.fenixTool=new FenixTool();
     };
 
     // Preload scripts
@@ -202,17 +201,24 @@ define([
     };
 
     Olap.prototype._renderOlap = function () {
+		
+		
+		
+		
+        var Renderer = this._getRenderer(this.renderer);
+		
+		
+		var myPivotatorConfig=this.fenixTool.parseInut(this.model.metadata.dsd, this.pivotatorConfig);
+//console.log(myPivotatorConfig,"config");
 
-        var Renderer = this._getRenderer(this.renderer),
-            model = this.pivotator.pivot(this.model, this.pivotatorConfig);
+		var model = this.pivotator.pivot(this.model, myPivotatorConfig);
 
         var config = $.extend(true, {}, {
-            pivotatorConfig : this.pivotatorConfig,
+            pivotatorConfig :myPivotatorConfig,
             model : model,
             el : this.$el,
             lang : this.lang
         });
-
         this.olap = new Renderer(config);
 
         this._trigger("ready");
