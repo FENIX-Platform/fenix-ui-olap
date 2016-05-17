@@ -209,7 +209,6 @@ define([
 		
 		
 		var myPivotatorConfig=this.fenixTool.parseInut(this.model.metadata.dsd, this.pivotatorConfig);
-//console.log(myPivotatorConfig,"config");
 
 		var model = this.pivotator.pivot(this.model, myPivotatorConfig);
 
@@ -255,7 +254,6 @@ define([
     // utils
 Olap.prototype.exportConf=function(optGr)
 	{var ret="";
-		console.log("EXPORT",JSON.stringify(optGr))
 		
 	}
 	

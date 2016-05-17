@@ -33,7 +33,6 @@ define([
 				olap.exportConf(Model.metadata.dsd,optGr)
                 //myRenderer.rendererGridFX(Model, "result", config);
                 olap.update(optGr);
-				console.log("after update",olap)
 
             }, lang: "EN", nbDecimal: 2, showCode: false
         });
