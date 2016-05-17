@@ -5,7 +5,7 @@ define([
     'fx-olap/start',
     'test/js/toolbar',
     //'test/models/datashort',
-    'test/models/data',
+    'test/models/dataFAOSTAT',
 
     //'test/models/uneca_population',
     //'test/models/dataFAOSTAT'
@@ -30,7 +30,7 @@ define([
 
                 optGr["showRowHeaders"] = true;
 				document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
-
+				olap.exportConf(Model.metadata.dsd,optGr)
                 //myRenderer.rendererGridFX(Model, "result", config);
                 olap.update(optGr);
 				console.log("after update",olap)
@@ -47,7 +47,7 @@ define([
         var config = $.extend(true, {}, {model: Model, el: "#result"}, optGr);
 		document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
         var olap = new Olap(config);
-		console.log("olap",olap)
+		olap.exportConf(Model.metadata.dsd,optGr)
     };
 
 

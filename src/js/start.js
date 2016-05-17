@@ -253,7 +253,12 @@ define([
     };
 
     // utils
-
+Olap.prototype.exportConf=function(optGr)
+	{var ret="";
+		console.log("EXPORT",JSON.stringify(optGr))
+		
+	}
+	
     Olap.prototype._callSelectorInstanceMethod = function (name, method, opts1, opts2) {
 
         var Instance = this.olap;
