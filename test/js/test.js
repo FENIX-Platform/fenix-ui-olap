@@ -14,8 +14,8 @@ define([
 
     var s = {
         CONFIGURATION_EXPORT: "#configuration-export",
-        FILTER_INTERACTION : "#filter-interaction",
-        OLAP_INTERACTION : "#olap-interaction"
+        FILTER_INTERACTION: "#filter-interaction",
+        OLAP_INTERACTION: "#olap-interaction"
     };
 
     function Test() {
@@ -37,7 +37,7 @@ define([
         log.trace("Filter configuration from FenixTool", items);
 
         this.filter = new Filter({
-            el : s.FILTER_INTERACTION,
+            el: s.FILTER_INTERACTION,
             items: items
         });
 
@@ -45,7 +45,12 @@ define([
 
             var config = this._getOlapConfigFromFilter();
 
-            log.trace("Init chart");
+            config = $.extend(true, {}, {
+                model: Model,
+                el: "#olap-interaction"
+            }, config);
+
+            log.trace("Init Olap");
             log.trace(config);
 
             this.olap = new OlapCreator(config);
@@ -67,11 +72,7 @@ define([
 
         var values = this.filter.getValues(),
             config = this.fenixTool.toTableConfig(values);
- config = $.extend(true, {}, {
-	  aggregationFn:"sum",formatter:"value",decimals:2,showRowHeaders:true,
-            model : Model,
-            el : "#olap-interaction"
-        }, config);
+
         this._printOlapConfiguration(config);
 
         return config;
