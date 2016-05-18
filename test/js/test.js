@@ -2,53 +2,88 @@
 define([
     'loglevel',
     'jquery',
+    'underscore',
     'fx-olap/start',
-    'test/js/toolbar',
-    //'test/models/datashort',
-    //'test/models/dataFAOSTAT',
-
-    'test/models/uneca_population',
-    //'test/models/dataFAOSTAT'
-], function (log, $, Olap, Toolbar, Model/*, ModelUncea, ModelFaostat*/) {
+    'fx-filter/start',
+    'fx-common/pivotator/fenixtool',
+    'test/models/data',
+    'test/models/filter-interaction'
+], function (log, $, _, OlapCreator, Filter, FenixTool, Model, FilterModel) {
 
     'use strict';
 
-    function Test() { }
+    var s = {
+        CONFIGURATION_EXPORT: "#configuration-export",
+        FILTER_INTERACTION : "#filter-interaction",
+        OLAP_INTERACTION : "#olap-interaction"
+    };
+
+    function Test() {
+        this.fenixTool = new FenixTool();
+    }
 
     Test.prototype.start = function () {
         log.trace("Test started");
-        this._renderOlap();
+        this._testFilterInteraction();
     };
 
-    Test.prototype._renderOlap = function () {
+    Test.prototype._testFilterInteraction = function () {
 
-        var myToolbar = new Toolbar();
+        //create filter configuration
+        var itemsFromFenixTool = this.fenixTool.toFilter(Model),
+        //FilterModel contains static filter selectors, e.g. show code, show unit
+            items = $.extend(true, {}, FilterModel, itemsFromFenixTool);
 
-        myToolbar.init("toolbar", Model.metadata.dsd, {
-            onchange: function () {
-                var optGr = myToolbar.getConfigCOLROW(Model.metadata.dsd);
+        log.trace("Filter configuration from FenixTool", items);
 
-                optGr["showRowHeaders"] = true;
-				document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
-				olap.exportConf(Model.metadata.dsd,optGr)
-                //myRenderer.rendererGridFX(Model, "result", config);
-                olap.update(optGr);
-
-            }, lang: "EN", nbDecimal: 2, showCode: false
+        this.filter = new Filter({
+            el : s.FILTER_INTERACTION,
+            items: items
         });
 
-        myToolbar.display();
+        this.filter.on("ready", _.bind(function () {
 
-        var optGr = myToolbar.getConfigCOLROW(Model.metadata.dsd);
+            var config = this._getOlapConfigFromFilter();
 
-        optGr["showRowHeaders"] = true;
+            log.trace("Init chart");
+            log.trace(config);
 
-        var config = $.extend(true, {}, {model: Model, el: "#result"}, optGr);
-		document.getElementById('toExport').innerHTML=JSON.stringify(optGr)
-        var olap = new Olap(config);
-		olap.exportConf(Model.metadata.dsd,optGr)
+            this.olap = new OlapCreator(config);
+        }, this));
+
+        this.filter.on("change", _.bind(function () {
+
+            var config = this._getOlapConfigFromFilter();
+
+            log.trace("Update chart");
+            log.trace(config);
+
+            this.olap.update(config);
+        }, this));
+
     };
 
+    Test.prototype._getOlapConfigFromFilter = function () {
+
+        var values = this.filter.getValues(),
+            config = this.fenixTool.toTableConfig(values);
+
+        this._printOlapConfiguration(config);
+
+        return config;
+
+    };
+
+    Test.prototype._printOlapConfiguration = function () {
+
+        var values = this.filter.getValues(),
+            config = this.fenixTool.toTableConfig(values);
+
+        //Export configuration
+        $(s.CONFIGURATION_EXPORT).html(JSON.stringify(config));
+
+        return config;
+    };
 
     return new Test();
 });

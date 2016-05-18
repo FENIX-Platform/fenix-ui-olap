@@ -1,3 +1,27 @@
-//@import '../../../fenix-ui-filter/src/css/filter';
-@import './toolbar';
-//@import '../../src/css/olap';
+/* Fenix Common CSS */
+@import '../../../fenix-ui-common/css/themes/fx-variables';
+
+/* Boostrap Queries */
+@import '../../../fenix-ui-common/css/themes/fx-bootstrap-queries';
+
+$fx-ui-common: '../../../fenix-ui-common/';
+
+@import '../../../fenix-ui-common/css/components/fx-icons';
+
+@import '../../../fenix-ui-common/css/utils/fx-mixins';
+@import '../../../fenix-ui-common/css/components/fx-dropdown';
+@import '../../../fenix-ui-common/css/components/fx-preload';
+
+
+@import '../../../fenix-ui-common/css/base/fx-typography';
+@import '../../../fenix-ui-common/css/base/fx-fonts-import';
+
+
+
+@import '../../../fenix-ui-common/css/components/fx-tabs';
+@import '../../../fenix-ui-common/css/components/fx-buttons';
+@import '../../../fenix-ui-common/css/vendor/fx-jstree';
+@import '../../../fenix-ui-common/css/components/fx-radio-checkbox';
+
+@import '../../../fenix-ui-filter/src/css/filter';
+@import '../../src/css/olap';
