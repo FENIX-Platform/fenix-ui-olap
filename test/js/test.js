@@ -6,7 +6,7 @@ define([
     'fx-olap/start',
     'fx-filter/start',
     'fx-common/pivotator/fenixtool',
-    'test/models/data',
+    'test/models/dataFAOSTAT',
     'test/models/filter-interaction'
 ], function (log, $, _, OlapCreator, Filter, FenixTool, Model, FilterModel) {
 
@@ -67,7 +67,11 @@ define([
 
         var values = this.filter.getValues(),
             config = this.fenixTool.toTableConfig(values);
-
+ config = $.extend(true, {}, {
+	  aggregationFn:"sum",formatter:"value",decimals:2,showRowHeaders:true,
+            model : Model,
+            el : "#olap-interaction"
+        }, config);
         this._printOlapConfiguration(config);
 
         return config;
