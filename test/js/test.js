@@ -62,7 +62,7 @@ define([
 
             log.trace("Update chart");
             log.trace(config);
-
+//console.log("config",config)
             this.olap.update(config);
         }, this));
 
@@ -70,8 +70,9 @@ define([
 
     Test.prototype._getOlapConfigFromFilter = function () {
 
-        var values = this.filter.getValues(),
-            config = this.fenixTool.toTableConfig(values);
+        var values = this.filter.getValues();
+		//console.log("_getOlapConfigFromFilter",values)
+		var config = this.fenixTool.toTableConfig(values);
 
         this._printOlapConfiguration(config);
 
