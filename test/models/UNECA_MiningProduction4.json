@@ -1,0 +1,531 @@
+ {
+  "metadata" : {
+    "creationDate" : 1448017200000,
+    "title" : {
+      "EN" : "Mining Production"
+    },
+    "dsd" : {
+      "contextSystem" : "uneca",
+      "datasources" : [ "D3S" ],
+      "rid" : "66_2516",
+      "columns" : [ {
+        "dataType" : "code",
+        "title" : {
+          "EN" : "Domain"
+        },
+        "values" : {
+          "codes" : [ {
+            "codes" : [ {
+              "code" : "02",
+              "label" : {
+                "EN" : "Economic statistics"
+              }
+            } ],
+            "idCodeList" : "UNECA_ClassificationOfActivities",
+            "extendedName" : {
+              "EN" : "UNECA Classification of Activities -Domains, topics and indicators"
+            }
+          } ]
+        },
+        "domain" : {
+          "codes" : [ {
+            "idCodeList" : "UNECA_ClassificationOfActivities",
+            "extendedName" : {
+              "EN" : "UNECA Classification of Activities -Domains, topics and indicators"
+            }
+          } ]
+        },
+        "key" : false,
+        "id" : "DomainCode"
+      }, {
+        "dataType" : "code",
+        "title" : {
+          "EN" : "Indicator"
+        },
+        "values" : {
+          "codes" : [ {
+            "codes" : [ {
+              "code" : "0208",
+              "label" : {
+                "EN" : "Mining"
+              }
+            } ],
+            "idCodeList" : "UNECA_ClassificationOfActivities",
+            "extendedName" : {
+              "EN" : "UNECA Classification of Activities -Domains, topics and indicators"
+            }
+          } ]
+        },
+        "domain" : {
+          "codes" : [ {
+            "idCodeList" : "UNECA_ClassificationOfActivities",
+            "extendedName" : {
+              "EN" : "UNECA Classification of Activities -Domains, topics and indicators"
+            }
+          } ]
+        },
+        "key" : true,
+        "id" : "IndicatorCode"
+      }, {
+        "dataType" : "code",
+        "title" : {
+          "EN" : "Country"
+        },
+        "values" : {
+          "codes" : [ {
+            "codes" : [ {
+              "code" : "MWI",
+              "label" : {
+                "EN" : "Malawi"
+              }
+            }, {
+              "code" : "NER",
+              "label" : {
+                "EN" : "Niger"
+              }
+            }, {
+              "code" : "CMR",
+              "label" : {
+                "EN" : "Cameroon"
+              }
+            }, {
+              "code" : "NAM",
+              "label" : {
+                "EN" : "Namibia"
+              }
+            }, {
+              "code" : "LSO",
+              "label" : {
+                "EN" : "Lesotho"
+              }
+            }, {
+              "code" : "MUS",
+              "label" : {
+                "EN" : "Mauritius"
+              }
+            }, {
+              "code" : "MOZ",
+              "label" : {
+                "EN" : "Mozambique"
+              }
+            }, {
+              "code" : "MAR",
+              "label" : {
+                "EN" : "Morocco"
+              }
+            }, {
+              "code" : "NGA",
+              "label" : {
+                "EN" : "Nigeria"
+              }
+            }, {
+              "code" : "GMB",
+              "label" : {
+                "EN" : "Gambia"
+              }
+            }, {
+              "code" : "GNQ",
+              "label" : {
+                "EN" : "Equatorial Guinea"
+              }
+            }, {
+              "code" : "CAF",
+              "label" : {
+                "EN" : "Central African Republic"
+              }
+            }, {
+              "code" : "MLI",
+              "label" : {
+                "EN" : "Mali"
+              }
+            }, {
+              "code" : "RWA",
+              "label" : {
+                "EN" : "Rwanda"
+              }
+            }, {
+              "code" : "AGO",
+              "label" : {
+                "EN" : "Angola"
+              }
+            }, {
+              "code" : "COG",
+              "label" : {
+                "EN" : "Congo"
+              }
+            }, {
+              "code" : "CIV",
+              "label" : {
+                "EN" : "CÃƒÂ´te d'Ivoire"
+              }
+            }, {
+              "code" : "LBY",
+              "label" : {
+                "EN" : "Libyan Arab Jamahiriya"
+              }
+            }, {
+              "code" : "MRT",
+              "label" : {
+                "EN" : "Mauritania"
+              }
+            }, {
+              "code" : "LBR",
+              "label" : {
+                "EN" : "Liberia"
+              }
+            }, {
+              "code" : "BEN",
+              "label" : {
+                "EN" : "Benin"
+              }
+            }, {
+              "code" : "BFA",
+              "label" : {
+                "EN" : "Burkina Faso"
+              }
+            }, {
+              "code" : "GHA",
+              "label" : {
+                "EN" : "Ghana"
+              }
+            }, {
+              "code" : "ERI",
+              "label" : {
+                "EN" : "Eritrea"
+              }
+            }, {
+              "code" : "ZAR"
+            }, {
+              "code" : "GAB",
+              "label" : {
+                "EN" : "Gabon"
+              }
+            }, {
+              "code" : "DJI",
+              "label" : {
+                "EN" : "Djibouti"
+              }
+            }, {
+              "code" : "BWA",
+              "label" : {
+                "EN" : "Botswana"
+              }
+            }, {
+              "code" : "GIN",
+              "label" : {
+                "EN" : "Guinea"
+              }
+            }, {
+              "code" : "EGY",
+              "label" : {
+                "EN" : "Egypt"
+              }
+            }, {
+              "code" : "DZA",
+              "label" : {
+                "EN" : "Algeria"
+              }
+            }, {
+              "code" : "ZMB",
+              "label" : {
+                "EN" : "Zambia"
+              }
+            }, {
+              "code" : "SWZ",
+              "label" : {
+                "EN" : "Swaziland"
+              }
+            }, {
+              "code" : "TCD",
+              "label" : {
+                "EN" : "Chad"
+              }
+            }, {
+              "code" : "SOM",
+              "label" : {
+                "EN" : "Somalia"
+              }
+            }, {
+              "code" : "TGO",
+              "label" : {
+                "EN" : "Togo"
+              }
+            }, {
+              "code" : "TZA",
+              "label" : {
+                "EN" : "United Republic of Tanzania"
+              }
+            }, {
+              "code" : "SLE",
+              "label" : {
+                "EN" : "Sierra Leone"
+              }
+            }, {
+              "code" : "ZWE",
+              "label" : {
+                "EN" : "Zimbabwe"
+              }
+            }, {
+              "code" : "ZAF",
+              "label" : {
+                "EN" : "South Africa"
+              }
+            }, {
+              "code" : "TUN",
+              "label" : {
+                "EN" : "Tunisia"
+              }
+            } ],
+            "idCodeList" : "ISO3",
+            "extendedName" : {
+              "EN" : "International Standard Organization - Geographic names"
+            }
+          } ]
+        },
+        "domain" : {
+          "codes" : [ {
+            "idCodeList" : "ISO3",
+            "extendedName" : {
+              "EN" : "International Standard Organization - Geographic names"
+            }
+          } ]
+        },
+        "subject" : "geo",
+        "key" : true,
+        "id" : "CountryCode"
+      }, {
+        "dataType" : "code",
+        "title" : {
+          "EN" : "Commodity"
+        },
+        "values" : {
+          "codes" : [ {
+            "version" : "2.1",
+            "codes" : [ {
+              "code" : "110",
+              "label" : {
+                "EN" : "Coal and peat"
+              }
+            }, {
+              "code" : "374",
+              "label" : {
+                "EN" : "Plaster, lime and cement"
+              }
+            }, {
+              "code" : "13000",
+              "label" : {
+                "EN" : "Uranium and thorium ores and concentrates"
+              }
+            }, {
+              "code" : "11010",
+              "label" : {
+                "EN" : "Hard coal"
+              }
+            }, {
+              "code" : "120",
+              "label" : {
+                "EN" : "Crude petroleum and natural gas"
+              }
+            }, {
+              "code" : "15120",
+              "label" : {
+                "EN" : "Marble and other calcareous monumental or building stone"
+              }
+            }, {
+              "code" : "16310",
+              "label" : {
+                "EN" : "Precious stones (including diamonds, but not industrial diamonds) and semi-precious stones, unworked or simply sawn or roughly shaped"
+              }
+            }, {
+              "code" : "16200",
+              "label" : {
+                "EN" : "Salt and pure sodium chloride; sea water"
+              }
+            }, {
+              "code" : "12020",
+              "label" : {
+                "EN" : "Natural gas, liquefied or in the gaseous state"
+              }
+            }, {
+              "code" : "14210",
+              "label" : {
+                "EN" : "Copper, ores and concentrates"
+              }
+            }, {
+              "code" : "15320",
+              "label" : {
+                "EN" : "Pebbles, gravel, broken or crushed stone, macadam; granules, chippings and powder of stone"
+              }
+            }, {
+              "code" : "15400",
+              "label" : {
+                "EN" : "Clays"
+              }
+            }, {
+              "code" : "14100",
+              "label" : {
+                "EN" : "Iron ores and concentrates, other than roasted iron pyrites"
+              }
+            }, {
+              "code" : "163",
+              "label" : {
+                "EN" : "Precious and semi-precious stones; pumice stone; emery; natural abrasives; other minerals"
+              }
+            }, {
+              "code" : "14230",
+              "label" : {
+                "EN" : "Aluminium ores and concentrates"
+              }
+            }, {
+              "code" : "153",
+              "label" : {
+                "EN" : "Sands, pebbles, gravel, broken or crushed stone, natural bitumen and asphalt"
+              }
+            } ],
+            "idCodeList" : "CPC",
+            "extendedName" : {
+              "EN" : "Central Product Classification"
+            }
+          } ]
+        },
+        "domain" : {
+          "codes" : [ {
+            "version" : "2.1",
+            "idCodeList" : "CPC",
+            "extendedName" : {
+              "EN" : "Central Product Classification"
+            }
+          } ]
+        },
+        "subject" : "item",
+        "key" : true,
+        "id" : "Commodity"
+      }, {
+        "dataType" : "year",
+        "title" : {
+          "EN" : "Year"
+        },
+        "values" : {
+          "timeList" : [ 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 ]
+        },
+        "subject" : "time",
+        "key" : true,
+        "id" : "Year"
+      }, {
+        "dataType" : "number",
+        "title" : {
+          "EN" : "Value"
+        },
+        "subject" : "value",
+        "key" : false,
+        "id" : "Value"
+      }, {
+        "dataType" : "text",
+        "title" : {
+          "EN" : "UM"
+        },
+        "key" : false,
+        "id" : "UM"
+      } ]
+    },
+    "rid" : "12_927",
+    "uid" : "UNECA_MiningProduction4",
+    "meContent" : {
+      "resourceRepresentationType" : "dataset",
+      "seCoverage" : {
+        "coverageSectors" : {
+          "codes" : [ {
+            "code" : "0208",
+            "label" : {
+              "EN" : "Mining"
+            }
+          } ],
+          "idCodeList" : "UNECA_ClassificationOfActivities",
+          "extendedName" : {
+            "EN" : "UNECA Classification of Activities -Domains, topics and indicators"
+          }
+        }
+      },
+      "resourceRepresentationTypeLabel" : {
+        "EN" : "Dataset"
+      }
+    },
+    "languageDetails" : {
+      "EN" : null
+    },
+    "characterSet" : {
+      "codes" : [ {
+        "code" : "106",
+        "label" : {
+          "EN" : "UTF-8"
+        }
+      } ],
+      "idCodeList" : "IANAcharacterSet",
+      "extendedName" : {
+        "EN" : "Internet Assigned Numbers Authority codelist"
+      }
+    },
+    "metadataStandardName" : "FENIX",
+    "metadataStandardVersion" : "1.0",
+    "metadataLanguage" : {
+      "version" : "1998",
+      "codes" : [ {
+        "code" : "eng",
+        "label" : {
+          "EN" : "English"
+        }
+      } ],
+      "idCodeList" : "ISO639-2",
+      "extendedName" : {
+        "EN" : "International Standard Organization - Language"
+      }
+    },
+    "contacts" : [ {
+      "position" : {
+        "EN" : null
+      },
+      "organization" : {
+        "EN" : "ECA"
+      },
+      "role" : "owner",
+      "contactInfo" : {
+        "phone" : "00",
+        "hoursOfService" : {
+          "EN" : null
+        },
+        "contactInstruction" : {
+          "EN" : null
+        }
+      },
+      "specify" : {
+        "EN" : null
+      },
+      "organizationUnit" : {
+        "EN" : null
+      },
+      "roleLabel" : {
+        "EN" : "Owner"
+      }
+    } ],
+    "meMaintenance" : {
+      "seUpdate" : {
+        "updateDate" : 1449503908746
+      }
+    },
+    "language" : {
+      "version" : "1998",
+      "codes" : [ {
+        "code" : "eng",
+        "label" : {
+          "EN" : "English"
+        }
+      } ],
+      "idCodeList" : "ISO639-2",
+      "extendedName" : {
+        "EN" : "International Standard Organization - Language"
+      }
+    }
+  },
+  "data" : [ [ "02", "0208", "MWI", "110", 2000, 60540.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2001, 71500.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2002, 62902.532, "metric tons" ], [ "02", "0208", "MWI", "110", 2003, 81425.7, "metric tons" ], [ "02", "0208", "MWI", "110", 2004, 51765.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2005, 51870.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2006, 60408.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2007, 58550.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2008, 60554.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2009, 59200.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2010, 79186.0, "metric tons" ], [ "02", "0208", "MWI", "110", 2011, 76500.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2000, 112500.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2001, 111600.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2002, 109300.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2003, 161000.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2004, 119500.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2005, 166000.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2006, 187600.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2007, 225000.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2008, 380400.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2009, 232000.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2010, 265800.0, "metric tons" ], [ "02", "0208", "MWI", "374", 2011, 224000.0, "metric tons" ], [ "02", "0208", "NER", "13000", 2000, 2898.0, "Tons" ], [ "02", "0208", "NER", "13000", 2001, 2920.0, "Tons" ], [ "02", "0208", "NER", "13000", 2002, 3072.0, "Tons" ], [ "02", "0208", "NER", "13000", 2003, 3143.0, "Tons" ], [ "02", "0208", "NER", "13000", 2004, 3273.0, "Tons" ], [ "02", "0208", "NER", "13000", 2005, 3093.0, "Tons" ], [ "02", "0208", "NER", "13000", 2006, 3434.0, "Tons" ], [ "02", "0208", "NER", "13000", 2007, 3153.0, "Tons" ], [ "02", "0208", "NER", "13000", 2008, 2993.0, "Tons" ], [ "02", "0208", "NER", "13000", 2009, 3241.0, "Tons" ], [ "02", "0208", "NER", "13000", 2010, 4198.0, "Tons" ], [ "02", "0208", "NER", "13000", 2011, 4160.0, "Tons" ], [ "02", "0208", "NER", "13000", 2012, 4821.0, "Tons" ], [ "02", "0208", "NER", "13000", 2013, 4235.0, "Tons" ], [ "02", "0208", "NER", "11010", 2000, 158200.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2001, 163275.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2002, 182916.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2003, 188915.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2004, 200384.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2005, 182060.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2006, 176320.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2007, 171296.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2008, 182912.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2009, 225072.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2010, 246558.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2011, 246016.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2012, 235000.0, "metric tons" ], [ "02", "0208", "NER", "11010", 2013, 241700.0, "metric tons" ], [ "02", "0208", "CMR", "120", 2000, 7346000.0, "metric tons" ], [ "02", "0208", "CMR", "120", 2001, 3350000.0, "metric tons" ], [ "02", "0208", "CMR", "120", 2002, 3.74E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2003, 3.56E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2004, 3.27E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2005, 3.01E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2006, 3.18E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2007, 3.12E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2008, 3.07E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2009, 2.67E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2010, 2.33E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2011, 2.16E7, "metric tons" ], [ "02", "0208", "CMR", "120", 2012, 2.25E7, "metric tons" ], [ "02", "0208", "CMR", "15120", 2000, 412.0, "Metric tons" ], [ "02", "0208", "CMR", "15120", 2001, 335.0, "Metric tons" ], [ "02", "0208", "CMR", "15120", 2002, 311.0, "Metric tons" ], [ "02", "0208", "CMR", "15120", 2003, 364.0, "Metric tons" ], [ "02", "0208", "NAM", "13000", 2000, 2715.0, "metric tons" ], [ "02", "0208", "NAM", "13000", 2001, 22000.0, "metric tons" ], [ "02", "0208", "NAM", "13000", 2002, 3000.0, "metric tons" ], [ "02", "0208", "NAM", "13000", 2003, 3140.0, "metric tons" ], [ "02", "0208", "NAM", "13000", 2004, 4107.0, "metric tons" ], [ "02", "0208", "NAM", "13000", 2005, 3711.0, "metric tons" ], [ "02", "0208", "NAM", "13000", 2006, 3617.0, "metric tons" ], [ "02", "0208", "NAM", "13000", 2007, 3680.493, "metric tons" ], [ "02", "0208", "NAM", "13000", 2008, 5104.21, "metric tons" ], [ "02", "0208", "NAM", "13000", 2009, 5600.0, "metric tons" ], [ "02", "0208", "NAM", "13000", 2010, 5473.41, "metric tons" ], [ "02", "0208", "NAM", "13000", 2011, 4009.87, "metric tons" ], [ "02", "0208", "LSO", "16310", 2002, 721.0, "carat" ], [ "02", "0208", "LSO", "16310", 2003, 434.95, "carat" ], [ "02", "0208", "LSO", "16310", 2004, 46731.17833, "carat" ], [ "02", "0208", "LSO", "16310", 2005, 52036.0, "carat" ], [ "02", "0208", "LSO", "16310", 2006, 110916.61, "carat" ], [ "02", "0208", "LSO", "16310", 2007, 227780.3, "carat" ], [ "02", "0208", "LSO", "16310", 2008, 218896.39, "carat" ], [ "02", "0208", "LSO", "16310", 2009, 107157.1652, "carat" ], [ "02", "0208", "LSO", "16310", 2010, 158196.1636, "carat" ], [ "02", "0208", "MUS", "16200", 2000, 6000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2001, 7000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2002, 7000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2003, 7000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2004, 7000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2005, 7000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2006, 7000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2007, 7000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2008, 5000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2009, 2000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2010, 3000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2011, 3000.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2012, 3800.0, "metric tons" ], [ "02", "0208", "MUS", "16200", 2013, 4000.0, "metric tons" ], [ "02", "0208", "MOZ", "12020", 2000, 927.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2001, 1245.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2002, 2423.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2003, 2523.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2004, 49739.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2005, 88908.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2006, 102189.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2007, 104520.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2008, 116617.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2009, 107610.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2010, 124783.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2011, 131556.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2012, 146793.0, "terajoules" ], [ "02", "0208", "MOZ", "12020", 2013, 150030.0, "terajoules" ], [ "02", "0208", "MAR", "14210", 2000, 23150.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2001, 19120.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2002, 17799.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2003, 17539.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2004, 10308.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2005, 12654.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2006, 17811.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2007, 19891.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2008, 27619.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2009, 42051.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2010, 37689.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2011, 39927.0, "Tons" ], [ "02", "0208", "MAR", "14210", 2012, 58969.0, "Tons" ], [ "02", "0208", "NGA", "12020", 2000, 1.216875E7, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2001, 1850420.0, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2002, 1701880.0, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2003, 1828540.0, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2004, 2082280.0, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2005, 2093630.0, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2006, 2252250.0, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2007, 2415650.0, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2008, 2282440.0, "Cubic Feet" ], [ "02", "0208", "NGA", "12020", 2009, 1837280.0, "Cubic Feet" ], [ "02", "0208", "GMB", "15320", 2001, 500000.0, "metric tons" ], [ "02", "0208", "GMB", "15320", 2002, 500000.0, "metric tons" ], [ "02", "0208", "GMB", "15320", 2010, 498145.0, "metric tons" ], [ "02", "0208", "GMB", "15320", 2011, 368044.0, "metric tons" ], [ "02", "0208", "GMB", "15400", 2000, 2000.0, "metric tons" ], [ "02", "0208", "GMB", "15400", 2001, 5000.0, "metric tons" ], [ "02", "0208", "GMB", "15400", 2002, 8617.379883, "metric tons" ], [ "02", "0208", "GMB", "15400", 2003, 9026.580078, "metric tons" ], [ "02", "0208", "GNQ", "120", 2000, 5803000.0, "metric tons" ], [ "02", "0208", "GNQ", "120", 2001, 9613000.0, "metric tons" ], [ "02", "0208", "GNQ", "120", 2002, 1.141E7, "metric tons" ], [ "02", "0208", "GNQ", "120", 2003, 1.2989E7, "metric tons" ], [ "02", "0208", "GNQ", "120", 2004, 1.7662E7, "metric tons" ], [ "02", "0208", "GNQ", "120", 2005, 1.7973E7, "metric tons" ], [ "02", "0208", "GNQ", "120", 2006, 1.7144E7, "metric tons" ], [ "02", "0208", "GNQ", "120", 2007, 1.7513E7, "metric tons" ], [ "02", "0208", "GNQ", "12020", 2001, 9900.0, "terajoules" ], [ "02", "0208", "GNQ", "12020", 2002, 18537.0, "terajoules" ], [ "02", "0208", "GNQ", "12020", 2003, 18773.0, "terajoules" ], [ "02", "0208", "GNQ", "12020", 2004, 25030.0, "terajoules" ], [ "02", "0208", "GNQ", "12020", 2005, 45030.0, "terajoules" ], [ "02", "0208", "GNQ", "12020", 2006, 55030.0, "terajoules" ], [ "02", "0208", "GNQ", "12020", 2007, 65250.0, "terajoules" ], [ "02", "0208", "CAF", "16310", 2000, 346000.0, "carat" ], [ "02", "0208", "CAF", "16310", 2001, 337000.0, "carat" ], [ "02", "0208", "CAF", "16310", 2002, 311000.0, "carat" ], [ "02", "0208", "CAF", "16310", 2003, 300000.0, "carat" ], [ "02", "0208", "CAF", "16310", 2004, 354703.0, "carat" ], [ "02", "0208", "CAF", "16310", 2005, 383000.0, "carat" ], [ "02", "0208", "CAF", "16310", 2006, 420000.0, "carat" ], [ "02", "0208", "MLI", "16200", 2000, 6000.0, "metric tons" ], [ "02", "0208", "MLI", "16200", 2001, 6000.0, "metric tons" ], [ "02", "0208", "MLI", "16200", 2002, 6000.0, "metric tons" ], [ "02", "0208", "MLI", "16200", 2003, 6000.0, "metric tons" ], [ "02", "0208", "MLI", "16200", 2004, 6000.0, "metric tons" ], [ "02", "0208", "MLI", "16200", 2005, 6000.0, "metric tons" ], [ "02", "0208", "MLI", "16200", 2006, 6000.0, "metric tons" ], [ "02", "0208", "MLI", "16200", 2007, 6000.0, "metric tons" ], [ "02", "0208", "RWA", "12020", 2000, 54.0, "terajoules" ], [ "02", "0208", "RWA", "12020", 2002, 54.0, "terajoules" ], [ "02", "0208", "RWA", "12020", 2003, 32.0, "terajoules" ], [ "02", "0208", "RWA", "12020", 2004, 4.0, "terajoules" ], [ "02", "0208", "RWA", "12020", 2005, 12.0, "terajoules" ], [ "02", "0208", "RWA", "12020", 2006, 20.0, "terajoules" ], [ "02", "0208", "RWA", "12020", 2007, 23.0, "terajoules" ], [ "02", "0208", "RWA", "12020", 2008, 24.0, "terajoules" ], [ "02", "0208", "RWA", "12020", 2009, 24.0, "terajoules" ], [ "02", "0208", "AGO", "120", 2000, 3.6705E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2001, 3.6469E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2002, 4.4758E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2003, 4.3733E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2004, 4.9443E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2005, 6.2314E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2006, 7.0494E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2007, 8.4908E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2008, 9.5302E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2009, 8.74E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2010, 8.788E7, "metric tons" ], [ "02", "0208", "AGO", "120", 2011, 8.0259E7, "metric tons" ], [ "02", "0208", "AGO", "16310", 2000, 5400000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2001, 4653000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2002, 5400000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2003, 6300000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2004, 6146000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2005, 7079000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2006, 9175000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2007, 9702000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2008, 8907000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2009, 1.3828E7, "carat" ], [ "02", "0208", "AGO", "16310", 2010, 8102000.0, "carat" ], [ "02", "0208", "AGO", "16310", 2011, 8304000.0, "carat" ], [ "02", "0208", "AGO", "12020", 2000, 22040.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2001, 20140.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2002, 23560.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2003, 24700.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2004, 29266.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2005, 25364.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2006, 26535.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2007, 32389.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2008, 25840.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2009, 30333.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2010, 26513.0, "terajoules" ], [ "02", "0208", "AGO", "12020", 2011, 33777.0, "terajoules" ], [ "02", "0208", "COG", "12020", 2006, 923.0, "terajoules" ], [ "02", "0208", "COG", "12020", 2007, 824.0, "terajoules" ], [ "02", "0208", "CIV", "120", 2000, 413233.0, "metric tons" ], [ "02", "0208", "CIV", "120", 2001, 332333.0, "metric tons" ], [ "02", "0208", "CIV", "120", 2002, 871284.0, "metric tons" ], [ "02", "0208", "CIV", "120", 2003, 1196374.0, "metric tons" ], [ "02", "0208", "CIV", "120", 2004, 1310131.0, "metric tons" ], [ "02", "0208", "CIV", "120", 2005, 2321224.8, "metric tons" ], [ "02", "0208", "CIV", "120", 2006, 3550148.302, "metric tons" ], [ "02", "0208", "CIV", "120", 2007, 2806914.22, "metric tons" ], [ "02", "0208", "CIV", "120", 2008, 2656241.929, "metric tons" ], [ "02", "0208", "CIV", "120", 2009, 2948023.225, "metric tons" ], [ "02", "0208", "CIV", "120", 2010, 2315199.791, "metric tons" ], [ "02", "0208", "CIV", "12020", 2000, 1.25859681E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2001, 1.367248371E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2002, 1.392957251E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2003, 1.224248118E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2004, 1.555821E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2005, 1.73762E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2006, 1.740350327E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2007, 1.57392E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2008, 1.657349E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2009, 1.699010796E9, "cubic meters" ], [ "02", "0208", "CIV", "12020", 2010, 1.755644489E9, "cubic meters" ], [ "02", "0208", "LBY", "120", 2000, 6.6403E7, "metric tons" ], [ "02", "0208", "LBY", "120", 2001, 6.473E7, "metric tons" ], [ "02", "0208", "LBY", "120", 2002, 6.0584E7, "metric tons" ], [ "02", "0208", "LBY", "120", 2003, 6.8736E7, "metric tons" ], [ "02", "0208", "LBY", "120", 2004, 7.5287E7, "metric tons" ], [ "02", "0208", "LBY", "120", 2005, 8.0252E7, "metric tons" ], [ "02", "0208", "LBY", "120", 2006, 8.331E7, "metric tons" ], [ "02", "0208", "LBY", "120", 2007, 8.1114E7, "metric tons" ], [ "02", "0208", "LBY", "16200", 2000, 40000.0, "metric tons" ], [ "02", "0208", "LBY", "16200", 2001, 40000.0, "metric tons" ], [ "02", "0208", "LBY", "16200", 2002, 40000.0, "metric tons" ], [ "02", "0208", "LBY", "16200", 2003, 40000.0, "metric tons" ], [ "02", "0208", "LBY", "16200", 2004, 40000.0, "metric tons" ], [ "02", "0208", "LBY", "16200", 2005, 40000.0, "metric tons" ], [ "02", "0208", "LBY", "16200", 2006, 40000.0, "metric tons" ], [ "02", "0208", "LBY", "16200", 2007, 40000.0, "metric tons" ], [ "02", "0208", "LBY", "12020", 2000, 223441.0, "terajoules" ], [ "02", "0208", "LBY", "12020", 2001, 234840.0, "terajoules" ], [ "02", "0208", "LBY", "12020", 2002, 235980.0, "terajoules" ], [ "02", "0208", "LBY", "12020", 2003, 243200.0, "terajoules" ], [ "02", "0208", "LBY", "12020", 2004, 306281.0, "terajoules" ], [ "02", "0208", "LBY", "12020", 2005, 429400.0, "terajoules" ], [ "02", "0208", "LBY", "12020", 2006, 562400.0, "terajoules" ], [ "02", "0208", "LBY", "12020", 2007, 625480.0, "terajoules" ], [ "02", "0208", "MRT", "14100", 2000, 1.139E7, "metric tons" ], [ "02", "0208", "MRT", "14100", 2001, 1.0272E7, "metric tons" ], [ "02", "0208", "MRT", "14100", 2002, 9424000.0, "metric tons" ], [ "02", "0208", "MRT", "14100", 2003, 1.0377E7, "metric tons" ], [ "02", "0208", "MRT", "14100", 2004, 1.0782E7, "metric tons" ], [ "02", "0208", "MRT", "14100", 2005, 1.0752E7, "metric tons" ], [ "02", "0208", "MRT", "14100", 2006, 1.1155E7, "metric tons" ], [ "02", "0208", "MRT", "14100", 2007, 1.1233E7, "metric tons" ], [ "02", "0208", "MRT", "14100", 2008, 1.1296E7, "metric tons" ], [ "02", "0208", "MRT", "14100", 2009, 1.0448E7, "metric tons" ], [ "02", "0208", "MRT", "14210", 2001, 6000.0, "Tons" ], [ "02", "0208", "MRT", "14210", 2002, 6000.0, "Tons" ], [ "02", "0208", "MRT", "14210", 2003, 6000.0, "Tons" ], [ "02", "0208", "MRT", "14210", 2004, 6000.0, "Tons" ], [ "02", "0208", "MRT", "14210", 2005, 0.0, "Tons" ], [ "02", "0208", "MRT", "14210", 2006, 5000.0, "Tons" ], [ "02", "0208", "MRT", "14210", 2007, 28911.3, "Tons" ], [ "02", "0208", "MRT", "14210", 2008, 32900.0, "Tons" ], [ "02", "0208", "LBR", "16310", 2000, 100000.0, "carat" ], [ "02", "0208", "LBR", "16310", 2001, 100000.0, "carat" ], [ "02", "0208", "LBR", "16310", 2002, 48000.0, "carat" ], [ "02", "0208", "LBR", "16310", 2003, 36000.0, "carat" ], [ "02", "0208", "LBR", "16310", 2004, 30000.0, "carat" ], [ "02", "0208", "LBR", "16310", 2005, 30000.0, "carat" ], [ "02", "0208", "LBR", "16310", 2006, 30000.0, "carat" ], [ "02", "0208", "LBR", "16310", 2007, 13000.0, "carat" ], [ "02", "0208", "NGA", "120", 2000, 3325853.8, "Barrels" ], [ "02", "0208", "NGA", "120", 2001, 859600.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2002, 725900.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2003, 844100.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2004, 911040.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2005, 918970.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2006, 870640.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2007, 803000.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2008, 768750.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2009, 780350.0, "Barrels" ], [ "02", "0208", "NGA", "120", 2010, 777450.0, "Barrels" ], [ "02", "0208", "COG", "120", 2000, 1.3222E7, "metric tons" ], [ "02", "0208", "COG", "120", 2001, 1.2125E7, "metric tons" ], [ "02", "0208", "COG", "120", 2002, 1.1674E7, "metric tons" ], [ "02", "0208", "COG", "120", 2003, 1.0705E7, "metric tons" ], [ "02", "0208", "COG", "120", 2004, 1.1209E7, "metric tons" ], [ "02", "0208", "COG", "120", 2005, 1.2268E7, "metric tons" ], [ "02", "0208", "COG", "120", 2006, 1.3899E7, "metric tons" ], [ "02", "0208", "COG", "120", 2007, 1.1374E7, "metric tons" ], [ "02", "0208", "COG", "120", 2008, 1.1E7, "metric tons" ], [ "02", "0208", "COG", "12020", 2000, 4877.0, "terajoules" ], [ "02", "0208", "COG", "12020", 2003, 650.0, "terajoules" ], [ "02", "0208", "COG", "12020", 2004, 769.0, "terajoules" ], [ "02", "0208", "COG", "12020", 2005, 890.0, "terajoules" ], [ "02", "0208", "BEN", "16200", 2001, 15.0, "metric tons" ], [ "02", "0208", "BEN", "16200", 2002, 15.0, "metric tons" ], [ "02", "0208", "BEN", "16200", 2003, 15.0, "metric tons" ], [ "02", "0208", "BEN", "16200", 2004, 15.0, "metric tons" ], [ "02", "0208", "BEN", "16200", 2005, 15.0, "metric tons" ], [ "02", "0208", "BEN", "16200", 2006, 15.0, "metric tons" ], [ "02", "0208", "BEN", "16200", 2007, 15.0, "metric tons" ], [ "02", "0208", "BFA", "163", 2000, 10000.0, "metric tons" ], [ "02", "0208", "BFA", "163", 2001, 10000.0, "metric tons" ], [ "02", "0208", "BFA", "163", 2002, 10000.0, "metric tons" ], [ "02", "0208", "BFA", "163", 2003, 10000.0, "metric tons" ], [ "02", "0208", "BFA", "163", 2004, 10000.0, "metric tons" ], [ "02", "0208", "BFA", "163", 2005, 10000.0, "metric tons" ], [ "02", "0208", "GHA", "120", 2000, 7346000.0, "metric tons" ], [ "02", "0208", "GHA", "120", 2001, 3350000.0, "metric tons" ], [ "02", "0208", "GHA", "120", 2002, 3.74E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2003, 3.56E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2004, 3.27E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2005, 3.01E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2006, 3.18E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2007, 3.12E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2008, 3.07E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2009, 2.67E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2010, 2.3E7, "metric tons" ], [ "02", "0208", "GHA", "120", 2011, 2.1E7, "metric tons" ], [ "02", "0208", "GHA", "15120", 2000, 412.0, "metric tons" ], [ "02", "0208", "GHA", "15120", 2001, 335.0, "metric tons" ], [ "02", "0208", "GHA", "15120", 2002, 311.0, "metric tons" ], [ "02", "0208", "GHA", "15120", 2003, 364.0, "metric tons" ], [ "02", "0208", "ERI", "16200", 2001, 78000.0, "metric tons" ], [ "02", "0208", "ERI", "16200", 2002, 116000.0, "metric tons" ], [ "02", "0208", "ERI", "16200", 2003, 52000.0, "metric tons" ], [ "02", "0208", "ERI", "16200", 2004, 53000.0, "metric tons" ], [ "02", "0208", "ERI", "16200", 2005, 6000.0, "metric tons" ], [ "02", "0208", "ERI", "16200", 2006, 10000.0, "metric tons" ], [ "02", "0208", "ERI", "16200", 2007, 7000.0, "metric tons" ], [ "02", "0208", "ZAR", "14210", 2000, 30821.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2001, 37847.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2002, 27359.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2003, 16359.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2004, 19019.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2005, 26389.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2006, 97360.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2007, 96391.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2008, 335066.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2009, 309181.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2010, 497537.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2011, 522133.0, "Tons" ], [ "02", "0208", "ZAR", "14210", 2012, 619301.0, "Tons" ], [ "02", "0208", "ZAR", "16310", 2000, 1.6006E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2001, 1.8198E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2002, 2.2503E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2003, 2.6981E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2004, 2.9503E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2005, 3.2599E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2006, 2.8949E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2007, 2.827E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2008, 2.0953E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2009, 1.788E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2010, 1.68E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2011, 1.9303E7, "carat" ], [ "02", "0208", "ZAR", "16310", 2012, 2.014E7, "carat" ], [ "02", "0208", "GAB", "120", 2000, 1.3615E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2001, 1.289E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2002, 1.2563E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2003, 1.3433E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2004, 1.3483E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2005, 1.3305E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2006, 1.193E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2007, 1.213E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2008, 1.27E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2009, 1.1829E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2010, 1.2431E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2011, 1.2512E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2012, 1.2655E7, "metric tons" ], [ "02", "0208", "GAB", "120", 2013, 1.127E7, "metric tons" ], [ "02", "0208", "GAB", "12020", 2000, 4.745E9, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2001, 3.796E9, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2002, 1.387E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2003, 1.466E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2004, 1.436E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2005, 1.509E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2006, 1.553E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2007, 1.671E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2008, 1.873E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2009, 2.58E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2010, 3.38E8, "Cubic meters" ], [ "02", "0208", "GAB", "12020", 2011, 3.36E8, "Cubic meters" ], [ "02", "0208", "DJI", "16200", 2000, 136000.0, "metric tons" ], [ "02", "0208", "DJI", "16200", 2001, 102000.0, "metric tons" ], [ "02", "0208", "DJI", "16200", 2002, 102000.0, "metric tons" ], [ "02", "0208", "DJI", "16200", 2003, 102000.0, "metric tons" ], [ "02", "0208", "DJI", "16200", 2004, 78000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2000, 940000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2001, 915000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2002, 953000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2003, 823000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2004, 913000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2005, 985000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2006, 962000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2007, 828000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2008, 910000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2009, 738000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2010, 988000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2011, 788000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2012, 1454000.0, "metric tons" ], [ "02", "0208", "BWA", "11010", 2013, 1107000.0, "metric tons" ], [ "02", "0208", "BWA", "16310", 2000, 1.9368E7, "carat" ], [ "02", "0208", "BWA", "16310", 2001, 2.01E7, "carat" ], [ "02", "0208", "BWA", "16310", 2002, 2.1702E7, "carat" ], [ "02", "0208", "BWA", "16310", 2003, 3.0412E7, "carat" ], [ "02", "0208", "BWA", "16310", 2004, 3.1125E7, "carat" ], [ "02", "0208", "BWA", "16310", 2005, 3.189E7, "carat" ], [ "02", "0208", "BWA", "16310", 2006, 3.4293E7, "carat" ], [ "02", "0208", "BWA", "16310", 2007, 3.3639E7, "carat" ], [ "02", "0208", "BWA", "16310", 2008, 3.2595E7, "carat" ], [ "02", "0208", "BWA", "16310", 2009, 1.7734E7, "carat" ], [ "02", "0208", "BWA", "16310", 2010, 2.2018E7, "carat" ], [ "02", "0208", "BWA", "16310", 2011, 2.2901E7, "carat" ], [ "02", "0208", "BWA", "16310", 2012, 2.0619E7, "carat" ], [ "02", "0208", "BWA", "16310", 2013, 1.666E7, "carat" ], [ "02", "0208", "GIN", "14230", 2000, 16507.0141, "metric tons" ], [ "02", "0208", "GIN", "14230", 2001, 15456.344, "metric tons" ], [ "02", "0208", "GIN", "14230", 2002, 15847.704, "metric tons" ], [ "02", "0208", "GIN", "14230", 2003, 1.5995872E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2004, 1.7026979E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2005, 1.729742119E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2006, 1.7502151E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2007, 1.7242E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2008, 1.85211E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2009, 1.52853E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2010, 1.66663E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2011, 1.82241E7, "metric tons" ], [ "02", "0208", "GIN", "14230", 2012, 1.79E7, "metric tons" ], [ "02", "0208", "GIN", "16310", 2000, 377066.03, "carat" ], [ "02", "0208", "GIN", "16310", 2001, 363900.0, "carat" ], [ "02", "0208", "GIN", "16310", 2002, 491200.0, "carat" ], [ "02", "0208", "GIN", "16310", 2003, 666000.0, "carat" ], [ "02", "0208", "GIN", "16310", 2004, 740000.0, "carat" ], [ "02", "0208", "GIN", "16310", 2005, 523700.0, "carat" ], [ "02", "0208", "GIN", "16310", 2006, 468800.0, "carat" ], [ "02", "0208", "GIN", "16310", 2007, 495000.0, "carat" ], [ "02", "0208", "GIN", "16310", 2008, 445400.0, "carat" ], [ "02", "0208", "GIN", "16310", 2009, 417300.0, "carat" ], [ "02", "0208", "GIN", "16310", 2010, 311200.0, "carat" ], [ "02", "0208", "GIN", "16310", 2011, 235400.0, "carat" ], [ "02", "0208", "GIN", "16310", 2012, 400000.0, "carat" ], [ "02", "0208", "EGY", "120", 2000, 3.7697E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2001, 3.4602E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2002, 3.0706E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2003, 3.0549E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2004, 2.904E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2005, 2.7044E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2006, 2.5934E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2007, 2.6354E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2008, 2.63E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2009, 2.83E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2010, 2.784E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2011, 2.828E7, "metric tons" ], [ "02", "0208", "EGY", "120", 2012, 2.8697E7, "metric tons" ], [ "02", "0208", "EGY", "14100", 2001, 3226000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2002, 2399000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2003, 2261000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2004, 1979000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2005, 508000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2006, 665000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2007, 773000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2008, 1780000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2009, 2314000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2010, 3321000.0, "Tons" ], [ "02", "0208", "EGY", "14100", 2011, 3930000.0, "Tons" ], [ "02", "0208", "EGY", "12020", 2000, 827710.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2001, 881436.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2002, 1076806.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2003, 1214024.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2004, 1148855.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2005, 1726837.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2006, 1857158.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2007, 1929518.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2008, 2124234.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2009, 2100879.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2010, 2088639.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2011, 2088639.0, "terajoules" ], [ "02", "0208", "EGY", "12020", 2012, 2072933.0, "terajoules" ], [ "02", "0208", "DZA", "120", 2000, 4.1464E7, "metric tons" ], [ "02", "0208", "DZA", "120", 2001, 4.0609E7, "metric tons" ], [ "02", "0208", "DZA", "120", 2002, 4.5601E7, "metric tons" ], [ "02", "0208", "DZA", "120", 2003, 5.4869E7, "metric tons" ], [ "02", "0208", "DZA", "120", 2004, 5.934E7, "metric tons" ], [ "02", "0208", "DZA", "120", 2005, 6.2545E7, "metric tons" ], [ "02", "0208", "DZA", "120", 2006, 6.3865E7, "metric tons" ], [ "02", "0208", "DZA", "120", 2007, 6.4085E7, "metric tons" ], [ "02", "0208", "DZA", "14100", 2000, 1520000.0, "metric tons" ], [ "02", "0208", "DZA", "14100", 2001, 1291000.0, "metric tons" ], [ "02", "0208", "DZA", "14100", 2002, 1200000.0, "metric tons" ], [ "02", "0208", "DZA", "14100", 2003, 1378000.0, "metric tons" ], [ "02", "0208", "DZA", "14100", 2004, 1415000.0, "metric tons" ], [ "02", "0208", "DZA", "14100", 2005, 1950000.0, "metric tons" ], [ "02", "0208", "DZA", "14100", 2006, 2000000.0, "metric tons" ], [ "02", "0208", "DZA", "14100", 2007, 1982101.0, "metric tons" ], [ "02", "0208", "DZA", "12020", 2000, 3275160.0, "terajoules" ], [ "02", "0208", "DZA", "12020", 2001, 3068448.0, "terajoules" ], [ "02", "0208", "DZA", "12020", 2002, 3213741.0, "terajoules" ], [ "02", "0208", "DZA", "12020", 2003, 3248416.0, "terajoules" ], [ "02", "0208", "DZA", "12020", 2004, 3216262.0, "terajoules" ], [ "02", "0208", "DZA", "12020", 2005, 3586296.0, "terajoules" ], [ "02", "0208", "DZA", "12020", 2006, 3844884.0, "terajoules" ], [ "02", "0208", "DZA", "12020", 2007, 3424650.0, "terajoules" ], [ "02", "0208", "ZMB", "14210", 2000, 2.59572976E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2001, 3.25266E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2002, 3.3774269E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2003, 3.53594E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2004, 4.2218066E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2005, 4.6500197E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2006, 5.15618055E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2007, 5.6073121E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2008, 5.7503672E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2009, 6.98646E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2010, 7.67008E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2011, 7.39759E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2012, 6.9902E8, "Tons" ], [ "02", "0208", "ZMB", "14210", 2013, 7.63805E8, "Tons" ], [ "02", "0208", "SWZ", "110", 2000, 378043.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2001, 94431.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2002, 553422.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2003, 448664.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2004, 488314.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2005, 221701.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2006, 310570.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2007, 241283.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2008, 174807.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2009, 129647.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2010, 145903.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2011, 121050.0, "metric tons" ], [ "02", "0208", "SWZ", "110", 2012, 152284.0, "metric tons" ], [ "02", "0208", "SWZ", "14100", 2011, 79553.0, "metric tons" ], [ "02", "0208", "SWZ", "14100", 2012, 1032230.0, "metric tons" ], [ "02", "0208", "TCD", "120", 2003, 1798110.0, "metric tons" ], [ "02", "0208", "TCD", "120", 2004, 8505326.0, "metric tons" ], [ "02", "0208", "TCD", "120", 2005, 8807990.0, "metric tons" ], [ "02", "0208", "TCD", "120", 2006, 7873614.5, "metric tons" ], [ "02", "0208", "TCD", "120", 2007, 7189559.0, "metric tons" ], [ "02", "0208", "TCD", "120", 2008, 4.6549E7, "metric tons" ], [ "02", "0208", "TCD", "120", 2009, 4.3625E7, "metric tons" ], [ "02", "0208", "TCD", "120", 2010, 4.4704E7, "metric tons" ], [ "02", "0208", "TCD", "120", 2011, 4.188E7, "metric tons" ], [ "02", "0208", "TCD", "120", 2012, 3.7173E7, "metric tons" ], [ "02", "0208", "TCD", "120", 2013, 3.431E7, "metric tons" ], [ "02", "0208", "SOM", "16200", 2000, 1000000.0, "metric tons" ], [ "02", "0208", "SOM", "16200", 2001, 1000000.0, "metric tons" ], [ "02", "0208", "SOM", "16200", 2002, 1000000.0, "metric tons" ], [ "02", "0208", "SOM", "16200", 2003, 1000000.0, "metric tons" ], [ "02", "0208", "SOM", "16200", 2004, 1000000.0, "metric tons" ], [ "02", "0208", "SOM", "16200", 2005, 1000000.0, "metric tons" ], [ "02", "0208", "SOM", "16200", 2006, 1000000.0, "metric tons" ], [ "02", "0208", "SOM", "16200", 2007, 1000000.0, "metric tons" ], [ "02", "0208", "TGO", "153", 2001, 272343.75, "Cubic meters" ], [ "02", "0208", "TGO", "153", 2002, 274693.75, "Cubic meters" ], [ "02", "0208", "TGO", "153", 2003, 457442.1, "Cubic meters" ], [ "02", "0208", "TGO", "153", 2004, 521131.0, "Cubic meters" ], [ "02", "0208", "TGO", "153", 2005, 560875.0, "Cubic meters" ], [ "02", "0208", "TGO", "153", 2006, 652357.5, "Cubic meters" ], [ "02", "0208", "TGO", "153", 2007, 593587.5, "Cubic meters" ], [ "02", "0208", "TZA", "11010", 2000, 79000.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2001, 78000.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2002, 79210.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2003, 54610.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2004, 65041.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2005, 74800.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2006, 17940.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2007, 27198.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2008, 15242.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2009, 1.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2010, 179.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2011, 2700.0, "metric tons" ], [ "02", "0208", "TZA", "11010", 2012, 78700.0, "metric tons" ], [ "02", "0208", "SLE", "16310", 2000, 77500.0, "carat" ], [ "02", "0208", "SLE", "16310", 2001, 224400.0, "carat" ], [ "02", "0208", "SLE", "16310", 2002, 351650.0, "carat" ], [ "02", "0208", "SLE", "16310", 2003, 506830.0, "carat" ], [ "02", "0208", "SLE", "16310", 2004, 691800.0, "carat" ], [ "02", "0208", "SLE", "16310", 2005, 668700.0, "carat" ], [ "02", "0208", "SLE", "16310", 2006, 582340.0, "carat" ], [ "02", "0208", "SLE", "16310", 2007, 604660.0, "carat" ], [ "02", "0208", "SLE", "16310", 2008, 330892.45, "carat" ], [ "02", "0208", "SLE", "16310", 2009, 400371.72, "carat" ], [ "02", "0208", "SLE", "16310", 2010, 525482.0, "carat" ], [ "02", "0208", "ZWE", "11010", 2000, 7346000.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2001, 3350000.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2002, 3.74E7, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2003, 2871962.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2004, 3323356.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2005, 3370826.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2006, 2107115.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2007, 2080221.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2008, 1509080.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2009, 1667346.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2010, 2500200.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2011, 2562100.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2012, 1593600.0, "metric tons" ], [ "02", "0208", "ZWE", "11010", 2013, 4980200.0, "metric tons" ], [ "02", "0208", "ZWE", "14100", 2000, 412.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2001, 335.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2002, 311.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2003, 366737.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2004, 228731.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2005, 363048.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2006, 104459.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2007, 79109.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2008, 2919.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2009, 0.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2010, 0.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2011, 0.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2012, 0.0, "Metric tons" ], [ "02", "0208", "ZWE", "14100", 2013, 0.0, "Metric tons" ], [ "02", "0208", "ZAF", "11010", 2000, 2.24199E11, "metric tons" ], [ "02", "0208", "ZAF", "11010", 2001, 2.2356E11, "metric tons" ], [ "02", "0208", "ZAF", "11010", 2002, 2.20213E11, "metric tons" ], [ "02", "0208", "ZAF", "11010", 2003, 2.38751E11, "metric tons" ], [ "02", "0208", "ZAF", "11010", 2004, 2.42821E11, "metric tons" ], [ "02", "0208", "ZAF", "11010", 2005, 2.44986E11, "metric tons" ], [ "02", "0208", "ZAF", "11010", 2006, 2.44784E11, "metric tons" ], [ "02", "0208", "ZAF", "11010", 2007, 2.47666E11, "metric tons" ], [ "02", "0208", "ZAF", "14210", 2000, 1.371E8, "metric tons" ], [ "02", "0208", "ZAF", "14210", 2001, 1.419E8, "metric tons" ], [ "02", "0208", "ZAF", "14210", 2002, 1.2959E8, "metric tons" ], [ "02", "0208", "ZAF", "14210", 2003, 1.2092E8, "metric tons" ], [ "02", "0208", "ZAF", "14210", 2004, 8.7E7, "metric tons" ], [ "02", "0208", "ZAF", "14210", 2005, 8.5E7, "metric tons" ], [ "02", "0208", "ZAF", "14210", 2006, 8.97E7, "metric tons" ], [ "02", "0208", "ZAF", "14210", 2007, 9.7E7, "metric tons" ], [ "02", "0208", "ZAF", "14100", 2000, 3.371E10, "metric tons" ], [ "02", "0208", "ZAF", "14100", 2001, 3.476E10, "metric tons" ], [ "02", "0208", "ZAF", "14100", 2002, 3.6484E10, "metric tons" ], [ "02", "0208", "ZAF", "14100", 2003, 3.8086E10, "metric tons" ], [ "02", "0208", "ZAF", "14100", 2004, 3.9274E10, "metric tons" ], [ "02", "0208", "ZAF", "14100", 2005, 3.9542E10, "metric tons" ], [ "02", "0208", "ZAF", "14100", 2006, 4.1195E10, "metric tons" ], [ "02", "0208", "ZAF", "14100", 2007, 4.2100888E10, "metric tons" ], [ "02", "0208", "TUN", "14100", 2000, 1.83E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2001, 2.04E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2002, 2.02E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2003, 1.6E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2004, 2.56E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2005, 2.064E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2006, 2.143E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2007, 1.804E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2008, 2.065E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2009, 1.513E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2010, 1.805E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2011, 1.711E8, "Tons" ], [ "02", "0208", "TUN", "14100", 2012, 2.79E8, "Tons" ] ],
+  "size" : 674
+}
