@@ -6,12 +6,46 @@ define([
     'fx-olap/start',
     'fx-filter/start',
     'fx-common/pivotator/fenixtool',
-    'test/models/dataFAOSTAT',
+    'text!test/models/UNECA_GDP_USD.json',
     'test/models/filter-interaction'
 ], function (log, $, _, OlapCreator, Filter, FenixTool, Model, FilterModel) {
+//http://fenix.fao.org/d3s_dev/msd/resources/uid/UNECA_BalanceOfPayments?full=true&dsd=true
+//http://fenixservices.fao.org/d3s/msd/resources/uid/UNECA_ExpenditureGDPCurrent?full=true&dsd=true
+/*
+UNECA_Education
+UNECA_Population
+UNECA_Health
+UNECA_BalanceOfPayments
+UNECA_Debt
+UNECA_MiningProduction4
+UNECA_Infrastructure
+UNECA_AgricultureProduction3
+ILO_Labour
+
+Uneca_PopulationNew
+UNECA_Labour
+UNECA_MonetaryStatistics
+UNECA_Inflation
+
+
+UNECA_Poverty
+UNECA_FinancialFlows
+UNECA_Tourism
+UNECA_PublicFinance
+
+
+
+UNECA_GDP
+UNECA_GDP_NC
+UNECA_ExpenditureGDPCostant
+UNECA_ExpenditureGDPCurrent
+UNECA_GDP_USD*/
+
+
 
     'use strict';
-
+	Model=JSON.parse(Model);
+	
     var s = {
         CONFIGURATION_EXPORT: "#configuration-export",
         FILTER_INTERACTION: "#filter-interaction",

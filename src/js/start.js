@@ -218,6 +218,7 @@ define([
             el : this.$el,
             lang : this.lang
         });
+		console.log(config)
         this.olap = new Renderer(config);
 
         this._trigger("ready");
