@@ -6,9 +6,17 @@ define([
     'fx-olap/start',
     'fx-filter/start',
     'fx-common/pivotator/fenixtool',
-    'text!test/models/UNECA_GDP_USD.json',
+    'text!test/models/UNECA_Education.json',
     'test/models/filter-interaction'
 ], function (log, $, _, OlapCreator, Filter, FenixTool, Model, FilterModel) {
+	
+	/*[16:24:54] Daniele  Salvatore: Richiesta Dataset con label:
+[16:25:29] Daniele  Salvatore: URL:  http://fenixservices.fao.org//d3s/processes/:uid_dataset
+=> http://fenixservices.fao.org//d3s/processes/UNECA_Population?full=true&dsd=true&language=EN
+METHOD: POST
+header: content-type: application/json
+body: []*/
+	
 //http://fenix.fao.org/d3s_dev/msd/resources/uid/UNECA_BalanceOfPayments?full=true&dsd=true
 //http://fenixservices.fao.org/d3s/msd/resources/uid/UNECA_ExpenditureGDPCurrent?full=true&dsd=true
 /*
@@ -96,7 +104,7 @@ UNECA_GDP_USD*/
 
             log.trace("Update chart");
             log.trace(config);
-//console.log("config",config)
+console.log("config",config)
             this.olap.update(config);
         }, this));
 
