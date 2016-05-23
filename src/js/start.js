@@ -47,7 +47,7 @@ define([
     // API
 
     Olap.prototype.update = function (config) {
-		this.olap.model=  this.pivotator.pivot(this.model, config);
+        this.olap.model = this.pivotator.pivot(this.model, config);
         this.olap.update(config);
     };
 
@@ -86,7 +86,7 @@ define([
         this.model = this.initial.model;
 
         var pc = {};
-		pc.inputFormat= this.initial.inputFormat || "raw";
+        pc.inputFormat = this.initial.inputFormat || "raw";
         pc.aggregationFn = this.initial.aggregationFn;
 
         pc.aggregations = this.initial.aggregations;
@@ -95,10 +95,10 @@ define([
         pc.hidden = this.initial.hidden;
         pc.values = this.initial.values;
 
-        pc.formatter =this.initial.formatter;
-        pc.valueOutputType =this.initial.valueOutputType;
+        pc.formatter = this.initial.formatter;
+        pc.valueOutputType = this.initial.valueOutputType;
         pc.showRowHeaders = this.initial.showRowHeaders;
-        pc.decimals =this.initial.decimals;
+        pc.decimals = this.initial.decimals;
 
         pc.showCode = this.initial.showCode;
         pc.showFlag = this.initial.showFlag;
@@ -153,7 +153,7 @@ define([
         this.channels = {};
 
         this.pivotator = new Pivotator();
-		this.fenixTool=new FenixTool();
+        this.fenixTool = new FenixTool();
     };
 
     // Preload scripts
@@ -201,24 +201,22 @@ define([
     };
 
     Olap.prototype._renderOlap = function () {
-		
-		
-		
-		
-        var Renderer = this._getRenderer(this.renderer);
-		
-		
-		var myPivotatorConfig=this.fenixTool.parseInut(this.model.metadata.dsd, this.pivotatorConfig);
 
-		var model = this.pivotator.pivot(this.model, myPivotatorConfig);
+
+        var Renderer = this._getRenderer(this.renderer);
+
+
+        var myPivotatorConfig = this.fenixTool.parseInut(this.model.metadata.dsd, this.pivotatorConfig);
+
+        var model = this.pivotator.pivot(this.model, myPivotatorConfig);
 
         var config = $.extend(true, {}, {
-            pivotatorConfig :myPivotatorConfig,
-            model : model,
-            el : this.$el,
-            lang : this.lang
+            pivotatorConfig: myPivotatorConfig,
+            model: model,
+            el: this.$el,
+            lang: this.lang
         });
-		console.log(config)
+
         this.olap = new Renderer(config);
 
         this._trigger("ready");
@@ -253,11 +251,11 @@ define([
     };
 
     // utils
-Olap.prototype.exportConf=function(optGr)
-	{var ret="";
-		
-	}
-	
+    Olap.prototype.exportConf = function (optGr) {
+        var ret = "";
+
+    }
+
     Olap.prototype._callSelectorInstanceMethod = function (name, method, opts1, opts2) {
 
         var Instance = this.olap;
