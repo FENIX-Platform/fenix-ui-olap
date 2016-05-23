@@ -6,7 +6,7 @@ define([
     'fx-olap/start',
     'fx-filter/start',
     'fx-common/pivotator/fenixtool',
-    'text!test/models/UNECA_ExpenditureGDPCurrent.json',
+    'text!test/models/UNECA_Population.json',
     'test/models/filter-interaction'
 ], function (log, $, _, OlapCreator, Filter, FenixTool, Model, FilterModel) {
 	
@@ -94,6 +94,7 @@ UNECA_GDP_USD*/
 
             log.trace("Init Olap");
             log.trace(config);
+console.log("config",config)
 
             this.olap = new OlapCreator(config);
         }, this));
