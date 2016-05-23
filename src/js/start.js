@@ -48,6 +48,8 @@ define([
 
     Olap.prototype.update = function (config) {
         this.olap.model = this.pivotator.pivot(this.model, config);
+		//console.log("MODEL FINAL", this.olap.model)
+
         this.olap.update(config);
     };
 
@@ -216,7 +218,6 @@ define([
             el: this.$el,
             lang: this.lang
         });
-console.log("MODEL FINAL",config)
         this.olap = new Renderer(config);
 
         this._trigger("ready");
