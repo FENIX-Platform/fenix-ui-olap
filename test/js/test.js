@@ -69,9 +69,9 @@ define([
 
         log.trace("Test started");
 
-        //this._testFilterInteraction();
+        this._testFilterInteraction();
 
-        this._testGrid();
+        //this._testGrid();
     };
 
     Test.prototype._testFilterInteraction = function () {
