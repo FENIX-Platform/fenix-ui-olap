@@ -95,3 +95,11 @@ el:"#result"
 
    this.olap = new OlapCreator(config);
 will create a grid in the container with the ID=result with country label, element label in row and the year in columns, group by the item: the aggregation function used will be the sum for the columns "value"
+
+
+
+#update
+the update function allow the user to modify the config file and refresh the grid : model,el have don't need to be provided.
+example
+this.olap.update({type:"area"})
+
