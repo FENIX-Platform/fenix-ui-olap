@@ -4,11 +4,11 @@ define(function () {
         paths: {
 
             'fx-olap/start': './start',
+            'fx-olap/renderers' : './renderers',
             'fx-olap/nls': '../../i18n',
             'fx-olap/config': '../../config',
             'fx-olap/html': '../../html',
             'fx-olap/js' : "./",
-            'fx-olap/renderers' : './renderers',
 
             'underscore': '{FENIX_CDN}/js/underscore/1.8.0/underscore.min',
             'jquery': '{FENIX_CDN}/js/jquery/2.1.1/jquery.min',
@@ -25,7 +25,10 @@ define(function () {
             jdatagrid:"./dist/easyui",
             pivotgrid:"./dist/easyui/pivotgrid",
 			sortable : '{FENIX_CDN}/js/sortable/1.4.2/Sortable.min',
-			localpagination:'localpagination'
+			localpagination:'localpagination',
+
+            //Bootstrap table renderers
+            "bootstrap-table" : '{FENIX_CDN}/js/bootstrap-table/1.10.1/dist/bootstrap-table.min'
 
         },
 

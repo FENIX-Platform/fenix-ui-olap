@@ -110,7 +110,7 @@ define([
 
         this.pivotatorConfig = pc;
 
-        this.renderer = this.initial.renderer || C.renderer || CD.renderer;
+        this.type = this.initial.type || C.type || CD.type;
 
         this.lang = this.initial.lang || 'EN';
 
@@ -185,7 +185,7 @@ define([
 
         var paths = [];
 
-        paths.push(this._getPluginPath(this.renderer));
+        paths.push(this._getPluginPath(this.type));
 
         log.info("olap path to load");
         log.info(paths);
@@ -204,9 +204,7 @@ define([
 
     Olap.prototype._renderOlap = function () {
 
-
-        var Renderer = this._getRenderer(this.renderer);
-
+        var Renderer = this._getRenderer(this.type);
 
         var myPivotatorConfig = this.fenixTool.parseInut(this.model.metadata.dsd, this.pivotatorConfig);
 
@@ -218,6 +216,7 @@ define([
             el: this.$el,
             lang: this.lang
         });
+
         this.olap = new Renderer(config);
 
         this._trigger("ready");

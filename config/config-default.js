@@ -8,14 +8,16 @@ define(function () {
 
     return {
 
-        renderer: "sigmagrid",
+        type: "olap",
 
         plugin_registry: {
-            'sigmagrid': {
+            'olap': {
                 path: selectorPath + 'sigmagrid'
+            },
+            'grid' : {
+                path: selectorPath + 'bootstrap-table'
             }
         }
-
     }
 
 });
