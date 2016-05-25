@@ -6,7 +6,7 @@ define([
     'fx-olap/start',
     'fx-filter/start',
     'fx-common/pivotator/fenixtool',
-    'text!test/models/UNECA_Population.json',
+    'text!test/models/UNECA_AgricultureProduction3.json',
     'test/models/filter-interaction'
 ], function (log, $, _, OlapCreator, Filter, FenixTool, Model, FilterModel) {
 	
