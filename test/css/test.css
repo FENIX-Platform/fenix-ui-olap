@@ -5351,7 +5351,7 @@ button_new_2:before {
     .fx-tabs .nav-tabs > li > a:hover, .fx-tabs .nav-tabs > li > a:focus {
       border-color: transparent;
       background-color: transparent;
-      color: #0076ff; }
+      color: red; }
     .fx-tabs .nav-tabs > li > a:before {
       -webkit-transition: all 0.3s ease 0s;
       -moz-transition: all 0.3s ease 0s;
@@ -5362,7 +5362,7 @@ button_new_2:before {
       position: absolute;
       width: 100%;
       height: 2px;
-      background-color: #0076ff;
+      background-color: red;
       left: 0;
       bottom: 5px;
       pointer-events: none;
@@ -5370,7 +5370,7 @@ button_new_2:before {
       -webkit-transform: scaleX(0);
       transform: scaleX(0); }
   .fx-tabs .nav-tabs > li.active > a {
-    color: #0076ff; }
+    color: red; }
     .fx-tabs .nav-tabs > li.active > a:before {
       -webkit-transition: all 0.3s ease 0s;
       -moz-transition: all 0.3s ease 0s;
@@ -5383,7 +5383,7 @@ button_new_2:before {
     .fx-tabs .nav-tabs > li.active > a:hover, .fx-tabs .nav-tabs > li.active > a:focus {
       border-color: transparent;
       background-color: transparent;
-      color: #0076ff; }
+      color: red; }
 .fx-tabs li {
   margin: 12px 0; }
 
@@ -5455,15 +5455,15 @@ input[type="button"]::-moz-focus-inner {
 
 .jstree-default .jstree-wholerow-clicked {
   background: none;
-  background-color: #cce4ff; }
+  background-color: #ffcccc; }
 
 .jstree-default .jstree-wholerow-hovered {
   background: none;
-  background-color: #e6f1ff; }
+  background-color: #ffe6e6; }
 
 .jstree-default .jstree-disabled.jstree-clicked {
   background: none;
-  background-color: #cce4ff; }
+  background-color: #ffcccc; }
 
 .jstree-container-ul .jstree-anchor {
   white-space: normal;
@@ -5496,13 +5496,13 @@ input[type="radio"] + label {
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     border-radius: 100%;
-    border: 0 solid #0076ff;
+    border: 0 solid red;
     position: relative;
     top: 2px;
     left: -4px; }
 
 input[type="radio"]:checked + label {
-  color: #0076ff; }
+  color: red; }
   input[type="radio"]:checked + label:before {
     border-width: 5px; }
 
@@ -5528,13 +5528,13 @@ input[type="checkbox"] + label {
     height: 15px;
     width: 15px;
     background-color: #bdbdbd;
-    border: 0 solid #0076ff;
+    border: 0 solid red;
     position: relative;
     top: 2px;
     left: -4px; }
 
 input[type="checkbox"]:checked + label {
-  color: #0076ff; }
+  color: red; }
   input[type="checkbox"]:checked + label:before {
     border-width: 5px; }
 
@@ -5667,14 +5667,14 @@ input[type="radio"]:disabled + label {
   top: 37px; }
 
 .irs-bar {
-  border-top: 1px solid #0076ff;
-  border-bottom: 1px solid #0076ff; }
+  border-top: 1px solid red;
+  border-bottom: 1px solid red; }
 
 .irs-bar-edge {
-  border: 1px solid #0076ff; }
+  border: 1px solid red; }
 
 .irs-bar, .irs-bar-edge {
-  background: #0076ff; }
+  background: red; }
 
 .irs-line {
   background: #bdbdbd;
@@ -5688,29 +5688,29 @@ input[type="radio"]:disabled + label {
 
 .irs-from, .irs-to, .irs-single {
   background: transparent;
-  color: #0076ff; }
+  color: red; }
 
 /* Time */
 .time-selector-icon {
   font-size: 20px; }
 
 [data-selector-time] .day.active {
-  background-color: #0076ff; }
+  background-color: red; }
   [data-selector-time] .day.active:hover {
-    background-color: #407bbf; }
+    background-color: #bf4040; }
 [data-selector-time] .day.today:before {
-  border-bottom-color: #0076ff; }
+  border-bottom-color: red; }
 [data-selector-time] .month.active {
-  background-color: #0076ff; }
+  background-color: red; }
 [data-selector-time] .year.active {
-  background-color: #0076ff; }
+  background-color: red; }
 [data-selector-time] .fx-time-addon {
   font-size: 24px;
   padding: 2px 8px;
-  color: #0076ff; }
+  color: red; }
 [data-selector-time] [data-action="incrementHours"], [data-selector-time] [data-action="decrementHours"], [data-selector-time] [data-action="incrementMinutes"], [data-selector-time] [data-action="decrementMinutes"] {
   font-size: 24px;
-  color: #0076ff; }
+  color: red; }
 [data-selector-time] [data-action="previous"] span:before, [data-selector-time] [data-action="next"] span:before {
   content: none; }
 [data-selector-time] [data-action="next"] span {
@@ -5721,7 +5721,7 @@ input[type="radio"]:disabled + label {
   padding: 0; }
   [data-selector-time] [data-action="togglePicker"] span {
     font-size: 24px;
-    color: #0076ff;
+    color: red;
     line-height: 35px !important;
     height: auto !important; }
 

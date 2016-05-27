@@ -5,7 +5,7 @@ define(function () {
 
     return {
         width: "100%",
-        height: "350",
+        height: "370",
        
         replaceContainer: false,
         pageSize: 15,
