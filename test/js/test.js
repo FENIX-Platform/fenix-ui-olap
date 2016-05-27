@@ -86,7 +86,7 @@ UNECA_GDP_USD*/
         this.filter.on("ready", _.bind(function () {
 
             var config = this._getOlapConfigFromFilter();
-			var derived={derived:{"TEST":function(rec){return rec.length}}}
+			var derived={derived:{"TEST":function(rec){return "test"}}}
 
             config = $.extend(true, {}, {
                 model: Model,
