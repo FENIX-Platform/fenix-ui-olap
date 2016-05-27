@@ -97,6 +97,8 @@ define([
         pc.hidden = this.initial.hidden;
         pc.values = this.initial.values;
 
+		
+		pc.derived=this.initial.derived;
         pc.formatter = this.initial.formatter;
         pc.valueOutputType = this.initial.valueOutputType;
         pc.showRowHeaders = this.initial.showRowHeaders;
