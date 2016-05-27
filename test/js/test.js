@@ -96,7 +96,7 @@ UNECA_GDP_USD*/
             log.trace("Init Olap");
             log.trace(config);
 			
-console.log("config",config)
+//console.log("config",config)
 
             this.olap = new OlapCreator(config);
         }, this));
@@ -107,7 +107,7 @@ console.log("config",config)
 
             log.trace("Update chart");
             log.trace(config);
-console.log("config",config)
+//console.log("config",config)
             this.olap.update(config);
         }, this));
 
