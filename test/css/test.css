@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* Fenix Common CSS */
 /*#0076ff*/
 /* Boostrap Queries */
@@ -5179,7 +5178,7 @@ button_new_2:before {
 
 .fa-border {
   padding: .2em .25em .15em;
-  border: solid 0.08em #eee;
+  border: solid 0.08em #eeeeee;
   border-radius: .1em; }
 
 .pull-right {
@@ -5201,6 +5200,7 @@ button_new_2:before {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); }
+
   100% {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
@@ -5208,6 +5208,7 @@ button_new_2:before {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); }
+
   100% {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
@@ -5269,84 +5270,84 @@ button_new_2:before {
   font-size: 2em; }
 
 .fa-inverse {
-  color: #fff; }
+  color: white; }
 
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
 .fa-search:before {
-  content: ""; }
+  content: "\f002"; }
 
 .fa-th:before {
-  content: ""; }
+  content: "\f00a"; }
 
 .fa-th-list:before {
-  content: ""; }
+  content: "\f00b"; }
 
 .fa-home:before {
-  content: ""; }
+  content: "\f015"; }
 
 .fa-clock-o:before {
-  content: ""; }
+  content: "\f017"; }
 
 .fa-refresh:before {
-  content: ""; }
+  content: "\f021"; }
 
 .fa-lock:before {
-  content: ""; }
+  content: "\f023"; }
 
 .fa-barcode:before {
-  content: ""; }
+  content: "\f02a"; }
 
 .fa-map-marker:before {
-  content: ""; }
+  content: "\f041"; }
 
 .fa-calendar:before {
-  content: ""; }
+  content: "\f073"; }
 
 .fa-twitter-square:before {
-  content: ""; }
+  content: "\f081"; }
 
 .fa-facebook-square:before {
-  content: ""; }
+  content: "\f082"; }
 
 .fa-globe:before {
-  content: ""; }
+  content: "\f0ac"; }
 
 .fa-wrench:before {
-  content: ""; }
+  content: "\f0ad"; }
 
 .fa-google-plus-square:before {
-  content: ""; }
+  content: "\f0d4"; }
 
 .fa-google-plus:before {
-  content: ""; }
+  content: "\f0d5"; }
 
 .fa-caret-down:before {
-  content: ""; }
+  content: "\f0d7"; }
 
 .fa-caret-up:before {
-  content: ""; }
+  content: "\f0d8"; }
 
 .fa-caret-left:before {
-  content: ""; }
+  content: "\f0d9"; }
 
 .fa-caret-right:before {
-  content: ""; }
+  content: "\f0da"; }
 
 .fa-rss-square:before {
-  content: ""; }
+  content: "\f143"; }
 
 .fa-slack:before {
-  content: ""; }
+  content: "\f198"; }
 
 .fa-database:before {
-  content: ""; }
+  content: "\f1c0"; }
 
 /* Tabs component */
 .fx-tabs .nav-tabs {
   border: 0; }
   .fx-tabs .nav-tabs > li > a {
-    color: #333;
+    color: #333333;
     border-color: transparent; }
     .fx-tabs .nav-tabs > li > a:hover, .fx-tabs .nav-tabs > li > a:focus {
       border-color: transparent;
@@ -5437,7 +5438,7 @@ input[type="button"]::-moz-focus-inner {
 
 /* Fenix - Js tree */
 .jstree-default .jstree-search {
-  color: #333;
+  color: #333333;
   font-weight: 300;
   font-style: normal; }
 .jstree-default .jstree-node:not(.jstree-open) {
@@ -5459,7 +5460,7 @@ input[type="button"]::-moz-focus-inner {
 
 .jstree-default .jstree-wholerow-hovered {
   background: none;
-  background-color: #e6f1ff; }
+  background-color: #e5f1ff; }
 
 .jstree-default .jstree-disabled.jstree-clicked {
   background: none;
@@ -5641,7 +5642,7 @@ input[type="radio"]:disabled + label {
 
 /* Buttons */
 .btn-default {
-  color: #333; }
+  color: #333333; }
 
 [data-role="remove"].btn-round {
   position: relative;
@@ -5659,7 +5660,7 @@ input[type="radio"]:disabled + label {
   margin-bottom: 5px; }
 
 .jstree-anchor, .jstree-anchor:link, .jstree-anchor:visited, .jstree-anchor:hover, .jstree-anchor:active {
-  color: #333; }
+  color: #333333; }
 
 /* Range Slider */
 .irs-bar, .irs-bar-edge, .irs-line {
@@ -5749,5 +5750,3 @@ input[type="radio"]:disabled + label {
   background-color: white;
   background-image: none;
   border: 1px solid #d8d8d8; }
-
-/*# sourceMappingURL=test.css.map */
