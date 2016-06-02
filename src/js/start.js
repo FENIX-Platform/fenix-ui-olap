@@ -18,7 +18,7 @@ define([
     function Olap(o) {
         log.info("FENIX Olap");
         log.info(o);
-
+//console.log("init OLAP",o)
         this._registerHandlebarsHelpers();
 
         $.extend(true, this, CD, C, {initial: o});
@@ -47,6 +47,8 @@ define([
     // API
 
     Olap.prototype.update = function (config) {
+		
+
         this.olap.model = this.pivotator.pivot(this.model, config);
 		//console.log("MODEL FINAL", this.olap.model)
 
