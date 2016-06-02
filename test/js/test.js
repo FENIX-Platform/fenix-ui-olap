@@ -72,9 +72,9 @@ UNECA_GDP_USD*/
     Test.prototype._testFilterInteraction = function () {
 
         //create filter configuration
-        var itemsFromFenixTool = this.fenixTool.toFilter(Model),
+        var itemsFromFenixTool = this.fenixTool.toFilter(Model);
         //FilterModel contains static filter selectors, e.g. show code, show unit
-            items = $.extend(true, {}, FilterModel, itemsFromFenixTool);
+           var  items = $.extend(true, {}, FilterModel, itemsFromFenixTool);
 
         log.trace("Filter configuration from FenixTool", items);
 
@@ -86,17 +86,24 @@ UNECA_GDP_USD*/
         this.filter.on("ready", _.bind(function () {
 
             var config = this._getOlapConfigFromFilter();
-			var derived={derived:{"TEST":function(rec){return "test"}}}
+			//console.log("Model",Model)
+			//var derived={derived:{"IndicatorCOMPLET":function(rec){return rec["IndicatorCode_EN"]+" "+rec["IndicatorCode"]}}}
 
             config = $.extend(true, {}, {
                 model: Model,
                 el: "#olap-interaction"
-            }, config,derived);
+            }, config
+			//,derived
+			);
 
             log.trace("Init Olap");
             log.trace(config);
 			
-//console.log("config",config)
+			
+			for(var d in config.derived){config.aggregations.push(d)}
+			
+			
+			console.log("config",config)
 
             this.olap = new OlapCreator(config);
         }, this));
