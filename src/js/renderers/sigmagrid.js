@@ -114,7 +114,7 @@ define([
     };
 
     Sigmagrid.prototype._renderSigmagrid = function (obj) {
-
+console.log("obj",obj,this.model)
         var model = this.model,
             dsOption = {fields: [], recordType: 'array', data: model.data},
             colsOption = [],
@@ -128,7 +128,7 @@ define([
                     id: model.rowname[i].id,
                     header: model.rowname[i].title[this.lang],
                     frozen: true,
-                    grouped: true
+                    grouped: obj.groupedRow
                 });
                 dsOption.fields.push({name: model.rowname[i].id});
             }
@@ -181,7 +181,7 @@ define([
             container: this.id + "_" + this.id
         });
 
-        //console.log("gridOption", gridOption)
+        console.log("gridOption", gridOption)
 
         //Sigma.destroyGrids();
         //	console.log($el,id)
