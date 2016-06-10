@@ -48,13 +48,14 @@ define([
 
     /**
      * pub/sub
-     * @return {Object} Sigmagrid instance
+     * @return {Object} component instance
      */
-    Sigmagrid.prototype.on = function (channel, fn) {
+    Sigmagrid.prototype.on = function (channel, fn, context) {
+        var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
         }
-        this.channels[channel].push({context: this, callback: fn});
+        this.channels[channel].push({context: _context, callback: fn});
         return this;
     };
 

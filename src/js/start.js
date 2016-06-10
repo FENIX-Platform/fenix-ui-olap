@@ -56,13 +56,14 @@ console.log("init OLAP",o)
 
     /**
      * pub/sub
-     * @return {Object} Olap instance
+     * @return {Object} component instance
      */
-    Olap.prototype.on = function (channel, fn) {
+    Olap.prototype.on = function (channel, fn, context) {
+        var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
         }
-        this.channels[channel].push({context: this, callback: fn});
+        this.channels[channel].push({context: _context, callback: fn});
         return this;
     };
 

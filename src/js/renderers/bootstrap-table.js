@@ -6,11 +6,10 @@ define([
     'fx-olap/config/errors',
     'fx-olap/config/events',
     'fx-olap/config/config',
-    'fx-olap/config/config-default',
     'fx-olap/config/renderers/bootstrap-table',
     'bootstrap-table',
     'amplify'
-], function ($, _, log, ERR, EVT, C, CD, Pivotator, Config) {
+], function ($, _, log, ERR, EVT, C, Pivotator, Config) {
 
     'use strict';
 
@@ -18,7 +17,7 @@ define([
         log.info("FENIX BootstrapTable");
         log.info(o);
 
-        $.extend(true, this, CD, C, o);
+        $.extend(true, this, C, o);
 
         var valid = this._validateInput();
 
@@ -42,13 +41,14 @@ define([
 
     /**
      * pub/sub
-     * @return {Object} BootstrapTable instance
+     * @return {Object} component instance
      */
-    BootstrapTable.prototype.on = function (channel, fn) {
+    BootstrapTable.prototype.on = function (channel, fn, context) {
+        var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
         }
-        this.channels[channel].push({context: this, callback: fn});
+        this.channels[channel].push({context: _context, callback: fn});
         return this;
     };
 
