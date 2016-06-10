@@ -6,7 +6,7 @@ define([
     'fx-olap/start',
     'fx-filter/start',
     'fx-common/pivotator/fenixtool',
-    'text!test/models/UNECA_AgricultureProduction3.json',
+    'text!test/models/UNECA_Education.json',
     'test/models/filter-interaction'
 ], function (log, $, _, OlapCreator, Filter, FenixTool, Model, FilterModel) {
 	
@@ -88,6 +88,29 @@ UNECA_GDP_USD*/
             var config = this._getOlapConfigFromFilter();
 			//console.log("Model",Model)
 			//var derived={derived:{"IndicatorCOMPLET":function(rec){return rec["IndicatorCode_EN"]+" "+rec["IndicatorCode"]}}}
+			 config={"values":["Value"],
+			 "formatter":"localstring",
+			 "aggregationFn":{"value":"sum","Value":"sum"},
+			 "decimals":["2"],"showRowHeaders":true,
+			 }
+			 
+			 /*{"aggregationFn":{"value":"sum","Value":"sum"},
+			"formatter":"localstring",
+			"decimals":["2"],
+			//"groupedRow":true,
+			"showRowHeaders":true,
+			"hidden":[],
+			//"rows":["Commodity_EN","CountryCode_EN","IndicatorCode_EN"],
+			//"columns":["Year"],
+			"aggregations":[],
+			"values":["Value"],
+			//"inputFormat" : "fenixtool"
+			
+			}*/;
+			
+			
+			
+			console.log("config",config)
 
             config = $.extend(true, {}, {
                 model: Model,
@@ -103,18 +126,17 @@ UNECA_GDP_USD*/
 			for(var d in config.derived){config.aggregations.push(d)}
 			
 			
-			console.log("config",config)
 
             this.olap = new OlapCreator(config);
         }, this));
 
-        this.filter.on("change", _.bind(function () {
+       this.filter.on("change", _.bind(function () {
 
             var config = this._getOlapConfigFromFilter();
 
             log.trace("Update chart");
             log.trace(config);
-//console.log("config",config)
+console.log("config2",config)
             this.olap.update(config);
         }, this));
 

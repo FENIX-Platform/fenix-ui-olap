@@ -67,6 +67,21 @@ define(function () {
             template : {
                 title : "Show"
             }
+        },
+        groupedRow : {
+
+            selector : {
+                id : "input",
+                type : "checkbox",
+                source : [
+                    { value : "groupedRow", label : "Group the row"},
+                   
+                ]
+            },
+
+            template : {
+                title : "groupedRow"
+            }
         }
 
     }

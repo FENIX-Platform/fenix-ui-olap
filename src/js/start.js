@@ -17,7 +17,7 @@ define([
     function Olap(o) {
         log.info("FENIX Olap");
         log.info(o);
-//console.log("init OLAP",o)
+console.log("init OLAP",o)
         this._registerHandlebarsHelpers();
 
         $.extend(true, this, C, {initial: o});
@@ -48,7 +48,7 @@ define([
     Olap.prototype.update = function (config) {
 		
 
-        this.olap.model = this.pivotator.pivot(this.model, config);
+       this.olap.model = this.pivotator.pivot(this.model, config);
 		//console.log("MODEL FINAL", this.olap.model)
 
         this.olap.update(config);
@@ -92,13 +92,14 @@ define([
         pc.inputFormat = this.initial.inputFormat || "raw";
         pc.aggregationFn = this.initial.aggregationFn;
 
-        pc.aggregations = this.initial.aggregations;
-        pc.columns = this.initial.columns;
-        pc.rows = this.initial.rows;
-        pc.hidden = this.initial.hidden;
-        pc.values = this.initial.values;
-
-		
+        pc.aggregations = this.initial.aggregations||[];
+        pc.columns = this.initial.columns||[];
+        pc.rows = this.initial.rows||[];
+        pc.hidden = this.initial.hidden||[];
+        pc.values = this.initial.values||[];
+if(this.initial.hasOwnProperty("groupedRow")){
+pc.groupedRow=this.initial.groupedRow;}
+else{pc.groupedRow=false;}
 		pc.derived=this.initial.derived;
         pc.formatter = this.initial.formatter;
         pc.valueOutputType = this.initial.valueOutputType;
@@ -209,7 +210,8 @@ define([
 
         var Renderer = this._getRenderer(this.type);
 
-        var myPivotatorConfig = this.fenixTool.parseInut(this.model.metadata.dsd, this.pivotatorConfig);
+        var myPivotatorConfig = this.fenixTool.parseInput(this.model.metadata.dsd, this.pivotatorConfig);
+console.log("myPivotatorConfig",this.pivotatorConfig,myPivotatorConfig)
 
         var model = this.pivotator.pivot(this.model, myPivotatorConfig);
 
