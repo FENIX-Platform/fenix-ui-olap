@@ -6,14 +6,13 @@ define([
     'fx-olap/config/errors',
     'fx-olap/config/events',
     'fx-olap/config/config',
-    'fx-olap/config/config-default',
     'fx-common/pivotator/start',
     'text!fx-olap/html/renderers/sigmagrid.hbs',
     'fx-olap/config/renderers/sigmagrid',
     'handlebars',
     'gt_msg_grid',
     'amplify'
-], function ($, _, log, ERR, EVT, C, CD, Pivotator, templates, sigmagridConfig, Handlebars) {
+], function ($, _, log, ERR, EVT, C, Pivotator, templates, sigmagridConfig, Handlebars) {
 
     'use strict';
 
@@ -25,7 +24,7 @@ define([
         log.info("FENIX Sigmagrid");
         log.info(o);
 
-        $.extend(true, this, CD, C, o);
+        $.extend(true, this, C, o);
 
         var valid = this._validateInput();
 

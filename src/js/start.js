@@ -7,12 +7,11 @@ define([
     'fx-olap/config/errors',
     'fx-olap/config/events',
     'fx-olap/config/config',
-    'fx-olap/config/config-default',
     'fx-common/pivotator/start',
     'fx-common/pivotator/fenixtool',
     'handlebars',
     'amplify'
-], function ($, require, _, log, ERR, EVT, C, CD, Pivotator, FenixTool, Handlebars) {
+], function ($, require, _, log, ERR, EVT, C, Pivotator, FenixTool, Handlebars) {
     'use strict';
 
     function Olap(o) {
@@ -21,7 +20,7 @@ define([
 //console.log("init OLAP",o)
         this._registerHandlebarsHelpers();
 
-        $.extend(true, this, CD, C, {initial: o});
+        $.extend(true, this, C, {initial: o});
 
         this._parseInput(o);
 
@@ -114,7 +113,7 @@ define([
 
         this.pivotatorConfig = pc;
 
-        this.type = this.initial.type || C.type || CD.type;
+        this.type = this.initial.type || C.type;
 
         this.lang = this.initial.lang || 'EN';
 
@@ -166,7 +165,7 @@ define([
 
     Olap.prototype._getPluginPath = function (name) {
 
-        var registeredSelectors = $.extend(true, {}, this.plugin_registry),
+        var registeredSelectors = $.extend(true, {}, this.pluginRegistry),
             path;
 
         var conf = registeredSelectors[name];
