@@ -48,14 +48,13 @@ define([
 
     /**
      * pub/sub
-     * @return {Object} component instance
+     * @return {Object} Sigmagrid instance
      */
-    Sigmagrid.prototype.on = function (channel, fn, context) {
-        var _context = context || this;
+    Sigmagrid.prototype.on = function (channel, fn) {
         if (!this.channels[channel]) {
             this.channels[channel] = [];
         }
-        this.channels[channel].push({context: _context, callback: fn});
+        this.channels[channel].push({context: this, callback: fn});
         return this;
     };
 
@@ -114,7 +113,7 @@ define([
     };
 
     Sigmagrid.prototype._renderSigmagrid = function (obj) {
-console.log("obj",obj,this.model)
+//console.log("obj",obj,this.model)
         var model = this.model,
             dsOption = {fields: [], recordType: 'array', data: model.data},
             colsOption = [],
@@ -181,7 +180,7 @@ console.log("obj",obj,this.model)
             container: this.id + "_" + this.id
         });
 
-        console.log("gridOption", gridOption)
+       //console.log("gridOption", gridOption)
 
         //Sigma.destroyGrids();
         //	console.log($el,id)

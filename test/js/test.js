@@ -110,7 +110,7 @@ UNECA_GDP_USD*/
 			
 			
 			
-			console.log("config",config)
+			//console.log("config",config)
 
             config = $.extend(true, {}, {
                 model: Model,
@@ -136,7 +136,7 @@ UNECA_GDP_USD*/
 
             log.trace("Update chart");
             log.trace(config);
-console.log("config2",config)
+//console.log("config2",config)
             this.olap.update(config);
         }, this));
 

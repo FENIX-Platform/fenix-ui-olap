@@ -17,7 +17,7 @@ define([
     function Olap(o) {
         log.info("FENIX Olap");
         log.info(o);
-console.log("init OLAP",o)
+//console.log("init OLAP",o)
         this._registerHandlebarsHelpers();
 
         $.extend(true, this, C, {initial: o});
@@ -212,7 +212,7 @@ else{pc.groupedRow=false;}
         var Renderer = this._getRenderer(this.type);
 
         var myPivotatorConfig = this.fenixTool.parseInput(this.model.metadata.dsd, this.pivotatorConfig);
-console.log("myPivotatorConfig",this.pivotatorConfig,myPivotatorConfig)
+//console.log("myPivotatorConfig",this.pivotatorConfig,myPivotatorConfig)
 
         var model = this.pivotator.pivot(this.model, myPivotatorConfig);
 
