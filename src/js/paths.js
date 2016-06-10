@@ -5,7 +5,7 @@ define(function () {
 
             'fx-olap/start': './start',
             'fx-olap/renderers' : './renderers',
-            'fx-olap/nls': '../../i18n',
+            'fx-olap/nls': '../../nls',
             'fx-olap/config': '../../config',
             'fx-olap/html': '../../html',
             'fx-olap/js' : "./",
