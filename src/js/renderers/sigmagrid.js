@@ -15,7 +15,8 @@ define([
 ], function ($, _, log, ERR, EVT, C, Pivotator, templates, sigmagridConfig, Handlebars) {
 
     'use strict';
-
+var mygrid;
+var idj=0;
     var s = {
         TABLE_HEADER : '[data-role="header"]'
     };
@@ -113,25 +114,54 @@ define([
     };
 
     Sigmagrid.prototype._renderSigmagrid = function (obj) {
-//console.log("obj",obj,this.model)
+		//console.log("_renderSigmagrid", obj)
         var model = this.model,
             dsOption = {fields: [], recordType: 'array', data: model.data},
             colsOption = [],
             colstemp = this.pivotator.toTree(model.cols2, 'colspan'),
             colstempL = this.pivotator.toTree(model.cols2label, 'colspan');
+			var hidden2={};	
+			for(var i in obj.hidden){hidden2[obj.hidden[i]]=true}
 
         // create sigmagrid config
         for (var i in model.rowname) {
+			//console.log(model,obj)
             if (model.rowname.hasOwnProperty(i)) {
+				//var b=Math.random()>0.5;
+			
                 colsOption.push( {
                     id: model.rowname[i].id,
                     header: model.rowname[i].title[this.lang],
                     frozen: true,
+					//hidden:b,
+					hidden:hidden2.hasOwnProperty(model.rowname[i].id),
+					//hidden:hidden2.hasOwnProperty(model.rowname[i].id),
+				//hidden:hidden2.hasOwnProperty(model.rowname[i].id),
                     grouped: obj.groupedRow
                 });
                 dsOption.fields.push({name: model.rowname[i].id});
             }
         }
+		
+		
+		    // hiddenCol
+      /*  for (var i in obj.hidden) {
+			console.log("hidden",i,obj)
+            //if (model.rowname.hasOwnProperty(i)) {
+                colsOption.push( {
+                    id: obj.hidden[i],
+                    header:  obj.hidden[i],
+                   
+					hidden:false
+                  
+                });
+				console.log("tet iden",obj.hidden[i])
+                dsOption.fields.push({name:  obj.hidden[i]});
+            //}
+        }*/
+
+		
+		
 
 		//console.log("OBJ",obj,colstemp)
 
@@ -171,31 +201,35 @@ define([
             }
 
         }
-
+		
+		
+idj++;
         var gridOption = $.extend(true, {}, sigmagridConfig, {
-            id: this.id + "_" + this.id,
+            id: this.id + "_" + this.id+idj,
             dataset: dsOption,
          //   customHead : 'myHead1',
             columns: colsOption,
-            container: this.id + "_" + this.id
+            container: this.id + "_" + this.id+idj
         });
 
-       //console.log("gridOption", gridOption)
 
-        //Sigma.destroyGrids();
+        Sigma.destroyGrids();
+		mygrid=null;
         //	console.log($el,id)
 
-        this.$el.find(".datagrid").remove();
+       // this.$el.find(".datagrid").remove();
         //this.$el.find(".datagrid").empty();
+        //$("#" + this.id + "_" + this.id+idj).empty();
 
-        this.$el.append("<div id='" + this.id + "_" + this.id + "' class='datagrid' />");
-        $("#" + this.id + "_" + this.id).empty();
+        this.$el.append("<div id='" + this.id + "_" + this.id+idj + "' class='datagrid' />");
+		  //  console.log("gridOption", gridOption,colsOption,dsOption)
 
-        var mygrid = new Sigma.Grid(gridOption);
-
-        //	Sigma.Util.onLoad(
+         mygrid = new Sigma.Grid(gridOption);
+        	//Sigma.Util.onLoad(
+			
         Sigma.Grid.render(mygrid)();
-//		);
+		//mygrid.reload();
+		//);
 
         this._trigger("ready");
 

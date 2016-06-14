@@ -50,7 +50,7 @@ define([
 
        this.olap.model = this.pivotator.pivot(this.model, config);
 		//console.log("MODEL FINAL", this.olap.model)
-
+//console.log("UPDATE", this.olap)
         this.olap.update(config);
     };
 
@@ -96,7 +96,8 @@ define([
         pc.aggregations = this.initial.aggregations||[];
         pc.columns = this.initial.columns||[];
         pc.rows = this.initial.rows||[];
-        pc.hidden = this.initial.hidden||[];
+		pc.derivedAttribute=this.initial.derivedAttribute;
+       // pc.hidden = this.initial.hidden||[];
         pc.values = this.initial.values||[];
 if(this.initial.hasOwnProperty("groupedRow")){
 pc.groupedRow=this.initial.groupedRow;}
@@ -210,9 +211,10 @@ else{pc.groupedRow=false;}
     Olap.prototype._renderOlap = function () {
 
         var Renderer = this._getRenderer(this.type);
-
-        var myPivotatorConfig = this.fenixTool.parseInput(this.model.metadata.dsd, this.pivotatorConfig);
-//console.log("myPivotatorConfig",this.pivotatorConfig,myPivotatorConfig)
+//console.log("_renderOlap",this.pivotatorConfig,"initi",this.initial)
+        var myPivotatorConfig =$.extend(true,{},this.initial, this.fenixTool.parseInput(this.model.metadata.dsd, this.pivotatorConfig));
+		
+//console.log("myPivotatorConfig",myPivotatorConfig)
 
         var model = this.pivotator.pivot(this.model, myPivotatorConfig);
 
@@ -222,7 +224,7 @@ else{pc.groupedRow=false;}
             el: this.$el,
             lang: this.lang
         });
-
+//console.log("olap renderer",config)
         this.olap = new Renderer(config);
 
         this._trigger("ready");

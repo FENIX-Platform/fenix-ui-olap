@@ -86,13 +86,14 @@ UNECA_GDP_USD*/
         this.filter.on("ready", _.bind(function () {
 
             var config = this._getOlapConfigFromFilter();
+		//	console.log("config",config)
 			//console.log("Model",Model)
-			//var derived={derived:{"IndicatorCOMPLET":function(rec){return rec["IndicatorCode_EN"]+" "+rec["IndicatorCode"]}}}
-			 config={"values":["Value"],
+			//var derived={derived:{"Indicator_EN_":function(rec){return "("+rec["IndicatorCode"]+")"+rec["IndicatorCode_EN"]}}}
+			/* config={"values":["Value"],
 			 "formatter":"localstring",
 			 "aggregationFn":{"value":"sum","Value":"sum"},
-			 "decimals":["2"],"showRowHeaders":true,
-			 }
+			 "decimals":["2"],"showRowHeaders":true,"aggregations":[],
+			 }*/
 			 
 			 /*{"aggregationFn":{"value":"sum","Value":"sum"},
 			"formatter":"localstring",
@@ -123,7 +124,10 @@ UNECA_GDP_USD*/
             log.trace(config);
 			
 			
-			for(var d in config.derived){config.aggregations.push(d)}
+			for(var d in config.derived)
+			{
+				config.aggregations.push(d);
+			}
 			
 			
 
@@ -143,7 +147,6 @@ UNECA_GDP_USD*/
     };
 
     Test.prototype._getOlapConfigFromFilter = function () {
-
         var values = this.filter.getValues();
 		//console.log("_getOlapConfigFromFilter",values)
 		var config = this.fenixTool.toTableConfig(values);
