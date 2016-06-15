@@ -219,11 +219,11 @@ idj++;
         });
 
 
-        Sigma.destroyGrids();
+      //  Sigma.destroyGrids();
 		mygrid=null;
         //	console.log($el,id)
 
-       // this.$el.find(".datagrid").remove();
+        this.$el.find(".datagrid").remove();
         //this.$el.find(".datagrid").empty();
         //$("#" + this.id + "_" + this.id+idj).empty();
 
