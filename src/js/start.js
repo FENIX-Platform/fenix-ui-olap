@@ -47,7 +47,7 @@ define([
 
     Olap.prototype.update = function (config) {
 		
-
+//console.log("OLAPPPPPPP",this.model,config)
        this.olap.model = this.pivotator.pivot(this.model, config);
 		//console.log("MODEL FINAL", this.olap.model)
 //console.log("UPDATE", this.olap)
@@ -215,6 +215,7 @@ else{pc.groupedRow=false;}
         var myPivotatorConfig =$.extend(true,{},this.initial, this.fenixTool.parseInput(this.model.metadata.dsd, this.pivotatorConfig));
 		
 //console.log("myPivotatorConfig",myPivotatorConfig)
+//console.log("OLAP",this.model, myPivotatorConfig)
 
         var model = this.pivotator.pivot(this.model, myPivotatorConfig);
 
