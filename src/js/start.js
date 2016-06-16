@@ -17,7 +17,7 @@ define([
     function Olap(o) {
         log.info("FENIX Olap");
         log.info(o);
-		console.log("init OLAP",o)
+		//console.log("init OLAP",o)
         this._registerHandlebarsHelpers();
 
         $.extend(true, this, C, {initial: o});

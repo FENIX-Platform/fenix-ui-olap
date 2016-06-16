@@ -168,7 +168,7 @@ var idj=0;
         for (var i in colstemp) {
 
             if (obj.values.length > 1  || obj.columns.length ==0) {
-				
+				//console.log("cas1")
 				
                 //for(var v in optGr.VALS){
                 if (i == colstemp.length - 1) {
@@ -184,7 +184,7 @@ var idj=0;
 
                             });
                             //dsOption.fields.push({name: colstemp[i][j].id + "_" + obj.values[v]});
-                        dsOption.fields.push({name: colstemp[i][j].id.replace(/ /g, "_") + "_" +obj.values[v].replace(/\|\*/g, "_").replace(/\W/g, "_")});
+                        dsOption.fields.push({name: colstemp[i][j].id.replace(/\W/g, "_") + "_" +obj.values[v].replace(/\|\*/g, "_").replace(/\W/g, "_")});
                         
 						}
                     }
@@ -192,7 +192,7 @@ var idj=0;
                 //}
             }
             else {				
-
+//console.log("cas2",colstemp[i])
                 if (i == colstemp.length - 1) {
                     for (var j in colstemp[i]) {
                         colsOption.push({
@@ -228,7 +228,7 @@ idj++;
         //$("#" + this.id + "_" + this.id+idj).empty();
 
         this.$el.append("<div id='" + this.id + "_" + this.id+idj + "' class='datagrid' />");
-		    console.log("gridOption", gridOption)
+		    //console.log("gridOption", gridOption)
 
          mygrid = new Sigma.Grid(gridOption);
         	//Sigma.Util.onLoad(
