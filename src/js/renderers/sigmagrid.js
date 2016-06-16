@@ -176,15 +176,15 @@ var idj=0;
                         //console.log("test",optGr.VALS)
                         for (var v in obj.values) {
 							var titleV;
-							if(v==0){titleV="value"}else{titleV=obj.values[v].replace(/.*\|\*/g, "").replace(" ", "_")}
+							if(v==0){titleV="value"}else{titleV=obj.values[v].replace(/.*\|\*/g, "")/*.replace("\W", "_")*/}
                             colsOption.push({
-                                id: colstemp[i][j].id.replace(/ /g, "_") + "_" +obj.values[v].replace(/\|\*/g, "_")
+                                id: colstemp[i][j].id.replace(/\W/g, "_") + "_" +obj.values[v].replace(/\|\*/g, "_").replace(/\W/g, "_")
 								,
                                 header: colstempL[i][j].id.replace(/_/g, "\n") + "\n" + titleV
 
                             });
                             //dsOption.fields.push({name: colstemp[i][j].id + "_" + obj.values[v]});
-                        dsOption.fields.push({name: colstemp[i][j].id.replace(/ /g, "_") + "_" +obj.values[v].replace(/\|\*/g, "_")});
+                        dsOption.fields.push({name: colstemp[i][j].id.replace(/ /g, "_") + "_" +obj.values[v].replace(/\|\*/g, "_").replace(/\W/g, "_")});
                         
 						}
                     }
@@ -196,11 +196,11 @@ var idj=0;
                 if (i == colstemp.length - 1) {
                     for (var j in colstemp[i]) {
                         colsOption.push({
-                            id: colstemp[i][j].id.replace(/ /g, "_"),
-                            header: colstempL[i][j].id.replace(/_/g, "\n").replace(/ /g, "_"),
+                            id: colstemp[i][j].id.replace(/\W/g, "_"),
+                            header: colstempL[i][j].id.replace(/_/g, "\n")/*.replace(/\W/g, "_")*/,
 
                         });
-                        dsOption.fields.push({name: colstemp[i][j].id.replace(/ /g, "_")});
+                        dsOption.fields.push({name: colstemp[i][j].id.replace(/\W/g, "_")});
 
                     }
                 }
@@ -228,7 +228,7 @@ idj++;
         //$("#" + this.id + "_" + this.id+idj).empty();
 
         this.$el.append("<div id='" + this.id + "_" + this.id+idj + "' class='datagrid' />");
-		    //console.log("gridOption", gridOption)
+		    console.log("gridOption", gridOption)
 
          mygrid = new Sigma.Grid(gridOption);
         	//Sigma.Util.onLoad(
