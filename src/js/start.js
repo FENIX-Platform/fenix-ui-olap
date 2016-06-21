@@ -17,12 +17,15 @@ define([
     function Olap(o) {
         log.info("FENIX Olap");
         log.info(o);
-		//console.log("init OLAP",o)
+
         this._registerHandlebarsHelpers();
 
         $.extend(true, this, C, {initial: o});
+
         this._parseInput(o);
+
         var valid = this._validateInput();
+
         if (valid === true) {
             this._initVariables();
             this._bindEventListeners();
@@ -33,12 +36,10 @@ define([
             log.error(valid)
         }
     }
+
     // API
-    Olap.prototype.update = function (config) {	
-//console.log("OLAPPPPPPP",this.model,config)
-       this.olap.model = this.pivotator.pivot(this.model, config);
-		//console.log("MODEL FINAL", this.olap.model)
-//console.log("UPDATE", this.olap)
+    Olap.prototype.update = function (config) {
+        this.olap.model = this.pivotator.pivot(this.model, config);
         this.olap.update(config);
     };
 
@@ -48,13 +49,17 @@ define([
      */
     Olap.prototype.on = function (channel, fn, context) {
         var _context = context || this;
-        if (!this.channels[channel]) {this.channels[channel] = [];}
+        if (!this.channels[channel]) {
+            this.channels[channel] = [];
+        }
         this.channels[channel].push({context: _context, callback: fn});
         return this;
     };
 
     Olap.prototype._trigger = function (channel) {
-        if (!this.channels[channel]) {return false;}
+        if (!this.channels[channel]) {
+            return false;
+        }
         var args = Array.prototype.slice.call(arguments, 1);
         for (var i = 0, l = this.channels[channel].length; i < l; i++) {
             var subscription = this.channels[channel][i];
@@ -74,16 +79,19 @@ define([
         pc.inputFormat = this.initial.inputFormat || "raw";
         pc.aggregationFn = this.initial.aggregationFn;
 
-        pc.aggregations = this.initial.aggregations||[];
-        pc.columns = this.initial.columns||[];
-        pc.rows = this.initial.rows||[];
-		pc.derivedAttribute=this.initial.derivedAttribute;
-       // pc.hidden = this.initial.hidden||[];
-        pc.values = this.initial.values||[];
-		if(this.initial.hasOwnProperty("groupedRow")){
-		pc.groupedRow=this.initial.groupedRow;}
-		else{pc.groupedRow=false;}
-		pc.derived=this.initial.derived;
+        pc.aggregations = this.initial.aggregations || [];
+        pc.columns = this.initial.columns || [];
+        pc.rows = this.initial.rows || [];
+        pc.derivedAttribute = this.initial.derivedAttribute;
+        // pc.hidden = this.initial.hidden||[];
+        pc.values = this.initial.values || [];
+        if (this.initial.hasOwnProperty("groupedRow")) {
+            pc.groupedRow = this.initial.groupedRow;
+        }
+        else {
+            pc.groupedRow = false;
+        }
+        pc.derived = this.initial.derived;
         pc.formatter = this.initial.formatter;
         pc.valueOutputType = this.initial.valueOutputType;
         pc.showRowHeaders = this.initial.showRowHeaders;
@@ -96,7 +104,8 @@ define([
         // add more pivotator config
         this.pivotatorConfig = pc;
         this.type = this.initial.type || C.type;
-        this.lang = this.initial.lang || 'EN';
+        this.lang = this.initial.lang ||  C.lang;
+        this.lang = this.lang.toUpperCase();
     };
 
     Olap.prototype._validateInput = function () {
@@ -107,12 +116,12 @@ define([
         if (!this.id) {
             window.fx_olap_id >= 0 ? window.fx_olap_id++ : window.fx_olap_id = 0;
             this.id = String(window.fx_olap_id);
-            log.warn("Impossible to find olap id. Set auto id to: " + this.id);
+            log.info("Set table id to: " + this.id);
         }
 
         if (!this.$el) {
             errors.push({code: ERR.MISSING_CONTAINER});
-            log.warn("Impossible to find olap container");
+            log.warn("Impossible to find table container");
         }
 
         //Check if $el exist
@@ -142,12 +151,18 @@ define([
 
     Olap.prototype._getPluginPath = function (name) {
 
-        var registeredSelectors = $.extend(true, {}, this.pluginRegistry),path;
+        var registeredSelectors = $.extend(true, {}, this.pluginRegistry), path;
         var conf = registeredSelectors[name];
-        if (!conf) {log.error('Registration not found for "' + name + ' plugin".');}
+        if (!conf) {
+            log.error('Registration not found for "' + name + ' plugin".');
+        }
 
-        if (conf.path) {path = conf.path;}
-		else {log.error('Impossible to find path configuration for "' + name + ' plugin".');}
+        if (conf.path) {
+            path = conf.path;
+        }
+        else {
+            log.error('Impossible to find path configuration for "' + name + ' plugin".');
+        }
         return path;
     };
 
@@ -168,8 +183,8 @@ define([
     Olap.prototype._renderOlap = function () {
         var Renderer = this._getRenderer(this.type);
 //console.log("_renderOlap",this.pivotatorConfig,"initi",this.initial)
-        var myPivotatorConfig =$.extend(true,{},this.initial, this.fenixTool.parseInput(this.model.metadata.dsd, this.pivotatorConfig));
-		
+        var myPivotatorConfig = $.extend(true, {}, this.initial, this.fenixTool.parseInput(this.model.metadata.dsd, this.pivotatorConfig));
+
 //console.log("myPivotatorConfig",myPivotatorConfig)
 //console.log("OLAP",this.model, myPivotatorConfig)
 
@@ -207,23 +222,24 @@ define([
         this._unbindEventListeners();
     };
 
-    // utils
-    Olap.prototype.exportConf = function (optGr) {var ret = "";}
-
     Olap.prototype._callSelectorInstanceMethod = function (name, method, opts1, opts2) {
         var Instance = this.olap;
-        if ($.isFunction(Instance[method])) {return Instance[method](opts1, opts2);}
-		else {log.error(name + " selector does not implement the mandatory " + method + "() fn");}
+        if ($.isFunction(Instance[method])) {
+            return Instance[method](opts1, opts2);
+        }
+        else {
+            log.error(name + " selector does not implement the mandatory " + method + "() fn");
+        }
     };
 
     //Utils
     Olap.prototype._registerHandlebarsHelpers = function () {
+
+        var self = this;
+
         Handlebars.registerHelper('i18n', function (keyword) {
-            var lang;
-            try {lang = require.s.contexts._.config.i18n.locale;} 
-			catch (e) {lang = "EN";}
-            return typeof keyword === 'object' ? keyword[lang.toUpperCase()] : "";
+            return typeof keyword === 'object' ? keyword[self.lang.toUpperCase()] : "";
         });
     };
-	return Olap;
+    return Olap;
 });

@@ -100,7 +100,7 @@ var idj=0;
 
             window.fx_olap_id >= 0 ? window.fx_olap_id++ : window.fx_olap_id = 0;
             this.id = String(window.fx_olap_id);
-            log.warn("Impossible to find grid id. Set auto id to: " + this.id);
+            log.info("Set signagrid id to: " + this.id);
         }
 
         this.$el = $(this.el);
@@ -120,7 +120,7 @@ var idj=0;
             colsOption = [],
             colstemp = this.pivotator.toTree(model.cols2, 'colspan'),
             colstempL = this.pivotator.toTree(model.cols2label, 'colspan');
-			var hidden2={};	
+			var hidden2={};
 			for(var i in obj.hidden){hidden2[obj.hidden[i]]=true}
 
         // create sigmagrid config
@@ -128,7 +128,7 @@ var idj=0;
 			//console.log(model,obj)
             if (model.rowname.hasOwnProperty(i)) {
 				//var b=Math.random()>0.5;
-			
+
                 colsOption.push( {
                     id: model.rowname[i].id,
                     header: model.rowname[i].title[this.lang],
@@ -142,8 +142,8 @@ var idj=0;
                 dsOption.fields.push({name: model.rowname[i].id});
             }
         }
-		
-		
+
+
 		    // hiddenCol
       /*  for (var i in obj.hidden) {
 			console.log("hidden",i,obj)
@@ -151,17 +151,17 @@ var idj=0;
                 colsOption.push( {
                     id: obj.hidden[i],
                     header:  obj.hidden[i],
-                   
+
 					hidden:false
-                  
+
                 });
 				console.log("tet iden",obj.hidden[i])
                 dsOption.fields.push({name:  obj.hidden[i]});
             //}
         }*/
 
-		
-		
+
+
 
 		//console.log("OBJ",obj,colstemp)
 
@@ -169,7 +169,7 @@ var idj=0;
 
             if (obj.values.length > 1  || obj.columns.length ==0) {
 				//console.log("cas1")
-				
+
                 //for(var v in optGr.VALS){
                 if (i == colstemp.length - 1) {
                     for (var j in colstemp[i]) {
@@ -185,13 +185,13 @@ var idj=0;
                             });
                             //dsOption.fields.push({name: colstemp[i][j].id + "_" + obj.values[v]});
                         dsOption.fields.push({name: colstemp[i][j].id.replace(/\W/g, "_") + "_" +obj.values[v].replace(/\|\*/g, "_").replace(/\W/g, "_")});
-                        
+
 						}
                     }
                 }
                 //}
             }
-            else {				
+            else {
 //console.log("cas2",colstemp[i])
                 if (i == colstemp.length - 1) {
                     for (var j in colstemp[i]) {
@@ -207,8 +207,8 @@ var idj=0;
             }
 
         }
-		
-		
+
+
 idj++;
         var gridOption = $.extend(true, {}, sigmagridConfig, {
             id: this.id + "_" + this.id+idj,
@@ -232,7 +232,7 @@ idj++;
 
          mygrid = new Sigma.Grid(gridOption);
         	//Sigma.Util.onLoad(
-			
+
         Sigma.Grid.render(mygrid)();
 		//mygrid.reload();
 		//);
@@ -280,7 +280,7 @@ idj++;
                 }
 
                 config.series.push({data: tempData});
-              
+
                 break;
             default:
 

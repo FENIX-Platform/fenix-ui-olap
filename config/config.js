@@ -10,6 +10,8 @@ define(function () {
 
         type: "olap",
 
+        lang : 'EN',
+
         pluginRegistry: {
             'olap': {
                 path: selectorPath + 'sigmagrid'
