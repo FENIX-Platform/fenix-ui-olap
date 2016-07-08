@@ -24,7 +24,7 @@ define(function () {
                 title : "Format"
             }
         },
-     "decimal_digit": {
+     "decimals": {
 
             "selector": {
                 "id": "dropdown",
