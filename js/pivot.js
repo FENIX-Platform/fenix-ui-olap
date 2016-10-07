@@ -440,7 +440,7 @@ define([
          if($.isFunction(opts.onDataLoaded) && typeof this.onDataLoadedExecuted === 'undefined')
             {
                 opts.onDataLoaded();
-                this.onDataLoadedExecuted = true;
+                //this.onDataLoadedExecuted = true;
             }
     };
 
