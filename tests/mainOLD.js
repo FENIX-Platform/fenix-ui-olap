@@ -11,7 +11,6 @@ requirejs.config(
 		'underscore': "//fenixapps.fao.org/repository/js/underscore/1.7.0/underscore.min",
         'jquery': "//fenixapps.fao.org/repository/js/jquery/2.1.1/jquery.min",
 
-        jquery-ui: "lib/jquery-ui-1.9.2.custom.min",
         //i18n: 'lib/jquery.i18n.properties-min',
         //jssc3: "lib/highlight/jssc3",
         //calendar: "lib/grid/calendar/calendar",
@@ -42,7 +41,6 @@ DEV
 		'HPivot6':'lib/HierachicalRender/group_distinct'*/
     },
     shim: {
-    	jquery-ui: ['jquery'],
         /*calendar: {exports: 'Calendar'},
         calendar_utf8: {exports: 'Calendar'},*/
 		highcharts:  ['jquery'],
