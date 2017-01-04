@@ -15,8 +15,8 @@ define(function () {
             'i18n':      '//fenixrepo.fao.org/cdn/js/requirejs/plugins/i18n/2.0.4/i18n',
             'amplify' :  '//fenixrepo.fao.org/cdn/js/amplify/1.1.2/amplify.min',
             'highcharts':'//code.highcharts.com/highcharts',
-			 jqueryui:   "../lib/jquery-ui-1.9.2.custom.min",
-           // 'jquery-ui': '//fenixrepo.fao.org/cdn/js/jquery-ui/1.10.3/jquery-ui-1.10.3.custom.min',
+			 //jquery-ui:   "../lib/jquery-ui-1.9.2.custom.min",
+            'jquery-ui': '//fenixrepo.fao.org/cdn/js/jquery-ui/1.10.3/jquery-ui-1.10.3.custom.min',
 			'HPivot':     '//fenixapps.fao.org/repository/js/jbpivot/0.1.0-olap/jbpivot.min',
 	'HPivot':     '../dist/pivot.min',
 
@@ -42,7 +42,7 @@ define(function () {
                 deps: ["jquery"]
             },
 			
-            "jqueryui": {
+            "jquery-ui": {
                 deps: ["jquery"]
             },/*
             "jquery-ui": {
@@ -58,8 +58,8 @@ define(function () {
 				//exports: 'Sigma',
 				deps:      ['jquery']
 			},
-			"gt_msg_grid": ['jquery','gt_msg','jqueryui'],
-			"HPivot": ['jquery','jqueryui'],			
+			"gt_msg_grid": ['jquery','gt_msg','jquery-ui'],
+			"HPivot": ['jquery','jquery-ui'],			
 			"pivotRenderers": ['pivotRenderersFuncs'],	
 			"pivotAggregators": ['pivotAggregatorsFuncs','jquery']
         }

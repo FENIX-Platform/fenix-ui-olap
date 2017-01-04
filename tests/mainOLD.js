@@ -11,7 +11,7 @@ requirejs.config(
 		'underscore': "//fenixapps.fao.org/repository/js/underscore/1.7.0/underscore.min",
         'jquery': "//fenixapps.fao.org/repository/js/jquery/2.1.1/jquery.min",
 
-        jqueryui: "lib/jquery-ui-1.9.2.custom.min",
+        jquery-ui: "lib/jquery-ui-1.9.2.custom.min",
         //i18n: 'lib/jquery.i18n.properties-min',
         //jssc3: "lib/highlight/jssc3",
         //calendar: "lib/grid/calendar/calendar",
@@ -42,7 +42,7 @@ DEV
 		'HPivot6':'lib/HierachicalRender/group_distinct'*/
     },
     shim: {
-    	jqueryui: ['jquery'],
+    	jquery-ui: ['jquery'],
         /*calendar: {exports: 'Calendar'},
         calendar_utf8: {exports: 'Calendar'},*/
 		highcharts:  ['jquery'],
@@ -54,7 +54,7 @@ DEV
         pivot: {
             deps: [
                 'jquery',
-                'jqueryui',
+                'jquery-ui',
 				//'jssc3',
 				//'calendar',
 				//'calendar_utf8',
@@ -64,7 +64,7 @@ DEV
 				'pivotRenderers'
             ]
         },
-		HPivot: ['jquery','jqueryui']
+		HPivot: ['jquery','jquery-ui']
 		/*,
 		'HPivot1':['HPivot'],'HPivot2':['HPivot'],
 		'HPivot3':['HPivot'],'HPivot4':['HPivot'],

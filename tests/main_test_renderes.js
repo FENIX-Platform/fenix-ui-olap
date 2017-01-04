@@ -6,7 +6,7 @@ requirejs.config({
         //jquery: "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
         jquery: "//fenixapps.fao.org/repository/js/jquery/2.1.1/jquery.min",
 
-        jqueryui: "lib/jquery-ui-1.9.2.custom.min",
+        'jquery-ui': "lib/jquery-ui-1.9.2.custom.min",
         //i18n: 'lib/jquery.i18n.properties-min',
         //jssc3: "lib/highlight/jssc3",
         //calendar: "lib/grid/calendar/calendar",
@@ -30,7 +30,7 @@ requirejs.config({
 		'HPivot5':'lib/HierachicalRender/formatter_default',
 		'HPivot6':'lib/HierachicalRender/group_distinct'
     },
-    shim: {jqueryui:{deps: ['jquery']},
+    shim: {'jquery-ui':{deps: ['jquery']},
         /*i18n : {deps: ['jquery']},
         calendar: {exports: 'Calendar'},
         calendar_utf8: {exports: 'Calendar'},*/
@@ -39,7 +39,7 @@ requirejs.config({
         gt_msg_grid: {deps: ['jquery','gt_msg']},
         pivot: {
             deps: [
-                'jquery','jqueryui',
+                'jquery','jquery-ui',
 				//'i18n',
 				// 'jssc3',
 				//'calendar',
@@ -49,7 +49,7 @@ requirejs.config({
 				'HPivot'/*,'HPivot1','HPivot2','HPivot3','HPivot4','HPivot5','HPivot6'*/
             ]
         },
-		'HPivot':['jquery','jqueryui'/*,'i18n'*/]/*,
+		'HPivot':['jquery','jquery-ui'/*,'i18n'*/]/*,
 		'HPivot1':['HPivot'],'HPivot2':['HPivot'],
 		'HPivot3':['HPivot'],'HPivot4':['HPivot'],
 		'HPivot5':['HPivot'],'HPivot6':['HPivot']     */
